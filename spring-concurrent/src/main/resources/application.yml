@@ -1,0 +1,13 @@
+logging:
+  level:
+    com.example: debug
+
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:demo
+      username: sa
+      password:
+  jpa:
+    hibernate:
+      ddl-auto: create

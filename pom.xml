@@ -14,6 +14,7 @@
     <module>spring-sample</module>
     <module>spring-activemq</module>
     <module>jmh</module>
+    <module>spring-concurrent</module>
   </modules>
   <repositories>
   </repositories>
