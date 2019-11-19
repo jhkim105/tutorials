@@ -10,9 +10,10 @@
   <packaging>pom</packaging>
   <name>tutorials</name>
   <modules>
+    <module>java-utils</module>
     <module>spring-sample</module>
     <module>spring-activemq</module>
-    <module>java-utils</module>
+    <module>jmh</module>
   </modules>
   <repositories>
   </repositories>
