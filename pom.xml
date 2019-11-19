@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.example</groupId>
+  <artifactId>spring-samples</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>spring-samples</name>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.2.1.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <url></url>
+  <modules>
+    <module>spring-sample</module>
+  </modules>
+  <distributionManagement>
+<!--    <repository>-->
+<!--      <id>release</id>-->
+<!--      <url>http://repo.rsupport.com:8081/repository/maven-releases/</url>-->
+<!--    </repository>-->
+<!--    <snapshotRepository>-->
+<!--      <id>snapshots</id>-->
+<!--      <url>http://repo.rsupport.com:8081/repository/maven-snapshots</url>-->
+<!--    </snapshotRepository>-->
+    <repository>
+      <id>release</id>
+      <url>http://build.rsupport.com:8081/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <url>http://build.rsupport.com:8081/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <repositories>
+    <repository>
+      <id>public</id>
+      <url>http://repo.rsupport.com:8081/repository/maven-public</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>private</id>
+      <url>http://build.rsupport.com:8081/content/groups/public/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>public</id>
+      <url>http://repo.rsupport.com:8081/repository/maven-public</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>private</id>
+      <url>http://build.rsupport.com:8081/content/groups/public</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.filename>${project.build.directory}/version.txt</version.filename>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <executable>true</executable>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
