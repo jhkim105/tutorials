@@ -27,12 +27,12 @@ public class RestTemplateTest {
 
     HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(headers);
     String uploadRequestUrl = "http://localhost:8080";
-    UriComponents builder = UriComponentsBuilder.fromHttpUrl(uploadRequestUrl)
+    UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(uploadRequestUrl)
         .queryParam("workCode", "bbbb")
         .build(false);
     RestTemplate restTemplate = new RestTemplate();
-    log.debug(builder.toUriString());
-    ResponseEntity<String> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, String.class);
+    log.debug(uriComponents.toUriString());
+    ResponseEntity<String> responseEntity = restTemplate.exchange(uriComponents.toUriString(), HttpMethod.GET, httpEntity, String.class);
   }
 
 }
