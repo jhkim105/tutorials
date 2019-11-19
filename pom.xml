@@ -12,6 +12,7 @@
   <modules>
     <module>spring-sample</module>
     <module>spring-activemq</module>
+    <module>java-utils</module>
   </modules>
   <repositories>
   </repositories>
