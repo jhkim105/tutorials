@@ -1,0 +1,5 @@
+
+mqtt:
+  brokerUrl: tcp://10.1.100.164:1883
+  qos: 1
+  async: true
