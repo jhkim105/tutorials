@@ -1,4 +1,4 @@
-package utils;
+package com.example.demo.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

@@ -15,6 +15,7 @@
     <module>spring-activemq</module>
     <module>jmh</module>
     <module>spring-concurrent</module>
+    <module>spring-security-jwt</module>
   </modules>
   <repositories>
   </repositories>

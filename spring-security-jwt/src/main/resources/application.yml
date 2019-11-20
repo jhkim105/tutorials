@@ -1,0 +1,17 @@
+logging:
+  level:
+    com.example: debug
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:demo
+    sql-script-encoding: UTF-8
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: create
+
