@@ -65,4 +65,31 @@ public class UserControllerIntegrationTest {
 
   }
 
+  @Test
+  public void testSave() throws Exception {
+    // given
+    LoginRequest loginRequest = new LoginRequest("user", "111111");
+    String authToken = userService.login(loginRequest).getAuthToken();
+    UserUpdateRequest userUpdateRequest = new UserUpdateRequest();
+    userUpdateRequest.setNickname("변경된닉네임");
+    // when
+    ResultActions resultActions =
+        mockMvc.perform(
+            post("/users")
+                .header(HttpHeaders.AUTHORIZATION, authToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtils.toString(userUpdateRequest)))
+            .andDo(print());
+
+    // then
+    resultActions.andExpect(status().isOk())
+        .andExpect(jsonPath("$.nickname").value(userUpdateRequest.getNickname()))
+        .andExpect(jsonPath("$.updatedBy").value("1"))
+        .andExpect(jsonPath("$.username").exists());
+
+  }
+
+
+
+
 }

@@ -41,9 +41,15 @@ public class User extends AbstractTraceableEntity {
 
   private String password;
 
+  private String nickname;
+
   @ElementCollection(targetClass = Role.class)
   @JoinTable(name = "tu_user_roles", joinColumns = {@JoinColumn(name = "user_id")})
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
   private Set<Role> roles = new HashSet<>();
+
+  public void update(String nickname) {
+    this.nickname = nickname;
+  }
 }

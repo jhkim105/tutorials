@@ -29,5 +29,11 @@ public class UserController {
   }
 
 
+  @PostMapping
+  public User save(@RequestBody UserUpdateRequest userUpdateRequest) {
+    User currentUser = userService.getCurrentUser();
+    userUpdateRequest.applyTo(currentUser);
+    return userService.save(currentUser);
+  }
 
 }

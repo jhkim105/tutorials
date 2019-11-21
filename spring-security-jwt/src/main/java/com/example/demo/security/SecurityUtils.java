@@ -26,7 +26,7 @@ public class SecurityUtils {
     return (AuthUser)userDetails;
   }
 
-  public static AuthUser getCurrentUserSilently() {
+  public static AuthUser getCurrentAuthUserSilently() {
     try {
       return getAuthUser();
     } catch (AccessDeniedException ae) {
