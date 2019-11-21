@@ -22,10 +22,8 @@ client.log("authToken:" + client.global.get("authToken"));
 
 ### /users/me
 GET http://localhost:8080/users/me
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdHkiOiJVU0VSIiwiaWQiOiIxIiwiZXhwIjoxNTc0MzMzMTYxLCJpYXQiOjE1NzQyNDY3NjF9.I3Nob2Vwzs8hBft35mJFp7Sw0Dg6QYtSS-ihMbRinxA
+Authorization: {{authToken}}
 Content-Type: application/json
 
-{
-}
 
 ###

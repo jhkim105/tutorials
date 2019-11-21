@@ -29,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
+        .httpBasic().disable()
+        .formLogin().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests()
           .antMatchers("/users/login", "/users/join").permitAll()
@@ -36,9 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .and()
                 .addFilterBefore(tokenAuthenticationFilter(), BasicAuthenticationFilter.class)
         .authenticationProvider(tokenAuthenticationProvider())
-        .httpBasic()
-          .authenticationEntryPoint(tokenAuthenticationEntryPoint())
-          .and()
+        .exceptionHandling().authenticationEntryPoint(tokenAuthenticationEntryPoint()).and()
         .csrf().disable();
     // @formatter:on
   }

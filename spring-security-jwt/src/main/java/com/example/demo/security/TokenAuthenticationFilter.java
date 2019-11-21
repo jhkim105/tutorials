@@ -37,7 +37,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-    log.debug("TokenAuthenticationFilter");
+    log.debug("attemptAuthentication");
     String token = getToken(request);
     if (StringUtils.isBlank(token)) {
       return null;
@@ -61,6 +61,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 
   @Override
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    log.debug("doFilter");
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
     String token = getToken(request);
@@ -68,6 +69,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
       chain.doFilter(request, response);
       return;
     }
+
     super.doFilter(req, res, chain);
   }
 
