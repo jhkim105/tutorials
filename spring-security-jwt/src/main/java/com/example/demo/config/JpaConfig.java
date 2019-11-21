@@ -1,15 +1,20 @@
 package com.example.demo.config;
 
-import com.example.demo.security.SpringSecurityAuditorAware;
+import com.example.demo.security.AuthUser;
+import com.example.demo.security.SecurityUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.util.Optional;
+
 @Configuration
-@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+@EnableJpaAuditing
 public class JpaConfig {
   @Bean
-  public SpringSecurityAuditorAware auditorAware() {
-    return new SpringSecurityAuditorAware();
+  public AuditorAware<String> auditorAware() {
+    return () -> Optional.ofNullable(SecurityUtils.getCurrentAuthUserSilently())
+        .map(AuthUser::getId);
   }
 }

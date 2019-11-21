@@ -1,6 +1,6 @@
 logging:
   level:
-    root: debug
+    root: info
     com.example: debug
 
 spring:
