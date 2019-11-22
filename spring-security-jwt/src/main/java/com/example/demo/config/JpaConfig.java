@@ -14,7 +14,7 @@ import java.util.Optional;
 public class JpaConfig {
   @Bean
   public AuditorAware<String> auditorAware() {
-    return () -> Optional.ofNullable(SecurityUtils.getCurrentAuthUserSilently())
+    return () -> Optional.ofNullable(SecurityUtils.getAuthUserSilently())
         .map(AuthUser::getId);
   }
 }

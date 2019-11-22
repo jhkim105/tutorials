@@ -9,11 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class SecurityUtils {
   private SecurityUtils() {
   }
-
-  public static String getCurrentUsername() {
-    return getAuthUser().getUsername();
-  }
-
   public static AuthUser getAuthUser() {
     SecurityContext ctx = SecurityContextHolder.getContext();
     Authentication authentication = ctx.getAuthentication();
@@ -26,7 +21,7 @@ public class SecurityUtils {
     return (AuthUser)userDetails;
   }
 
-  public static AuthUser getCurrentAuthUserSilently() {
+  public static AuthUser getAuthUserSilently() {
     try {
       return getAuthUser();
     } catch (AccessDeniedException ae) {
