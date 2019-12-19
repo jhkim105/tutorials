@@ -10,6 +10,8 @@ import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
+import org.springframework.integration.dsl.MessageChannels;
+import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
@@ -25,6 +27,8 @@ import java.util.UUID;
 public class MqttIntegrationConfig {
 
   private static final String MQTT_OUTBOUND_CHANNEL = "outboundChannel";
+
+  private static final String MQTT_LOGGING_CHANNEL = "mqttLoggingChannel";
 
   @Autowired
   private MqttProperties mqttProperties;
@@ -48,7 +52,10 @@ public class MqttIntegrationConfig {
 
   @Bean
   public IntegrationFlow outboundFlow() {
-    return IntegrationFlows.from(outboundChannel()).handle(outboundMessageHandler()).get();
+    return IntegrationFlows
+        .from(outboundChannel())
+        .wireTap(MQTT_LOGGING_CHANNEL)
+        .handle(outboundMessageHandler()).get();
   }
 
   public MessageHandler outboundMessageHandler() {
@@ -69,4 +76,21 @@ public class MqttIntegrationConfig {
     void publish(@Header(MqttHeaders.TOPIC) String topic, @Header(MqttHeaders.QOS) Integer qos, String data);
   }
 
+  @Bean(name = MQTT_LOGGING_CHANNEL)
+  public MessageChannel loggingChannel() {
+    return MessageChannels.direct().get();
+  }
+
+  @Bean
+  public IntegrationFlow logFlow() {
+    return IntegrationFlows.from(MQTT_LOGGING_CHANNEL).handle(loggingHandler()).get();
+  }
+
+  @Bean
+  public LoggingHandler loggingHandler() {
+    LoggingHandler loggingHandler = new LoggingHandler(LoggingHandler.Level.INFO.name());
+    loggingHandler.setShouldLogFullMessage(true);
+    loggingHandler.setLoggerName("mqttLogger"); // logback 의 logger name 과 맞추면 해당 로거를 사용해서 로깅한다.
+    return loggingHandler;
+  }
 }
