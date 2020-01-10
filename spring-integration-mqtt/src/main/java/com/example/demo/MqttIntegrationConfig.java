@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +15,9 @@ import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
+import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
+import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
@@ -24,6 +27,7 @@ import java.util.UUID;
 
 @Configuration
 @IntegrationComponentScan
+@Slf4j
 public class MqttIntegrationConfig {
 
   private static final String MQTT_OUTBOUND_CHANNEL = "outboundChannel";
@@ -76,13 +80,37 @@ public class MqttIntegrationConfig {
     void publish(@Header(MqttHeaders.TOPIC) String topic, @Header(MqttHeaders.QOS) Integer qos, String data);
   }
 
+
+  @Bean
+  public IntegrationFlow inboundFlow() {
+    String clientId = UUID.randomUUID().toString();
+
+    return IntegrationFlows.from(
+        inboundAdapter(clientId, "/test"))
+        .wireTap(MQTT_LOGGING_CHANNEL)
+        .handle(m -> log.debug("message -> {}", m))
+        .get();
+  }
+
+
+  private MqttPahoMessageDrivenChannelAdapter inboundAdapter(String clientId, String topic) {
+    MqttPahoMessageDrivenChannelAdapter adapter =
+        new MqttPahoMessageDrivenChannelAdapter(clientId, mqttClientFactory(), topic);
+    adapter.setCompletionTimeout(mqttProperties.getCompletionTimeout());
+    adapter.setConverter(new DefaultPahoMessageConverter());
+    adapter.setQos(mqttProperties.getQos());
+    return adapter;
+  }
+
+
+
   @Bean(name = MQTT_LOGGING_CHANNEL)
   public MessageChannel loggingChannel() {
     return MessageChannels.direct().get();
   }
 
   @Bean
-  public IntegrationFlow logFlow() {
+  public IntegrationFlow loggingFlow() {
     return IntegrationFlows.from(MQTT_LOGGING_CHANNEL).handle(loggingHandler()).get();
   }
 

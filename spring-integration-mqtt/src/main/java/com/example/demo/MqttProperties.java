@@ -13,5 +13,6 @@ public class MqttProperties {
 
   private String brokerUrl;
   private int qos;
+  private int completionTimeout; //ms
   private boolean async;
 }
