@@ -1,0 +1,14 @@
+
+mqtt:
+  brokerUrl: tcp://localhost:1883
+#  brokerUrl: tcp://devpns.remotemeeting.com:1883
+  qos: 2
+  async: true
+  completionTimeout: 5000
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+logging:
+  level:
+    com.example: debug

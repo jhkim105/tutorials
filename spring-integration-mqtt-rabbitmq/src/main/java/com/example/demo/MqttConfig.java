@@ -2,13 +2,12 @@ package com.example.demo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.annotation.Gateway;
+import org.springframework.integration.amqp.dsl.Amqp;
 import org.springframework.integration.annotation.IntegrationComponentScan;
-import org.springframework.integration.annotation.MessagingGateway;
-import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
@@ -16,21 +15,15 @@ import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
-import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
-import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHandler;
-import org.springframework.messaging.handler.annotation.Header;
 
 import java.util.UUID;
 
 @Configuration
 @IntegrationComponentScan
 @Slf4j
-public class MqttIntegrationConfig {
-
-  private static final String MQTT_OUTBOUND_CHANNEL = "outboundChannel";
+public class MqttConfig {
 
   private static final String MQTT_LOGGING_CHANNEL = "mqttLoggingChannel";
 
@@ -45,56 +38,21 @@ public class MqttIntegrationConfig {
 //    options.setUserName("username");
 //    options.setPassword("password".toCharArray());
     factory.setConnectionOptions(options);
+    log.debug("brokerUrl:{}", mqttProperties.getBrokerUrl());
     return factory;
   }
 
-  @Bean(name = MQTT_OUTBOUND_CHANNEL)
-  public MessageChannel outboundChannel() {
-    DirectChannel channel = new DirectChannel();
-    return channel;
-  }
 
   @Bean
-  public IntegrationFlow outboundFlow() {
-    return IntegrationFlows
-        .from(outboundChannel())
-        .wireTap(MQTT_LOGGING_CHANNEL)
-        .handle(outboundMessageHandler()).get();
-  }
-
-  public MessageHandler outboundMessageHandler() {
-    String clientId = UUID.randomUUID().toString();
-    MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(clientId, mqttClientFactory());
-    messageHandler.setAsync(mqttProperties.isAsync());
-    messageHandler.setDefaultTopic("defaultTopic");
-    messageHandler.setDefaultQos(mqttProperties.getQos());
-    messageHandler.setCompletionTimeout(5000);
-    return messageHandler;
-  }
-
-//  @MessagingGateway(defaultRequestChannel = MQTT_OUTBOUND_CHANNEL, defaultRequestTimeout = "5000", defaultReplyTimeout = "5000")
-  @MessagingGateway(defaultRequestChannel = MQTT_OUTBOUND_CHANNEL)
-  public interface OutboundGateway {
-    @Gateway
-    void publish(@Header(MqttHeaders.TOPIC) String topic, String data);
-    @Gateway
-    void publish(@Header(MqttHeaders.TOPIC) String topic, @Header(MqttHeaders.QOS) Integer qos, String data);
-  }
-
-
-  @Bean
-  public IntegrationFlow inboundFlow() {
+  public IntegrationFlow mqttInboundFlow(RabbitTemplate rabbitTemplate) {
     String clientId = UUID.randomUUID().toString();
 
-    return IntegrationFlows.from(
-        inboundAdapter(clientId, "/test"))
+    return IntegrationFlows.from(mqttInboundAdapter(clientId, "/test"))
         .wireTap(MQTT_LOGGING_CHANNEL)
-        .handle(m -> log.debug("message -> {}", m))
-        .get();
+        .handle(Amqp.outboundAdapter(rabbitTemplate).routingKey(AmqpConfig.QUEUE_MQTT)).get();
   }
 
-
-  private MqttPahoMessageDrivenChannelAdapter inboundAdapter(String clientId, String topic) {
+  private MqttPahoMessageDrivenChannelAdapter mqttInboundAdapter(String clientId, String topic) {
     MqttPahoMessageDrivenChannelAdapter adapter =
         new MqttPahoMessageDrivenChannelAdapter(clientId, mqttClientFactory(), topic);
     adapter.setCompletionTimeout(mqttProperties.getCompletionTimeout());
