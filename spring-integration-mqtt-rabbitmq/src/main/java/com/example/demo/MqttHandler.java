@@ -22,7 +22,6 @@ public class MqttHandler {
 
   private void executeOnce(String message) {
     RAtomicLong atomicLong = redissonClient.getAtomicLong(message);
-    atomicLong.expire(3, TimeUnit.SECONDS);
     long currentValue = atomicLong.addAndGet(1);
     log.debug("currentValue:{}", currentValue);
     if (currentValue == 1) {
@@ -30,6 +29,7 @@ public class MqttHandler {
       log.debug(message);
     }
 
+    // if get a unique key, this is not required.
     if (atomicLong.remainTimeToLive() < 0) {
       atomicLong.expire(3, TimeUnit.SECONDS);
     }
