@@ -31,7 +31,4 @@ public class AmqpConfig {
         .get();
   }
 
-  public void handle(String message) {
-    log.debug(message);
-  }
 }

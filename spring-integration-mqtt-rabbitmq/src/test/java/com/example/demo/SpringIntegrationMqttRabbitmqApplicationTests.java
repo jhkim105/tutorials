@@ -1,13 +1,20 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringIntegrationMqttRabbitmqApplicationTests {
+public class SpringIntegrationMqttRabbitmqApplicationTests {
+
+  @Autowired
+  private MqttHandler mqttHandler;
 
   @Test
-  void contextLoads() {
+  public void test() {
+    mqttHandler.handle("a");
+    mqttHandler.handle("a");
+    mqttHandler.handle("a");
   }
 
 }

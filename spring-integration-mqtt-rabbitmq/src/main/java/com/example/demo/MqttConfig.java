@@ -52,6 +52,15 @@ public class MqttConfig {
         .handle(Amqp.outboundAdapter(rabbitTemplate).routingKey(AmqpConfig.QUEUE_MQTT)).get();
   }
 
+  @Bean
+  public IntegrationFlow mqttInboundFlow2(RabbitTemplate rabbitTemplate) {
+    String clientId = UUID.randomUUID().toString();
+
+    return IntegrationFlows.from(mqttInboundAdapter(clientId, "/test"))
+        .wireTap(MQTT_LOGGING_CHANNEL)
+        .handle(Amqp.outboundAdapter(rabbitTemplate).routingKey(AmqpConfig.QUEUE_MQTT)).get();
+  }
+
   private MqttPahoMessageDrivenChannelAdapter mqttInboundAdapter(String clientId, String topic) {
     MqttPahoMessageDrivenChannelAdapter adapter =
         new MqttPahoMessageDrivenChannelAdapter(clientId, mqttClientFactory(), topic);
