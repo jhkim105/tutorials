@@ -17,25 +17,22 @@ import org.springframework.messaging.MessageChannel;
 public class OutboundConfig {
 
   @Bean
-  @ServiceActivator(inputChannel = "amqpOutboundChannel")
-  public AmqpOutboundEndpoint amqpOutbound(AmqpTemplate amqpTemplate) {
-    AmqpOutboundEndpoint outbound = new AmqpOutboundEndpoint(amqpTemplate);
-    outbound.setExpectReply(true);
-    outbound.setRoutingKey("foo"); // default exchange - route to queue 'foo'
-    return outbound;
+  public IntegrationFlow amqpOutboundFlow(AmqpTemplate amqpTemplate) {
+    return IntegrationFlows.from(amqpOutboundChannel())
+        .handle(Amqp.outboundAdapter(amqpTemplate)
+            .routingKey("foo")) // default exchange - route to queue 'foo'
+        .get();
   }
-
 
   @Bean
   public MessageChannel amqpOutboundChannel() {
     return new DirectChannel();
   }
 
-
   @MessagingGateway(defaultRequestChannel = "amqpOutboundChannel")
 //  @MessagingGateway(defaultRequestChannel = "amqpOutboundChannel", defaultRequestTimeout = "50000", defaultReplyTimeout = "5000")
   public interface RabbitGateway {
-    String sendToRabbit(String data);
+    void sendToRabbit(String data);
   }
 
 }

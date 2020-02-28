@@ -7,15 +7,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Slf4j
-class SpringIntegrationRabbitmqApplicationTests {
+class SpringIntegrationRabbitmqDslApplicationTests {
 
   @Autowired(required = false)
   private OutboundConfig.RabbitGateway rabbitGateway;
 
   @Test
   void sendToRabbit() {
-    String result = rabbitGateway.sendToRabbit("aaaa");
-    log.debug("result:{}", result);
+    rabbitGateway.sendToRabbit("aaaa");
+//    log.debug("result:{}", result);
   }
 
 }

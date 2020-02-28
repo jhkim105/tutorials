@@ -3,11 +3,11 @@ package com.example.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.example.demo")
-public class SpringIntegrationRabbitmqApplication {
+@SpringBootApplication
+public class SpringIntegrationRabbitmqDslApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringIntegrationRabbitmqApplication.class, args);
+    SpringApplication.run(SpringIntegrationRabbitmqDslApplication.class, args);
   }
 
 }
