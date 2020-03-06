@@ -16,7 +16,7 @@ public class RoundRobinTest {
     RoundRobin<String> roundRobin = new RoundRobin<>(list);
     int i = 0;
     while(i++ < 10) {
-      log.debug(roundRobin.iterator().next());
+      log.debug(roundRobin.next());
     }
   }
 

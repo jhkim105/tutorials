@@ -6,17 +6,20 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
-public class RoundRobin<T> {
+public class RoundRobin3<T> {
 
   private final List<T> list;
 
-  public RoundRobin(final List<T> list) {
+  public RoundRobin3(final List<T> list) {
     this.list = list;
   }
 
   public T next() {
-    Collections.shuffle(list);
-    T  ret = list.get(0);
+    T ret;
+    synchronized (list) {
+      ret = list.get(0);
+      Collections.rotate(list, -1);
+    }
     return ret;
   }
 }
