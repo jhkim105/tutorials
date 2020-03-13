@@ -21,9 +21,18 @@ import org.springframework.messaging.MessageHandler;
 @Slf4j
 public class InboundConfig {
 
-  @Bean // return the upper cased payload
-  public IntegrationFlow amqpInboundGateway(ConnectionFactory connectionFactory) {
-    return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, "foo"))
+//  @Bean // return the upper cased payload
+//  public IntegrationFlow amqpInboundGateway(ConnectionFactory connectionFactory) {
+//    return IntegrationFlows.from(Amqp.inboundGateway(connectionFactory, "foo"))
+//        .transform(String.class, String::toUpperCase)
+//        .handle(this, "handle")
+//        .get();
+//  }
+
+  @Bean
+  public IntegrationFlow amqpInboundAdater(ConnectionFactory connectionFactory) {
+    return IntegrationFlows
+        .from(Amqp.inboundAdapter(connectionFactory, "foo"))
         .transform(String.class, String::toUpperCase)
         .handle(this, "handle")
         .get();

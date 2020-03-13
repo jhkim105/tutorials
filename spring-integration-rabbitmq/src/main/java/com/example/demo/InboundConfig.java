@@ -42,6 +42,7 @@ public class InboundConfig {
         new SimpleMessageListenerContainer(connectionFactory);
     container.setQueueNames("foo");
     container.setConcurrentConsumers(2);
+    container.setDefaultRequeueRejected(false);
     // ...
     return container;
   }
