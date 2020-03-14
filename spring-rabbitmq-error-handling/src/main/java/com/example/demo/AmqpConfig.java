@@ -16,6 +16,7 @@ public class AmqpConfig {
   public static final String EXCHANGE_MESSAGES = "messages-exchange";
   public static final String QUEUE_MESSAGES_DLQ = QUEUE_MESSAGES +".dlq";
   public static final String EXCHANGE_MESSAGES_DLX = QUEUE_MESSAGES + ".dlx";
+  public static final String HEADER_X_RETRIES_COUNT = "x-retries-count";
 
   @Bean
   FanoutExchange deadLetterExchange() {

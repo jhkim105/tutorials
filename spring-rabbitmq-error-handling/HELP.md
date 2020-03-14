@@ -17,3 +17,5 @@ The following guides illustrate how to use some features concretely:
 * [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 * [Messaging with RabbitMQ](https://spring.io/guides/gs/messaging-rabbitmq/)
 
+### Reference
+* [Error Handling with Spring AMQP](https://www.baeldung.com/spring-amqp-error-handling)
