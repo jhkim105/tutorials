@@ -20,6 +20,7 @@
     <module>spring-integration-rabbitmq</module>
     <module>spring-integration-rabbitmq-dsl</module>
     <module>spring-rabbitmq-error-handling</module>
+    <module>spring-rabbitmq-broadcast</module>
     <module>spring-security-jwt</module>
   </modules>
   <repositories>
