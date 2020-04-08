@@ -35,7 +35,7 @@ public class RoundRobinBenchmark {
   @Fork(1)
   public void benchmark1(RsCryptoBenchmark.BenchmarkState state, Blackhole bh) {
     RoundRobin roundRobin = new RoundRobin(Arrays.asList("a", "b", "c", "d", "e"));
-    log.debug("{}", roundRobin.iterator().next());
+    log.debug("{}", roundRobin.next());
   }
 
 }

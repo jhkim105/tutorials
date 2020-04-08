@@ -15,13 +15,11 @@
     <module>spring-activemq</module>
     <module>jmh</module>
     <module>spring-concurrent</module>
-    <module>spring-integration-mqtt</module>
-    <module>spring-integration-mqtt-rabbitmq</module>
-    <module>spring-integration-rabbitmq</module>
-    <module>spring-integration-rabbitmq-dsl</module>
+    <module>spring-integration</module>
     <module>spring-rabbitmq-error-handling</module>
     <module>spring-rabbitmq-broadcast</module>
     <module>spring-security-jwt</module>
+    <module>spring-security-oauth</module>
   </modules>
   <repositories>
   </repositories>
