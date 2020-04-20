@@ -19,7 +19,7 @@
     <module>spring-rabbitmq-error-handling</module>
     <module>spring-rabbitmq-broadcast</module>
     <module>spring-security-jwt</module>
-    <module>spring-security-oauth</module>
+    <module>spring-oauth2</module>
   </modules>
   <repositories>
   </repositories>
