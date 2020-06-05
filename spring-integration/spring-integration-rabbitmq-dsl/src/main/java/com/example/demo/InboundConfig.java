@@ -1,21 +1,12 @@
 package com.example.demo;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.amqp.dsl.Amqp;
-import org.springframework.integration.amqp.inbound.AmqpInboundGateway;
-import org.springframework.integration.annotation.ServiceActivator;
-import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.integration.handler.AbstractReplyProducingMessageHandler;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHandler;
 
 @Configuration
 @Slf4j
@@ -35,7 +26,26 @@ public class InboundConfig {
         .from(Amqp.inboundAdapter(connectionFactory, "foo"))
         .transform(String.class, String::toUpperCase)
         .handle(this, "handle")
-        .get();
+        .split()
+        .<String, Boolean>route(s -> s.equals("A"),
+            m -> m
+                .subFlowMapping(true, handle1Flow())
+                .subFlowMapping(false, handle2Flow())).get();
+  }
+
+  @Bean
+  public IntegrationFlow handle1Flow() {
+    return f -> f.handle(m -> log.debug("handle1"));
+  }
+
+  @Bean
+  public IntegrationFlow handle2Flow() {
+    return f -> f.handle(m -> log.debug("handle2"));
+  }
+
+  public String handle(String message) {
+    log.debug("message:{}", message);
+    return message;
   }
 
 
@@ -44,7 +54,4 @@ public class InboundConfig {
     return String.format("reply to %s", message);
   }
 
-  public void handle(String message) {
-    log.debug("message:{}", message);
-  }
 }
