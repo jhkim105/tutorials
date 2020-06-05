@@ -15,6 +15,7 @@ class SpringIntegrationRabbitmqDslApplicationTests {
   @Test
   void sendToRabbit() {
     rabbitGateway.sendToRabbit("a");
+    rabbitGateway.sendToRabbit("b");
 //    log.debug("result:{}", result);
   }
 
