@@ -30,6 +30,5 @@
   </build>
   <modules>
     <module>spring-boot-keycloak</module>
-    <module>spring-oauth2-angular</module>
   </modules>
 </project>

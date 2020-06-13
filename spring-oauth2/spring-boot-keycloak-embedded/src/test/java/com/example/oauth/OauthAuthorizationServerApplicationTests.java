@@ -1,10 +1,10 @@
-package com.example.springoauth2angular;
+package com.example.oauth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringOauth2AngularApplicationTests {
+class OauthAuthorizationServerApplicationTests {
 
   @Test
   void contextLoads() {
