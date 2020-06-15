@@ -29,6 +29,10 @@
     </plugins>
   </build>
   <modules>
+    <module>demo-oauth2</module>
     <module>spring-boot-keycloak</module>
+    <module>spring-boot-keycloak-embedded</module>
+    <module>spring-boot-oauth2-login</module>
+    <module>spring-oauth2-login</module>
   </modules>
 </project>

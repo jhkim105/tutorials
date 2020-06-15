@@ -1,0 +1,11 @@
+insert into post (name, description) values('post01', 'description01');
+insert into post (name, description) values('post02', 'description02');
+insert into post (name, description) values('post03', 'description03');
+insert into post (name, description) values('post04', 'description04');
+insert into post (name, description) values('post05', 'description05');
+insert into post (name, description) values('post06', 'description06');
+insert into post (name, description) values('post11', 'description11');
+insert into post (name, description) values('post09', 'description09');
+insert into post (name, description) values('post07', 'description07');
+insert into post (name, description) values('post08', 'description08');
+insert into post (name, description) values('post10', 'description10');
