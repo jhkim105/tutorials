@@ -19,6 +19,7 @@
     <module>spring-rabbitmq-error-handling</module>
     <module>spring-rabbitmq-broadcast</module>
     <module>spring-oauth2</module>
+    <module>spring-cache</module>
     <module>spring-security</module>
   </modules>
   <repositories>
