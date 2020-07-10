@@ -18,8 +18,8 @@
     <module>spring-integration</module>
     <module>spring-rabbitmq-error-handling</module>
     <module>spring-rabbitmq-broadcast</module>
-    <module>spring-security-jwt</module>
     <module>spring-oauth2</module>
+    <module>spring-security</module>
   </modules>
   <repositories>
   </repositories>

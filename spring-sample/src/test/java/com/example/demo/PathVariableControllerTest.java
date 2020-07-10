@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class PathVariableControllerTest {
   private MockMvc mockMvc;
 
   @Test
+  @Ignore
   public void testUri() throws Exception{
     String uri = "abc/123";
     ResultActions resultActions = mockMvc.perform(
@@ -38,6 +40,7 @@ public class PathVariableControllerTest {
   }
 
   @Test
+  @Ignore
   public void testUri2() throws Exception{
     String uri = "abc/123/file.m3u8";
     ResultActions resultActions = mockMvc.perform(
