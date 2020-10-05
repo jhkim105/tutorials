@@ -1,0 +1,22 @@
+logging:
+  level:
+    com.example: debug
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+  datasource:
+    url: @db.url@
+    username: @db.username@
+    password: @db.password@
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+
+mqtt:
+  brokerUrl: tcp://localhost:1883
+  #  brokerUrl: tcp://devpns.remotemeeting.com:1883
+  qos: 1
+  async: true
+  completionTimeout: 5000
