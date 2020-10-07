@@ -1,5 +1,5 @@
 ##
-Topic: /RCCP/CON/cid001/STT  
+Topic: /RCCP/CON/cid001/STT 
 Body:
 ```json
 {
@@ -13,3 +13,10 @@ Body:
   }
 }
 ```
+
+/RCCP/CON/+/STT 형식은 리스닝 안됨. why?  
+/test로 함
+
+
+
+
