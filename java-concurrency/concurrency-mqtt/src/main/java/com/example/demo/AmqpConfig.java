@@ -20,7 +20,7 @@ public class AmqpConfig {
 
 
   @Autowired
-  private ConferenceSttLogSaveActivator conferenceSttLogSaveActivator;
+  private ConferenceSttLogSaveActivator3 conferenceSttLogSaveActivator;
 
 
   @Bean
