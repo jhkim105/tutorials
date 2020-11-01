@@ -28,5 +28,9 @@ public final class DateUtils {
       return null;
     return org.apache.commons.lang3.time.DateUtils.addDays(date, i);
   }
+
+  public static long getEpochMilli(LocalDateTime localDateTime) {
+    return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+  }
 }
 
