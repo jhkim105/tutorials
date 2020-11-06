@@ -19,6 +19,9 @@ public class MyCounter {
   @Autowired
   private RedissonClient redissonClient;
 
+  public void init() {
+    count = 0;
+  }
 
   public void increment() {
     int temp = count;

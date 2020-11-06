@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.concurrent.ForkJoinPool;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +24,53 @@ public class RedissonLockTest {
   MyCounter myCounter;
 
   @Test
-  public void test() throws InterruptedException {
-    int numberOfThreads = 5;
+  public void test_using_parallelStream() {
+    int count = 10;
+    myCounter.init();
+    IntStream.range(0, count).parallel().forEach(n -> myCounter.incrementWithRedissonLock());
+    log.debug("end count:{}", myCounter.count);
+    assertThat(myCounter.count).isEqualTo(count);
+  }
+
+  @Test
+  public void test_error_using_parallelStream() {
+    int count = 10;
+    myCounter.init();
+    IntStream.range(0, count).parallel().forEach(n -> myCounter.increment());
+    log.debug("end count:{}", myCounter.count);
+    assertThat(myCounter.count).isNotEqualTo(count);
+  }
+
+  @Test
+  public void test_using_executorService() throws InterruptedException {
+    int count = 10;
     ExecutorService service = Executors.newFixedThreadPool(10);
-    CountDownLatch countDownLatch = new CountDownLatch(numberOfThreads);
-    for (int i = 0; i < numberOfThreads; i++) {
+    CountDownLatch countDownLatch = new CountDownLatch(count);
+    for (int i = 0; i < count; i++) {
       service.submit(() -> {
-//        IntStream.range(0,10).forEach(n -> myCounter.increment());
-//        IntStream.range(0,10).forEach(n -> myCounter.incrementWithWait());
-        IntStream.range(0, 10).forEach(n -> myCounter.incrementWithRedissonLock());
+        myCounter.incrementWithRedissonLock();
         countDownLatch.countDown();
       });
     }
     countDownLatch.await();
     log.debug("end count:{}", myCounter.count);
+    assertThat(myCounter.count).isEqualTo(count);
   }
 
   @Test
-  public void testSingle() throws InterruptedException {
-    IntStream.range(0, 10).forEach(n -> myCounter.incrementWithRedissonLock());
+  public void test_using_forkJoinPool() throws InterruptedException {
+    int count = 10;
+    ForkJoinPool forkJoinPool = new ForkJoinPool(count);
+    CountDownLatch countDownLatch = new CountDownLatch(count);
+    for (int i = 0; i < count; i++) {
+      forkJoinPool.submit(() -> {
+        myCounter.incrementWithRedissonLock();
+        countDownLatch.countDown();
+      });
+    }
+    countDownLatch.await();
     log.debug("end count:{}", myCounter.count);
+    assertThat(myCounter.count).isEqualTo(count);
   }
+
 }
