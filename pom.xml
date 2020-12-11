@@ -21,6 +21,7 @@
     <module>spring-cache</module>
     <module>spring-security</module>
     <module>java-concurrency</module>
+    <module>spring-jpa</module>
   </modules>
   <repositories>
   </repositories>

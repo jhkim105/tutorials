@@ -44,6 +44,7 @@ public class RedissonLockTest {
   @Test
   public void test_using_executorService() throws InterruptedException {
     int count = 10;
+    myCounter.init();
     ExecutorService service = Executors.newFixedThreadPool(10);
     CountDownLatch countDownLatch = new CountDownLatch(count);
     for (int i = 0; i < count; i++) {
@@ -60,8 +61,10 @@ public class RedissonLockTest {
   @Test
   public void test_using_forkJoinPool() throws InterruptedException {
     int count = 10;
+    myCounter.init();
     ForkJoinPool forkJoinPool = new ForkJoinPool(count);
     CountDownLatch countDownLatch = new CountDownLatch(count);
+    myCounter.init();
     for (int i = 0; i < count; i++) {
       forkJoinPool.submit(() -> {
         myCounter.incrementWithRedissonLock();

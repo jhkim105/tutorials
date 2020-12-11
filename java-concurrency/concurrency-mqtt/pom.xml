@@ -11,7 +11,7 @@
   <groupId>com.example</groupId>
   <artifactId>concurrency-mqtt</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>concurrency-mqtt-redis-lock</name>
+  <name>concurrency-mqtt</name>
   <description>Demo project for Spring Boot</description>
 
   <properties>
