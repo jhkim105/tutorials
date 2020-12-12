@@ -1,0 +1,14 @@
+<beanio xmlns="http://www.beanio.org/2012/03"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
+
+  <stream name="employeeFile" format="csv" >
+    <record name="employee" class="com.example.beanio.example.Employee">
+      <field name="firstName" />
+      <field name="lastName" />
+      <field name="title" />
+      <field name="salary" />
+      <field name="hireDate" format="MMddyyyy" />
+    </record>
+  </stream>
+</beanio>
