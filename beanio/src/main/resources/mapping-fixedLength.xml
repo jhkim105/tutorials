@@ -9,7 +9,7 @@
       </segment>
       <segment name="body" class="com.example.beanio.example.Body" >
         <field name="number" type="int" length="4"/>
-        <field name="code" length="5" justify="right" padding=" "/>
+        <field name="code" length="5" justify="right" default="ABCDE" padding=" "/>
         <field name="msg" length="20" justify="right" padding=" "/>
       </segment>
     </record>

@@ -10,9 +10,9 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class Message implements Serializable {
+public class Message {
 
-  private static final long serialVersionUID = -3894497903821668443L;
+//  private static final long serialVersionUID = -3894497903821668443L;
   private Header header;
 
   private Body body;

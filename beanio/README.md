@@ -93,4 +93,4 @@ Test Code
 
 ## Refs
 * http://beanio.org/
-* https://github.com/kwangyul/oss/tree/master/beanio
+* [mapping sample](https://svn.apache.org/repos/asf/camel/trunk/components/camel-beanio/src/test/resources/org/apache/camel/dataformat/beanio/mappings.xml)

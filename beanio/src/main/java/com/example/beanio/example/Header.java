@@ -10,9 +10,9 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class Header implements Serializable {
+public class Header {
 
-  private static final long serialVersionUID = 1833194287730628681L;
+//  private static final long serialVersionUID = 1833194287730628681L;
   private int size;
   private String token;
 

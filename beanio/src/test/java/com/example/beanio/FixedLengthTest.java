@@ -36,7 +36,7 @@ public class FixedLengthTest {
             .build())
         .body(Body.builder()
             .msg("msg")
-            .code("code")
+//            .code("code")
             .number(21)
             .build())
         .build();
