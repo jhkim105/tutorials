@@ -9,4 +9,7 @@
   - 하아버네이트는 엔터티를 영속화 할 때, 컬렉션을 감싸서 하이버네이트 내장 컬력센으로 변경함. 이 때 문제가 발생할 수 있다.
   
   
+  
+## References
+* https://www.baeldung.com/spring-data-query-by-example
  
