@@ -81,10 +81,10 @@ Test Code
 ```
 실행 결과
 ```
-12:29:35.589 [main] INFO com.example.beanio.BeanIoTest - message->Message(header=Header(size=20, token=token), body=Body(number=21, code=code, msg=msg))
-12:29:35.790 [main] INFO com.example.beanio.BeanIoTest - messageString->20                                 token21   code                 msg
+12:29:35.589 [main] INFO com.example.beanio.CsvTest - message->Message(header=Header(size=20, token=token), body=Body(number=21, code=code, msg=msg))
+12:29:35.790 [main] INFO com.example.beanio.CsvTest - messageString->20                                 token21   code                 msg
 
-12:29:35.795 [main] INFO com.example.beanio.BeanIoTest - Message(header=Header(size=20, token=token), body=Body(number=21, code=code, msg=msg))
+12:29:35.795 [main] INFO com.example.beanio.CsvTest - Message(header=Header(size=20, token=token), body=Body(number=21, code=code, msg=msg))
 ``` 
 
 

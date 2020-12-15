@@ -12,20 +12,14 @@ import org.beanio.BeanWriter;
 import org.beanio.StreamFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 @SpringBootTest
 @Slf4j
 public class FixedLengthTest {
 
   @Autowired
-  private ResourceLoader resourceLoader;
-
-  @Value("${mapping-file.path}")
-  private String mappingFilePath;
+  StreamFactory factory;
 
   @Test
   void testFixedLength() throws IOException {
@@ -41,10 +35,7 @@ public class FixedLengthTest {
             .build())
         .build();
 
-    Resource resource = resourceLoader.getResource(mappingFilePath);
     log.info("message->{}", message);
-    StreamFactory factory = StreamFactory.newInstance();
-    factory.load(resource.getFile());
     StringWriter stringWriter = new StringWriter();
     BeanWriter beanWriter = factory.createWriter("message", stringWriter);
     beanWriter.write(message);
@@ -57,4 +48,5 @@ public class FixedLengthTest {
     Message message2 = (Message)beanReader.read();
     log.info("{}", message2);
   }
+
 }
