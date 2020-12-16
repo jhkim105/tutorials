@@ -1,11 +1,13 @@
 package com.example.beanio.protocol;
 
+import com.example.beanio.ProtocolProperties;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.beanio.BeanWriter;
@@ -15,30 +17,48 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class ProtocolUtils {
 
-  @Autowired
-  StreamFactory factory;
+  private final StreamFactory streamFactory;
+
+  private final ProtocolProperties protocolProperties;
 
   public String serialize(Protocol protocol) {
     String steamName = "message";
     StringWriter stringWriter = new StringWriter();
-    BeanWriter beanWriter = factory.createWriter(steamName, stringWriter);
+    BeanWriter beanWriter = streamFactory.createWriter(steamName, stringWriter);
 
-    Map<String, Object> headerMap = new HashMap<>();
-    headerMap.put("id", protocol.id);
-    beanWriter.write("header", headerMap);
-    Map<String, Object> dataMap = new HashMap<>();
-    dataMap.put("mobile", protocol.mobile);
-    dataMap.put("message", protocol.message);
-    beanWriter.write("data", dataMap);
+    try {
+      Map<String, Object> headerMap = new HashMap<>();
+      headerMap.put("id", protocol.id);
+      beanWriter.write("header", headerMap);
+      Map<String, Object> dataMap = new HashMap<>();
+      dataMap.put(protocolProperties.getPhoneNumberFieldName(), protocol.mobile);
+      dataMap.put(protocolProperties.getMessageFieldName(), protocol.message);
+      beanWriter.write("data", dataMap);
 
-    String ret = stringWriter.toString();
+      String ret = stringWriter.toString();
+      log.debug("length:{}, protocol:{}", ret.length(), ret);
+      checkLength(ret);
+      return ret;
+    } finally {
+      beanWriter.flush();
+      beanWriter.close();
+    }
 
-    beanWriter.flush();
-    beanWriter.close();
+  }
 
-    return ret;
+  private void checkLength(String ret) {
+    int parseLength = parseLength(ret);
+    if(parseLength != ret.length()) {
+      throw new RuntimeException(String.format("message length invalid. expected:%s, actual:%s", parseLength, ret.length()));
+    }
+  }
+
+  private int parseLength(String ret) {
+    String lenStr = ret.substring(0, 8);
+    return Integer.parseInt(lenStr);
   }
 
   @ToString

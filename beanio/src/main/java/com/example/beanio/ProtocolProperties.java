@@ -9,4 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class ProtocolProperties {
   private String mappingFilePath;
+  private String phoneNumberFieldName;
+  private String messageFieldName;
 }
