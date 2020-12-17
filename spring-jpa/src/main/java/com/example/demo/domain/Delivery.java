@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.base.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Delivery {
+public class Delivery extends BaseEntity<String> {
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @GeneratedValue(generator = "uuid")

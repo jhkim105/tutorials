@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserAddress {
+public class UserAddress extends BaseEntity<String> {
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @GeneratedValue(generator = "uuid")

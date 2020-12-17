@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.base.BaseEntity;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @EqualsAndHashCode(of = {"order", "product"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderProduct {
+public class OrderProduct extends BaseEntity<String> {
 
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")

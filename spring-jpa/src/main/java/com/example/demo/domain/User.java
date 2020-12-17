@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.base.BaseEntity;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -22,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseEntity<String> {
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @GeneratedValue(generator = "uuid")

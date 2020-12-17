@@ -1,5 +1,6 @@
 package com.example.demo.domain;
 
+import com.example.demo.domain.base.BaseEntity;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +31,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Order {
+public class Order extends BaseEntity<String> implements BaseEntity.LogWriteEntity {
 
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -60,5 +61,12 @@ public class Order {
     this.name = name;
     this.user = user;
     this.orderProducts = orderProducts;
+  }
+
+  @Override
+  public BaseEntity<?> toLog() {
+    OrderLog orderLog = OrderLog.builder()
+        .build();
+    return orderLog;
   }
 }
