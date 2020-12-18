@@ -37,6 +37,7 @@ public class ProtocolUtils {
       dataMap.put(protocolProperties.getPhoneNumberFieldName(), protocol.mobile);
       dataMap.put(protocolProperties.getMessageFieldName(), protocol.message);
       beanWriter.write("data", dataMap);
+      beanWriter.write("end", new HashMap());
 
       String ret = stringWriter.toString();
       log.debug("length:{}, protocol:{}", ret.length(), ret);

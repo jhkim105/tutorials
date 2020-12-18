@@ -2,9 +2,9 @@
 <beanio xmlns="http://www.beanio.org/2012/03" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.beanio.org/2012/03 http://www.beanio.org/2012/03/mapping.xsd">
 
   <stream name="message" format="fixedlength">
-<!--    <parser>-->
-<!--      <property name="recordTerminator" value="" />-->
-<!--    </parser>-->
+    <parser>
+      <property name="recordTerminator" value="" />
+    </parser>
     <record name="header" class="map" maxOccurs="1" >
         <field name="length" length="8" justify="right" padding="0" default="130" type="int"/>
         <field name="code" length="5" justify="left" padding=" " default="CODE1"/>
@@ -15,8 +15,9 @@
         <field name="kind" length="5" justify="left" padding=" " default="SMS"/>
         <field name="mobile" length="20" justify="left" padding="0"/>
         <field name="message" length="50" justify="left" padding=" "/>
+        <field name="END" length="2" justify="left" padding=" " default="@@"/>
     </record>
-    <record name="end">
+    <record name="end" class="map">
       <field name="END" length="2" justify="left" padding=" " default="@@"/>
     </record>
   </stream>
