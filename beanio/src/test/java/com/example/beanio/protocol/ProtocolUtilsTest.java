@@ -14,12 +14,16 @@ class ProtocolUtilsTest {
   ProtocolUtils protocolUtils;
 
   @Test
-  void serialize() {
+  void serializeAndDeserialize() {
     Protocol message = Protocol.builder()
         .mobile("01011112222")
         .message("this is message")
         .build();
     String protocol = protocolUtils.serialize(message);
     log.info(protocol);
+
+    message= protocolUtils.deserialize(protocol);
+    log.info("{}", message);
   }
+
 }
