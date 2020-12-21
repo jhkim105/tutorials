@@ -7,15 +7,15 @@
     </parser>
     <record name="message1" class="com.example.beanio.protocol.ProtocolUtils$Protocol" minOccurs="1" maxOccurs="1" >
       <segment name="header" class="map" maxOccurs="1" >
+        <field name="length" length="8" justify="right" padding="0" default="130" type="int" />
+        <field name="code" length="5" justify="left" padding=" " default="CODE1" />
+        <field name="id" length="32" justify="left" padding=" " default="" />
+      </segment>
+      <segment name="data" class="map" maxOccurs="1" >
         <field name="length" length="8" justify="right" padding="0" default="83" type="int" />
         <field name="kind" length="5" justify="left" padding=" " default="SMS"/>
         <field name="mobile" length="20" justify="left" padding=" "/>
         <field name="message" length="50" justify="left" padding=" "/>
-      </segment>
-      <segment name="data" class="map" maxOccurs="1" >
-        <field name="length" length="8" justify="right" padding="0" default="130" type="int" />
-        <field name="code" length="5" justify="left" padding=" " default="CODE1" />
-        <field name="id" length="32" justify="left" padding=" " default="" />
       </segment>
       <field name="end" length="2" justify="left" padding=" " default="@@"/>
     </record>

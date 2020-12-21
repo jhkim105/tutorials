@@ -35,8 +35,8 @@ public class ProtocolUtils {
     try {
       beanWriter.write("message1", protocol);
       String ret = stringWriter.toString();
-      log.debug("length:{}, protocol:{}", ret.length(), ret);
-//      checkLength(ret);
+      log.info("length:{}, protocol:{}", ret.length(), ret);
+      checkLength(ret);
       return ret;
     } finally {
       beanWriter.flush();
