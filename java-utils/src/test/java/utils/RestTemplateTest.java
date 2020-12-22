@@ -1,8 +1,9 @@
 package utils;
 
+import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,13 +14,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Collections;
-
 @Slf4j
 public class RestTemplateTest {
 
   @Test
-  @Ignore
+  @Disabled
   public void testGet() {
     HttpHeaders headers = new HttpHeaders();
     headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON_UTF8));

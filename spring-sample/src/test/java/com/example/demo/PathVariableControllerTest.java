@@ -1,22 +1,19 @@
 package com.example.demo;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PathVariableControllerTest {
@@ -25,7 +22,7 @@ public class PathVariableControllerTest {
   private MockMvc mockMvc;
 
   @Test
-  @Ignore
+  @Disabled
   public void testUri() throws Exception{
     String uri = "abc/123";
     ResultActions resultActions = mockMvc.perform(
@@ -40,7 +37,7 @@ public class PathVariableControllerTest {
   }
 
   @Test
-  @Ignore
+  @Disabled
   public void testUri2() throws Exception{
     String uri = "abc/123/file.m3u8";
     ResultActions resultActions = mockMvc.perform(

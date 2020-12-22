@@ -1,18 +1,18 @@
 package utils.mqtt;
 
+import java.util.UUID;
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import java.util.UUID;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class MqttClientTest {
+
   @Test
-  @Ignore
+  @Disabled
   public void testSttLog() throws MqttException {
     String conferenceId = "abccc5e434ea4906a80c38587e1159d9";
     String url = "tcp://devpns.remotemeeting.com:1883";
