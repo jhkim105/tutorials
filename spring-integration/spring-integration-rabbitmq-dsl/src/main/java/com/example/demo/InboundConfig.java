@@ -21,7 +21,7 @@ public class InboundConfig {
 //  }
 
   @Bean
-  public IntegrationFlow amqpInboundAdater(ConnectionFactory connectionFactory) {
+  public IntegrationFlow routeFlow(ConnectionFactory connectionFactory) {
     return IntegrationFlows
         .from(Amqp.inboundAdapter(connectionFactory, "foo"))
         .transform(String.class, String::toUpperCase)

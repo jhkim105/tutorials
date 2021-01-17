@@ -1,0 +1,4 @@
+GET http://localhost:8080/message?queueName=dynamic&count=1000
+Accept: application/json
+
+###
