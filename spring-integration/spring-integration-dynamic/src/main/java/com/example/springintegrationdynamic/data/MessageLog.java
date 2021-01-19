@@ -38,10 +38,14 @@ public class MessageLog {
   @Column(nullable = false)
   private LocalDateTime createdDate;
 
+
+  private int queue;
+
   @Builder
-  public MessageLog(String messageId, LocalDateTime messageCreatedDate) {
+  public MessageLog(String messageId, LocalDateTime messageCreatedDate, int queue) {
     this.messageId = messageId;
     this.messageCreatedDate = messageCreatedDate;
     this.createdDate = LocalDateTime.now();
+    this.queue = queue;
   }
 }

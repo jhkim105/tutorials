@@ -8,7 +8,9 @@ import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Component;
 
@@ -19,39 +21,47 @@ public class MyMessageHandler {
   @Autowired
   private MessageLogRepository messageLogRepository;
 
-  @ServiceActivator
-  public MessageDto handle(MessageDto dto) {
-    log.info("handle->{}", dto);
-    writeResult("result.txt", dto);
-    save(dto);
-    return dto;
-  }
+  @Autowired
+  private RabbitTemplate rabbitTemplate;
 
-  private void save(MessageDto dto) {
-    MessageLog message = MessageLog.builder()
-        .messageId(dto.getId())
-        .messageCreatedDate(dto.getCreatedAt())
-        .build();
-    messageLogRepository.save(message);
+  @Value("${queue.count}")
+  private int queueCount;
+
+  @ServiceActivator
+  public void handle(MessageDto dto) {
+    log.info("handle->{}", dto);
+    int queueNumber = Math.abs(dto.hashCode()) % queueCount;
+    String queueName = String.format("%s_%s", IntegrationConfig.QUEUE_NAME, queueNumber);
+    rabbitTemplate.convertAndSend(queueName, dto);
   }
 
   public void handle0(MessageDto dto) {
     log.info("handle0->{}", dto);
+    save(dto, 0);
     writeResult("result_0.txt", dto);
   }
 
 
   public void handle1(MessageDto dto) {
     log.info("handle1->{}", dto);
+    save(dto, 1);
     writeResult("result_1.txt", dto);
   }
 
 
   public void handle2(MessageDto dto) {
     log.info("handle2->{}", dto);
+    save(dto, 2);
     writeResult("result_2.txt", dto);
   }
 
+  private void save(MessageDto dto, int queueNumber) {
+    MessageLog message = MessageLog.builder()
+        .messageId(dto.getId())
+        .messageCreatedDate(dto.getCreatedAt())
+        .build();
+    messageLogRepository.save(message);
+  }
 
   @SneakyThrows
   public void initializeFile() {

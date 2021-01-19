@@ -19,13 +19,13 @@ class SpringIntegrationDynamicApplicationTests {
 	MyMessageHandler myMessageHandler;
 
 	@Test
+//	@Disabled
 	void test() {
 		myMessageHandler.initializeFile();
 		List<String> list = Arrays.asList("id01", "id02", "id03", "id04", "id05");
-		IntStream.range(0, 10000).parallel().forEach( i -> {
+		IntStream.range(0, 1000).parallel().forEach( i -> {
 			Collections.shuffle(list);
 			rabbitTemplate.convertAndSend(IntegrationConfig.QUEUE_NAME, new MessageDto(list.get(0)));
-			rabbitTemplate.convertAndSend(IntegrationConfig.QUEUE_NAME+ "_0", new MessageDto(list.get(0)));
 		});
 	}
 }
