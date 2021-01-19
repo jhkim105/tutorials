@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ class SpringIntegrationDynamicApplicationTests {
 	MyMessageHandler myMessageHandler;
 
 	@Test
-//	@Disabled
+	@Disabled
 	void test() {
 		myMessageHandler.initializeFile();
 		List<String> list = Arrays.asList("id01", "id02", "id03", "id04", "id05");

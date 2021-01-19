@@ -4,6 +4,7 @@ import com.example.springintegrationdynamic.data.MessageLog;
 import com.example.springintegrationdynamic.data.MessageLogRepository;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import javax.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,8 @@ public class MyMessageHandler {
   @ServiceActivator
   public void handle(MessageDto dto) {
     log.info("handle->{}", dto);
-    int queueNumber = Math.abs(dto.hashCode()) % queueCount;
+    writeResult("result.txt", dto);
+    int queueNumber = Math.abs(dto.getId().hashCode()) % queueCount;
     String queueName = String.format("%s_%s", IntegrationConfig.QUEUE_NAME, queueNumber);
     rabbitTemplate.convertAndSend(queueName, dto);
   }
@@ -59,11 +61,13 @@ public class MyMessageHandler {
     MessageLog message = MessageLog.builder()
         .messageId(dto.getId())
         .messageCreatedDate(dto.getCreatedAt())
+        .queue(queueNumber)
         .build();
     messageLogRepository.save(message);
   }
 
   @SneakyThrows
+  @PostConstruct
   public void initializeFile() {
     FileUtils.write(new File(getResultFilePath("result.txt")), "", StandardCharsets.UTF_8, false);
     FileUtils.write(new File(getResultFilePath("result_0.txt")), "", StandardCharsets.UTF_8, false);

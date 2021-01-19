@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class HomeConfig {
+public class HomeController {
 
   private final RabbitTemplate rabbitTemplate;
 
@@ -29,9 +29,7 @@ public class HomeConfig {
     IntStream.range(0, count).parallel().forEach( i -> {
       Collections.shuffle(list);
       String id = list.get(0);
-      log.debug("id:{]", id);
       rabbitTemplate.convertAndSend(queueName, new MessageDto(id));
-      rabbitTemplate.convertAndSend(IntegrationConfig.QUEUE_NAME+ "_0", new MessageDto(list.get(0)));
     });
   }
 }
