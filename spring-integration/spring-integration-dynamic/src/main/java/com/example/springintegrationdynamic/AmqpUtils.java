@@ -21,7 +21,12 @@ public class AmqpUtils {
   private Client rabbitmqClient;
 
   public void declareQueue(String queueName, int maxInactiveMinutes) {
-    Queue queue = new Queue(queueName, true, false, false, getQueueExpiresArgument(maxInactiveMinutes));
+    Queue queue;
+    if(maxInactiveMinutes > 0) {
+      queue = new Queue(queueName, true, false, false, getQueueExpiresArgument(maxInactiveMinutes));
+    } else {
+      queue = new Queue(queueName, true);
+    }
     amqpAdmin.declareQueue(queue);
   }
 

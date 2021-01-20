@@ -55,14 +55,26 @@ public class IntegrationConfig {
   @PostConstruct
   public void createFlow() {
     IntStream.range(0, queueCount).forEach(i -> amqpUtils.declareQueue(subQueueName(i), 1));
-    IntStream.range(0, queueCount).forEach( i -> integrationFlowContext.registration(subFlow(connectionFactory, i)).id(subQueueName(i)).register());
+//    IntStream.range(0, queueCount).forEach( i -> integrationFlowContext.registration(subFlow(i)).id(subQueueName(i)).register());
+    IntStream.range(0, queueCount).forEach( i -> integrationFlowContext.registration(subFlow2(i)).id(subQueueName(i)).register());
   }
 
-  private IntegrationFlow subFlow(ConnectionFactory connectionFactory, int i) {
+  private IntegrationFlow subFlow(int i) {
     String queueName = subQueueName(i);
     return IntegrationFlows.from(
         Amqp.inboundAdapter(simpleMessageListenerContainer(connectionFactory, queueName, 1))
     ).handle(myMessageHandler, "handle" + i).get();
+  }
+
+  private IntegrationFlow subFlow2(int i) {
+    String queueName = subQueueName(i);
+    return IntegrationFlows.from(
+        Amqp.inboundAdapter(connectionFactory,  queueName)
+        .configureContainer(
+            cfg -> cfg.concurrentConsumers(1)
+                .defaultRequeueRejected(false)
+                .prefetchCount(1))
+      ).handle(myMessageHandler, "handle").get();
   }
 
   private SimpleMessageListenerContainer simpleMessageListenerContainer(ConnectionFactory connectionFactory, String queueName, int consumerCount) {
