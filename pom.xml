@@ -15,8 +15,7 @@
     <module>spring-activemq</module>
     <module>jmh</module>
     <module>spring-integration</module>
-    <module>spring-rabbitmq-error-handling</module>
-    <module>spring-rabbitmq-broadcast</module>
+    <module>spring-rabbitmq</module>
     <module>spring-oauth2</module>
     <module>spring-cache</module>
     <module>spring-security</module>
