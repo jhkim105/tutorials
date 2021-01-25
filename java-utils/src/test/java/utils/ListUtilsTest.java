@@ -1,7 +1,9 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -24,4 +26,15 @@ class ListUtilsTest {
   }
 
 
+  @Test
+  void subList() {
+    List<Integer> list = new ArrayList<>();
+    IntStream.range(0, 17).forEach(i -> list.add(i));
+    int sliceSize = 3;
+    List<Integer> sublist;
+    int index = 0;
+    while(!(sublist = ListUtils.subList(list, index++, sliceSize)).isEmpty()) {
+      log.debug("{}", sublist);
+    }
+  }
 }

@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -29,6 +30,14 @@ public class ListUtils {
     LinkedHashSet<T> set = new LinkedHashSet<>(list);
     List<T> resultList = new ArrayList<>(set);
     return resultList;
+  }
+
+  public static <T> List<T> subList(List<T> list, int index, int size) {
+    int start = size * index;
+    int end = Math.min(list.size(), start + size);
+    if (start > list.size())
+      return Collections.emptyList();
+    return list.subList(start, end);
   }
 
 }
