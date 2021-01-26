@@ -13,8 +13,13 @@ class RabbitClientUtilsTest {
   RabbitClientUtils rabbitClientUtils;
 
   @Test
-  void unackedCount() {
-    log.info("unackedCount:{}", rabbitClientUtils.getUnackedCount());
+  void messageUnackedCount() {
+    log.info("unackedCount:{}", rabbitClientUtils.getMessageUnackedCount());
+  }
+
+  @Test
+  void messageReadyCount() {
+    log.info("unackedCount:{}", rabbitClientUtils.getMessageReadyCount());
   }
 
   @Test

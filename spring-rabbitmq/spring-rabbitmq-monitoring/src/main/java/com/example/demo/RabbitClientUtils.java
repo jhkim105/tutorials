@@ -10,8 +10,12 @@ public class RabbitClientUtils {
 
   private final Client rabbitClient;
 
-  public long getUnackedCount() {
-    return rabbitClient.getOverview().getQueueTotals().getMessagesUnacknowledged();
+  public int getMessageUnackedCount() {
+    return (int)rabbitClient.getOverview().getQueueTotals().getMessagesUnacknowledged();
+  }
+
+  public int getMessageReadyCount() {
+    return (int)rabbitClient.getOverview().getQueueTotals().getMessagesReady();
   }
 
   public int getQueueCount() {
