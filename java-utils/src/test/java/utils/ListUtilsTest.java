@@ -36,5 +36,6 @@ class ListUtilsTest {
     while(!(sublist = ListUtils.subList(list, index++, sliceSize)).isEmpty()) {
       log.debug("{}", sublist);
     }
+    log.debug("index:{}", index);
   }
 }

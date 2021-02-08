@@ -1,0 +1,4 @@
+GET http://localhost:8080/me?authToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzYyI6WyJBRE1JTiJdLCJ1aSI6IjEiLCJ1biI6Impoa2ltMTA1QGdtYWlsLmNvbSIsImV4cCI6MTYxMjc4NTMzNCwiaWF0IjoxNjEyNjk4OTM0fQ.4ROm0eyF2c6zL2wTtDbMkag2aCTmcr_y1w3xAqO9ViU
+Accept: application/json
+
+###
