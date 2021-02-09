@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
       .authorizeRequests()
-        .antMatchers("/login", "/user/register/**", "/oauth-login", "/oauth2/authorize").permitAll()
+        .antMatchers("/login", "/user/register/**", "/oauth-login*", "/oauth2/authorize").permitAll()
         .anyRequest().authenticated()
         .and()
       .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .successHandler(customAuthenticationSuccessHandler)
         ;
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
     // @formatter:on
   }
 
@@ -75,6 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public AuthorizationRequestRepository customAuthorizationRequestRepository() {
+//    return new HttpSessionOAuth2AuthorizationRequestRepository();
     return new HttpSessionOAuth2AuthorizationRequestRepository();
   }
 

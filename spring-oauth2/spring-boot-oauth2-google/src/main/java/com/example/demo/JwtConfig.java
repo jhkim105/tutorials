@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class JwtConfig {
-  @Value("${jwt.key}")
+  @Value("${app.jwt.key}")
   private String jwtKey;
 
-  @Value("${jwt.authTokenExpiry}")
+  @Value("${app.jwt.authTokenExpiry}")
   private int authTokenExpiry;
 
   @Bean

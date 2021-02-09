@@ -31,6 +31,11 @@ public class LoginController {
     return "oauth-login";
   }
 
+  @GetMapping("/oauth-login2")
+  public String oauthLogin2(Model model) {
+    log.debug("login2");
+    return "oauth-login";
+  }
 
   @GetMapping("/login-success")
   public String loginSuccess(Model model, OAuth2AuthenticationToken authentication) {
