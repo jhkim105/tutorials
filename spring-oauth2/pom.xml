@@ -30,7 +30,6 @@
   </build>
   <modules>
     <module>spring-boot-keycloak</module>
-    <module>spring-boot-oauth2-login</module>
-<!--    <module>spring-oauth2-login</module>-->
+    <module>spring-boot-oauth2-google</module>
   </modules>
 </project>
