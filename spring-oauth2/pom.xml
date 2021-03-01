@@ -31,5 +31,6 @@
   <modules>
     <module>spring-boot-keycloak</module>
     <module>spring-boot-oauth2-google</module>
+    <module>spring-oauth2-youtube</module>
   </modules>
 </project>

@@ -76,7 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public AuthorizationRequestRepository customAuthorizationRequestRepository() {
-//    return new HttpSessionOAuth2AuthorizationRequestRepository();
     return new HttpSessionOAuth2AuthorizationRequestRepository();
   }
 
