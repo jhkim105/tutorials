@@ -16,6 +16,7 @@
   <name>spring-integration</name>
   <description>spring-integration</description>
   <modules>
+    <module>spring-integration-dynamic</module>
     <module>spring-integration-mqtt</module>
     <module>spring-integration-mqtt-rabbitmq</module>
     <module>spring-integration-rabbitmq</module>

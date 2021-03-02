@@ -1,7 +1,5 @@
 package com.example.springintegrationdynamic;
 
-import java.util.stream.IntStream;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.Queue;
@@ -14,6 +12,9 @@ import org.springframework.integration.amqp.dsl.Amqp;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.context.IntegrationFlowContext;
+
+import javax.annotation.PostConstruct;
+import java.util.stream.IntStream;
 
 @Configuration
 @RequiredArgsConstructor
@@ -62,7 +63,7 @@ public class IntegrationConfig {
   private IntegrationFlow subFlow(int i) {
     String queueName = subQueueName(i);
     return IntegrationFlows.from(
-        Amqp.inboundAdapter(simpleMessageListenerContainer(connectionFactory, queueName, 1))
+        Amqp.inboundAdapter(simpleMessageListenerContainer(queueName, 1, 1))
     ).handle(myMessageHandler, "handle" + i).get();
   }
 
@@ -77,13 +78,13 @@ public class IntegrationConfig {
       ).handle(myMessageHandler, "handle").get();
   }
 
-  private SimpleMessageListenerContainer simpleMessageListenerContainer(ConnectionFactory connectionFactory, String queueName, int consumerCount) {
+  private SimpleMessageListenerContainer simpleMessageListenerContainer(String queueName, int consumerCount, int fetchCount) {
     SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
     container.setConnectionFactory(connectionFactory);
     container.setQueueNames(queueName);
     container.setDefaultRequeueRejected(false);
     container.setConcurrentConsumers(consumerCount);
-    container.setPrefetchCount(1);
+    container.setPrefetchCount(fetchCount);
     return container;
   }
 
