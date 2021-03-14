@@ -1,41 +1,51 @@
 package com.example.springintegrationdynamic;
 
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.DirectMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.amqp.dsl.Amqp;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.integration.dsl.context.IntegrationFlowContext;
 
 @Configuration
 @RequiredArgsConstructor
 public class IntegrationConfig {
 
   public final static String QUEUE_NAME = "dynamic";
-  private final IntegrationFlowContext integrationFlowContext;
-  private final ConnectionFactory connectionFactory;
   private final MyMessageHandler myMessageHandler;
   private final AmqpUtils amqpUtils;
+
+  private final ConnectionFactory cachingConnectionFactory;
+
   @Value("${queue.count}")
   private int queueCount;
 
+  @PostConstruct
+  public void deleteGarbageQueue() {
+    amqpUtils.deleteGarbageQueues();
+  }
+
+//  @Bean
+//  public Declarables queues() {
+//    Declarables declarables = new Declarables();
+//    declarables.getDeclarables().add(new Queue(QUEUE_NAME));
+//    return declarables;
+//  }
+
   @Bean
-  public Declarables queues() {
-    Declarables declarables = new Declarables();
-    declarables.getDeclarables().add(new Queue(QUEUE_NAME));
-    return declarables;
+  public Queue agentQueue() {
+    return new Queue(QUEUE_NAME);
   }
 
   @Bean
-  public IntegrationFlow mainFlow(ConnectionFactory connectionFactory) {
+  public IntegrationFlow masterFlow(ConnectionFactory connectionFactory) {
     return IntegrationFlows
         .from(
             Amqp.inboundAdapter(connectionFactory, QUEUE_NAME)
@@ -44,47 +54,40 @@ public class IntegrationConfig {
                         .defaultRequeueRejected(false)
                         .prefetchCount(1))
         )
-        .handle(myMessageHandler)
+        .handle(myMessageHandler, "handleMaster")
         .get();
+  }
+
+  @Bean
+  public IntegrationFlow createFlow() {
+    List<String> queueNames = new ArrayList<>();
+    for (int i = 0; i < queueCount; i++) {
+      String queueName = subQueueName(i);
+      amqpUtils.declareQueue(queueName);
+      queueNames.add(queueName);
+    }
+    return IntegrationFlows
+        .from(
+            Amqp.inboundAdapter(
+                directMessageListenerContainer(queueNames, 1, 10))
+
+        )
+        .handle(this.myMessageHandler).get();
   }
 
   private String subQueueName(int i) {
     return String.format("%s_%s", QUEUE_NAME, i);
   }
 
-  @PostConstruct
-  public void createFlow() {
-    IntStream.range(0, queueCount).forEach(i -> amqpUtils.declareQueue(subQueueName(i), 1));
-//    IntStream.range(0, queueCount).forEach( i -> integrationFlowContext.registration(subFlow(i)).id(subQueueName(i)).register());
-    IntStream.range(0, queueCount).forEach( i -> integrationFlowContext.registration(subFlow2(i)).id(subQueueName(i)).register());
-  }
-
-  private IntegrationFlow subFlow(int i) {
-    String queueName = subQueueName(i);
-    return IntegrationFlows.from(
-        Amqp.inboundAdapter(simpleMessageListenerContainer(connectionFactory, queueName, 1))
-    ).handle(myMessageHandler, "handle" + i).get();
-  }
-
-  private IntegrationFlow subFlow2(int i) {
-    String queueName = subQueueName(i);
-    return IntegrationFlows.from(
-        Amqp.inboundAdapter(connectionFactory,  queueName)
-        .configureContainer(
-            cfg -> cfg.concurrentConsumers(1)
-                .defaultRequeueRejected(false)
-                .prefetchCount(1))
-      ).handle(myMessageHandler, "handle").get();
-  }
-
-  private SimpleMessageListenerContainer simpleMessageListenerContainer(ConnectionFactory connectionFactory, String queueName, int consumerCount) {
-    SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-    container.setConnectionFactory(connectionFactory);
-    container.setQueueNames(queueName);
+  private DirectMessageListenerContainer directMessageListenerContainer(List<String> queueNames, int consumerCount, int fetchCount) {
+    DirectMessageListenerContainer container = new DirectMessageListenerContainer();
+    container.setConnectionFactory(cachingConnectionFactory);
+    container.setQueueNames(queueNames.toArray(new String[0]));
     container.setDefaultRequeueRejected(false);
-    container.setConcurrentConsumers(consumerCount);
-    container.setPrefetchCount(1);
+    container.setConsumersPerQueue(consumerCount);
+    container.setPrefetchCount(fetchCount);
     return container;
   }
+
 
 }

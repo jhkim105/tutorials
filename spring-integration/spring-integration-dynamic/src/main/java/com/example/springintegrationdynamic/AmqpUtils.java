@@ -20,6 +20,10 @@ public class AmqpUtils {
   @Autowired
   private Client rabbitmqClient;
 
+  public void declareQueue(String queueName) {
+    declareQueue(queueName, 0);
+  }
+
   public void declareQueue(String queueName, int maxInactiveMinutes) {
     Queue queue;
     if(maxInactiveMinutes > 0) {
@@ -62,6 +66,17 @@ public class AmqpUtils {
   public void deleteQueues() {
     List<QueueInfo> queueInfoList = rabbitmqClient.getQueues();
     queueInfoList.forEach( qi -> deleteQueue(qi.getName()));
+  }
+
+  public void deleteGarbageQueues() {
+    List<QueueInfo> queueInfoList = rabbitmqClient.getQueues();
+    queueInfoList.forEach( qi -> deleteGarbageQueue(qi));
+  }
+
+  private void deleteGarbageQueue(QueueInfo qi) {
+    if (qi.getConsumerCount() == 0) {
+      deleteQueue(qi.getName());
+    }
   }
 
 }

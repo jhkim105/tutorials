@@ -28,33 +28,20 @@ public class MyMessageHandler {
   @Value("${queue.count}")
   private int queueCount;
 
-  @ServiceActivator
-  public void handle(MessageDto dto) {
-    log.info("handle->{}", dto);
+
+  public void handleMaster(MessageDto dto) {
+    log.info("handleMaster->{}", dto);
     writeResult("result.txt", dto);
     int queueNumber = Math.abs(dto.getId().hashCode()) % queueCount;
     String queueName = String.format("%s_%s", IntegrationConfig.QUEUE_NAME, queueNumber);
     rabbitTemplate.convertAndSend(queueName, dto);
   }
 
-  public void handle0(MessageDto dto) {
-    log.info("handle0->{}", dto);
-    save(dto, 0);
-    writeResult("result_0.txt", dto);
-  }
-
-
-  public void handle1(MessageDto dto) {
-    log.info("handle1->{}", dto);
-    save(dto, 1);
-    writeResult("result_1.txt", dto);
-  }
-
-
-  public void handle2(MessageDto dto) {
-    log.info("handle2->{}", dto);
-    save(dto, 2);
-    writeResult("result_2.txt", dto);
+  @ServiceActivator
+  public void handle(MessageDto dto) {
+    log.info("handle->{}", dto);
+    int queueNumber = Math.abs(dto.getId().hashCode()) % queueCount;
+    save(dto, queueNumber);
   }
 
   private void save(MessageDto dto, int queueNumber) {
@@ -70,9 +57,6 @@ public class MyMessageHandler {
   @PostConstruct
   public void initializeFile() {
     FileUtils.write(new File(getResultFilePath("result.txt")), "", StandardCharsets.UTF_8, false);
-    FileUtils.write(new File(getResultFilePath("result_0.txt")), "", StandardCharsets.UTF_8, false);
-    FileUtils.write(new File(getResultFilePath("result_1.txt")), "", StandardCharsets.UTF_8, false);
-    FileUtils.write(new File(getResultFilePath("result_2.txt")), "", StandardCharsets.UTF_8, false);
   }
 
 

@@ -9,16 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Slf4j
 @SpringBootTest
-class YouTubeApiHelperTest {
+class YouTubeApiTest {
 
   @Autowired
-  YouTubeApiHelper youTubeApiHelper;
+  YouTubeApi youTubeApi;
 
   @Test
   @Disabled
   public void getChannels() {
     String accessToken = "ya29.A0AfH6SMCcTUDZd8KORsTDTiRKaotPq7Lk_xxJaz5BMkYhzKLKLe0433DxIB8G0_x3soCUaF3W6o6G5OslAtqv_BiNjIh4LZ25zUtZbZgOkgWA3ruCfR67zlXMfB1Yiq56emjtGOEkycuWuQoFDOFSBPxdgqSr4g";
-    ChannelListResponse channelListResponse = youTubeApiHelper.getChannels(accessToken);
+    ChannelListResponse channelListResponse = youTubeApi.getChannels(accessToken);
     log.debug("{}", channelListResponse);
   }
 }
