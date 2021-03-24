@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.CustomAuthorizationRequestResolver.StateParameter;
+import com.example.demo.OAuthUser.OAuthProvider;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,19 +44,20 @@ public class OAuth2AuthenticatoinSuccessHandler extends SimpleUrlAuthenticationS
     DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User)authentication.getPrincipal();
     String userId = defaultOAuth2User.getAttribute("sub");
     String email = defaultOAuth2User.getAttribute("email");
-    OAuthUser oAuthUser = oAuthUserRepository.findByRegistrationIdAndUserId(registrationId, userId);
+    OAuthUser oAuthUser = oAuthUserRepository.findByOauthProviderAndUserId(OAuthProvider.GOOGLE, userId);
     if (oAuthUser == null) {
       oAuthUser = OAuthUser.builder()
-          .registrationId(registrationId)
+          .oauthProvider(OAuthProvider.GOOGLE)
           .userId(userId)
+          .accessToken(accessToken)
+          .refreshToken(refreshToken)
           .email(email)
           .build();
     }
-    oAuthUser.update(accessToken, refreshToken);
-    oAuthUser = oAuthUserRepository.save(oAuthUser);
+
 
     String redirectUrl = UriComponentsBuilder.fromUriString(callback)
-        .queryParam("oAuthUserId", oAuthUser.getId())
+        .queryParam("oauthUserId", oAuthUser.getId())
         .build().toUriString();
     getRedirectStrategy().sendRedirect(request, response, redirectUrl);
   }

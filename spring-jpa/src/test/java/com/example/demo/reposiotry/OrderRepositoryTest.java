@@ -1,10 +1,9 @@
-package com.example.demo.repository;
+package com.example.demo.reposiotry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.demo.BaseRepositoryTest;
 import com.example.demo.domain.Order;
-import com.example.demo.reposiotry.OrderRepository;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,12 @@ package com.example.demo;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,12 +18,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "su_oauth_user",
-    uniqueConstraints = { @UniqueConstraint(columnNames = {"registration_id", "user_id"}) })
+    uniqueConstraints = { @UniqueConstraint(columnNames = {"oauth_provider", "user_id"}) })
 @Getter
 @EqualsAndHashCode(callSuper = false, of = {"id"})
 @ToString
@@ -35,8 +38,9 @@ public class OAuthUser {
   @GeneratedValue(generator = "system-uuid")
   private String id;
 
-  @Column(name = "registration_id", length = 50)
-  private String registrationId;
+  @Column(name = "oauth_provider", length = 50)
+  @Enumerated(EnumType.STRING)
+  private OAuthProvider oauthProvider;
 
   @Column(name = "user_id", length = 100)
   private String userId;
@@ -49,19 +53,37 @@ public class OAuthUser {
   @Column(name = "refresh_token")
   private String refreshToken;
 
+  @Column(name = "expire_date")
+  private LocalDateTime expireDate;
+
   @Builder
-  public OAuthUser(String registrationId, String userId, String email, String accessToken, String refreshToken) {
-    this.registrationId = registrationId;
+  public OAuthUser(OAuthProvider oauthProvider, String userId, String email, String accessToken, int expiresIn, String refreshToken) {
+    this.oauthProvider = oauthProvider;
     this.userId = userId;
     this.email = email;
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
+    updateAccessToken(accessToken, expiresIn);
   }
 
-  public void update(String accessToken, String refreshToken) {
+  public void updateAccessToken(String accessToken, long expiresIn) {
+    this.expireDate = LocalDateTime.now().plus(expiresIn, ChronoUnit.SECONDS);
     this.accessToken = accessToken;
-    if (StringUtils.isNotBlank(refreshToken)) {
-      this.refreshToken = refreshToken;
+  }
+
+  public boolean isAccessTokenExpired() {
+    if (expireDate == null) {
+      return true;
     }
+
+    if (expireDate.isBefore(LocalDateTime.now())) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public enum OAuthProvider {
+    GOOGLE
   }
 }
