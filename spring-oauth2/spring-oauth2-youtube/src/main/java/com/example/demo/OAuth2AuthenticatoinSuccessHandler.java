@@ -44,6 +44,7 @@ public class OAuth2AuthenticatoinSuccessHandler extends SimpleUrlAuthenticationS
     DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User)authentication.getPrincipal();
     String userId = defaultOAuth2User.getAttribute("sub");
     String email = defaultOAuth2User.getAttribute("email");
+    String name = defaultOAuth2User.getAttribute("name");
     OAuthUser oAuthUser = oAuthUserRepository.findByOauthProviderAndUserId(OAuthProvider.GOOGLE, userId);
     if (oAuthUser == null) {
       oAuthUser = OAuthUser.builder()
@@ -52,6 +53,7 @@ public class OAuth2AuthenticatoinSuccessHandler extends SimpleUrlAuthenticationS
           .accessToken(accessToken)
           .refreshToken(refreshToken)
           .email(email)
+          .name(name)
           .build();
     }
 

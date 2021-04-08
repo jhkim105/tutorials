@@ -91,6 +91,7 @@ public class GoogleOAuth2Utils {
     return result;
   }
 
+
   @Getter
   @ToString
   public static class GoogleProfile {

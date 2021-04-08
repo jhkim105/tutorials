@@ -47,6 +47,8 @@ public class OAuthUser {
 
   private String email;
 
+  private String name;
+
   @Column(name = "access_token")
   private String accessToken;
 
@@ -57,10 +59,11 @@ public class OAuthUser {
   private LocalDateTime expireDate;
 
   @Builder
-  public OAuthUser(OAuthProvider oauthProvider, String userId, String email, String accessToken, int expiresIn, String refreshToken) {
+  public OAuthUser(OAuthProvider oauthProvider, String userId, String email, String name, String accessToken, int expiresIn, String refreshToken) {
     this.oauthProvider = oauthProvider;
     this.userId = userId;
     this.email = email;
+    this.name = name;
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
     updateAccessToken(accessToken, expiresIn);

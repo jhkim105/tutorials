@@ -55,8 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizationEndpoint()
           .authorizationRequestRepository(customAuthorizationRequestRepository())
           .and()
-//        .defaultSuccessUrl("/login-success")
-        .successHandler(customAuthenticationSuccessHandler)
+        .defaultSuccessUrl("/login-success")
+//        .successHandler(customAuthenticationSuccessHandler)
         ;
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

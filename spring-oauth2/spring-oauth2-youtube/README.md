@@ -2,7 +2,7 @@
 ## 구현 내용
 ### callback 주소 지정하여 구글로그인 하기
 - 서버에서 인증정보 저장(accessToken, refreshToken)
-http://localhost:8080/oauth2/google?callback=xxxx
+http://localhost:8080/oauth2/google?callback=http://localhost:8080/oauth2/google
 
 ## youtube api
 
