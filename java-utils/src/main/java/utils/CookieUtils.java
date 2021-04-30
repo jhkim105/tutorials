@@ -10,10 +10,6 @@ import org.apache.commons.io.FilenameUtils;
 public class CookieUtils {
 
   public static void setCookie(HttpServletResponse response, String name, String value, int maxAgeSeconds, String path) {
-    if (log.isDebugEnabled()) {
-      log.debug("Setting cookie. name:{}", name);
-    }
-
     Cookie cookie = new Cookie(name, value);
     cookie.setSecure(false);
     cookie.setMaxAge(maxAgeSeconds);

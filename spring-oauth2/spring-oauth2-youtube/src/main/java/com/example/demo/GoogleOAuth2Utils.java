@@ -8,6 +8,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.Map;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -16,7 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -89,6 +92,20 @@ public class GoogleOAuth2Utils {
     HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(parameters, headers);
     GoogleOAuth2TokenResponse result = restTemplate.postForObject("https://accounts.google.com/o/oauth2/token", httpEntity, GoogleOAuth2TokenResponse.class);
     return result;
+  }
+
+  public String getName(String accessToken) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+    headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+
+    HttpEntity<String> entity = new HttpEntity<>("", headers);
+
+    String userInfoEndpointUri = "https://www.googleapis.com/oauth2/v3/userinfo";
+    ResponseEntity<Map> response = restTemplate.exchange(userInfoEndpointUri, HttpMethod.GET, entity, Map.class);
+    log.debug("responseBody->{}", response.getBody());
+    Map userAttributes = response.getBody();
+    return (String)userAttributes.get("name");
   }
 
 

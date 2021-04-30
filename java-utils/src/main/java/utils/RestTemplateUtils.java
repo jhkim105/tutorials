@@ -1,19 +1,8 @@
-/*
- *
- *  * MPP(Multiple Push) version 1.0
- *  *
- *  *  Copyright ⓒ 2018 kt corp. All rights reserved.
- *  *
- *  *  This is a proprietary software of kt corp, and you may not use this file except in
- *  *  compliance with license agreement with kt corp. Any redistribution or use of this
- *  *  software, with or without modification shall be strictly prohibited without prior written
- *  *  approval of kt corp, and the copyright notice above does not evidence any actual or
- *  *  intended publication of such software.
- *
- */
-
 package utils;
 
+import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import javax.net.ssl.SSLContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -25,10 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
-
-import javax.net.ssl.SSLContext;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
 
 @Slf4j
 public final class RestTemplateUtils {
