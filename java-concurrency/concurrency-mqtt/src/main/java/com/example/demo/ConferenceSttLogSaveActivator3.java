@@ -33,7 +33,7 @@ public class ConferenceSttLogSaveActivator3 {
     String key = String.format("%s_%s", data.getConferenceId(), data.getSeq());
     RLock lock = redissonClient.getLock(key);
     try {
-      if (lock.tryLock(3, 10, TimeUnit.SECONDS)) {
+      if (lock.tryLock(10, 10, TimeUnit.SECONDS)) {
         String executeKey = key + "_";
         if (isExecuted(executeKey)) {
           log.debug("Already processed. key->{}", key);
@@ -78,7 +78,7 @@ public class ConferenceSttLogSaveActivator3 {
     long currentValue = atomicLong.addAndGet(1);
     log.debug("setExecuted().currentValue:{}", currentValue);
     if (atomicLong.remainTimeToLive() < 0) {
-      atomicLong.expire(10, TimeUnit.SECONDS);
+      atomicLong.expire(15, TimeUnit.SECONDS);
     }
   }
 
