@@ -11,4 +11,12 @@ public class StringUtils {
 
     return str;
   }
+
+  public static String defaultString(String str) {
+    return org.apache.commons.lang3.StringUtils.defaultString(str);
+  }
+
+  public static boolean isBlank(String str) {
+    return org.apache.commons.lang3.StringUtils.isBlank(str);
+  }
 }

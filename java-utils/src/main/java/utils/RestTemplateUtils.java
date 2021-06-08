@@ -16,7 +16,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
-public final class RestTemplateUtils {
+public class RestTemplateUtils {
 
   private static final int DEFAULT_TIMEOUT = 5000;
 
@@ -41,7 +41,7 @@ public final class RestTemplateUtils {
           .loadTrustMaterial(null, acceptingTrustStrategy)
           .build();
     } catch (Exception ex) {
-      log.warn(ex.toString());
+      throw new RuntimeException(ex);
     }
     SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
 

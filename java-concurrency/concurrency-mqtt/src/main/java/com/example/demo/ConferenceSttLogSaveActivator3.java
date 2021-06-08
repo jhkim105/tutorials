@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RLock;
@@ -7,8 +8,6 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
@@ -34,7 +33,7 @@ public class ConferenceSttLogSaveActivator3 {
     String key = String.format("%s_%s", data.getConferenceId(), data.getSeq());
     RLock lock = redissonClient.getLock(key);
     try {
-      if (lock.tryLock(10, 3, TimeUnit.SECONDS)) {
+      if (lock.tryLock(3, 10, TimeUnit.SECONDS)) {
         String executeKey = key + "_";
         if (isExecuted(executeKey)) {
           log.debug("Already processed. key->{}", key);
@@ -79,7 +78,7 @@ public class ConferenceSttLogSaveActivator3 {
     long currentValue = atomicLong.addAndGet(1);
     log.debug("setExecuted().currentValue:{}", currentValue);
     if (atomicLong.remainTimeToLive() < 0) {
-      atomicLong.expire(3, TimeUnit.SECONDS);
+      atomicLong.expire(10, TimeUnit.SECONDS);
     }
   }
 

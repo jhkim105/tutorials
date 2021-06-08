@@ -22,7 +22,7 @@ class ListUtilsTest {
   }
 
   @Test
-  public void removeDuplicates() {
+  void removeDuplicates() {
     List<String> list = Arrays.asList("a", "a", "b", "c", "a", "b");
     List<String> distinctList = ListUtils.removeDuplicates(list);
     log.debug("{}", distinctList);
@@ -43,7 +43,7 @@ class ListUtilsTest {
   }
 
   @Test
-  public void findDuplicateIndexes() {
+  void findDuplicateIndexes() {
     List<String> list = Arrays.asList("a", "a", "b", "c", "a", "b");
     Map<String, ArrayList<Integer>> duplicateMap = ListUtils.findDuplicateIndexes(list);
     log.warn("result->{}", duplicateMap);
