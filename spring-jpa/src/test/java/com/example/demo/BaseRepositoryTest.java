@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+`@Import(JpaConfig.class)
 public class BaseRepositoryTest {
 
 }
