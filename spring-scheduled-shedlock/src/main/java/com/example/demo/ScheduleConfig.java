@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
 @EnableScheduling
-@EnableSchedulerLock(defaultLockAtMostFor = "30s")
+@EnableSchedulerLock(defaultLockAtMostFor = "10m")
 @Slf4j
 public class ScheduleConfig {
 
