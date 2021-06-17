@@ -34,19 +34,20 @@ public class ConferenceSttLogSaveActivator3 {
     RLock lock = redissonClient.getLock(key);
     try {
       if (lock.tryLock(10, 10, TimeUnit.SECONDS)) {
-        String executeKey = key + "_";
-        if (isExecuted(executeKey)) {
-          log.debug("Already processed. key->{}", key);
-        } else {
-          createSttLog(data);
-          setExecuted(executeKey);
+        try {
+          String executeKey = key + "_";
+          if (isExecuted(executeKey)) {
+            log.debug("Already processed. key->{}", key);
+          } else {
+            createSttLog(data);
+            setExecuted(executeKey);
+          }
+        } finally {
+          lock.unlock();
         }
       }
     } catch (Exception e) {
       throw new RuntimeException(e);
-    } finally {
-      if (lock.isLocked())
-        lock.unlock();
     }
   }
 
