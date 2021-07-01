@@ -1,0 +1,11 @@
+INSERT INTO company (id, name) VALUES ('default-id01', 'Company 01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id01', null, 'User Name01', '111111', 'user01', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id02', null, 'User Name02', '111111', 'user02', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id03', null, 'User Name03', '111111', 'user03', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id04', null, 'User Name04', '111111', 'user04', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id05', null, 'User Name05', '111111', 'user05', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id06', null, 'User Name06', '111111', 'user06', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id07', null, 'User Name07', '111111', 'user07', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id08', null, 'User Name08', '111111', 'user08', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id09', null, 'User Name09', '111111', 'user09', 'default-id01');
+INSERT INTO user (id, description, name, password, username, company_id) VALUES ('default-id10', null, 'User Name10', '111111', 'user10', 'default-id01');

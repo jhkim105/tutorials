@@ -1,5 +1,7 @@
 package utils;
 
+import java.text.DecimalFormat;
+
 public class StringUtils {
 
   public static String removeEach(String str, String format) {
@@ -18,5 +20,10 @@ public class StringUtils {
 
   public static boolean isBlank(String str) {
     return org.apache.commons.lang3.StringUtils.isBlank(str);
+  }
+
+  public static String getDecimalFormatString(Object value, String format) {
+    DecimalFormat decimalFormat = new DecimalFormat(format);
+    return decimalFormat.format(value);
   }
 }
