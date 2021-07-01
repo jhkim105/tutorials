@@ -22,16 +22,8 @@
 * 테스트 케이스(클래스) 마다 초기화 되어 비효율적이다.
 * 웹서버 시작시에 초기화한다. 실수로 운영서버 적용될 위험이 있다. 방법 1처럼, build시에만 초기화 되도록 하는 것이 좋겠다.
 
-```properties
-spring.sql.init.mode=always
-#spring.sql.init.data-locations=classpath*:data.sql
-#spring.sql.init.continue-on-error=true
-```
-
-서버 반영시는 Flyway를 활용.
-
 ### 개선된 방법
-maven plugin 을 사용하지 않고, DB 초기화하는 효율적인 방법(방법 2 단점(테스트 케이스마다 초기화 되는 문제))을 찾아보자
+maven plugin 을 사용하지 않고, DB 초기화하는 효율적인 방법(방법 2 단점(테스트 클래스 마다 초기화 되는 문제))을 찾아보자
 * application 설정은 DB 초기화 비활성화
 * src/main/resources/application.properties
     ```properties
