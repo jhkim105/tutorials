@@ -12,17 +12,17 @@
 * dbunit-maven-plugin을 통해서 초기데이터 적재
 
 ### 방법 2 - hbm2ddl.auto option
-### Schema 반영
+#### Schema 반영
 * spring.jpa.hibernate.ddl-auto=create
 
-### 초기데이터 적재
+#### 초기데이터 적재
 * spring.sql.init.mode=always 옵션 사용
   
 ### 문제점
 * 테스트 케이스(클래스) 마다 초기화 되어 비효율적이다.
 * 웹서버 시작시에 초기화한다. 실수로 운영서버 적용될 위험이 있다. 방법 1처럼, build시에만 초기화 되도록 하는 것이 좋겠다.
 
-### 개선된 방법
+## 개선된 방법
 maven plugin 을 사용하지 않고, DB 초기화하는 효율적인 방법(방법 2 단점(테스트 클래스 마다 초기화 되는 문제))을 찾아보자
 * application 설정은 DB 초기화 비활성화
 * src/main/resources/application.properties
@@ -41,7 +41,7 @@ maven plugin 을 사용하지 않고, DB 초기화하는 효율적인 방법(방
   ```java
   @FirstRun
   @SpringBootTest
-  @TestPropertySource(locations = {"classpath:/application.properties", "classpath:/application-test.properties"})
+  @TestPropertySource(locations = {"classpath:/application-test.properties"})
   @Slf4j
   public class DBInitializeTest {
   
