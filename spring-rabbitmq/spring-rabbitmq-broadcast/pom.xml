@@ -6,7 +6,6 @@
 		<groupId>com.example</groupId>
 		<artifactId>spring-rabbitmq</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/>
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>spring-rabbitmq-broadcast</artifactId>

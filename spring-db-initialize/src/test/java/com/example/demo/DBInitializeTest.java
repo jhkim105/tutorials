@@ -7,7 +7,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @FirstRun
 @SpringBootTest
-@TestPropertySource(locations = {"classpath:/application-test.properties"})
+@TestPropertySource(locations = {"classpath:/db-initialize.properties"})
 @Slf4j
 public class DBInitializeTest {
 

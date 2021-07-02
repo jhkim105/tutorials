@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.user;
 
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +9,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserRepositoryTest {
+public class CompanyRepositoryTest {
+
 
   @Autowired
-  UserRepository userRepository;
+  CompanyRepository companyRepository;
 
   @Test
   void findAll() {
-    Assertions.assertThat(userRepository.findAll()).hasSize(10);
+    List<Company> list = companyRepository.findAll();
+    Assertions.assertThat(list).hasSize(1);
   }
-
 }

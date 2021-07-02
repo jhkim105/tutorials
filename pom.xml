@@ -10,17 +10,23 @@
   <packaging>pom</packaging>
   <name>tutorials</name>
   <modules>
-    <module>java-utils</module>
-    <module>spring-sample</module>
-    <module>spring-activemq</module>
-    <module>jmh</module>
-    <module>spring-integration</module>
-    <module>spring-rabbitmq</module>
-    <module>spring-oauth2</module>
-    <module>spring-cache</module>
-    <module>spring-security</module>
     <module>java-concurrency</module>
+    <module>java-utils</module>
+    <module>jmh</module>
+    <module>spring-activemq</module>
+    <module>spring-cache</module>
+    <module>spring-integration</module>
+    <module>spring-dbcp</module>
+    <module>spring-db-encrypt</module>
+    <module>spring-db-initialize</module>
     <module>spring-jpa</module>
+    <module>spring-jsp</module>
+    <module>spring-junit5</module>
+    <module>spring-oauth2</module>
+    <module>spring-rabbitmq</module>
+    <module>spring-sample</module>
+    <module>spring-scheduled-shedlock</module>
+    <module>spring-security</module>
   </modules>
   <repositories>
   </repositories>

@@ -1,10 +1,9 @@
-package com.example.demo;
+package com.example.demo.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,26 +16,15 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class Company {
+
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @GeneratedValue(generator = "uuid")
   @Column(length = 50)
   private String id;
 
-  @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false)
-  private String username;
-
-  @Column(nullable = false)
-  private String password;
-
-  @Column
-  private String description;
-
-  @ManyToOne
-  private Company company;
 
 }
