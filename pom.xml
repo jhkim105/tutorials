@@ -19,6 +19,7 @@
     <module>spring-dbcp</module>
     <module>spring-db-encrypt</module>
     <module>spring-db-initialize</module>
+    <module>spring-db-jasypt</module>
     <module>spring-jpa</module>
     <module>spring-jsp</module>
     <module>spring-junit5</module>
