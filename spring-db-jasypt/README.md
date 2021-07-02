@@ -61,6 +61,53 @@ Entity
 검색조건에 사용할 경우 직접 복호화해야 한다. Spring Data method로는 조회가 안된다.  
   - User user = repository.findByUsername("user01");
 
+
+저장된 데이터가 평문일 경우 Exception 발생
+평문일 경우에 예외 밝생하지 않고 평문이 조회되도록 Custom Class 작성.
+기존 시스템 데이터 변경없이, 암호화를 추가하는 경우에 필요하다.
+```java
+@Slf4j
+public class CustomPBStringEncryptor implements PBEStringCleanablePasswordEncryptor {
+
+  private final PooledPBEStringEncryptor pooledPBEStringEncryptor;
+
+  public CustomPBStringEncryptor(PooledPBEStringEncryptor pooledPBEStringEncryptor) {
+    this.pooledPBEStringEncryptor = pooledPBEStringEncryptor;
+  }
+
+
+  @Override
+  public String encrypt(String message) {
+    return pooledPBEStringEncryptor.encrypt(message);
+  }
+
+  @Override
+  public String decrypt(String encryptedMessage) {
+    String ret;
+    try {
+      ret = pooledPBEStringEncryptor.decrypt(encryptedMessage);
+    } catch(Exception ex) {
+      //ignored
+      log.debug("{}", ex.toString());
+      ret = encryptedMessage;
+    }
+    return ret;
+  }
+
+  @Override
+  public void setPasswordCharArray(char[] password) {
+    pooledPBEStringEncryptor.setPasswordCharArray(password);
+  }
+
+  @Override
+  public void setPassword(String password) {
+    pooledPBEStringEncryptor.setPassword(password);
+  }
+}
+
+```
+
+
 ## References
 http://www.jasypt.org/hibernate.html
 

@@ -1,0 +1,2 @@
+INSERT INTO demo.user (id, description, name, username) VALUES ('tid01', null, 'Full Name', 'hdj/V2JOebd9Wjtih626pg==');
+INSERT INTO demo.user (id, description, name, username) VALUES ('tid02', null, 'Full Name', 'tuser02');

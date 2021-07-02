@@ -40,3 +40,4 @@ END
   private String username;
 ```
 
+저장된 데이터가 평문일 경우 null로 조회된다.

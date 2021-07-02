@@ -35,7 +35,6 @@ public class User {
   @Column
   private String description;
 
-
   @Builder
   public User(String name, String username, String description) {
     this.name = name;

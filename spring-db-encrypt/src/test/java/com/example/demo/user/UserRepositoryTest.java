@@ -1,11 +1,14 @@
 package com.example.demo.user;
 
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -25,4 +28,11 @@ public class UserRepositoryTest {
     log.info("{}", user);
   }
 
+  @Test
+  @Sql(scripts = "/testdata-user.sql")
+  void get_평문있을경우() {
+    List<User> list = repository.findAll();
+    log.debug("{}", list);
+    Assertions.assertThat(list.get(0).getUsername()).isEqualTo("user01");
+  }
 }
