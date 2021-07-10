@@ -20,7 +20,9 @@
     <module>spring-db-encrypt</module>
     <module>spring-db-initialize</module>
     <module>spring-db-jasypt</module>
-    <module>spring-jpa</module>
+    <module>spring-db-multitenant</module>
+    <module>spring-data-multiple-datasource</module>
+    <module>spring-data-jpa</module>
     <module>spring-jsp</module>
     <module>spring-junit5</module>
     <module>spring-oauth2</module>

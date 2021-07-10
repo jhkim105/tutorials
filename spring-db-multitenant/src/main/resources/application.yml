@@ -1,0 +1,15 @@
+logging:
+  level:
+    root: info
+    com.example.demo: debug
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.hibernate.type.EnumType: trace
+
+multitenant:
+  master:
+    datasource:
+      url: jdbc:mariadb://${db.address}/demo_tenant_master?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+      username: @db.username@
+      password: @db.password@
+      driver-class-name: org.mariadb.jdbc.Driver

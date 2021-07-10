@@ -1,0 +1,34 @@
+logging:
+  level:
+    root: info
+    com.example.demo: debug
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.hibernate.type.EnumType: trace
+
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  jpa:
+#    generate-ddl: true
+#    hibernate:
+#      ddl-auto: create
+    properties:
+      hibernate.hbm2ddl.auto: create
+
+product:
+  datasource:
+    url: jdbc:mariadb://localhost/demo_product?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    username: root # not replaced
+    password: @db.password@
+    driver-class-name: org.mariadb.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+
+user:
+  datasource:
+    url: jdbc:mariadb://localhost/demo_user?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    username: root
+    password: @db.password@
+    driver-class-name: org.mariadb.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
