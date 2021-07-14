@@ -107,6 +107,11 @@ public class CustomPBStringEncryptor implements PBEStringCleanablePasswordEncryp
 
 ```
 
+### Encrypt password(secret) 숨기기
+자바 또는 시스템 환경변수 사용
+- System.getProperty("jasypt.encryptor.password")
+- System.getenv("jasypt.encryptor.password")
+
 
 ## References
 http://www.jasypt.org/hibernate.html

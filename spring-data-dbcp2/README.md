@@ -1,4 +1,4 @@
-# DBPC Test
+# DBCP Test
 ## DB connection 갯수에 관련된 설정들
 https://commons.apache.org/proper/commons-dbcp/configuration.html
 
@@ -9,7 +9,7 @@ https://commons.apache.org/proper/commons-dbcp/configuration.html
   - The maximum number of connections that can remain idle in the pool, without extra ones being released, or negative for no limit
   - NOTE: If maxIdle is set too low on heavily loaded systems it is possible you will see connections being closed and almost immediately new connections being opened. This is a result of the active threads momentarily closing connections faster than they are opening them, causing the number of idle connections to rise above maxIdle. The best value for maxIdle for heavily loaded system will vary but the default is a good starting point.
 
-* minIdle(0) : 커넥션 풀에 유지되수 있는 idle 상태 커넥션의 최소 개수. 
+* minIdle(0) : 커넥션 풀에 유지되수 있는 idle 상태 커넥션의 최소 개수. Evictor thread가 활성화 되어 있어야 이 숫자가 유지된다.
 
 * validationQuery : 커넥션의 유효성 검증에 사용할 SQL Query (반드시 하나 이상의 row 가 반환될 SELECT 구분이어야 함.)
 
@@ -19,7 +19,7 @@ https://commons.apache.org/proper/commons-dbcp/configuration.html
 
 * testWhileIde(false) : 커넥션 유효성 검사를 풀에 idle 상태에 존재할때 실시할것인지 여부
 
-* timeBetweenEvictionRunsMillis(-1): Evictor 스레드 실행 간격. 기본값은 -1이며 Evictor 스레드의 실행이 비활성화 되어 있다. 유휴 커넥션을 제거하고 minIdle 로 커넥션을 유지한다.
+* timeBetweenEvictionRunsMillis(-1): Evictor 스레드 실행 간격. 기본값은 -1이며 Evictor thread의 실행이 비활성화 되어 있다. 유휴 커넥션을 제거하고 minIdle 로 커넥션을 유지한다.
 
 * numTestsPerEvictionRun(3): Evictor 스레드 동작 시 한 번에 검사할 커넥션의 개수
 

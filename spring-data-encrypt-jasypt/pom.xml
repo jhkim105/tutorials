@@ -9,9 +9,9 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>spring-db-jasypt</artifactId>
+  <artifactId>spring-data-encrypt-jasypt</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-db-jasypt</name>
+  <name>spring-data-encrypt-jasypt</name>
   <description>Demo project for Spring Boot</description>
   <properties>
     <java.version>11</java.version>

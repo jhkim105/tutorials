@@ -10,7 +10,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>demo</artifactId>
+  <artifactId>spring-cache</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-cache</name>
   <description>Demo project for Spring Boot</description>

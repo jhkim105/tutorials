@@ -16,12 +16,13 @@
     <module>spring-activemq</module>
     <module>spring-cache</module>
     <module>spring-integration</module>
-    <module>spring-dbcp</module>
+    <module>spring-data-dbcp2</module>
     <module>spring-data-encrypt</module>
     <module>spring-data-encrypt-jasypt</module>
     <module>spring-data-initialize</module>
     <module>spring-data-multitenant</module>
     <module>spring-data-multiple-datasource</module>
+    <module>spring-data-replication-driver</module>
     <module>spring-data-jpa</module>
     <module>spring-jsp</module>
     <module>spring-junit5</module>

@@ -15,5 +15,6 @@
   <modules>
     <module>concurrency-mq-single</module>
     <module>concurrency-mqtt</module>
+    <module>testing-multithreaded</module>
   </modules>
 </project>

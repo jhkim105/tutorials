@@ -9,9 +9,9 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>multitenant</artifactId>
+  <artifactId>spring-data-multitenant</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>multitenant</name>
+  <name>spring-data-multitenant</name>
   <description>Demo project for Spring Boot</description>
   <properties>
     <java.version>11</java.version>
