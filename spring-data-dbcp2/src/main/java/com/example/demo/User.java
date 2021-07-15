@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 @Entity
 @Table(name = "dm_user")

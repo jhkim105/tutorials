@@ -86,16 +86,15 @@ min-evictable-idle-time-millis: 1000
     - slave 커넥션 숫자는 계속 변함. 총량은 유지됨.
     
 
-### 부하 상황에서 커넥션 수
+#### 부하 상황에서 커넥션 수
 ```properties
 max-total: 5
 initial-size: 5
 max-idle: 5
-min-idle: 5
+min-idle: 3
 ```
-시작시에는 slave 총량이 5개로 유지되었다가 부하가 발생할 경우 슬레이브의 각 커넥션수는 max-total 값 까지 증가한다. 이런 경우 master db는 slave 총량 갯수 만큼 늘어서 10개가 된다.  
-
-이번 테스트를 통해 커넥션 유지를 위해서 max-total, max-idle, intial-size, min-idle을 동일하게 설정했는데, 커넥션이 계속 증가하는 상황을 검증 할 수 있었다.
+* slave 개별 커넥션 수는 균등하게 분배되지 않고 총량은 위  설정대로 유지됨. 부하 상황에서 master 커넥션 수와 slave 커넥션 수 총량은 max-total 을 초과하지 않는다.
+* Evictor를 비활성화 한 경우, slave 커넥션의 경우 초기 할당한된 대로 유지된다.
 
 
 

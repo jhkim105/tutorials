@@ -9,9 +9,9 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>spring-data-replication</artifactId>
+  <artifactId>spring-data-replication-driver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-data-replication</name>
+  <name>spring-data-replication-driver</name>
   <description>Demo project for Spring Boot</description>
   <properties>
     <java.version>11</java.version>

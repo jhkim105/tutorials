@@ -1,9 +1,9 @@
 package com.example.demo.user;
 
 import java.util.List;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -11,13 +11,8 @@ public class UserService {
 
   private final UserRepository userRepository;
 
-//  @Transactional
+  @Transactional(readOnly = true)
   public List<User> findAll() {
-    try {
-      Thread.sleep(500);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
     return userRepository.findAll();
   }
 

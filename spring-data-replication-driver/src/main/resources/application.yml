@@ -16,8 +16,8 @@ spring:
 
   datasource:
     type: org.apache.commons.dbcp2.BasicDataSource
-    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
-#    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+#    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
 #    url: jdbc:mariadb://127.0.0.1:13306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
     username: root
     password: 111111
@@ -26,7 +26,9 @@ spring:
       max-total: 5
       initial-size: 5
       max-idle: 5
-      min-idle: 5
-      time-between-eviction-runs-millis: 5000
-      min-evictable-idle-time-millis: 1000
-#      num-tests-per-eviction-run: 4
+      min-idle: 0
+#      time-between-eviction-runs-millis: 5000
+      min-evictable-idle-time-millis: 10000
+
+  jmx:
+    enabled: true

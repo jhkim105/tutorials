@@ -10,6 +10,7 @@
   <packaging>pom</packaging>
   <name>tutorials</name>
   <modules>
+    <module>beanio</module>
     <module>java-concurrency</module>
     <module>java-utils</module>
     <module>jmh</module>

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class MyRunner implements ApplicationRunner {
+@RequiredArgsConstructor
+public class CustomApplicationRunner implements ApplicationRunner {
 
-  @Autowired
-  BasicDataSource dataSource;
+  private final BasicDataSource dataSource;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {

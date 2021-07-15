@@ -9,7 +9,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>spring-db-multiple</artifactId>
+  <artifactId>spring-data-multiple-datasource</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-data-multiple-datasource</name>
   <description>spring-data-multiple-datasource</description>

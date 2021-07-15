@@ -4,8 +4,8 @@ https://commons.apache.org/proper/commons-dbcp/configuration.html
 
 * maxActive(8) : 서비스에서 동시에 사용될수 있는 최대 커넥션 개수.
 
-* maxIdle(8) : 커넥션 풀에 유지될수 있는 커넥션의 최대 개수. 커넥션 풀에 커넥션을 반납할 때 종료시킴.
-  - (maxAcive - maxIdle ) 개의 커넥션은 pool 에 반환되지 않고 제거(real destory) 된다.  
+* maxIdle(8) : 사용한 커넥션을 풀에 반납할 때 최대료 유지될수 있는 커넥션 개수.
+  - (maxAcive - maxIdle ) 개의 커넥션은 pool 에 반환되지 않고 제거(real destroy) 된다.  
   - The maximum number of connections that can remain idle in the pool, without extra ones being released, or negative for no limit
   - NOTE: If maxIdle is set too low on heavily loaded systems it is possible you will see connections being closed and almost immediately new connections being opened. This is a result of the active threads momentarily closing connections faster than they are opening them, causing the number of idle connections to rise above maxIdle. The best value for maxIdle for heavily loaded system will vary but the default is a good starting point.
 
@@ -34,3 +34,5 @@ https://commons.apache.org/proper/commons-dbcp/configuration.html
 ```
 select * from information_schema.processlist where DB = 'demo';
 ```  
+## Monitoring DBCO2 with JMX
+@EnableMBeanExport 를 선언해주거나, 프로퍼티에서 spring.jmx.enabled=true 를 지정하고 JConsole 로 값을 확인할 수 있다.
