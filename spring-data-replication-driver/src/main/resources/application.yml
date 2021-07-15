@@ -16,18 +16,18 @@ spring:
 
   datasource:
     type: org.apache.commons.dbcp2.BasicDataSource
-#    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
-    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+#    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
 #    url: jdbc:mariadb://127.0.0.1:13306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
     username: root
     password: 111111
     dbcp2:
-      max-wait-millis: 10000
-      max-total: 5
-      initial-size: 5
-      max-idle: 5
-      min-idle: 0
-#      time-between-eviction-runs-millis: 5000
+      max-wait-millis: 1000
+      max-total: 2
+      initial-size: 2
+      max-idle: 2
+      min-idle: 2
+      time-between-eviction-runs-millis: 5000
       min-evictable-idle-time-millis: 10000
 
   jmx:

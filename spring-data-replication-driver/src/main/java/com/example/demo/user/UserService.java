@@ -1,7 +1,10 @@
 package com.example.demo.user;
 
+import static java.lang.Thread.sleep;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,8 +14,10 @@ public class UserService {
 
   private final UserRepository userRepository;
 
+  @SneakyThrows
   @Transactional(readOnly = true)
   public List<User> findAll() {
+    sleep(1000);
     return userRepository.findAll();
   }
 
