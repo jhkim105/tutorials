@@ -2,9 +2,11 @@ package com.example.demo.product;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +27,9 @@ public class ProductDatabaseConfig {
 
 
   @Bean
+  @ConfigurationProperties("product.datasource.dbcp2")
   public DataSource productDataSource(@Qualifier("productDataSourceProperties") DataSourceProperties productDataSourceProperties) {
-    return productDataSourceProperties.initializeDataSourceBuilder().build();
+    return productDataSourceProperties.initializeDataSourceBuilder().type(BasicDataSource.class).build();
   }
 
 

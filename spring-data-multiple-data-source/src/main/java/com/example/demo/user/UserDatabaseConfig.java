@@ -2,6 +2,7 @@ package com.example.demo.user;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -27,8 +28,9 @@ public class UserDatabaseConfig {
 
   @Bean
   @Primary
+  @ConfigurationProperties("user.datasource.dbcp2")
   public DataSource userDataSource(@Qualifier("userDataSourceProperties") DataSourceProperties userDataSourceProperties) {
-    return userDataSourceProperties.initializeDataSourceBuilder().build();
+    return userDataSourceProperties.initializeDataSourceBuilder().type(BasicDataSource.class).build();
   }
 
   @Bean

@@ -17,18 +17,26 @@ spring:
     properties:
       hibernate.hbm2ddl.auto: create
 
-product:
-  datasource:
-    url: jdbc:mariadb://localhost/demo_product?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
-    username: root # not replaced
-    password: @db.password@
-    driver-class-name: org.mariadb.jdbc.Driver
-    type: com.zaxxer.hikari.HikariDataSource
-
 user:
   datasource:
-    url: jdbc:mariadb://localhost/demo_user?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://localhost/demo_user?createDatabaseIfNotExist=true
     username: root
     password: @db.password@
-    driver-class-name: org.mariadb.jdbc.Driver
-    type: com.zaxxer.hikari.HikariDataSource
+    dbcp2:
+      max-total: 20
+      initial-size: 20
+      max-idle: 20
+      min-idle: 10
+
+product:
+  datasource:
+    url: jdbc:mariadb://localhost/demo_product?createDatabaseIfNotExist=true
+    username: root # not replaced
+    password: @db.password@
+    dbcp2:
+      max-total: 20
+      initial-size: 20
+      max-idle: 20
+      min-idle: 10
+
+

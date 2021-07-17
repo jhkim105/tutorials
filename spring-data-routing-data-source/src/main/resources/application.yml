@@ -1,0 +1,44 @@
+
+logging:
+  level:
+    root: info
+    com.example.demo: debug
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.hibernate.type.EnumType: debug
+
+spring:
+  jpa:
+    #    hibernate:
+    #      ddl-auto: create
+    properties:
+      hibernate:
+        hbm2ddl.auto: create
+  datasource:
+    master:
+      type: org.apache.commons.dbcp2.BasicDataSource
+      url: jdbc:mariadb://127.0.0.1:13306/demo_repl?createDatabaseIfNotExist=true
+      username: root
+      password: 111111
+      dbcp2:
+        max-wait-millis: 1000
+        max-total: 5
+        initial-size: 5
+        max-idle: 5
+        min-idle: 2
+        min-evictable-idle-time-millis: 10000
+        time-between-eviction-runs-millis: 5000
+    slave:
+      type: org.apache.commons.dbcp2.BasicDataSource
+#      url: jdbc:mariadb://127.0.0.1:23306/demo_repl?createDatabaseIfNotExist=true
+      url: jdbc:mariadb:loadbalance://127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true
+      username: root
+      password: 111111
+      dbcp2:
+        max-wait-millis: 1000
+        max-total: 10
+        initial-size: 10
+        max-idle: 10
+        min-idle: 5
+        min-evictable-idle-time-millis: 10000
+        time-between-eviction-runs-millis: 5000
