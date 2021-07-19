@@ -9,6 +9,8 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
+  jmx:
+    enabled: true
 logging:
   level:
     com.example: debug

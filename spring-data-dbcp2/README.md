@@ -38,7 +38,7 @@ select * from information_schema.processlist where DB = 'demo';
 * @EnableMBeanExport 를 선언해주거나, 프로퍼티에서 spring.jmx.enabled=true 를 지정하고 JConsole 로 값을 확인할 수 있다.
 * Remote 접속을 위한 JMX 설정
 ```  
--Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9840 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost
+-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9840 -Dcom.sun.management.jmxremote.rmi.port=9841 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost
 ```
 ### JMX Client
 * JMSServiceURL

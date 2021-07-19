@@ -4,12 +4,14 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 
-@Component
 @Slf4j
+@Component
+@ConditionalOnProperty(name = "scheduled.data-source-monitoring.cron")
 public class DataSourceMonitoring {
 
   private BasicDataSource basicDataSource;
@@ -22,7 +24,7 @@ public class DataSourceMonitoring {
         basicDataSource.getMaxIdle(), basicDataSource.getMinIdle(), basicDataSource.getTimeBetweenEvictionRunsMillis());
   }
 
-  @Scheduled(cron = "0/10 * * * * *")
+  @Scheduled(cron = "${scheduled.data-source-monitoring.cron}")
   public void doLogging() {
     DataSourceInfo info = DataSourceInfo.from(basicDataSource);
     log.info("{}", info);
