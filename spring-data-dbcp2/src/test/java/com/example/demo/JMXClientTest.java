@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolMXBean;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
@@ -20,6 +21,7 @@ public class JMXClientTest {
 
   @SneakyThrows
   @Test
+  @Disabled
   public void test() {
 //    JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://52.193.43.196:9840/jmxrmi");
     JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:9840/jmxrmi");
