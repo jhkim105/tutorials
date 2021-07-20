@@ -34,7 +34,7 @@ https://commons.apache.org/proper/commons-dbcp/configuration.html
 ```
 select * from information_schema.processlist where DB = 'demo';
 ```  
-## Monitoring DBCO2 with JMX
+## Monitoring DBCP2 with JMX
 * @EnableMBeanExport 를 선언해주거나, 프로퍼티에서 spring.jmx.enabled=true 를 지정하고 JConsole 로 값을 확인할 수 있다.
 * Remote 접속을 위한 JMX 설정
 ```  
