@@ -14,6 +14,7 @@
     <module>java-concurrency</module>
     <module>java-utils</module>
     <module>jmh</module>
+    <module>monitoring-prometheus</module>
     <module>spring-activemq</module>
     <module>spring-cache</module>
     <module>spring-integration</module>
