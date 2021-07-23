@@ -17,6 +17,7 @@
     <module>monitoring-prometheus</module>
     <module>spring-activemq</module>
     <module>spring-cache</module>
+    <module>spring-commons-configuration</module>
     <module>spring-integration</module>
     <module>spring-data-dbcp2</module>
     <module>spring-data-encrypt</module>

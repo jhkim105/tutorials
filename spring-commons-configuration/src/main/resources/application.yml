@@ -1,0 +1,21 @@
+# LOGGING
+logging:
+  level:
+    com.example.demo: debug
+
+# DB - MySQL
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost/demo?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+
+custom:
+  database-properties-cache:
+    enabled: true

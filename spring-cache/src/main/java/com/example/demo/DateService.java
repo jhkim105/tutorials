@@ -45,10 +45,9 @@ public class DateService {
 
 
   @Autowired
-  private ApplicationContext applicationContext;
+  private DateService self;
 
   public String getCachedDateString(String s) {
-    DateService service = applicationContext.getBean(DateService.class);
-    return service.getDateString(s);
+    return self.getDateString(s);
   }
 }
