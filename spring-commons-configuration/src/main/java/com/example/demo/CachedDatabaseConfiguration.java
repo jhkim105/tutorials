@@ -4,7 +4,6 @@ import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.configuration.DatabaseConfiguration;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 @Slf4j

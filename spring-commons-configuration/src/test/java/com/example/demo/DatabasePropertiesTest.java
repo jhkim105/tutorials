@@ -1,16 +1,13 @@
 package com.example.demo;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import javax.annotation.Resource;
 import org.apache.commons.configuration.DatabaseConfiguration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PropertiesConfigTest {
+class DatabasePropertiesTest {
 
   @Resource(name = "databaseConfiguration")
   private DatabaseConfiguration databaseConfiguration;
