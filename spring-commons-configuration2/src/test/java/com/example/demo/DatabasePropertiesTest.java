@@ -1,14 +1,12 @@
 package com.example.demo;
 
 import javax.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.configuration.DatabaseConfiguration;
+import org.apache.commons.configuration2.DatabaseConfiguration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@Slf4j
 class DatabasePropertiesTest {
 
   @Resource(name = "databaseConfiguration")
@@ -17,7 +15,6 @@ class DatabasePropertiesTest {
 
   @Test
   void getProperty() {
-
     databaseConfiguration.getProperty("prop1");
     databaseConfiguration.getProperty("prop1");
     databaseConfiguration.getProperty("prop2");
