@@ -14,3 +14,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+custom:
+  #  runtime-properties-path: runtime.properties
+  runtime-properties-path: /Users/jihwankim/dev/my/tutorials/spring-commons-configuration2/src/main/resources/runtime.properties
+#  runtime-properties-path: /Users/jihwankim/temp/runtime.properties

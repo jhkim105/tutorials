@@ -1,0 +1,9 @@
+GET http://localhost:8080/runtime?key=prop1
+Accept: application/json
+
+###
+
+GET http://localhost:8080/runtime2?key=prop1
+Accept: application/json
+
+###
