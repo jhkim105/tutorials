@@ -19,3 +19,6 @@ spring:
 custom:
   database-properties-cache:
     enabled: true
+  runtime-properties-path: runtime.properties
+
+runtime-properties-path: 124
