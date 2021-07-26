@@ -27,7 +27,7 @@ public class UserControllerIntegrationTest {
   private UserService userService;
 
   @Test
-  public void testLogin() throws Exception {
+  void testLogin() throws Exception {
     // when
     LoginRequest loginRequest = new LoginRequest("user", "111111");
     ResultActions resultActions =
@@ -44,7 +44,7 @@ public class UserControllerIntegrationTest {
   }
 
   @Test
-  public void testMe() throws Exception {
+  void testMe() throws Exception {
     // given
     LoginRequest loginRequest = new LoginRequest("user", "111111");
     String authToken = userService.login(loginRequest).getAuthToken();
@@ -66,7 +66,7 @@ public class UserControllerIntegrationTest {
   }
 
   @Test
-  public void testSave() throws Exception {
+  void testSave() throws Exception {
     // given
     LoginRequest loginRequest = new LoginRequest("user", "111111");
     String authToken = userService.login(loginRequest).getAuthToken();

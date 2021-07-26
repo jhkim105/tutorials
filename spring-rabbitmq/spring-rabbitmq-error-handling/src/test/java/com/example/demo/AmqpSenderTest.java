@@ -11,7 +11,7 @@ class AmqpSenderTest {
   AmqpSender amqpSender;
 
   @Test
-  public void send() {
+  void send() {
     amqpSender.sendMessage("1111");
   }
 }

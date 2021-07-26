@@ -33,6 +33,6 @@ public class UserRepositoryTest {
   void get_평문있을경우() {
     List<User> list = repository.findAll();
     log.debug("{}", list);
-    Assertions.assertThat(list.get(0).getUsername()).isEqualTo("user01");
+    Assertions.assertThat(list.get(0).getUsername()).isNull();
   }
 }

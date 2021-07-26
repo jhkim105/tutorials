@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 @Slf4j
 public class JasyptConfig {
 
-  private static final String DP = "secret#1";
+  private static final String DP = "secret#01";
 
   @Bean
   public PBEStringEncryptor stringEncryptor() {

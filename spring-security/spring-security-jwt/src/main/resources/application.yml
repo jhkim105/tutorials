@@ -10,11 +10,11 @@ spring:
   datasource:
     hikari:
       jdbc-url: jdbc:h2:mem:demo
-    sql-script-encoding: UTF-8
-    initialization-mode: always
-    continue-on-error: true
   jpa:
     hibernate:
       ddl-auto: create
-
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
 

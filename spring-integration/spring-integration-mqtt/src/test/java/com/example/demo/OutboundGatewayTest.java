@@ -16,7 +16,7 @@ public class OutboundGatewayTest {
   private MqttIntegrationConfig.OutboundGateway outboundGateway;
 
   @Test
-  public void send() {
+  void send() {
     String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss SSS"));
     log.info(time);
     outboundGateway.publish("/test", 2, time);
