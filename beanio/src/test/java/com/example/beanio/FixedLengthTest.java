@@ -13,13 +13,15 @@ import org.beanio.StreamFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 @SpringBootTest
 @Slf4j
 public class FixedLengthTest {
 
   @Autowired
-  StreamFactory factory;
+  private ResourceLoader resourceLoader;
 
   @Test
   void testFixedLength() throws IOException {
@@ -37,6 +39,10 @@ public class FixedLengthTest {
 
     log.info("message->{}", message);
     StringWriter stringWriter = new StringWriter();
+    Resource resource = resourceLoader.getResource("classpath:/mapping-fixedLength.xml");
+    log.info("message->{}", message);
+    StreamFactory factory = StreamFactory.newInstance();
+    factory.load(resource.getFile());
     BeanWriter beanWriter = factory.createWriter("message", stringWriter);
     beanWriter.write(message);
     String messageString = stringWriter.toString();

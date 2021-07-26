@@ -48,45 +48,42 @@ mapping.xml
 ```
 Test Code
 ```java
-  @Test
-  void testFixedLength() {
-    Message message = Message.builder()
-        .header(Header.builder()
-            .size(20)
-            .token("token")
-            .build())
-        .body(Body.builder()
-            .msg("msg")
-            .code("code")
-            .number(21)
-            .build())
-        .build();
+      Message message = Message.builder()
+          .header(Header.builder()
+          .size(20)
+          .token("token")
+          .build())
+          .body(Body.builder()
+          .msg("msg")
+    //      .code("code")
+          .number(21)
+          .build())
+          .build();
 
-    log.info("message->{}", message);
-
-    StreamFactory factory = StreamFactory.newInstance();
-    factory.loadResource("mapping-fixedLength.xml");
-    StringWriter stringWriter = new StringWriter();
-    BeanWriter beanWriter = factory.createWriter("message", stringWriter);
-    beanWriter.write(message);
-    String messageString = stringWriter.toString();
-    log.info("messageString->{}", messageString);
-
-
-    StringReader reader = new StringReader(messageString);
-    BeanReader beanReader = factory.createReader("message", reader);
-    Message message2 = (Message)beanReader.read();
-    log.info("{}", message2);
-  }
+      log.info("message->{}", message);
+      StringWriter stringWriter = new StringWriter();
+      Resource resource = resourceLoader.getResource("classpath:/mapping-fixedLength.xml");
+      log.info("message->{}", message);
+      StreamFactory factory = StreamFactory.newInstance();
+      factory.load(resource.getFile());
+      BeanWriter beanWriter = factory.createWriter("message", stringWriter);
+      beanWriter.write(message);
+      String messageString = stringWriter.toString();
+      log.info("messageString->{}", messageString);
+      
+      StringReader reader = new StringReader(messageString);
+      BeanReader beanReader = factory.createReader("message", reader);
+      Message message2 = (Message)beanReader.read();
+      log.info("{}", message2);
 ```
 실행 결과
 ```
-12:29:35.589 [main] INFO com.example.beanio.CsvTest - message->Message(header=Header(size=20, token=token), body=Body(number=21, code=code, msg=msg))
-12:29:35.790 [main] INFO com.example.beanio.CsvTest - messageString->20                                 token21   code                 msg
+2021-07-26 13:44:52.726  INFO 8551 --- [           main] com.example.beanio.FixedLengthTest       : message->Message(header=Header(size=20, token=token), body=Body(number=21, code=null, msg=msg))
+2021-07-26 13:44:52.726  INFO 8551 --- [           main] com.example.beanio.FixedLengthTest       : message->Message(header=Header(size=20, token=token), body=Body(number=21, code=null, msg=msg))
+2021-07-26 13:44:52.754  INFO 8551 --- [           main] com.example.beanio.FixedLengthTest       : messageString->20                                 token21  ABCDE                 msg
 
-12:29:35.795 [main] INFO com.example.beanio.CsvTest - Message(header=Header(size=20, token=token), body=Body(number=21, code=code, msg=msg))
-``` 
-
+2021-07-26 13:44:52.758  INFO 8551 --- [           main] com.example.beanio.FixedLengthTest       : Message(header=Header(size=20, token=token), body=Body(number=21, code=ABCDE, msg=msg))``` 
+```
 
 
 

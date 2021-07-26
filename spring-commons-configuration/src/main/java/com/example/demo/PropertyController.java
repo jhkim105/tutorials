@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PropertyController {
 
-  private final CachedDatabaseConfiguration cachedDatabaseConfiguration;
+  private final DatabaseConfiguration databaseConfiguration;
 
   @GetMapping("/property")
   public String getProperty(String key) {
-    return (String)cachedDatabaseConfiguration.getProperty(key);
+    return (String)databaseConfiguration.getProperty(key);
   }
 }
