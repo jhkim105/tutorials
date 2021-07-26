@@ -35,6 +35,7 @@
     <module>spring-sample</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
+    <module>aws-lambda</module>
   </modules>
   <repositories>
   </repositories>
