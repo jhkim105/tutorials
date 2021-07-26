@@ -17,7 +17,6 @@ class DatabasePropertiesTest {
 
   @Test
   void getProperty() {
-
     databaseConfiguration.getProperty("prop1");
     databaseConfiguration.getProperty("prop1");
     databaseConfiguration.getProperty("prop2");
@@ -27,6 +26,14 @@ class DatabasePropertiesTest {
     databaseConfiguration.setProperty("prop1", "2");
     Assertions.assertThat(databaseConfiguration.getProperty("prop1")).isEqualTo("2");
     databaseConfiguration.getProperty("prop2");
-
   }
+
+  @Test
+  void getString() {
+    databaseConfiguration.getProperty("prop1");
+    databaseConfiguration.getProperty("prop1");
+    databaseConfiguration.getString("prop1"); // Not applied cache: self-invocation
+    databaseConfiguration.getString("prop1"); // Not applied cache: self-invocation
+  }
+
 }
