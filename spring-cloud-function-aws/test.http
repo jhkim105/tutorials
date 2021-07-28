@@ -1,0 +1,15 @@
+POST http://localhost:8080/uppercase
+
+abc
+###
+
+POST http://localhost:8080/greeter
+
+Cloud
+###
+
+
+POST http://localhost:8080
+
+aaa
+###

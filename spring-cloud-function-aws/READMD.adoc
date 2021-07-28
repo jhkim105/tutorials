@@ -1,0 +1,151 @@
+= Spring Cloud Function on AWS
+:hardbreaks:
+
+
+== Project 생성
+Web, Spring Cloud > Function 선택
+아래와 같이 생성됨
+[source,xml]
+----
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.springframework.cloud</groupId>
+  <artifactId>spring-cloud-function-web</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-test</artifactId>
+  <scope>test</scope>
+</dependency>
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-test</artifactId>
+  <scope>test</scope>
+</dependency>
+----
+
+== Function 작성
+
+=== @Bean 으로 등록
+
+[source,java]
+----
+  @Bean
+  public Function<String, String> uppercase() {
+    System.out.println();
+    return param -> {
+      System.out.println("param:" + param);
+      return param.toUpperCase();};
+  }
+----
+
+서버 시작 후 접속
+- 함수명으로 노출됨
+----
+curl localhost:8080/uppercase -H "Content-Type: text/plain" -d "Hello cloud function"
+----
+
+=== Functional interface 구현하기
+[source,java]
+----
+public class GreetingFunction implements Function<String, String> {
+
+  @Override
+  public String apply(String s) {
+    return "Hello " + s;
+  }
+}
+----
+@Component로 선언하거나, spring.cloud.function.scan.packages 로 지정 가능함
+
+
+
+== AWS Lambda 에 배포하기
+
+
+=== Configuration
+dependency
+[source,xml]
+----
+<dependency>
+  <groupId>org.springframework.cloud</groupId>
+  <artifactId>spring-cloud-function-adapter-aws</artifactId>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-events -->
+<dependency>
+  <groupId>com.amazonaws</groupId>
+  <artifactId>aws-lambda-java-events</artifactId>
+  <version>3.9.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core -->
+<dependency>
+  <groupId>com.amazonaws</groupId>
+  <artifactId>aws-lambda-java-core</artifactId>
+  <version>1.2.1</version>
+</dependency>
+----
+
+용량을 줄이기 위해 spring-boot-thin-layout 적용
+https://github.com/spring-projects-experimental/spring-boot-thin-launcher
+
+plugin에 dependency 추가
+- spring boot 2.x 를 지원하는 버전은 1.0.28.BUILD-SNAPSHOT임. 이 버전을 다운로드 하려면 아래 리파지토리 추가해야 한다.
+[source,xml]
+----
+<repository>
+  <id>spring-snapshots</id>
+  <name>Spring Snapshots</name>
+  <url>https://repo.spring.io/snapshot</url>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+</repository>
+----
+
+[source,xml]
+----
+<plugin>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-maven-plugin</artifactId>
+  <version>${project.parent.version}</version>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot.experimental</groupId>
+      <artifactId>spring-boot-thin-layout</artifactId>
+      <version>1.0.28.BUILD-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+</plugin>
+----
+
+maven-shade-plugin 적용
+[source,xml]
+-----
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-shade-plugin</artifactId>
+  <version>3.2.4</version>
+  <configuration>
+    <createDependencyReducedPom>false</createDependencyReducedPom>
+    <shadedArtifactAttached>true</shadedArtifactAttached>
+    <shadedClassifierName>aws</shadedClassifierName>
+  </configuration>
+</plugin>
+-----
+
+
+빌드하면 -aws.jar가 생성됨. 이 파일을 AWS Lambda에 배포하면 된다.
+
+Handler 지정하기
+- org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+
+두개 이상의 함수가 존재할 경우 노출할 함수 지정
+- spring.cloud.function.definition=uppercase
+- AWS Lambda 에서는 환경변수로 . 을 허용하지 않음. _ 로 바꿔서 등록해야 한다.
+----
+spring_cloud_function_definition
+----
