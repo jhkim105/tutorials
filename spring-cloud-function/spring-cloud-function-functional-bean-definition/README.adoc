@@ -1,0 +1,89 @@
+= Spring Cloud Function - Functional Bean Definition
+:hardbreaks:
+
+
+https://cloud.spring.io/spring-cloud-function/reference/html/spring-cloud-function.html#_functional_bean_definitions
+
+
+=== Functional Bean Definitions
+[source,java]
+----
+@SpringBootConfiguration
+public class SpringCloudFunctionFunctionalBeanDefinitionApplication implements ApplicationContextInitializer<GenericApplicationContext> {
+  Logger log = LoggerFactory.getLogger(SpringCloudFunctionFunctionalBeanDefinitionApplication.class);
+
+  public static void main(String[] args) {
+    FunctionalSpringApplication.run(SpringCloudFunctionFunctionalBeanDefinitionApplication.class, args);
+  }
+
+  public Function<String, String> uppercase() {
+    return param -> {
+      System.out.println("param:" + param);
+      return param.toUpperCase();};
+  }
+
+  @Override
+  public void initialize(GenericApplicationContext context) {
+    log.debug("initialize");
+    context.registerBean("uppercase", FunctionRegistration.class,
+        () -> new FunctionRegistration(uppercase())
+            .type(FunctionType.from(String.class).to(String.class)));
+
+  }
+}
+----
+
+.Differences
+* Main class는 ApplicationContextInitializer 를 구현
+* @Bean -> conext.registerBean() 을 호출하여 등록
+* @SpringBootApplication -> @SpringBootConfiguration
+* SpringApplication -> FunctionalSpringApplication
+
+
+spring-boot-starter-web를 spring-boot-starter-webflux 로 변경
+[source,xml]
+----
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-function-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+----
+spring-boot-starter-webflux 사용
+[source,xml]
+----
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-function-webflux</artifactId>
+    </dependency>
+----
+
+=== Testing
+@FunctionalSpringBootTest 사용
+[source,java]
+----
+@FunctionalSpringBootTest
+@AutoConfigureWebTestClient
+class SpringCloudFunctionFunctionalBeanDefinitionApplicationTests {
+
+
+  @Autowired
+  private WebTestClient client;
+
+
+  @Test
+  void uppercase() {
+    client.post().uri("/uppercase")
+        .body(Mono.just("hello"), String.class)
+        .exchange()
+        .expectStatus().isOk()
+        .expectBody(String.class).isEqualTo("HELLO");
+  }
+
+}
+----
+
+

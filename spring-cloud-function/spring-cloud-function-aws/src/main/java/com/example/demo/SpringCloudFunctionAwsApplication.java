@@ -15,7 +15,6 @@ public class SpringCloudFunctionAwsApplication {
 
   @Bean
   public Function<String, String> uppercase() {
-    System.out.println();
     return param -> {
       System.out.println("param:" + param);
       return param.toUpperCase();};

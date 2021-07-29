@@ -9,9 +9,9 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>spring-cloud-function-aws</artifactId>
+  <artifactId>spring-cloud-function-functional-bean-definition</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-cloud-function-aws</name>
+  <name>spring-cloud-function-functional-bean-definition</name>
   <description>Demo project for Spring Boot</description>
   <properties>
     <java.version>11</java.version>
@@ -19,39 +19,23 @@
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-function-web</artifactId>
+      <artifactId>spring-cloud-starter-function-webflux</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-function-adapter-aws</artifactId>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-events -->
     <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-lambda-java-events</artifactId>
-      <version>3.9.0</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core -->
-    <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-lambda-java-core</artifactId>
-      <version>1.2.1</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+<!--      <exclusions>-->
+<!--        <exclusion>-->
+<!--          <groupId>org.junit.vintage</groupId>-->
+<!--          <artifactId>junit-vintage-engine</artifactId>-->
+<!--        </exclusion>-->
+<!--      </exclusions>-->
     </dependency>
   </dependencies>
   <dependencyManagement>
@@ -69,16 +53,8 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${project.parent.version}</version>
         <dependencies>
           <dependency>
             <groupId>org.springframework.boot.experimental</groupId>
@@ -99,14 +75,5 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
+
 </project>

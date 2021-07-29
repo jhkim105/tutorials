@@ -35,7 +35,6 @@ Web, Spring Cloud > Function 선택
 ----
   @Bean
   public Function<String, String> uppercase() {
-    System.out.println();
     return param -> {
       System.out.println("param:" + param);
       return param.toUpperCase();};
@@ -149,3 +148,5 @@ Handler 지정하기
 ----
 spring_cloud_function_definition
 ----
+
+=== initialize override 하여 등록하기
