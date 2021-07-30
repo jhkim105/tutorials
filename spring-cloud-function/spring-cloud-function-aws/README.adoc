@@ -148,5 +148,3 @@ Handler 지정하기
 ----
 spring_cloud_function_definition
 ----
-
-=== initialize override 하여 등록하기

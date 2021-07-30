@@ -1,9 +1,6 @@
 package com.example.demo;
 
 import javax.annotation.Resource;
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.configuration2.FileBasedConfiguration;
-import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.springframework.http.ResponseEntity;
