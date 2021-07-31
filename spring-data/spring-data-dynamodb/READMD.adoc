@@ -1,0 +1,206 @@
+= Spring Data DynamoDB Examples
+
+
+== Run local dynamoDB
+
+
+== Spring Data DynamoDB
+[souce,shell]
+----
+docker run -d -p 8000:8000 amazon/dynamodb-local —name dynamodb
+aws configure ...
+aws dynamodb list-tables --endpoint-url http://localhost:8000
+----
+
+
+=== Dependency
+[source,xml]
+----
+    <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-releasetrain -->
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-releasetrain</artifactId>
+      <version>Neumann-SR9</version>
+      <type>pom</type>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb -->
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-dynamodb</artifactId>
+      <version>1.12.35</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.derjust/spring-data-dynamodb -->
+    <dependency>
+      <groupId>com.github.derjust</groupId>
+      <artifactId>spring-data-dynamodb</artifactId>
+      <version>5.1.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.amazonaws</groupId>
+          <artifactId>aws-java-sdk-dynamodb</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+----
+
+=== Configuration
+
+application.yml
+[source,yml]
+----
+amazon:
+  aws:
+    accessKey: local
+    secretKey: local
+  dynamodb:
+    region:
+    endpoint: http://localhost:8000
+----
+DynamoDBConfig.java
+[source,java]
+----
+@Configuration
+@EnableDynamoDBRepositories(basePackages = "com.example.demo.repository")
+public class DynamoDBConfig {
+
+  @Value("${amazon.dynamodb.endpoint}")
+  private String amazonDynamoDBEndpoint;
+
+  @Value("${amazon.dynamodb.region}")
+  private String amazonDynamoDBRegion;
+
+  @Value("${amazon.aws.accesskey}")
+  private String amazonAWSAccessKey;
+
+  @Value("${amazon.aws.secretkey}")
+  private String amazonAWSSecretKey;
+
+  @Bean
+  public AmazonDynamoDB amazonDynamoDB() {
+
+    AmazonDynamoDBClientBuilder builder = AmazonDynamoDBClientBuilder.standard()
+        .withCredentials(credentialsProvider())
+        ;
+
+    if (StringUtils.hasText(amazonDynamoDBEndpoint)) {
+      builder.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(amazonDynamoDBEndpoint, amazonDynamoDBRegion));
+    } else {
+      builder.withRegion(Regions.fromName(amazonDynamoDBRegion));
+    }
+
+    return builder.build();
+
+  }
+
+  @Bean
+  public AWSStaticCredentialsProvider credentialsProvider() {
+    return new AWSStaticCredentialsProvider(new BasicAWSCredentials(
+        amazonAWSAccessKey, amazonAWSSecretKey));
+  }
+
+}
+----
+
+=== Model
+ServerStatus.java
+[source,java]
+----
+@DynamoDBTable(tableName = "server")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class ServerStatus {
+
+  @DynamoDBHashKey
+  private String id;
+
+  @DynamoDBAttribute
+  private String status;
+
+  @Builder
+  public ServerStatus(String id, String status) {
+    this.id = id;
+    this.status = status;
+  }
+}
+
+----
+
+
+=== Repository
+ServerStatusRepository.java
+[source,java]
+----
+@EnableScan
+public interface ServerStatusRepository extends CrudRepository<ServerStatus, String> {
+
+}
+----
+
+=== Testing
+ServerStatusRepositoryTest.java
+[source,java]
+----
+@SpringBootTest
+@Slf4j
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class ServerStatusRepositoryTest {
+
+  @Autowired
+  private AmazonDynamoDB amazonDynamoDB;
+
+  private DynamoDBMapper dynamoDBMapper;
+
+  @Autowired
+  private ServerStatusRepository repository;
+
+  @BeforeAll
+  void setup() throws Exception {
+    try {
+      dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
+      CreateTableRequest tableRequest = dynamoDBMapper.generateCreateTableRequest(ServerStatus.class);
+      tableRequest.setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+      amazonDynamoDB.createTable(tableRequest);
+
+    } catch (ResourceInUseException  e) {
+      log.info(e.getMessage());
+      // do nothing: already created
+    }
+
+    try {
+      dynamoDBMapper.save(ServerStatus.builder().id("id01").status("status01").build());
+      dynamoDBMapper.save(ServerStatus.builder().id("id02").status("status02").build());
+    } catch(AmazonDynamoDBException e) {
+      log.info(e.getMessage());
+      // do nothing: already exists
+    }
+
+  }
+
+  @Test
+  void findAll() {
+    Iterable<ServerStatus> serverStatusIterable = repository.findAll();
+    List<ServerStatus> serverStatusList = new ArrayList<>();
+    serverStatusIterable.forEach(serverStatusList::add);
+    log.info("{}", serverStatusList);
+  }
+
+  @Test
+  void save() {
+    ServerStatus serverStatus = ServerStatus.builder().id("id03").status("status03").build();
+    repository.save(serverStatus);
+
+    ServerStatus serverStatus2 = repository.findById("id03").orElseThrow();
+    log.info("{}", serverStatus2);
+  }
+
+  @AfterAll
+  void deleteAll() {
+    dynamoDBMapper.batchDelete((List<ServerStatus>) repository.findAll());
+  }
+
+}
+----
+
+
