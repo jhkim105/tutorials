@@ -50,15 +50,17 @@ curl localhost:8080/uppercase -H "Content-Type: text/plain" -d "Hello cloud func
 === Functional interface 구현하기
 [source,java]
 ----
-public class GreetingFunction implements Function<String, String> {
+public class Greeter implements Function<String, String> {
 
   @Override
   public String apply(String s) {
+    System.out.println("param:" + s);
     return "Hello " + s;
   }
 }
+
 ----
-@Component로 선언하거나, spring.cloud.function.scan.packages 로 지정 가능함
+@Component 로 선언하거나, spring.cloud.function.scan.packages 로 지정 가능함
 
 
 
@@ -137,7 +139,7 @@ maven-shade-plugin 적용
 -----
 
 
-빌드하면 -aws.jar가 생성됨. 이 파일을 AWS Lambda에 배포하면 된다.
+빌드하면 -aws.jar 가 생성됨. 이 파일을 AWS Lambda 에 배포하면 된다.
 
 Handler 지정하기
 - org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
