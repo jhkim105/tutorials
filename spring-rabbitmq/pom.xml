@@ -16,8 +16,10 @@
   <name>spring-rabbitmq</name>
   <description>spring-rabbitmq</description>
   <modules>
+    <module>spring-rabbitmq-batched-messages</module>
     <module>spring-rabbitmq-broadcast</module>
     <module>spring-rabbitmq-error-handling</module>
+    <module>spring-rabbitmq-monitoring</module>
   </modules>
   <properties>
   </properties>
