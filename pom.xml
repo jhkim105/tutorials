@@ -25,6 +25,7 @@
     <module>spring-cache</module>
     <module>spring-cache-redis</module>
     <module>spring-cloud-function</module>
+    <module>spring-cloud-stream</module>
     <module>spring-integration</module>
     <module>spring-data</module>
     <module>spring-docker</module>

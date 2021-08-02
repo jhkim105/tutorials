@@ -9,12 +9,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>jhkim105.tutorials</groupId>
-  <artifactId>spring-cloud-function</artifactId>
+  <artifactId>spring-cloud-stream</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>spring-cloud-function-aws</module>
-    <module>spring-cloud-function-functional-bean-definition</module>
+    <module>spring-cloud-stream-rabbitmq</module>
   </modules>
   <properties>
     <spring-boot.version>2.5.3</spring-boot.version>
