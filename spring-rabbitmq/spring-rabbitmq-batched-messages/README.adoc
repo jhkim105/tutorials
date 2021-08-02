@@ -1,6 +1,6 @@
 = AMQP Batched Message Examples
 
-== BatchListener
+== BatchMessageListener
 
 BatchMessageListener 구현
 [source,java]
@@ -31,6 +31,27 @@ Container 설정
   }
 ----
 
+== @RabbitListener with Batching
+containerFactory 등록
+[source,java]
+----
+  @Bean
+  public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+    SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+    factory.setConnectionFactory(connectionFactory);
+    factory.setBatchListener(true);
+    factory.setConsumerBatchEnabled(true);
+    factory.setBatchSize(10);
+    return factory;
+  }
+
+
+  @RabbitListener(queues = QUEUE_A)
+  public void listen(List<String> list) {
+    log.info("messages->{}", list);
+  }
+----
+
 
 == Test 결과
 메시지를 최대 배치사이즈 만큼 한번에 읽어온다.
@@ -40,6 +61,8 @@ image::result-01.png[]
 일정시간 간격으로 전송하는 경우, 한건씩 읽는다.
 
 image::result-02.png[]
+
+
 
 == References
 https://docs.spring.io/spring-amqp/docs/current/reference/html/#de-batching
