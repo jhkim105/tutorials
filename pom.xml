@@ -19,6 +19,7 @@
     <module>mockserver</module>
     <module>monitoring-prometheus</module>
     <module>spring-activemq</module>
+    <module>spring-aws-dynamodb</module>
     <module>spring-cache</module>
     <module>spring-cloud-function</module>
     <module>spring-integration</module>
