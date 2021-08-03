@@ -19,14 +19,16 @@
     <module>mockserver</module>
     <module>monitoring-prometheus</module>
     <module>spring-activemq</module>
+    <module>spring-activemq-guarantee-order</module>
     <module>spring-aws-dynamodb</module>
+    <module>spring-oauth2</module>
     <module>spring-cache</module>
     <module>spring-cloud-function</module>
     <module>spring-integration</module>
     <module>spring-data</module>
     <module>spring-jsp</module>
     <module>spring-junit5</module>
-    <module>spring-oauth2</module>
+    <module>spring-mqtt-distributed-lock</module>
     <module>spring-rabbitmq</module>
     <module>spring-sample</module>
     <module>spring-scheduled-shedlock</module>
