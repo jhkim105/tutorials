@@ -64,6 +64,9 @@ admin/admin
 
 Add datasource and Create a dashboard
 
+## Prometheus Java Client - TODO
+https://github.com/prometheus/client_java
+
 
 ## References
 https://meetup.toast.com/posts/237  
