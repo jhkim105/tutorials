@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MonitoringPrometheusApplication {
+public class SpringPrometheusApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(MonitoringPrometheusApplication.class, args);
+    SpringApplication.run(SpringPrometheusApplication.class, args);
   }
 
 }
