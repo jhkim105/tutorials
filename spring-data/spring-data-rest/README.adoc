@@ -1,0 +1,39 @@
+= Spring Data Rest And Rest Docs
+
+
+
+== Rest Docs
+
+[source,xml]
+----
+  <dependency>
+      <groupId>org.springframework.restdocs</groupId>
+      <artifactId>spring-restdocs-mockmvc</artifactId>
+      <scope>test</scope>
+    </dependency>
+----
+
+
+RestDocsConfiguration.java
+[source,java]
+----
+@TestConfiguration
+public class RestDocsConfiguration {
+
+  @Bean
+  public RestDocsMockMvcConfigurationCustomizer restDocsMockMvcConfigurationCustomizer() {
+    return configurer -> configurer.operationPreprocessors()
+        .withRequestDefaults(prettyPrint())
+        .withResponseDefaults(prettyPrint());
+
+  }
+
+}
+----
+
+
+
+
+== References
+https://docs.asciidoctor.org/maven-tools/latest/
+

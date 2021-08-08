@@ -1,0 +1,90 @@
+= REST API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:operation-http-request-title: Request example
+:operation-curl-request-title: Request example(curl)
+:operation-http-response-title: Response example
+
+[[overview]]
+= 개요
+
+[[overview-http-methods]]
+== HTTP method
+
+|===
+| Method | Usage
+
+| `GET`
+| 리소스 조회
+
+| `POST`
+| 리소스 생성
+
+| `PUT`
+| 리소스 수정
+
+| `PATCH`
+| 리소스 일부 수정
+
+| `DELETE`
+| 리소스 삭제
+|===
+
+[[overview-http-status-codes]]
+== HTTP status code
+
+|===
+| Status Code | Usage
+
+| `200 OK`
+| 요청을 성공적으로 처리함
+
+| `201 Created`
+| 새 리소스를 성공적으로 생성함. 응답의 `Location` 헤더에 해당 리소스의 URI가 담겨있다.
+
+| `204 No Content`
+| 기존 리소스를 성공적으로 수정함.
+
+| `400 Bad Request`
+| 잘못된 요청을 보낸 경우. 응답 본문에 더 오류에 대한 정보가 담겨있다.
+
+| `404 Not Found`
+| 요청한 리소스가 없음.
+|===
+
+[[overview-errors]]
+== Errors
+에러 발생(status code >= 400)하면 response body에 error 정보가 다음과 같이 리턴된다.
+
+include::{snippets}/error-example/http-response.adoc[]
+
+[[resources]]
+= Resources
+Resources API는 http://stateless.co/hal_specification.html[Hypertext Application from resource to resource. Language (HAL)] 형식을 따른다.
+링크는 `_links`라는 키로 제공한다. 본 API의 사용자(클라이언트)는 URI를 직접 생성하지 않아야 하며, 리소스에서 제공하는 링크를 사용해야 한다.
+
+
+[[resources-user]]
+== User
+
+[[resources-user-links]]
+=== Links
+include::{snippets}/users-get/links.adoc[]
+
+[[resources-user-list]]
+=== User 목록 조회
+operation::users-list[snippets='http-request,curl-request,http-response,response-fields']
+
+[[resources-user-get]]
+=== User 조회
+operation::users-get[snippets='http-request,curl-request,http-response,response-fields']
+
+[[actions]]
+= Actions
+
+[[actoins-account]]
+== Account
