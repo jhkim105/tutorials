@@ -1,0 +1,18 @@
+
+
+
+== FlashPhoner
+promethues.yml
+----
+global:
+  scrape_interval: 10s # 10초 마다 Metric 을 Pulling
+  evaluation_interval: 10s
+scrape_configs:
+  - job_name: 'flashphoner'
+    metrics_path: '/' # Application prometheus endpoint
+    params:
+      action: [stat]
+      format: [prometheus]
+    static_configs:
+      - targets: ['marioms.rsupport.com:8081'] # Application host:port
+----
