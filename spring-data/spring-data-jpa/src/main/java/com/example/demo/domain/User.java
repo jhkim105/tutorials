@@ -15,6 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.ToString.Exclude;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -34,9 +35,11 @@ public class User extends BaseEntity<String> {
   private String name;
 
   @OneToMany(mappedBy = "user")
+  @Exclude
   private Set<UserAddress> userAddresses = new HashSet<>();
 
   @OneToMany(mappedBy = "user")
+  @Exclude
   private Set<Order> orders = new HashSet<>();
 
   @Builder

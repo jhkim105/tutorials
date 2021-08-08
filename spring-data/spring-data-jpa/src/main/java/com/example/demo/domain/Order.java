@@ -20,6 +20,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.ToString.Exclude;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -31,7 +32,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Order extends BaseEntity<String> implements BaseEntity.LogWriteEntity {
+public class Order extends BaseEntity<String> {
 
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -50,10 +51,15 @@ public class Order extends BaseEntity<String> implements BaseEntity.LogWriteEnti
   private LocalDateTime orderDate;
 
   @OneToMany(mappedBy = "order")
+  @Exclude
   private Set<OrderProduct> orderProducts = new HashSet<>();
 
   @OneToOne
   private Delivery delivery;
+
+  public void setOrderProducts(Set<OrderProduct> orderProducts) {
+    this.orderProducts = orderProducts;
+  }
 
 
   @Builder
@@ -63,10 +69,4 @@ public class Order extends BaseEntity<String> implements BaseEntity.LogWriteEnti
     this.orderProducts = orderProducts;
   }
 
-  @Override
-  public BaseEntity<?> toLog() {
-    OrderLog orderLog = OrderLog.builder()
-        .build();
-    return orderLog;
-  }
 }
