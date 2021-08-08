@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MonitoringPrometheusApplicationTests {
+class SpringPrometheusApplicationTests {
 
   @Test
   void contextLoads() {

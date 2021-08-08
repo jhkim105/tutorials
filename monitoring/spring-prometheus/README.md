@@ -36,13 +36,14 @@ docker: https://prometheus.io/docs/prometheus/latest/installation/
 
 prometheus.yml
 ```yml
-scrape_interval: 10s # 10초 마다 Metric을 Pulling
-evaluation_interval: 10s
+global:
+  scrape_interval: 10s # 10초 마다 Metric 을 Pulling
+  evaluation_interval: 10s
 scrape_configs:
-- job_name: 'spring-boot-app'
-metrics_path: '/actuator/prometheus' # Application prometheus endpoint
-static_configs:
-- targets: ['host.docker.internal:8080'] # Application host:port
+  - job_name: 'spring-boot-app'
+    metrics_path: '/actuator/prometheus' # Application prometheus endpoint
+    static_configs:
+      - targets: ['host.docker.internal:8080'] # Application host:port
 ```
 
 docker run
@@ -63,6 +64,9 @@ docker run -d -p 3000:3000 --name grafana grafana/grafana
 admin/admin
 
 Add datasource and Create a dashboard
+
+## Prometheus Java Client - TODO
+https://github.com/prometheus/client_java
 
 
 ## References

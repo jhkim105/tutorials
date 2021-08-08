@@ -17,7 +17,7 @@
     <module>java-utils</module>
     <module>jmh</module>
     <module>mockserver</module>
-    <module>monitoring-prometheus</module>
+    <module>monitoring</module>
     <module>spring-activemq</module>
     <module>spring-activemq-guarantee-order</module>
     <module>spring-aws-dynamodb</module>

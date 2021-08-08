@@ -1,0 +1,9 @@
+
+
+== TODO
+Metrics
+https://www.baeldung.com/micrometer
+
+Spring Metrics
+https://docs.spring.io/spring-metrics/docs/current/public/prometheus
+

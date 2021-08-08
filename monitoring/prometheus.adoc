@@ -1,0 +1,7 @@
+:hardbreaks:
+=== Reload config
+curl -X POST http://127.0.0.1:9090/-/reload
+
+Lifecycle API is not enabled 에러나면서 안될 경우에 아래 옵션 필요
+--web.enable-lifecycle
+

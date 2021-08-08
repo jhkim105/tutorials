@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>jhkim105</groupId>
+    <artifactId>tutorials</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>jhkim105.tutorials</groupId>
+  <artifactId>monitoring</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>monitoring</name>
+  <description>monitoring</description>
+  <packaging>pom</packaging>
+  <properties>
+    <java.version>11</java.version>
+    <spring-boot.version>2.5.3</spring-boot.version>
+  </properties>
+  <modules>
+    <module>spring-prometheus</module>
+  </modules>
+</project>

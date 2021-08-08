@@ -1,0 +1,135 @@
+# curl http://localhost:9091/api/v1/targets/metadata
+#    --data-urlencode 'metric=process_cpu_usage'
+#    --data-urlencode 'match_target={job="spring-boot-app"}'
+#    --data-urlencode 'limit=2'
+POST http://localhost:9091/api/v1/targets/metadata
+Content-Type: application/x-www-form-urlencoded
+
+metric=process_cpu_usage&match_target=%7Bjob%3D%22spring-boot-app%22%7D&limit=2
+
+###
+
+
+
+
+
+
+# https://prometheus.io/docs/prometheus/latest/querying/api/
+
+# Expression queries #
+# Instanct queries
+GET http://localhost:9090/api/v1/query?query=up
+Accept: application/json
+
+###
+
+GET http://localhost:9090/api/v1/query?query=up&time=2021-08-03T20:10:51.781Z
+Accept: application/json
+
+###
+
+# Range queries
+GET http://localhost:9090/api/v1/query_range?query=up&start=2021-08-01T20:10:30.781Z&end=2021-08-01T20:11:00.781Z&step=15s
+
+###
+
+
+
+# Querying metadata #
+
+# Finding series by label matchers
+# curl 'http://localhost:9090/api/v1/series?' --data-urlencode 'match[]=up' --data-urlencode 'match[]=process_start_time_seconds{job="prometheus"}'
+POST http://localhost:9090/api/v1/series
+Content-Type: application/x-www-form-urlencoded
+
+match[]=up&match[]=process_start_time_seconds%7Bjob%3D%22prometheus%22%7D
+
+###
+
+
+
+## Getting label names
+GET localhost:9090/api/v1/labels
+
+###
+
+## Querying label values
+GET http://localhost:9090/api/v1/label/job/values
+
+###
+
+
+# Targets #
+GET http://localhost:9090/api/v1/targets
+
+###
+
+GET http://localhost:9090/api/v1/targets?state=active
+
+###
+
+
+# Rules #
+# type=alert|record
+GET http://localhost:9090/api/v1/rules
+
+###
+
+# Alerts #
+GET http://localhost:9090/api/v1/alerts
+
+###
+
+# Querying target metadata #
+# match_target=, metric=, limit=,
+GET http://localhost:9090/api/v1/targets/metadata
+
+###
+
+# curl http://localhost:9091/api/v1/targets/metadata
+#    --data-urlencode 'metric=process_cpu_usage'
+#    --data-urlencode 'match_target={job="spring-boot-app"}'
+#    --data-urlencode 'limit=2'
+GET http://localhost:9090/api/v1/targets/metadata?metric=process_cpu_usage&match_target=%7Bjob%3D%22spring-boot-app%22%7D&limit=2
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+# Querying metric metadata #
+GET http://localhost:9090/api/v1/metadata?limit=2
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+GET http://localhost:9090/api/v1/metadata?metric=jvm_memory_max_bytes
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+
+# Status #
+# Config
+GET http://localhost:9090/api/v1/status/config
+
+###
+
+# Flags
+GET http://localhost:9090/api/v1/status/flags
+
+###
+
+# Runtime Information
+GET http://localhost:9090/api/v1/status/runtimeinfo
+
+###
+
+# Build Information
+GET http://localhost:9090/api/v1/status/buildinfo
+
+###
+
+# TSDB Stats
+GET http://localhost:9090/api/v1/status/tsdb
+
+###
+

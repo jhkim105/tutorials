@@ -1,0 +1,29 @@
+{
+  "status": "success",
+  "data": {
+    "activeTargets": [
+      {
+        "discoveredLabels": {
+          "__address__": "marioms.rsupport.com:8081",
+          "__metrics_path__": "/",
+          "__param_action": "stat",
+          "__param_format": "prometheus",
+          "__scheme__": "http",
+          "job": "flashphoner"
+        },
+        "labels": {
+          "instance": "marioms.rsupport.com:8081",
+          "job": "flashphoner"
+        },
+        "scrapePool": "flashphoner",
+        "scrapeUrl": "http://marioms.rsupport.com:8081/?action=stat&format=prometheus",
+        "globalUrl": "http://marioms.rsupport.com:8081/?action=stat&format=prometheus",
+        "lastError": "",
+        "lastScrape": "2021-08-07T02:50:56.3265487Z",
+        "lastScrapeDuration": 0.0348893,
+        "health": "up"
+      }
+    ],
+    "droppedTargets": []
+  }
+}
