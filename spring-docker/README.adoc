@@ -1,0 +1,61 @@
+= Spring Boot with Docker
+
+
+== Dockerfile
+
+Dockerfile
+----
+FROM amazoncorretto:11-alpine-jdk
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+----
+
+Build and Run
+----
+docker build --tag spring-boot-docker .
+docker run -p8080:8080 spring-boot-docker
+----
+
+
+Dockerfile to run non-root user
+----
+FROM amazoncorretto:11-alpine-jdk
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+----
+
+Build and Run
+----
+docker build --tag spring-boot-docker .
+docker run -p8080:8080 spring-boot-docker
+----
+
+로그에서 spring 계정으로 실행되었음을 확인할 수 있다. (/app.jar started by spring in /)
+----
+2021-08-12 12:41:37.765  INFO 1 --- [           main] c.example.demo.SpringDockerApplication   : Starting SpringDockerApplication v0.0.1-SNAPSHOT using Java 11.0.12 on ca2f2e33702c with PID 1 (/app.jar started by spring in /)
+----
+
+
+== Build a Docker Image with Maven
+----
+mvn spring-boot:build-image -Dspring-boot.build-image.imageName=spring-boot-docker
+----
+시간이 다소 소요됨
+[source,shell script]
+---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:42 min
+[INFO] Finished at: 2021-08-12T21:54:49+09:00
+[INFO] ------------------------------------------------------------------------
+----
+
+
+== Refs
+https://spring.io/guides/gs/spring-boot-docker/
+https://www.baeldung.com/dockerizing-spring-boot-application

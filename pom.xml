@@ -26,6 +26,7 @@
     <module>spring-cloud-function</module>
     <module>spring-integration</module>
     <module>spring-data</module>
+    <module>spring-docker</module>
     <module>spring-jsp</module>
     <module>spring-junit5</module>
     <module>spring-mqtt-distributed-lock</module>
