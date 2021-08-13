@@ -57,5 +57,5 @@ mvn spring-boot:build-image -Dspring-boot.build-image.imageName=spring-boot-dock
 
 
 == Refs
-https://spring.io/guides/gs/spring-boot-docker/
-https://www.baeldung.com/dockerizing-spring-boot-application
+- https://spring.io/guides/gs/spring-boot-docker/
+- https://www.baeldung.com/dockerizing-spring-boot-application
