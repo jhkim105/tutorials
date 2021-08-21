@@ -23,6 +23,7 @@
     <module>spring-aws-dynamodb</module>
     <module>spring-oauth2</module>
     <module>spring-cache</module>
+    <module>spring-cache-redis</module>
     <module>spring-cloud-function</module>
     <module>spring-integration</module>
     <module>spring-data</module>
@@ -35,6 +36,7 @@
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
     <module>aws-lambda</module>
+    <module>java-basic</module>
   </modules>
   <repositories>
   </repositories>

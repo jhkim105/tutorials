@@ -13,7 +13,7 @@ public class PrometheusApiClientTests {
 
   @BeforeEach
   void beforeEach() {
-    prometheusApiClient = new PrometheusApiClient();
+    prometheusApiClient = new PrometheusApiClient("http://localhost:9090/api/v1");
   }
 
   @Test
