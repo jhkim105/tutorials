@@ -12,7 +12,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-
+  redis:
+    host: locahost
+    port: 6379
 
 mqtt:
   brokerUrl: tcp://localhost:1883

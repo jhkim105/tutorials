@@ -1,0 +1,83 @@
+= Spring Cache With Redis
+
+
+== Dependency
+[source,xml]
+----
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-cache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.redisson</groupId>
+      <artifactId>redisson-spring-data-25</artifactId>
+      <version>3.16.1</version>
+    </dependency>
+----
+
+== Config
+RedisConfig.java
+[source,java]
+----
+@Configuration
+public class RedisConfig {
+  @Bean
+  public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
+    return new RedissonConnectionFactory(redisson);
+  }
+
+  @Bean(destroyMethod = "shutdown")
+  public RedissonClient redissonClient(Environment env) {
+    String host = env.getProperty("spring.redis.host");
+    Integer port = env.getProperty("spring.redis.port", Integer.class);
+
+    Config config = new Config();
+    SingleServerConfig singleServerConfig = config.useSingleServer();
+    singleServerConfig
+        .setTimeout(10000)
+        .setAddress(String.format("redis://%s:%s", host, port));
+
+    return Redisson.create(config);
+  }
+}
+----
+
+CacheConfig.java
+[source,java]
+----
+@Configuration
+@EnableCaching
+public class CacheConfig {
+
+  public final static String CACHE_DATE_STRING = "dateString";
+
+  @Bean
+  public CacheManager cacheManager(RedissonConnectionFactory redissonConnectionFactory) {
+    Set<String> cacheNames = cacheNames();
+    Map<String, RedisCacheConfiguration> expiresMap = cacheExpiresMap();
+    return RedisCacheManager.builder(redissonConnectionFactory)
+        .initialCacheNames(cacheNames).withInitialCacheConfigurations(expiresMap).build();
+  }
+
+  private Set<String> cacheNames() {
+    Set<String> cacheNames = new HashSet<>();
+    cacheNames.add(CACHE_DATE_STRING);
+    return cacheNames;
+  }
+
+  private Map<String, RedisCacheConfiguration> cacheExpiresMap() {
+    Map<String, RedisCacheConfiguration> expiresMap = new HashMap<>();
+    expiresMap.put(CACHE_DATE_STRING, redisExpiresConfiguration(600));
+    return expiresMap;
+  }
+
+  private RedisCacheConfiguration redisExpiresConfiguration(long ttl) {
+    return RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(ttl));
+  }
+
+}
+
+----
+
+== Refs
+https://github.com/redisson/redisson/tree/master/redisson-spring-data

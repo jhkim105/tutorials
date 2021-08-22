@@ -1,4 +1,6 @@
-package com.example.springcacheredis;
+package com.example.spring.cache.redis;
+
+import static com.example.spring.cache.redis.CacheConfig.CACHE_DATE_STRING;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,19 +15,19 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class DateService {
 
-  @Cacheable("dateString")
+  @Cacheable(CACHE_DATE_STRING)
   public String getDateString(String pattern) {
     log.info("getDateString called");
     return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
   }
 
 
-  @CacheEvict(value = "dateString", allEntries = true)
+  @CacheEvict(value = CACHE_DATE_STRING, allEntries = true)
   public void evictCache() {
 
   }
 
-  @CachePut(value = "dateString")
+  @CachePut(value = CACHE_DATE_STRING)
   public String putCache(String pattern) {
     return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
   }

@@ -1,4 +1,4 @@
-package com.example.springcacheredis;
+package com.example.spring.cache.redis;
 
 import java.time.Duration;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
@@ -11,7 +11,9 @@ import org.springframework.data.redis.serializer.RedisSerializationContext.Seria
 
 @Configuration
 @EnableCaching
-public class RedisCacheConfig {
+public class CacheConfig {
+
+  public final static String CACHE_DATE_STRING = "dateString";
 
   @Bean
   public RedisCacheConfiguration cacheConfiguration() {
@@ -25,7 +27,7 @@ public class RedisCacheConfig {
   @Bean
   public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
     return (builder) -> builder
-        .withCacheConfiguration("dateString",
+        .withCacheConfiguration(CACHE_DATE_STRING,
             RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10)))
 //        .withCacheConfiguration("customerCache",
 //            RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5)))

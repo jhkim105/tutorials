@@ -1,4 +1,4 @@
-package com.example.springcacheredis;
+package com.example.spring.cache.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @SpringBootTest
 @Slf4j
-public class RedisCacheTest {
+public class CacheTest {
 
   @Autowired
   DateService dateService;

@@ -1,10 +1,10 @@
-package com.example.springcacheredis;
+package jhkim105.tutorials.spring.cache.redisson;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringCacheRedisApplicationTests {
+class SpringCacheRedissonApplicationTests {
 
   @Test
   void contextLoads() {

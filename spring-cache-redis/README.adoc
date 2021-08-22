@@ -15,12 +15,12 @@
 ----
 
 == Config
-RedisConfig.java
+CacheConfig.java
 [source,java]
 ----
 @Configuration
 @EnableCaching
-public class RedisCacheConfig {
+public class CacheConfig {
 
   @Bean
   public RedisCacheConfiguration cacheConfiguration() {
