@@ -17,7 +17,7 @@ public class RedisConfig {
   }
 
   @Bean(destroyMethod = "shutdown")
-  public RedissonClient redissonClient(Environment env) {
+  public RedissonClient redisson(Environment env) {
     String host = env.getProperty("spring.redis.host");
     Integer port = env.getProperty("spring.redis.port", Integer.class);
 
