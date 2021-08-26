@@ -36,7 +36,10 @@ public class ConferenceSttLogSaveActivator4 {
         log.debug("conferenceSttLog -> {}", conferenceSttLog);
         if (conferenceSttLog == null)
           createSttLog(data);
-        lock.unlock();
+        if(lock.isLocked())
+          lock.unlock();
+      } else {
+        throw new RuntimeException("Server is busy");
       }
     } catch (InterruptedException e) {
       throw new RuntimeException(e);

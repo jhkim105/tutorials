@@ -43,8 +43,11 @@ public class ConferenceSttLogSaveActivator3 {
             setExecuted(executeKey);
           }
         } finally {
-          lock.unlock();
+          if(lock.isLocked())
+            lock.unlock();
         }
+      } else {
+        throw new RuntimeException("Server is busy");
       }
     } catch (Exception e) {
       throw new RuntimeException(e);

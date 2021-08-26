@@ -1,5 +1,5 @@
 spring:
   cloud:
     function:
-      scan.packages: com.example.demo.functions
+      scan.packages: jhkim105.tutorials.spring.cloud.function.aws.functions
       definition: uppercase
