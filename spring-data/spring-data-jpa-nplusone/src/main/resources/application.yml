@@ -1,0 +1,24 @@
+
+logging:
+  level:
+    jhkim105.tutorials: debug
+#    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+#    org.hibernate.type.EnumType: trace
+#    org.springframework.transaction: debug
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:mariadb://localhost/demo_nplusone?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate.id.new_generator_mappings: false
+
+    show-sql: true
