@@ -30,13 +30,14 @@
     <module>spring-docker</module>
     <module>spring-jsp</module>
     <module>spring-junit5</module>
-    <module>spring-mqtt-distributed-lock</module>
+    <module>spring-mqtt</module>
     <module>spring-rabbitmq</module>
     <module>spring-sample</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
     <module>aws-lambda</module>
     <module>java-basic</module>
+    <module>spring-mqtt</module>
   </modules>
   <repositories>
   </repositories>
