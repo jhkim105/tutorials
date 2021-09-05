@@ -30,14 +30,6 @@ class InvestRepositoryTest {
     Assertions.assertThat(investPage.getContent().get(0).getId()).isEqualTo(-99L);
   }
 
-//  @Test
-//  @Sql(scripts = {"/sql/products.sql", "/sql/invests.sql"})
-//  void findAllByUserIdUsingQuery_exception_when_paging() {
-//    Page<Invest> investPage = investRepository.findAllByUserIdUsingQuery(PageRequest.of(0, 2), "user01");
-//    Assertions.assertThat(investPage.getContent()).size().isEqualTo(2);
-//    Assertions.assertThat(investPage.getContent().get(0).getId()).isEqualTo(-99L);
-//  }
-//
   @Test
   @Sql(scripts = {"/sql/products.sql", "/sql/invests.sql"})
   void findAllByUserIdUsingQuery() {
@@ -47,17 +39,17 @@ class InvestRepositoryTest {
   @Test
   @Sql(scripts = {"/sql/products.sql", "/sql/invests.sql"})
   void findAllByUserIdUsingQueryDsl() {
-    Page<Invest> investPage = investRepository.findAllByUserIdUsingQueryDsl(PageRequest.of(0, 2), "user01");
-    Assertions.assertThat(investPage.getContent()).size().isEqualTo(2);
-    Assertions.assertThat(investPage.getContent().get(0).getId()).isEqualTo(-99L);
+    Page<Invest> investPage = investRepository.findAllByUserIdUsingQueryDsl(PageRequest.of(1, 2), "user01");
+    Assertions.assertThat(investPage.getContent()).size().isEqualTo(1);
+    Assertions.assertThat(investPage.getContent().get(0).getId()).isEqualTo(-97L);
   }
 
   @Test
   @Sql(scripts = {"/sql/products.sql", "/sql/invests.sql"})
   void findAllByUserIdUsingQueryDslProjection() {
-    Page<InvestProjection> investPage = investRepository.findAllByUserIdUsingQueryDslProjection(PageRequest.of(0, 2), "user01");
-    Assertions.assertThat(investPage.getContent()).size().isEqualTo(2);
-    Assertions.assertThat(investPage.getContent().get(0).getInvestId()).isEqualTo(-99L);
+    Page<InvestProjection> investPage = investRepository.findAllByUserIdUsingQueryDslProjection(PageRequest.of(1, 2), "user01");
+    Assertions.assertThat(investPage.getContent()).size().isEqualTo(1);
+    Assertions.assertThat(investPage.getContent().get(0).getInvestId()).isEqualTo(-97L);
   }
 
 }
