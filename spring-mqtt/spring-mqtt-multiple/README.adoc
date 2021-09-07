@@ -23,7 +23,7 @@
     return adapter;
   }
 
-    private MqttPahoClientFactory mqttClientFactory(String brokerUrl) {
+  private MqttPahoClientFactory mqttClientFactory(String brokerUrl) {
     log.info("mqttProperties->{}", mqttProperties);
     DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
     MqttConnectOptions options = new MqttConnectOptions();
