@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,7 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.handler.annotation.Header;
-
-import java.util.UUID;
 
 @Configuration
 @IntegrationComponentScan
@@ -62,7 +60,7 @@ public class MqttIntegrationConfig {
         .handle(outboundMessageHandler()).get();
   }
 
-  public MessageHandler outboundMessageHandler() {
+  public MqttPahoMessageHandler outboundMessageHandler() {
     String clientId = UUID.randomUUID().toString();
     MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(clientId, mqttClientFactory());
     messageHandler.setAsync(mqttProperties.isAsync());

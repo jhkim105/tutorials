@@ -1,6 +1,5 @@
 package jhkim105.tutorials.spring.mqtt.multiple;
 
-import jhkim105.tutorials.spring.mqtt.multiple.MqttConfig.OutboundGateway;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,14 +9,14 @@ import org.springframework.integration.dsl.context.IntegrationFlowContext;
 class SpringMqttMultipleApplicationTests {
 
   @Autowired(required = false)
-  private OutboundGateway outboundGateway;
+  private MqttUtils mqttUtils;
 
   @Autowired
   private IntegrationFlowContext integrationFlowContext;
 
   @Test
   void publish() {
-    outboundGateway.publish("/test2", "aaaa");
+    mqttUtils.publish("/test2", "aaaa");
   }
 
   @Test

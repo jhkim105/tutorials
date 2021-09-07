@@ -1,0 +1,84 @@
+= Publish And Subscribe to Multiple MQTT Server
+
+== Subscribe
+* IntegratonFlow 를  서버 수 만큼 등록
+
+[source,java]
+----
+  private IntegrationFlow mqttInboundFlow(String brokerUrl) {
+    String clientId = UUID.randomUUID().toString();
+    return IntegrationFlows
+        .from(mqttInboundAdapter(mqttClientFactory(brokerUrl), clientId, TOPIC))
+        .wireTap(MQTT_LOGGING_CHANNEL)
+        .handle(this::handle)
+        .get();
+  }
+
+  private MqttPahoMessageDrivenChannelAdapter mqttInboundAdapter(MqttPahoClientFactory mqttClientFactory, String clientId, String topic) {
+    MqttPahoMessageDrivenChannelAdapter adapter =
+        new MqttPahoMessageDrivenChannelAdapter(clientId, mqttClientFactory, topic);
+    adapter.setCompletionTimeout(mqttProperties.getCompletionTimeout());
+    adapter.setConverter(new DefaultPahoMessageConverter());
+    adapter.setQos(mqttProperties.getQos());
+    return adapter;
+  }
+
+    private MqttPahoClientFactory mqttClientFactory(String brokerUrl) {
+    log.info("mqttProperties->{}", mqttProperties);
+    DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
+    MqttConnectOptions options = new MqttConnectOptions();
+    options.setServerURIs(new String[]{brokerUrl});
+    factory.setConnectionOptions(options);
+    return factory;
+  }
+----
+
+== Publish
+* MessageHandler를 서버 수 만큼 생성 Collection 을 bean 으로 등록 후 전송
+[source,java]
+----
+  @Bean
+  public Collection<MessageHandler> outboundMessageHandlers() {
+    String[] brokerUrls = mqttProperties.getBrokerUrl();
+    Collection<MessageHandler> messageHandlers = new ArrayList<>();
+    for(String url : brokerUrls) {
+      messageHandlers.add(outboundMessageHandler(url));
+    }
+    return messageHandlers;
+  }
+
+  private MqttPahoMessageHandler outboundMessageHandler(String brokerUrl) {
+    String clientId = UUID.randomUUID().toString();
+    MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(clientId, mqttClientFactory(brokerUrl));
+    messageHandler.setAsync(mqttProperties.isAsync());
+    messageHandler.setDefaultQos(mqttProperties.getQos());
+    messageHandler.setCompletionTimeout(mqttProperties.getCompletionTimeout());
+    messageHandler.afterPropertiesSet();
+    return messageHandler;
+  }
+----
+
+MqttUtils.java
+[source,java]
+----
+@Component
+@RequiredArgsConstructor
+public class MqttUtils {
+
+  @Resource(name = "outboundMessageHandlers")
+  private Collection<MqttPahoMessageHandler> outboundMessageHandlers;
+
+  private final MqttProperties mqttProperties;
+
+  public void publish(String topic, String payload) {
+    Message<String> message = MessageBuilder
+        .withPayload(payload)
+        .setHeader(MqttHeaders.TOPIC, topic)
+        .setHeader(MqttHeaders.QOS, mqttProperties.getQos())
+        .build();
+
+    outboundMessageHandlers.parallelStream().forEach(messageHandler -> messageHandler.handleMessage(message));
+  }
+}
+----
+
