@@ -5,6 +5,18 @@
 
 [source,java]
 ----
+  @PostConstruct
+  public void init() {
+    createInboundFlow();
+  }
+
+  private void createInboundFlow() {
+    String[] brokerUrls = mqttProperties.getBrokerUrl();
+    for(String url : brokerUrls) {
+      integrationFlowContext.registration(mqttInboundFlow(url)).id(String.format("%s-%s", INBOUND_PREFIX, url.replace(":", ""))).register();
+    }
+  }
+
   private IntegrationFlow mqttInboundFlow(String brokerUrl) {
     String clientId = UUID.randomUUID().toString();
     return IntegrationFlows
@@ -35,6 +47,7 @@
 
 == Publish
 * MessageHandler를 서버 수 만큼 생성 Collection 을 bean 으로 등록 후 전송
+
 [source,java]
 ----
   @Bean
