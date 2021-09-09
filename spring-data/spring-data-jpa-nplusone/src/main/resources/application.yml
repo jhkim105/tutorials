@@ -20,5 +20,8 @@ spring:
       ddl-auto: create
     properties:
       hibernate.id.new_generator_mappings: false
-
     show-sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
