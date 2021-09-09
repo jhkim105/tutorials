@@ -4,6 +4,8 @@ import java.util.List;
 import jhkim105.tutorials.spring.data.jpa.nplusone.JpaConfig;
 import jhkim105.tutorials.spring.data.jpa.nplusone.domain.User;
 import org.junit.jupiter.api.Test;
+import org.quickperf.spring.sql.QuickPerfSqlConfig;
+import org.quickperf.sql.annotation.ExpectSelect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,13 +15,14 @@ import org.springframework.data.domain.PageRequest;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(JpaConfig.class)
+@Import({JpaConfig.class, QuickPerfSqlConfig.class})
 public class UserRepositoryTest {
 
   @Autowired
   UserRepository userRepository;
 
   @Test
+  @ExpectSelect(2)
   void findAllUsingEntityGraph() {
     Page<User> userPage = userRepository.findAllUsingEntityGraph(PageRequest.of(0, 2));
     userPage.getContent().stream().forEach(user -> user.getCoupons().size());
@@ -27,6 +30,7 @@ public class UserRepositoryTest {
   }
 
   @Test
+  @ExpectSelect(1)
   void findAllUsingQuery() {
     List<User> users = userRepository.findAllUsingQuery();
     users.stream().forEach(user -> user.getCoupons().size());

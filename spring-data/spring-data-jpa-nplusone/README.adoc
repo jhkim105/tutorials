@@ -83,8 +83,9 @@ Caused by: java.lang.IllegalArgumentException: The given JpaEntityGraph [name=or
 at org.springframework.util.Assert.isTrue(Assert.java:121)
 ----
 
-[source,java]
+
 Entity
+[source,java]
 ----
 @NamedEntityGraph(name = "User.couponsAndOrders",
     attributeNodes = {@NamedAttributeNode("coupons"), @NamedAttributeNode("orders")}
@@ -92,8 +93,54 @@ Entity
 ----
 
 Repository
+[source,java]
 ----
   @EntityGraph("User.couponsAndOrders")
   @Query("select o from User o")
   Page<User> findAllUsingEntityGraph(Pageable pageable);
+
+----
+
+
+== QuickPerf 로 쿼리 실행횟수 검증하기
+
+=== Maven Dependency
+----
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.quickperf</groupId>
+        <artifactId>quick-perf-bom</artifactId>
+        <version>1.0.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+...
+ <dependency>
+     <groupId>org.quickperf</groupId>
+     <artifactId>quick-perf-junit5</artifactId>
+     <scope>test</scope>
+ </dependency>
+    <dependency>
+      <groupId>org.quickperf</groupId>
+      <artifactId>quick-perf-springboot2-sql-starter</artifactId>
+      <scope>test</scope>
+    </dependency>
+----
+
+
+=== TestCase
+Import QuickPerfSqlConfig.class
+
+----
+@Import({JpaConfig.class, QuickPerfSqlConfig.class})
+----
+
+@ExpectSelect() 사용하여 실행횟수 지정
+----
+  @ExpectSelect(2)
+  void findAllUsingEntityGraph() {
+    Page<User> userPage = userRepository.findAllUsingEntityGraph(PageRequest.of(0, 2));
 ----
