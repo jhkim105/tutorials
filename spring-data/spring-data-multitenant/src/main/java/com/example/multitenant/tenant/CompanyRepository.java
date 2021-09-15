@@ -1,4 +1,4 @@
-package com.example.demo.tenant;
+package com.example.multitenant.tenant;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

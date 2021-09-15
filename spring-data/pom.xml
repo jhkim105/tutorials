@@ -34,7 +34,7 @@
     <module>spring-data-initialize</module>
     <module>spring-data-jpa</module>
     <module>spring-data-multiple-datasource</module>
-<!--    <module>spring-data-multitenant</module>-->
+    <module>spring-data-multitenant</module>
     <module>spring-data-replication-driver</module>
     <module>spring-data-routing-data-source</module>
   </modules>

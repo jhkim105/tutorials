@@ -16,10 +16,11 @@ spring:
 #      ddl-auto: create
     properties:
       hibernate.hbm2ddl.auto: create
+      hibernate.physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
 
 user:
   datasource:
-    url: jdbc:mariadb://localhost/demo_user?createDatabaseIfNotExist=true
+    url: jdbc:mariadb://localhost/demo_mds_user?createDatabaseIfNotExist=true
     username: root
     password: @db.password@
     dbcp2:
@@ -30,7 +31,7 @@ user:
 
 product:
   datasource:
-    url: jdbc:mariadb://localhost/demo_product?createDatabaseIfNotExist=true
+    url: jdbc:mariadb://localhost/demo_mds_product?createDatabaseIfNotExist=true
     username: root # not replaced
     password: @db.password@
     dbcp2:
