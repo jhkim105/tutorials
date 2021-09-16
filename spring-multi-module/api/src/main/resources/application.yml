@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    group:
+      api: core
+service:
+  app-name: api
+  app-version: 1.0
