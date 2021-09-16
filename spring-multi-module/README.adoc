@@ -1,3 +1,5 @@
+:hardbreaks:
+
 = Spring Boot Multi Module Project
 
 == Setup Root Project
