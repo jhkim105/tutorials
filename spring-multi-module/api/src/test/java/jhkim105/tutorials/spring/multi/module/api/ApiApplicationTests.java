@@ -26,6 +26,7 @@ class ApiApplicationTests {
   void env() {
     Assertions.assertThat(env.getProperty("service.app-name")).isEqualTo("api");
     Assertions.assertThat(env.getProperty("service.app-version")).isEqualTo("1.0");
+    Assertions.assertThat(env.getProperty("core.prop1")).isEqualTo("value1");
   }
 }
 

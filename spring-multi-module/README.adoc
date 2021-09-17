@@ -149,19 +149,6 @@ Spring Intializer 로 생성 후 parent 지정 및 core depedency 추가
 
 == Application Properties
 core property 를 import 하여 override 가능하게 하기
-spring.profiles.group 방식이 간단해서 더 적합해 보인다.
-
-=== Profile Group
-[source,yaml]
-----
-spring:
-  profiles:
-    group:
-      api: core
-service:
-  app-name: api
-  app-version: 1.0
-----
 
 === Import Config
 [source,yaml]
@@ -184,3 +171,4 @@ service:
 
 == Refs
 https://spring.io/guides/gs/multi-module/
+https://spring.io/blog/2020/08/14/config-file-processing-in-spring-boot-2-4

@@ -1,7 +1,14 @@
 spring:
   profiles:
-    group:
-      api: core
+    active: api
+  config:
+    import: classpath:/core.properties
+
+---
+spring:
+  config:
+    activate:
+      on-profile: api
 service:
   app-name: api
   app-version: 1.0
