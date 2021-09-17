@@ -11,12 +11,10 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   jpa:
-#    generate-ddl: true
-#    hibernate:
-#      ddl-auto: create
     properties:
       hibernate.hbm2ddl.auto: create
       hibernate.physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    show-sql: true
 
 user:
   datasource:
@@ -24,9 +22,9 @@ user:
     username: root
     password: @db.password@
     dbcp2:
-      max-total: 20
-      initial-size: 20
-      max-idle: 20
+      max-total: 10
+      initial-size: 10
+      max-idle: 10
       min-idle: 10
 
 product:
@@ -36,8 +34,8 @@ product:
     password: @db.password@
     dbcp2:
       max-total: 20
-      initial-size: 20
-      max-idle: 20
+      initial-size: 10
+      max-idle: 10
       min-idle: 10
 
 
