@@ -148,24 +148,19 @@ Spring Intializer 로 생성 후 parent 지정 및 core depedency 추가
 ----
 
 == Application Properties
-core property 를 import 하여 override 가능하게 하기
+
+core property 를 import 하여 override 하기
 
 === Import Config
 [source,yaml]
 ----
 spring:
-  profiles:
-    active: api
   config:
     import: classpath:/core.properties
-
 ---
-spring:
-  config:
-    activate:
-      on-profile: api
 service:
   app-name: api
+  app-version: 1.0
 ----
 
 
