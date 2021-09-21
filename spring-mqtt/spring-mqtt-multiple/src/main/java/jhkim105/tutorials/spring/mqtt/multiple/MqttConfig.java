@@ -6,7 +6,6 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.IntegrationComponentScan;
@@ -15,10 +14,8 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.dsl.context.IntegrationFlowContext;
 import org.springframework.integration.handler.LoggingHandler;
-import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
-import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -34,6 +31,8 @@ public class MqttConfig {
   private final MqttProperties mqttProperties;
 
   private final IntegrationFlowContext integrationFlowContext;
+
+  private final MqttConfigUtils mqttConfigUtils;
 
   private static final String TOPIC = "/test";
 
@@ -59,7 +58,7 @@ public class MqttConfig {
   private IntegrationFlow mqttInboundFlow(String brokerUrl) {
     String clientId = UUID.randomUUID().toString();
     return IntegrationFlows
-        .from(mqttInboundAdapter(mqttClientFactory(brokerUrl), clientId, TOPIC))
+        .from(mqttInboundAdapter(mqttConfigUtils.mqttClientFactory(brokerUrl), clientId, TOPIC))
         .wireTap(MQTT_LOGGING_CHANNEL)
         .handle(this::handle)
         .get();
@@ -85,30 +84,10 @@ public class MqttConfig {
     String[] brokerUrls = mqttProperties.getBrokerUrl();
     Collection<MessageHandler> messageHandlers = new ArrayList<>();
     for(String url : brokerUrls) {
-      messageHandlers.add(outboundMessageHandler(url));
+      messageHandlers.add(mqttConfigUtils.outboundMessageHandler(mqttProperties, url));
     }
     return messageHandlers;
   }
-
-  private MqttPahoMessageHandler outboundMessageHandler(String brokerUrl) {
-    String clientId = UUID.randomUUID().toString();
-    MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(clientId, mqttClientFactory(brokerUrl));
-    messageHandler.setAsync(mqttProperties.isAsync());
-    messageHandler.setDefaultQos(mqttProperties.getQos());
-    messageHandler.setCompletionTimeout(mqttProperties.getCompletionTimeout());
-    messageHandler.afterPropertiesSet();
-    return messageHandler;
-  }
-
-  private MqttPahoClientFactory mqttClientFactory(String brokerUrl) {
-    log.info("mqttProperties->{}", mqttProperties);
-    DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
-    MqttConnectOptions options = new MqttConnectOptions();
-    options.setServerURIs(new String[]{brokerUrl});
-    factory.setConnectionOptions(options);
-    return factory;
-  }
-
 
 
   @Bean(name = MQTT_LOGGING_CHANNEL)
