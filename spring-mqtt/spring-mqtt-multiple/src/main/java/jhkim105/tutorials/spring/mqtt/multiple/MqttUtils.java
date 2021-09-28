@@ -28,9 +28,4 @@ public class MqttUtils {
     outboundMessageHandlers.parallelStream().forEach(messageHandler -> messageHandler.handleMessage(message));
   }
 
-  public void recreateOutboundHandlers() {
-    outboundMessageHandlers.clear();
-  }
-
-
 }

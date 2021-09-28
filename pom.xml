@@ -13,7 +13,7 @@
     <module>beanio</module>
     <module>commons-configuration</module>
     <module>database-encrypt</module>
-    <module>java-concurrency</module>
+    <module>concurrency</module>
     <module>java-utils</module>
     <module>jmh</module>
     <module>mockserver</module>
@@ -38,6 +38,7 @@
     <module>aws-lambda</module>
     <module>java-basic</module>
     <module>spring-mqtt</module>
+    <module>concurrency</module>
   </modules>
   <repositories>
   </repositories>
