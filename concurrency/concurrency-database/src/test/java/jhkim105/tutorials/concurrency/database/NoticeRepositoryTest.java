@@ -22,7 +22,9 @@ class NoticeRepositoryTest {
 
   @BeforeEach
   void beforeEach() {
-
+    Notice notice = Notice.builder().title("test").build();
+    repository.save(notice);
+    noticeId = notice.getId();
   }
 
   @Test
