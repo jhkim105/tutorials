@@ -1,0 +1,27 @@
+
+
+= Spring Boot JSP Examples
+
+
+== Issues
+
+=== JSP Slow 이슈
+spring boot 2.3 에서  jsp page 호출시 속도가 느림. 최초 요청이 느리고  1~2 초 이내로 부르면 빠르게 응답했다가 느리게 응답하는것을 반복함
+https://github.com/spring-projects/spring-boot/issues/24744
+이 소스에서는 재현안됨.
+느릴 경우 다음 설정 추가
+[source,xml]
+----
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-tomcat</artifactId>
+  <scope>provided</scope>
+  <exclusions>
+    <exclusion>
+      <groupId>org.glassfish</groupId>
+      <artifactId>jakarta.el</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>
+----
+
