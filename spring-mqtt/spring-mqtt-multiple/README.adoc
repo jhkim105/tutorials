@@ -95,3 +95,55 @@ public class MqttUtils {
 }
 ----
 
+== Publish using IntegrationFlow and @MessagingGateway
+IntegrationFlow를 사용해서 했을때 첫번째 서버에만 message가 전송되어서 위와 같은 방법을 했는데, DirectChannel 대신 PublishSubscribeChannel 을 사용해야 정상 동작한다.
+
+[source,code]
+MqttConfig.java
+----
+
+  private void createOutboundFlow() {
+    String[] brokerUrls = mqttProperties.getBrokerUrl();
+    for(String url : brokerUrls) {
+      integrationFlowContext.registration(mqttOutboundFlow(url))
+          .id(String.format("%s-%s", OUTBOUND_PREFIX, url.replace(":", ""))).register();
+    }
+  }
+
+  private IntegrationFlow mqttOutboundFlow(String url) {
+    return IntegrationFlows
+        .from(outboundChannel())
+        .wireTap(MQTT_LOGGING_CHANNEL)
+        .handle(mqttConfigUtils.outboundMessageHandler(mqttProperties, url)).get();
+  }
+
+
+  @Bean(name = MQTT_OUTBOUND_CHANNEL)
+  public MessageChannel outboundChannel() {
+    PublishSubscribeChannel channel = new PublishSubscribeChannel();
+    return channel;
+  }
+
+  @MessagingGateway(defaultRequestChannel = MQTT_OUTBOUND_CHANNEL)
+  public interface OutboundGateway {
+    @Gateway
+    void publish(@Header(MqttHeaders.TOPIC) String topic, String data);
+    @Gateway
+    void publish(@Header(MqttHeaders.TOPIC) String topic, @Header(MqttHeaders.QOS) Integer qos, String data);
+  }
+----
+
+[source,java]
+MqttUtils.java
+----
+public class MqttUtils {
+
+  @Autowired(required = false)
+  private OutboundGateway outboundGateway;
+
+  public void publish(String topic, String payload) {
+    outboundGateway.publish(topic, payload);
+  }
+
+}
+----

@@ -1,14 +1,18 @@
 package jhkim105.tutorials.spring.mqtt.multiple;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import static java.util.stream.Collectors.toList;
+
+import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.IntegrationComponentScan;
+import org.springframework.integration.annotation.MessagingGateway;
+import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
@@ -17,9 +21,11 @@ import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHandler;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @IntegrationComponentScan
@@ -46,9 +52,10 @@ public class MqttConfig {
   @PostConstruct
   public void init() {
     createInboundFlow();
+    createOutboundFlow();
   }
 
-  private void createInboundFlow() {
+  public void createInboundFlow() {
     String[] brokerUrls = mqttProperties.getBrokerUrl();
     for(String url : brokerUrls) {
       integrationFlowContext.registration(mqttInboundFlow(url)).id(String.format("%s-%s", INBOUND_PREFIX, url.replace(":", ""))).register();
@@ -79,14 +86,54 @@ public class MqttConfig {
   }
 
 
-  @Bean
-  public Collection<MessageHandler> outboundMessageHandlers() {
+  public void createOutboundFlow() {
     String[] brokerUrls = mqttProperties.getBrokerUrl();
-    Collection<MessageHandler> messageHandlers = new ArrayList<>();
     for(String url : brokerUrls) {
-      messageHandlers.add(mqttConfigUtils.outboundMessageHandler(mqttProperties, url));
+      integrationFlowContext.registration(mqttOutboundFlow(url))
+          .id(String.format("%s-%s", OUTBOUND_PREFIX, url.replace(":", ""))).register();
     }
-    return messageHandlers;
+  }
+
+  private IntegrationFlow mqttOutboundFlow(String url) {
+    return IntegrationFlows
+        .from(outboundChannel())
+        .wireTap(MQTT_LOGGING_CHANNEL)
+        .handle(mqttConfigUtils.outboundMessageHandler(mqttProperties, url)).get();
+  }
+
+
+  @Bean(name = MQTT_OUTBOUND_CHANNEL)
+  public MessageChannel outboundChannel() {
+    PublishSubscribeChannel channel = new PublishSubscribeChannel();
+    return channel;
+  }
+
+  @MessagingGateway(defaultRequestChannel = MQTT_OUTBOUND_CHANNEL)
+  public interface OutboundGateway {
+    @Gateway
+    void publish(@Header(MqttHeaders.TOPIC) String topic, String data);
+    @Gateway
+    void publish(@Header(MqttHeaders.TOPIC) String topic, @Header(MqttHeaders.QOS) Integer qos, String data);
+  }
+
+  public void removeIntegrationFlows() {
+    List<String> targetIds = integrationFlowContext.getRegistry().keySet().stream()
+        .filter(this::isMqttFlowId)
+        .collect(toList());
+
+    targetIds.forEach(integrationFlowContext::remove);
+  }
+
+  private boolean isMqttFlowId(String flowId) {
+    return StringUtils.startsWithIgnoreCase(flowId, INBOUND_PREFIX) || StringUtils.startsWithIgnoreCase(flowId, OUTBOUND_PREFIX);
+  }
+
+  private void removeInboundFlows() {
+
+  }
+
+  private void removeOutboundFlows() {
+
   }
 
 

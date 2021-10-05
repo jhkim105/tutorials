@@ -1,31 +1,27 @@
 package jhkim105.tutorials.spring.mqtt.multiple;
 
-import java.util.Collection;
-import javax.annotation.Resource;
+import jhkim105.tutorials.spring.mqtt.multiple.MqttConfig.OutboundGateway;
 import lombok.RequiredArgsConstructor;
-import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
-import org.springframework.integration.mqtt.support.MqttHeaders;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class MqttUtils {
 
-  @Resource(name = "outboundMessageHandlers")
-  private Collection<MqttPahoMessageHandler> outboundMessageHandlers;
+  @Autowired(required = false)
+  private OutboundGateway outboundGateway;
 
-  private final MqttProperties mqttProperties;
+  private final MqttConfig mqttConfig;
 
   public void publish(String topic, String payload) {
-    Message<String> message = MessageBuilder
-        .withPayload(payload)
-        .setHeader(MqttHeaders.TOPIC, topic)
-        .setHeader(MqttHeaders.QOS, mqttProperties.getQos())
-        .build();
+    outboundGateway.publish(topic, payload);
+  }
 
-    outboundMessageHandlers.parallelStream().forEach(messageHandler -> messageHandler.handleMessage(message));
+  public void reloadMqttServers() {
+    mqttConfig.removeIntegrationFlows();
+    mqttConfig.createInboundFlow();
+    mqttConfig.createOutboundFlow();
   }
 
 }
