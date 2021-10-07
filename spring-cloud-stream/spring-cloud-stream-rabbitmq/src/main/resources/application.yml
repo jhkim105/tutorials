@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        uppercase-in-0:
+          destination: uppercaseInput
+        uppercase-out-0:
+          destination: uppercaseOutput
+        print-in-0:
+          destination: uppercaseOutput
+    function:
+      definition: uppercase;print

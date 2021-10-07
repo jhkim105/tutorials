@@ -1,0 +1,54 @@
+:hardbreaks:
+
+= Spring Cloud Stream - RabbitMQ
+
+
+== Spring Cloud Function support
+3.0 버전 부터 Function Type(Supplier, Consumer, Function) 을 지원함. 이전 버전에서 사용했던 @EnableBinding, @StreamListener 는 deprecated 됨.
+[source,java]
+----
+@SpringBootApplication
+@Slf4j
+public class SpringCloudStreamRabbitmqApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringCloudStreamRabbitmqApplication.class, args);
+	}
+
+	@Bean
+	public Function<String, String> uppercase() {
+		return value -> {
+			log.info("Received(uppercase): {}", value );
+			return value.toUpperCase();
+		};
+	}
+
+
+	@Bean
+	public Consumer<String> print() {
+		return s -> log.info("Received(print): {}", s);
+	}
+
+}
+----
+
+[source,yaml]
+----
+spring:
+  cloud:
+    stream:
+      bindings:
+        uppercase-in-0:
+          destination: uppercaseInput
+        uppercase-out-0:
+          destination: uppercaseOutput
+        print-in-0:
+          destination: uppercaseOutput
+    function:
+      definition: uppercase;print
+----
+
+
+== Refs
+https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/spring-cloud-stream.html
+https://github.com/spring-cloud/spring-cloud-stream-samples/tree/main/multi-binder-samples/multi-binder-kafka-rabbit
