@@ -101,6 +101,32 @@ Repository
 
 ----
 
+== 단건 조회시 ManyToOne
+Order - User 관계를 Many To One, FetchType.EAGER 일 경우에 Order 조회시 join query로 조회한다.
+----
+  @Test
+  void find() {
+    Order order = orderRepository.findById(-99L).orElseThrow();
+  }
+
+----
+
+----
+select order0_.id as id1_3_0_, order0_.name as name2_3_0_, order0_.user_id as user_id3_3_0_, user1_.id as id1_4_1_, user1_.name as name2_4_1_ from t_order order0_ inner join t_user user1_ on order0_.user_id=user1_.id where order0_.id=?
+----
+
+JPQL 을 사용하는 경우에는 별도 쿼리가 실행된다.
+----
+@Query("select o from Order o where o.id = :id")
+Order findByIdUsingQuery(@Param("id") Long id);
+----
+----
+select order0_.id as id1_3_, order0_.name as name2_3_, order0_.user_id as user_id3_3_ from t_order order0_ where order0_.id=?
+select user0_.id as id1_4_0_, user0_.name as name2_4_0_ from t_user user0_ where user0_.id=?
+----
+FetchType.LAZY 로 설정하면 Order 조회하는 쿼리 한번만 실행된다.
+
+
 
 == QuickPerf 로 쿼리 실행횟수 검증하기
 

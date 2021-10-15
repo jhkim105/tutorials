@@ -1,5 +1,6 @@
 package jhkim105.tutorials.spring.data.jpa.nplusone.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 
 @Entity
@@ -24,7 +26,15 @@ public class Order {
 
   private String name;
 
-  @ManyToOne
+  @ManyToOne(optional = false)
+//  @ManyToOne(optional = false, fetch = FetchType.LAZY)
   private User user;
 
+  @Column(nullable = false)
+  @ColumnDefault("0")
+  private boolean completed;
+
+  public void complete() {
+    this.completed = true;
+  }
 }
