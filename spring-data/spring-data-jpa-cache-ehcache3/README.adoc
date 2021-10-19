@@ -1,0 +1,100 @@
+= Spring JPA 2nd Level Cache And Ehcache3 with JCache
+
+== Dependencies
+[source,xml]
+----
+<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jcache -->
+<dependency>
+  <groupId>org.hibernate</groupId>
+  <artifactId>hibernate-jcache</artifactId>
+  <version>5.6.0.Final</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.ehcache/ehcache -->
+<dependency>
+  <groupId>org.ehcache</groupId>
+  <artifactId>ehcache</artifactId>
+  <version>3.9.6</version>
+</dependency>
+----
+
+== Properties
+----
+hibernate.cache.use_second_level_cache: true
+hibernate.cache.region.factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+----
+
+== Entity
+----
+@Cache(region = "user", usage = CacheConcurrencyStrategy.READ_ONLY)
+public class User {
+----
+
+== XML Config
+application.yml
+----
+hibernate.javax.cache.uri: ehcache.xml
+----
+
+ehcache.xml
+----
+<config
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xmlns='http://www.ehcache.org/v3'
+  xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+  xsi:schemaLocation="
+        http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
+        http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+
+
+  <service>
+    <jsr107:defaults enable-management="true" enable-statistics="true"/>
+  </service>
+
+  <cache alias="defaultCache">
+    <key-type>java.lang.Object</key-type>
+    <value-type>java.lang.Object</value-type>
+    <heap unit="entries">2000</heap>
+  </cache>
+
+  <cache alias="user">
+    <key-type>java.lang.Object</key-type>
+    <value-type>java.lang.Object</value-type>
+    <expiry>
+      <ttl unit="seconds">1</ttl>
+    </expiry>
+    <heap unit="entries">2000</heap>
+    <jsr107:mbeans enable-management="false" enable-statistics="false"/>
+  </cache>
+
+</config>
+----
+
+== Java Config
+----
+@Configuration
+public class CacheConfig {
+
+  @Bean
+  public HibernatePropertiesCustomizer hibernatePropertiesCustomizer() {
+    CachingProvider cachingProvider = new EhcacheCachingProvider();
+    CacheManager cacheManager = cachingProvider.getCacheManager();
+    MutableConfiguration<String, Object> configuration = new MutableConfiguration<>();
+
+
+    configuration.setStoreByValue(false)
+            .setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(new Duration(TimeUnit.SECONDS, 1)));
+
+
+    cacheManager.createCache("user", configuration);
+    return hibernateProperties -> hibernateProperties.put(ConfigSettings.CACHE_MANAGER, cacheManager);
+  }
+
+}
+
+----
+
+
+== References
+https://docs.jboss.org/hibernate/orm/5.4/userguide/html_single/Hibernate_User_Guide.html#caching
+https://www.ehcache.org/documentation/3.9/107.html
+https://www.boraji.com/hibernate-5-jcache-ehcache-3-configuration-example

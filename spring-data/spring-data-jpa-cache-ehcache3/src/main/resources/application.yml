@@ -1,0 +1,34 @@
+
+logging:
+  level:
+    jhkim105.tutorials: debug
+#    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+#    org.hibernate.type.EnumType: trace
+#    org.springframework.transaction: debug
+    org.hibernate.cache: debug
+    org.ehcache: debug
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:mariadb://localhost/demo_cache?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate.id.new_generator_mappings: false
+      hibernate.cache.use_second_level_cache: true
+#      hibernate.cache.region.factory_class: jcache
+#      hibernate.javax.cache.provider: org.ehcache.jsr107.EhcacheCachingProvider
+      hibernate.javax.cache.uri: ehcache.xml
+      hibernate.javax.cache.missing_cache_strategy: fail
+    show-sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

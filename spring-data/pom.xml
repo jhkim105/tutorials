@@ -22,6 +22,7 @@
     <module>spring-data-dbcp2</module>
     <module>spring-data-initialize</module>
     <module>spring-data-jpa</module>
+    <module>spring-data-jpa-cache-ehcache3</module>
     <module>spring-data-multiple-datasource</module>
     <module>spring-data-multitenant</module>
     <module>spring-data-replication-driver</module>

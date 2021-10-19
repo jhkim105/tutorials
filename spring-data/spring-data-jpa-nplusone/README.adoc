@@ -158,8 +158,13 @@ FetchType.LAZY 로 설정하면 Order 조회하는 쿼리 한번만 실행된다
 
 
 === TestCase
-Import QuickPerfSqlConfig.class
+@QuickPerfTest 애노테이션 추가하거나, 자동으로 감지하게 하려면 아래 설정 추가
+src/test/resources/junit-platform.properties
+----
+junit.jupiter.extensions.autodetection.enabled=true
+----
 
+Import QuickPerfSqlConfig.class
 ----
 @Import({JpaConfig.class, QuickPerfSqlConfig.class})
 ----
