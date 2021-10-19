@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.data.jpa.ehcache3;
+package jhkim105.tutorials.jpa.cache.ehcache3;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

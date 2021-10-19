@@ -9,10 +9,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>jhkim105.tutorials</groupId>
-  <artifactId>spring-data-jpa-cache-ehcache3</artifactId>
+  <artifactId>jpa-cache-ehcache3</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-data-jpa-cache-ehcache3</name>
-  <description>spring-data-jpa-cache-ehcache3</description>
+  <name>jpa-cache-ehcache3</name>
+  <description>jpa-cache-ehcache3</description>
   <properties>
     <java.version>11</java.version>
   </properties>

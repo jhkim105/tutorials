@@ -16,6 +16,7 @@
     <module>concurrency</module>
     <module>java-utils</module>
     <module>jmh</module>
+    <module>jpa-cache</module>
     <module>mockserver</module>
     <module>monitoring</module>
     <module>spring-activemq</module>
