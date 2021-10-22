@@ -1,0 +1,2 @@
+ALTER TABLE user
+    MODIFY company_id VARCHAR (50) NOT NULL;

@@ -1,0 +1,42 @@
+= Spring Boot Tips
+
+== Install
+xxx.conf
+----
+JAVA_OPTS="-Xmx2G"
+JAVA_OPTS="$JAVA_OPTS -Dxxx_home=/DATA/WEB/studio"
+#RUN_ARGS="--server.port=8080"
+LOG_FOLDER="/DATA/Logs/tomcat"
+----
+config/application.properties
+----
+----
+
+config/logback-spring.xml
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <logger name="org.springframework" level="INFO"/>
+  <logger name="com.rsupport" level="INFO"/>
+  <root level="WARN">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>
+----
+
+Service 등록 및 실행
+----
+sudo chown u+x xxx.jar
+sudo ln -s /DATA/WEB/xxx.jar /etc/init.d/xxx
+sudo chkconfig xxx on
+sudo service xxx start
+sudo service xxx stop
+service xxx start
+service xxx stop
+----
+
+
+
+
