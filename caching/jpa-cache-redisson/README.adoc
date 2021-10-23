@@ -1,0 +1,34 @@
+= Jpa Cache With Redisson
+
+== Dependencies
+[source,xml]
+----
+    <dependency>
+      <groupId>org.redisson</groupId>
+      <artifactId>redisson-hibernate-53</artifactId>
+      <version>3.16.2</version>
+    </dependency>
+----
+
+== Configuration
+application.yml
+----
+        cache:
+          use_second_level_cache: true
+          redisson:
+            fallback: true
+            config: redisson.yml
+            user:
+              eviction.max_entries: 2000
+              expiration.time_to_live: 1000
+              expiration.max_idle_time: 1000
+----
+
+redisson.yml
+----
+singleServerConfig:
+  address: redis://localhost:6379
+----
+
+== Refs
+https://github.com/redisson/redisson/tree/master/redisson-hibernate

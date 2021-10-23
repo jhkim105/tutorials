@@ -21,12 +21,20 @@ spring:
     hibernate:
       ddl-auto: create
     properties:
-      hibernate.id.new_generator_mappings: false
-      hibernate.cache.use_second_level_cache: true
-#      hibernate.cache.region.factory_class: jcache
-#      hibernate.javax.cache.provider: org.ehcache.jsr107.EhcacheCachingProvider
-      hibernate.javax.cache.uri: ehcache.xml
-      hibernate.javax.cache.missing_cache_strategy: fail
+      hibernate:
+        id.new_generator_mappings: false
+        javax.cache.missing_cache_strategy: fail
+        cache:
+          use_second_level_cache: true
+          redisson:
+            fallback: true
+            config: redisson.yml
+            user:
+              eviction.max_entries: 2000
+              expiration.time_to_live: 1000
+              expiration.max_idle_time: 1000
+
+
     show-sql: true
     defer-datasource-initialization: true
   sql:

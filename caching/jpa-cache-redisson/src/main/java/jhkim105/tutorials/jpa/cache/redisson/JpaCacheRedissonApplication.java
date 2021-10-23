@@ -1,13 +1,13 @@
-package jhkim105.tutorials.jpa.cache.ehcache3;
+package jhkim105.tutorials.jpa.cache.redisson;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringDataJpaEhcache3Application {
+public class JpaCacheRedissonApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringDataJpaEhcache3Application.class, args);
+    SpringApplication.run(JpaCacheRedissonApplication.class, args);
   }
 
 }

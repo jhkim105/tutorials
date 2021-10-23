@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 @SpringBootTest
 @Import({QuickPerfSqlConfig.class})
 @QuickPerfTest
-class SpringDataJpaEhcache3ApplicationTests {
+class JpaCacheEhcache3ApplicationTests {
 
   @Autowired
   UserRepository userRepository;
