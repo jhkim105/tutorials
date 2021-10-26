@@ -79,3 +79,5 @@ maven plugin 을 사용하지 않고, DB 초기화하는 효율적인 방법(방
   ```properties
   junit.jupiter.testclass.order.default=com.example.demo.TestClassOrderer
   ```
+
+maven-sufire-plugin을 사용해서 DB 초기화 테스트 케이스를 먼저 실행하게 하는것도 가능하다.
