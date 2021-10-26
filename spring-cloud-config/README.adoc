@@ -1,0 +1,113 @@
+:hardbreaks:
+= Spring Cloud Config Example
+
+== Config Server
+Config 저장소로 Git, File, DB 등을 지원함.
+
+=== Config Server - File
+pom.xml
+[source,xml]
+----
+	<properties>
+		<java.version>11</java.version>
+		<spring-cloud.version>2020.0.4</spring-cloud.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+----
+
+@EnableConfigServer
+----
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+----
+
+----
+server:
+  port: 8888
+spring:
+  profiles:
+    active: native
+----
+
+config/config-client-development.yml
+----
+config.name: service-development
+----
+
+http://localhost:8888/config-client/development
+
+Config 위치 지정
+지정하게 되면 classpath에 있는 config는 무시된다.
+----
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud-config/config-server/conf
+----
+
+== Config Client
+pom.xml
+[source,xml]
+----
+  <properties>
+    <java.version>11</java.version>
+    <spring-cloud.version>2020.0.4</spring-cloud.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+
+  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+----
+
+application.yml(문서는 bootstramp.yml로 작성하라고 되어 있는데, 그렇게 하면 동작 안함)
+----
+spring:
+  application:
+    name: config-client # config file 명과 동일해야 함
+  profiles:
+    active: development
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      uri: "http://localhost:8888"
+----
+
+== Refs
+https://cloud.spring.io/spring-cloud-config/reference/html
+
