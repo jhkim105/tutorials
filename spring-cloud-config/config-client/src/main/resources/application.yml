@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: config-client
+  profiles:
+    active: development
+  config:
+    import: "optional:configserver:http://localhost:8888"
+  rbbitmq:
+    host: localhost
+    port:  5672
+  cloud:
+    config:
+      label: 1.0.1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "refresh,busrefresh"
+
+config.name: local

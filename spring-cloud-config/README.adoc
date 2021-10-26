@@ -1,0 +1,247 @@
+:hardbreaks:
+= Spring Cloud Config Example
+
+== Config Server
+Config 저장소로 Git, File, DB 등을 지원함.
+
+=== Config Server - File
+pom.xml
+[source,xml]
+----
+	<properties>
+		<java.version>11</java.version>
+		<spring-cloud.version>2020.0.4</spring-cloud.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+----
+
+@EnableConfigServer
+[source,java]
+----
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+----
+
+[source,yaml]
+----
+server:
+  port: 8888
+spring:
+  profiles:
+    active: native
+----
+
+config/config-client-development.yml
+[source,yaml]
+----
+config.name: service-development
+----
+
+http://localhost:8888/config-client/development
+
+Config 위치 지정
+지정하게 되면 classpath에 있는 config는 무시된다.
+[source,yaml]
+----
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud-config/config-server/conf
+----
+
+==  Config Client
+
+
+pom.xml
+[source,xml]
+----
+  <properties>
+    <java.version>11</java.version>
+    <spring-cloud.version>2020.0.4</spring-cloud.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+
+  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+----
+
+application.yml
+[source,yaml]
+----
+spring:
+  application:
+    name: config-client # config file 명과 동일해야 함
+  profiles:
+    active: development
+  config:
+    import: "optional:configserver:http://localhost:8888"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "refresh"
+----
+
+== Config 갱신하기
+두가지 방법이 있다
+- @RefreshScope with Actuator
+- Spring Cloud Bus
+
+=== Refresh - @RefreshScope
+Config Client 수정
+pom.xml
+[source,xml]
+----
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+----
+
+@RefreshScope 지정
+[source,java]
+----
+@RestController
+@RefreshScope
+public class HomeController {
+
+
+  @Value("${config.name}")
+  private String configName;
+
+
+  @GetMapping("/")
+  public String home() {
+    return configName;
+  }
+}
+----
+
+
+갱신하기
+[source,shell script]
+----
+curl -X POST localhost:8080/actuator/refresh
+----
+
+=== Refresh - Spring Cloud Bus
+Config Client 수정
+pom.xml
+[source,xml]
+----
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+    </dependency>
+----
+
+application.yml
+[source,yaml]
+----
+spring:
+  application:
+    name: config-client # config file 명과 동일해야 함
+  profiles:
+    active: development
+  config:
+    import: "optional:configserver:http://localhost:8888"
+  rbbitmq:
+    host: localhost
+    port:  5672
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "refresh,busrefresh"
+----
+
+갱신하기 - client 한대만 요청하면 전체 client 에 적용됨.
+[source,shell script]
+----
+curl -X POST localhost:8080/actuator/busrefresh
+----
+
+
+== Environment Repository
+
+=== Git Backend
+==== git local
+[source,yaml]
+----
+server:
+  port: 8888
+spring:
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://${user.home}/config-repo
+          default-label: main
+----
+
+[source,shell script]
+----
+cd $HOME
+mkdir config-repo
+cd config-repo
+git init .
+echo config.name=git-local-config-client-development > config-client-development.properties
+git add -A .
+git commit -m ‘add'
+----
+
+curl http://localhost:8888/config-client/development/main
+[source,json]
+----
+{"name":"config-client","profiles":["development"],"label":"main","version":"a286e0f76e05f89c695edc9ec7f6b11e3d81ec5b","state":null,"propertySources":[{"name":"file:///Users/jihwankim/config-repo/config-client-development.properties","source":{"config.name":"git-local-config-client-development"}}]}
+----
+
+config client에서 label 지정
+----
+spring.cloud.config.label=1.0.1
+----
+
+==== Git - remote
+
+
+
+== Refs
+https://docs.spring.io/spring-cloud-config/docs/current/reference/html/
+https://spring.io/guides/gs/centralized-configuration/
