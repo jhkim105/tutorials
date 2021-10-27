@@ -5,9 +5,12 @@ spring:
     active: development
   config:
     import: "optional:configserver:http://localhost:8888"
+  rbbitmq:
+    host: localhost
+    port:  5672
 management:
   endpoints:
     web:
       exposure:
-        include: "refresh"
+        include: "refresh,busrefresh"
 
