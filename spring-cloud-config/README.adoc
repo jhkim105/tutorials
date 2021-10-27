@@ -94,7 +94,7 @@ pom.xml
   </dependencyManagement>
 ----
 
-application.yml(문서는 bootstramp.yml로 작성하라고 되어 있는데, 그렇게 하면 동작 안함)
+application.yml
 ----
 spring:
   application:
@@ -102,12 +102,14 @@ spring:
   profiles:
     active: development
   config:
-    import: "optional:configserver:"
-  cloud:
-    config:
-      uri: "http://localhost:8888"
+    import: "optional:configserver:http://localhost:8888"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "refresh"
 ----
 
 == Refs
 https://cloud.spring.io/spring-cloud-config/reference/html
-
+https://spring.io/guides/gs/centralized-configuration/

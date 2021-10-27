@@ -1,10 +1,13 @@
 spring:
   application:
-    name: config-client
+    name: config-client # config file 명과 동일해야 함
   profiles:
     active: development
   config:
-    import: "optional:configserver:"
-  cloud:
-    config:
-      uri: "http://localhost:8888"
+    import: "optional:configserver:http://localhost:8888"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "refresh"
+

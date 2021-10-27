@@ -38,5 +38,33 @@ service xxx stop
 ----
 
 
+== ApplicationRunner and CommandLineRunner
+애플리케이션 구동 시점에 특정 코드 실행하기
 
+ApplicationRunner
+[source,java]
+----
+@Component
+@Slf4j
+public class CustomApplicationRunner implements ApplicationRunner {
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        System.out.println("ApplicationRunner Args: " + Arrays.toString(args.getSourceArgs()));
+    }
+}
+----
+
+CommandLineRunner
+[soruce.java]
+----
+@Component
+public class CustomCommandLineRunner implements CommandLineRunner {
+
+    @Override
+    public void run(String... args) throws Exception {
+        System.out.println("CommandLineRunner Args: " + Arrays.toString(args));
+    }
+
+}
+----
 
