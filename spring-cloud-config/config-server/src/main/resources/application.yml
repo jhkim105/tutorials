@@ -2,9 +2,12 @@ server:
   port: 8888
 spring:
   profiles:
-    active: native
+    active: git
   cloud:
     config:
       server:
-        native:
-          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud-config/config-server/conf
+        git:
+          uri: file://${user.home}/config-repo
+          default-label: main
+#        native:
+#          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud-config/config-server/conf

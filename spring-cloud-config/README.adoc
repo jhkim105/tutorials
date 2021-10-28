@@ -32,12 +32,14 @@ pom.xml
 ----
 
 @EnableConfigServer
+[source,java]
 ----
 @SpringBootApplication
 @EnableConfigServer
 public class ConfigServerApplication {
 ----
 
+[source,yaml]
 ----
 server:
   port: 8888
@@ -47,6 +49,7 @@ spring:
 ----
 
 config/config-client-development.yml
+[source,yaml]
 ----
 config.name: service-development
 ----
@@ -55,6 +58,7 @@ http://localhost:8888/config-client/development
 
 Config 위치 지정
 지정하게 되면 classpath에 있는 config는 무시된다.
+[source,yaml]
 ----
 spring:
   profiles:
@@ -66,7 +70,9 @@ spring:
           search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud-config/config-server/conf
 ----
 
-== Config Client
+==  Config Client
+
+
 pom.xml
 [source,xml]
 ----
@@ -95,6 +101,7 @@ pom.xml
 ----
 
 application.yml
+[source,yaml]
 ----
 spring:
   application:
@@ -145,7 +152,9 @@ public class HomeController {
 }
 ----
 
+
 갱신하기
+[source,shell script]
 ----
 curl -X POST localhost:8080/actuator/refresh
 ----
@@ -181,19 +190,58 @@ management:
         include: "refresh,busrefresh"
 ----
 
-갱신하기 - client 한대만 요청하면 전체 client에 적용됨.
+갱신하기 - client 한대만 요청하면 전체 client 에 적용됨.
+[source,shell script]
 ----
 curl -X POST localhost:8080/actuator/busrefresh
 ----
 
 
+== Environment Repository
 
+=== Git Backend
+==== git local
+[source,yaml]
+----
+server:
+  port: 8888
+spring:
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://${user.home}/config-repo
+          default-label: main
+----
 
+[source,shell script]
+----
+cd $HOME
+mkdir config-repo
+cd config-repo
+git init .
+echo config.name=git-local-config-client-development > config-client-development.properties
+git add -A .
+git commit -m ‘add'
+----
 
+curl http://localhost:8888/config-client/development/main
+[source,json]
+----
+{"name":"config-client","profiles":["development"],"label":"main","version":"a286e0f76e05f89c695edc9ec7f6b11e3d81ec5b","state":null,"propertySources":[{"name":"file:///Users/jihwankim/config-repo/config-client-development.properties","source":{"config.name":"git-local-config-client-development"}}]}
+----
 
+config client에서 label 지정
+----
+spring.cloud.config.label=1.0.1
+----
+
+==== Git - remote
 
 
 
 == Refs
-https://cloud.spring.io/spring-cloud-config/reference/html
+https://docs.spring.io/spring-cloud-config/docs/current/reference/html/
 https://spring.io/guides/gs/centralized-configuration/
