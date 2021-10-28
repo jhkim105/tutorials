@@ -8,9 +8,9 @@ spring:
   rbbitmq:
     host: localhost
     port:  5672
-#  cloud:
-#    config:
-#      label: 1.0.1
+  cloud:
+    config:
+      label: 1.0.1
 
 management:
   endpoints:
