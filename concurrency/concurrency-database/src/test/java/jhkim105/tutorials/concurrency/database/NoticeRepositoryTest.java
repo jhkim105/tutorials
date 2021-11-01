@@ -30,7 +30,7 @@ class NoticeRepositoryTest {
   @Test
   void increaseCount() {
     repository.increaseCount(noticeId);
-    em.clear();
+//    em.clear();
 
     Notice notice = repository.findById(noticeId).get();
     Assertions.assertThat(notice.getCount()).isEqualTo(1);
