@@ -28,6 +28,7 @@
     <module>spring-cloud-function</module>
     <module>spring-cloud-stream</module>
     <module>spring-integration</module>
+    <module>spring-session-redis</module>
     <module>spring-docker</module>
     <module>spring-jsp</module>
     <module>spring-junit5</module>
