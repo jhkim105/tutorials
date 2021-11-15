@@ -54,6 +54,12 @@ public class Tenant {
 MasterDatabaseConfig.java
 [source,java]
 ----
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "com.example.multitenant.master",
+    entityManagerFactoryRef = "masterEntityManagerFactory",
+    transactionManagerRef = "masterTransactionManager"
+)
 public class MasterDatabaseConfig {
 
   @Bean
@@ -93,7 +99,7 @@ public class MasterDatabaseConfig {
 DataSourceBasedMultiTenantConnectionProviderImpl.java
 [source,java]
 ----
-@Configuration
+@Component
 @Slf4j
 public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 

@@ -1,15 +1,19 @@
 package com.example.multitenant.master;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 @Slf4j
+@RequiredArgsConstructor
 public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 
   private static final long serialVersionUID = -6837240859738111430L;
@@ -17,6 +21,8 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
   private TenantRepository tenantRepository;
 
   private BasicDataSource masterDataSource;
+
+  private Map<String, DataSource> dataSourceMap = new HashMap<>();
 
   @Autowired
   public void setTenantRepository(TenantRepository tenantRepository) {
@@ -30,6 +36,7 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
 
   @Override
   protected DataSource selectAnyDataSource() {
+    log.info("selectAnyDataSource");
     return masterDataSource;
   }
 
@@ -44,7 +51,13 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
 
   @Override
   protected DataSource selectDataSource(String tenantId) {
-    Tenant tenantDataSource = tenantRepository.findById(tenantId).orElseThrow();
-    return createDataSource(tenantDataSource);
+    DataSource dataSource = dataSourceMap.get(tenantId);
+    if (dataSource == null) {
+      Tenant tenantDataSource = tenantRepository.findById(tenantId).orElseThrow();
+      dataSource = createDataSource(tenantDataSource);;
+      dataSourceMap.put(tenantId, dataSource);
+    }
+
+    return dataSource;
   }
 }
