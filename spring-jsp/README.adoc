@@ -25,3 +25,19 @@ https://github.com/spring-projects/spring-boot/issues/24744
 </dependency>
 ----
 
+4초 간격으로 페이지 응답이 느려지는 현상
+jasper 설정 중 development 속성 비활성화. 이 옵션이 활성화 되어 있을 경우 4초(modificationTestInterval) 마다 jsp 수정 여부를 체크함
+다음과 같이 비활성화 처리
+----
+@Bean
+public WebServerFactoryCustomizer<TomcatServletWebServerFactory> servletContainerCustomizer() {
+  return container -> container.addContextCustomizers(ctx -> {
+    ctx.setResources(new ExtractingRoot());
+    ctx.setReloadable(false);
+    Wrapper jsp = (Wrapper)ctx.findChild("jsp");
+    jsp.addInitParameter("development", "false");
+    log.info("servletContainerCustomizer executed");
+  });
+}
+----
+
