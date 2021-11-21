@@ -1,0 +1,9 @@
+server:
+  tomcat:
+    basedir: .
+    accesslog:
+      enabled: true
+      condition-unless: ignoreAccessLog
+      max-days: 1
+
+accesslog.ignore.uris: /ignore, /version, /service_check
