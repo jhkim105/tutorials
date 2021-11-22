@@ -3,7 +3,6 @@ server:
     basedir: .
     accesslog:
       enabled: true
-      condition-unless: ignoreAccessLog
       max-days: 1
-
-accesslog.ignore.uris: /ignore, /version, /service_check
+      condition-unless: ignoreAccessLog
+      ignore-uris: /ignore, /version, /service_check

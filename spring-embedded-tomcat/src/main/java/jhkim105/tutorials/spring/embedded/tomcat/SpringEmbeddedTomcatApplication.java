@@ -16,7 +16,7 @@ public class SpringEmbeddedTomcatApplication {
     SpringApplication.run(SpringEmbeddedTomcatApplication.class, args);
   }
 
-  @Value("${accesslog.ignore.uris}")
+  @Value("${server.tomcat.accesslog.ignore-uris}")
   List<String> ignoreUris;
 
   @Bean
