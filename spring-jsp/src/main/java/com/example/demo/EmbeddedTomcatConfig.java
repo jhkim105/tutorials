@@ -6,9 +6,8 @@ import org.apache.catalina.webresources.ExtractingRoot;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 @Slf4j
 public class EmbeddedTomcatConfig {
 
@@ -18,7 +17,8 @@ public class EmbeddedTomcatConfig {
       ctx.setResources(new ExtractingRoot());
       ctx.setReloadable(false);
       Wrapper jsp = (Wrapper)ctx.findChild("jsp");
-      jsp.addInitParameter("development", "false");
+//      jsp.addInitParameter("development", "false");
+      log.info("{}", jsp.findInitParameter("development"));
       log.info("servletContainerCustomizer executed");
     });
   }
