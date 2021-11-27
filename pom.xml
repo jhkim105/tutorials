@@ -34,7 +34,7 @@
     <module>spring-junit5</module>
     <module>spring-mqtt</module>
     <module>spring-rabbitmq</module>
-    <module>spring-sample</module>
+    <module>spring-mvc</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
     <module>aws-lambda</module>

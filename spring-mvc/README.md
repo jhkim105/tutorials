@@ -1,2 +1,2 @@
-# spring-sample
+# spring-mvc
 Spring MVC Sample Code
