@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PathVariableController {
 
-  @GetMapping("/path/uri/{uri:.*}")
+  @GetMapping("/path/uri/{uri}")
   // 404
   public Map<String, String> path(@PathVariable("uri") String uri) {
     Map<String, String> result = new HashMap<>();
@@ -18,7 +18,7 @@ public class PathVariableController {
     return result;
   }
 
-  @GetMapping("/path/uri2/**")
+  @GetMapping("/path/uri2/*")
   public Map<String, String> path2(HttpServletRequest request) {
     Map<String, String> result = new HashMap<>();
     String uri = extractWildcardPath(request, "path2");

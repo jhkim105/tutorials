@@ -24,8 +24,8 @@ public class RestTemplateUtils {
 
   public static HttpHeaders jsonHeaders() {
     HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
     return headers;
   }
 

@@ -22,7 +22,7 @@ public class PathVariableControllerTest {
   private MockMvc mockMvc;
 
   @Test
-  @Disabled
+  @Disabled("404")
   public void testUri() throws Exception{
     String uri = "abc/123";
     ResultActions resultActions = mockMvc.perform(

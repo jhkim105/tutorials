@@ -6,12 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @Slf4j
-public class SpringSampleApplication {
+public class SpringMvcApplication {
 
   public static void main(String[] args) {
-    log.debug("debug");
-    log.debug("info");
-    SpringApplication.run(SpringSampleApplication.class, args);
+    SpringApplication.run(SpringMvcApplication.class, args);
   }
 
 }
