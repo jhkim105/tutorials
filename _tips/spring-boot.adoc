@@ -3,11 +3,10 @@
 == Install
 xxx.conf
 ----
-JAVA_OPTS="-Xmx2G"
-JAVA_OPTS="-Xms2g -Xmx2g -Drm_home=/DATA/WEB/remotemeeting"
-JAVA_OPTS="$JAVA_OPTS -Xloggc:./log/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps"
+JAVA_OPTS="-Xms2g -Xmx2g"
+JAVA_OPTS="$JAVA_OPTS -Xloggc:./logs/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps"
 #RUN_ARGS="--server.port=8080 --server.address=0.0.0.0"
-JAVA_OPTS="$JAVA_OPTS -Dlogging.config=./config/logback-spring.xml"
+JAVA_OPTS="$JAVA_OPTS -Dlogging.config=logback-spring.xml"
 LOG_FOLDER="/DATA/Logs/tomcat"
 RUN_AS_USER="tomcat"
 ----
@@ -15,7 +14,7 @@ config/application.properties
 ----
 ----
 
-config/logback-spring.xml
+logback-spring.xml
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="5 seconds">

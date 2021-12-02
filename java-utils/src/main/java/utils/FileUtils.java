@@ -38,7 +38,7 @@ public class FileUtils {
     if (StringUtils.isNotBlank(extension)) {
       fileName += "." + extension;
     }
-    String targetFilePath = uploadDir + "/" + fileName;
+    String targetFilePath = uploadDir + File.separator + fileName;
     File targetFile = new File(targetFilePath);
     try {
       multipartFile.transferTo(targetFile);
@@ -46,6 +46,11 @@ public class FileUtils {
       throw new RuntimeException(String.format("file upload error:%s", targetFilePath), ex);
     }
     return targetFile;
+  }
+
+  public static File upload(MultipartFile multipartFile, String uploadDir) {
+    String saveFileName = FilenameUtils.getBaseName(multipartFile.getOriginalFilename());
+    return upload(multipartFile, uploadDir, saveFileName);
   }
 
   public static void makeDirIfNotExists(String path) {

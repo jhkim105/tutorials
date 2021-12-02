@@ -24,7 +24,7 @@ public class DownloadImageController {
   private final AppProperties appProperties;
 
   @GetMapping(value = "/**/{file:.+}")
-  public ResponseEntity<byte[]> downloadPng(HttpServletRequest request, @PathVariable String file) {
+  public ResponseEntity<byte[]> download(HttpServletRequest request, @PathVariable String file) {
     log.debug("download:{}", file);
 
     return ResponseEntity.ok().contentType(mediaType(file)).body(getImage(request));

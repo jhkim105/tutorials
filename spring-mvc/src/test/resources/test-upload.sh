@@ -1,0 +1,1 @@
+curl -F 'file=@input.ppt' http://localhost:8080/upload
