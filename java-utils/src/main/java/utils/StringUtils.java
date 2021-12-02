@@ -26,4 +26,17 @@ public class StringUtils {
     DecimalFormat decimalFormat = new DecimalFormat(format);
     return decimalFormat.format(value);
   }
+
+  public static String removeBefore(String str, String separator ) {
+    String removeStr = org.apache.commons.lang3.StringUtils.substringBefore(str, separator);
+    return org.apache.commons.lang3.StringUtils.removeStart(str, removeStr);
+  }
+
+
+  public static String substringAfter(String str, String separator ) {
+    return org.apache.commons.lang3.StringUtils.substringAfter(str, separator);
+  }
+  public static String substringBefore(String str, String separator ) {
+    return org.apache.commons.lang3.StringUtils.substringBefore(str, separator);
+  }
 }
