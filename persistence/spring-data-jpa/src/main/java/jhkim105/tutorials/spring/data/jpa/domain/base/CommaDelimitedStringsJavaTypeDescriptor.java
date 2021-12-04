@@ -15,15 +15,14 @@ public class CommaDelimitedStringsJavaTypeDescriptor extends AbstractTypeDescrip
     public static final CommaDelimitedStringsJavaTypeDescriptor INSTANCE = new CommaDelimitedStringsJavaTypeDescriptor();
 
     public CommaDelimitedStringsJavaTypeDescriptor() {
-        super(
-            List.class,
-            new MutableMutabilityPlan<List>() {
-                @Override
-                protected List deepCopyNotNull(List value) {
-                    return new ArrayList( value );
-                }
+        super(List.class, new MutableMutabilityPlan<>() {
+            private static final long serialVersionUID = 1695746149097394537L;
+
+            @Override
+            protected List deepCopyNotNull(List value) {
+                return new ArrayList(value);
             }
-        );
+        });
     }
 
     @Override

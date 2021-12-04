@@ -22,7 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "dm_user")
 @Getter
 @ToString
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity<String> {
   @Id

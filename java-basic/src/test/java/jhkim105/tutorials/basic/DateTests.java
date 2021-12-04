@@ -1,9 +1,11 @@
+package jhkim105.tutorials.basic;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.Test;
 
 
-public class DateTest {
+public class DateTests {
 
 
   @Test

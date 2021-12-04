@@ -1,8 +1,8 @@
 
 ## jstatd
 policy 작성
-$JAVA_HOME/jre/lib/security/jstatd.all.policy
-(/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.0.1.x86_64/jre/lib/security/jstatd.all.policy)
+$JAVA_HOME/jre/lib/security/all.policy
+(/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.0.1.x86_64/jre/lib/security/all.policy)
 ```shell
 grant codebase "file:${java.home}/../lib/tools.jar" {
 permission java.security.AllPermission;
@@ -10,7 +10,7 @@ permission java.security.AllPermission;
 ```
 Run
 ```shell
-jstatd -J-Djava.security.policy=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.0.1.x86_64/jre/lib/security/jstatd.all.policy -J-Djava.rmi.server.hostname=18.178.73.168 -p 40400
+jstatd -J-Djava.security.policy=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.amzn2.0.1.x86_64/jre/lib/security/all.policy -J-Djava.rmi.server.hostname=18.178.73.168 -p 40400
 ```
 
 

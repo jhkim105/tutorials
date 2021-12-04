@@ -1,0 +1,1 @@
+package jhkim105.tutorials.spring.data.jpa.domain;

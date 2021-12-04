@@ -38,7 +38,6 @@ class UploadTest {
 
     HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
     String serverUrl = "http://localhost:8080/upload";
-    RestTemplate restTemplate = new RestTemplate();
     ResponseEntity<String> response = restTemplate.postForEntity(serverUrl, requestEntity, String.class);
     log.info("Response code: {}", response.getStatusCode());
     log.info("Response body: {}", response.getBody());

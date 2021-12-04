@@ -10,12 +10,13 @@
   <packaging>pom</packaging>
   <name>tutorials</name>
   <modules>
+    <module>aws-lambda</module>
     <module>beanio</module>
     <module>commons-configuration</module>
     <module>caching</module>
     <module>concurrency</module>
     <module>database-encrypt</module>
-    <module>java-utils</module>
+    <module>java-basic</module>
     <module>jmh</module>
     <module>mockserver</module>
     <module>monitoring</module>
@@ -37,9 +38,8 @@
     <module>spring-mvc</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
-    <module>aws-lambda</module>
-    <module>java-basic</module>
     <module>spring-mqtt</module>
+    <module>utils</module>
 
   </modules>
   <repositories>
