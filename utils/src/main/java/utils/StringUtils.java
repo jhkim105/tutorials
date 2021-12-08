@@ -18,6 +18,10 @@ public class StringUtils {
     return org.apache.commons.lang3.StringUtils.defaultString(str);
   }
 
+  public static String defaultString(String str, String defaultStr) {
+    return org.apache.commons.lang3.StringUtils.defaultString(str, defaultStr);
+  }
+
   public static boolean isBlank(String str) {
     return org.apache.commons.lang3.StringUtils.isBlank(str);
   }

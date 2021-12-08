@@ -2,7 +2,12 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,6 +73,23 @@ public class FileUtils {
       org.apache.commons.io.FileUtils.writeStringToFile(file, data, "UTF-8");
     } catch (IOException ex) {
       throw new RuntimeException(ex);
+    }
+  }
+
+  public static List<File> files(String dir) {
+    try (Stream<Path> stream = Files.list(Paths.get(dir))) {
+      return stream.map( p -> p.toFile())
+          .collect(Collectors.toList());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static List<Path> paths(String dir) {
+    try (Stream<Path> stream = Files.list(Paths.get(dir))) {
+      return stream.collect(Collectors.toList());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 
