@@ -34,6 +34,5 @@ class AesTest {
     String key = Hex.encodeHexString("abcdefghijklmnop1234567890123456".getBytes(StandardCharsets.UTF_8)); //6162636465666768696a6b6c6d6e6f7031323334353637383930313233343536
     String iv = Hex.encodeHexString("abcdefghijklmnop".getBytes(StandardCharsets.UTF_8)); //6162636465666768696a6b6c6d6e6f70
     log.debug(key);
-    log.debug(iv);
   }
 }
