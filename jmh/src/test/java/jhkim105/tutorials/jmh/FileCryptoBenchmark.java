@@ -1,5 +1,8 @@
 package jhkim105.tutorials.jmh;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import javax.crypto.KeyGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -13,39 +16,25 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.concurrent.TimeUnit;
+import utils.crypto.FileCryptor;
 
 @Slf4j
-public class RsCryptoComponentBenchmark {
+public class FileCryptoBenchmark {
   @State(Scope.Thread)
   public static class BenchmarkState {
-    ApplicationContext context;
-    RsCryptoComponent rsCryptoComponent;
-
     @Setup(Level.Trial)
     public synchronized void init() {
-      try {
-        if (context == null) {
-          context = new AnnotationConfigApplicationContext(JmhApplication.class);
-        }
-        rsCryptoComponent = context.getBean(RsCryptoComponent.class);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
     }
   }
 
   @Benchmark
   @BenchmarkMode(Mode.Throughput)
-  @OutputTimeUnit(TimeUnit.SECONDS)
-  @Warmup(iterations = 0)
-  @Threads(1)
+  @OutputTimeUnit(TimeUnit.MILLISECONDS)
+  @Warmup(iterations = 1)
+  @Threads(3)
   @Fork(1)
-  public void benchmark1(BenchmarkState state, Blackhole bh) {
-    String enc = state.rsCryptoComponent.encrypt("abc");
-    log.debug("encrypt:{}", enc);
+  public void benchmark1(BenchmarkState state, Blackhole bh) throws Exception {
+    FileCryptor fileCrypto = new FileCryptor(KeyGenerator.getInstance("AES").generateKey(), "AES/CBC/PKCS5Padding");
+    fileCrypto.encrypt("plaintext", "target/temp/" + UUID.randomUUID());
   }
 }
