@@ -18,6 +18,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @Slf4j
 public class Aes {
@@ -36,6 +37,17 @@ public class Aes {
     this.ivParameterSpec = generateIv(password);
   }
 
+  public Aes(String password, String iv, int size) {
+    this.cipher = cipher(ALG);
+    this.secretKey = generateKey(password, size);
+    this.ivParameterSpec = generateIv(iv);
+  }
+
+  public Aes(byte[] password, byte[] iv, int size) {
+    this.cipher = cipher(ALG);
+    this.secretKey = generateKey(password, size);
+    this.ivParameterSpec = generateIv(iv);
+  }
 
   private Cipher cipher(String alg) {
     try {
@@ -48,15 +60,24 @@ public class Aes {
   private SecretKey generateKey(String password, int size) {
     byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
     bytes = Arrays.copyOf(bytes, size);
-    return new SecretKeySpec(bytes, "AES");
+    return generateKey(bytes, size);
+  }
+
+  private SecretKey generateKey(byte[] password, int size) {
+    password = Arrays.copyOf(password, size);
+    return new SecretKeySpec(password, "AES");
   }
 
   private IvParameterSpec generateIv(String iv) {
-    byte[] bytes = iv.getBytes(StandardCharsets.UTF_8);
+    byte[] bytes = DigestUtils.sha256(iv);
     bytes = Arrays.copyOf(bytes, 16);
-    return new IvParameterSpec(bytes);
+    return generateIv(bytes);
   }
 
+  private IvParameterSpec generateIv(byte[] iv) {
+    iv = Arrays.copyOf(iv, 16);
+    return new IvParameterSpec(iv);
+  }
 
   private SecretKey generateKey(String password, String salt) {
     SecretKeyFactory factory;

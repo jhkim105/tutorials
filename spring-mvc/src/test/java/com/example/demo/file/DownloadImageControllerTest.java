@@ -38,7 +38,7 @@ class DownloadImageControllerTest {
     File downloadFile = new File("target/1.jpg");
     FileUtils.writeByteArrayToFile(downloadFile, resultActions.andReturn().getResponse().getContentAsByteArray());
 
-    IOUtils.contentEquals(new FileInputStream(new File("storage/images/sample/jpg/1.jpg")), new FileInputStream(downloadFile));
+    IOUtils.contentEquals(new FileInputStream("storage/images/sample/jpg/1.jpg"), new FileInputStream(downloadFile));
   }
 
 }

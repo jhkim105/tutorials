@@ -15,7 +15,7 @@ class AesFileCryptoTest {
     AesFileCryptor aesFileCrypto = new AesFileCryptor(secret);
     aesFileCrypto.encrypt(new File("src/test/resources/input.txt"), new File("target/enc.txt"));
     aesFileCrypto.decrypt(new File("target/enc.txt"), new File("target/dec.txt"));
-    Assertions.assertTrue(IOUtils.contentEquals(new FileInputStream(new File("src/test/resources/input.txt")), new FileInputStream(new File("target/dec.txt"))));
+    Assertions.assertTrue(IOUtils.contentEquals(new FileInputStream("src/test/resources/input.txt"), new FileInputStream("target/dec.txt")));
   }
 
 }

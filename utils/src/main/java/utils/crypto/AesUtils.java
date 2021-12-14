@@ -1,9 +1,11 @@
 package utils.crypto;
 
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Arrays;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -46,10 +48,18 @@ public class AesUtils {
     return secretKey;
   }
 
+  public static SecretKey generateKey(String secret, int keySize) {
+    byte[] key = secret.getBytes(StandardCharsets.UTF_8);
+    key = Arrays.copyOf(key, keySize);
+    return new SecretKeySpec(key, "AES");
+  }
+
   public static IvParameterSpec generateIv() {
     byte[] iv = new byte[16];
     new SecureRandom().nextBytes(iv);
     return new IvParameterSpec(iv);
   }
+
+
 
 }

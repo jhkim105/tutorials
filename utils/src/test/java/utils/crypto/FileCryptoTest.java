@@ -1,6 +1,5 @@
 package utils.crypto;
 
-import java.io.File;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import org.assertj.core.api.Assertions;
@@ -21,7 +20,19 @@ class FileCryptoTest {
     String decryptedContent = fileCrypto.decrypt(encFilePath);
     Assertions.assertThat(decryptedContent).isEqualTo(originalContent);
 
-    new File("target/baz.enc").delete(); // cleanup
   }
 
+  @Test
+  void testWithKey() throws Exception {
+    String originalContent = "abc123 z";
+    String encFilePath = "target/input-enc-256.txt";
+    SecretKey secretKey = AesUtils.generateKey("abcdefghijklmnop1234567890123456", 32);
+
+    FileCryptor fileCrypto = new FileCryptor(secretKey, "AES/CBC/PKCS5Padding");
+//    fileCrypto.encrypt(originalContent, encFilePath);
+
+    String decryptedContent = fileCrypto.decrypt(encFilePath);
+    Assertions.assertThat(decryptedContent).isEqualTo(originalContent);
+
+  }
 }

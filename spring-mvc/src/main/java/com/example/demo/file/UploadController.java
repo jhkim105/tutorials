@@ -29,7 +29,7 @@ public class UploadController {
   public ResponseEntity<UploadResponse> upload(MultipartRequest multipartRequest) {
     MultipartFile multipartFile = multipartRequest.getFile("file");
     if (multipartFile.isEmpty()) {
-      return ResponseEntity.notFound().build();
+      return ResponseEntity.badRequest().build();
     }
 
     String baseDir = String.format("upload/%s/%s",
