@@ -1,16 +1,15 @@
 package jhkim105.tutorials.jmh;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
-
+import java.nio.charset.Charset;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.Charset;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 public final class RsCrypto {
 
-    private static RsCrypto rsCrypto = new RsCrypto();
+    private static final RsCrypto rsCrypto = new RsCrypto();
     private SecretKeySpec keySpec;
     private IvParameterSpec ivSpec;
     private static final String ALGORITHM = "AES/CBC/PKCS5Padding";

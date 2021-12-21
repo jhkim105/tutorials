@@ -1,10 +1,11 @@
 package com.example.demo.file;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.AbstractResource;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -52,9 +53,8 @@ public class UploadToUrlController {
 
     MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
-    InputStreamResource inputStreamResource = new FilenameAwareInputStreamResource(multipartFile.getInputStream(), multipartFile.getSize(), multipartFile.getOriginalFilename());
-
-    body.add("file", inputStreamResource);
+    MultipartFileResource multipartFileResource = new MultipartFileResource(multipartFile);
+    body.add("file", multipartFileResource);
 
     HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
     RestTemplate restTemplate = new RestTemplate();
@@ -62,25 +62,37 @@ public class UploadToUrlController {
     return ResponseEntity.ok(result);
   }
 
+  /**
+   * org.springframework.web.multipart.MultipartFileResource
+   */
+  private class MultipartFileResource extends AbstractResource {
 
-  private static class FilenameAwareInputStreamResource extends InputStreamResource {
-    private final String filename;
-    private final long contentLength;
+    private final MultipartFile multipartFile;
 
-    public FilenameAwareInputStreamResource(InputStream inputStream, long contentLength, String filename) {
-      super(inputStream);
-      this.filename = filename;
-      this.contentLength = contentLength;
+    public MultipartFileResource(MultipartFile multipartFile) {
+      this.multipartFile = multipartFile;
     }
 
     @Override
     public String getFilename() {
-      return filename;
+      return this.multipartFile.getOriginalFilename();
+    }
+
+    @Override
+    public String getDescription() {
+      return "MultipartFile resource [" + this.multipartFile.getName() + "]";
     }
 
     @Override
     public long contentLength() {
-      return contentLength;
+      return this.multipartFile.getSize();
     }
+
+    @Override
+    public InputStream getInputStream() throws IOException {
+      return this.multipartFile.getInputStream();
+    }
+
   }
+
 }

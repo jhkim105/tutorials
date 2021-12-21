@@ -39,9 +39,9 @@ public class RsCryptoComponentBenchmark {
 
   @Benchmark
   @BenchmarkMode(Mode.Throughput)
-  @OutputTimeUnit(TimeUnit.SECONDS)
+  @OutputTimeUnit(TimeUnit.MILLISECONDS)
   @Warmup(iterations = 0)
-  @Threads(1)
+  @Threads(3)
   @Fork(1)
   public void benchmark1(BenchmarkState state, Blackhole bh) {
     String enc = state.rsCryptoComponent.encrypt("abc");

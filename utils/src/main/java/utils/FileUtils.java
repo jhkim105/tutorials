@@ -96,4 +96,5 @@ public class FileUtils {
   public static void deleteContents(String dir) {
     org.aspectj.util.FileUtil.deleteContents(new File(dir));
   }
+
 }
