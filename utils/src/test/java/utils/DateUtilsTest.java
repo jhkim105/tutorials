@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 public class DateUtilsTest {
 
   @Test
-  public void getEpochMilli() {
+  public void getTimestamp() {
     Date date = new Date();
     LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    assertEquals(DateUtils.getEpochMilli(localDateTime), date.getTime());
+    assertEquals(DateUtils.getTimestamp(localDateTime), date.getTime());
   }
 }

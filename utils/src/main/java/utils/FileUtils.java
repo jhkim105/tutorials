@@ -1,15 +1,25 @@
 package utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.lang3.StringUtils;
+import org.mozilla.universalchardet.UniversalDetector;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -36,7 +46,7 @@ public class FileUtils {
   }
 
   public static File upload(MultipartFile multipartFile, String uploadDir, String saveFileName) {
-    makeDirIfNotExists(uploadDir);
+    makeDirectory(uploadDir);
 
     String fileName = saveFileName;
     String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
@@ -58,7 +68,7 @@ public class FileUtils {
     return upload(multipartFile, uploadDir, saveFileName);
   }
 
-  public static void makeDirIfNotExists(String path) {
+  public static void makeDirectory(String path) {
     File dirPath = new File(path);
     if (!dirPath.exists()) {
       boolean made = dirPath.mkdirs();
@@ -78,14 +88,14 @@ public class FileUtils {
 
   public static List<File> files(String dir) {
     try (Stream<Path> stream = Files.list(Paths.get(dir))) {
-      return stream.map( p -> p.toFile())
+      return stream.map(p -> p.toFile())
           .collect(Collectors.toList());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public static List<Path> paths(String dir) {
+  public static List<Path> filePaths(String dir) {
     try (Stream<Path> stream = Files.list(Paths.get(dir))) {
       return stream.collect(Collectors.toList());
     } catch (IOException e) {
@@ -97,4 +107,58 @@ public class FileUtils {
     org.aspectj.util.FileUtil.deleteContents(new File(dir));
   }
 
+  public static Iterator<File> findOldFiles(File dir, int days) {
+    Date cutoff = DateUtils.addDays(new Date(), -days);
+    IOFileFilter fileFilter = FileFilterUtils.ageFileFilter(cutoff);
+    return org.apache.commons.io.FileUtils.iterateFiles(dir, fileFilter, fileFilter);
+  }
+
+  public static List<File> findOldDirs(String dir, String dirName, int hours, String... excludes) {
+    long cutoff = Timestamp.valueOf(LocalDateTime.now().minusHours(hours)).getTime();;
+    try(Stream<Path> pathStream = Files.walk(Paths.get(dir))) {
+      return pathStream
+          .map(Path::toFile)
+          .filter(File::isDirectory)
+          .filter(file -> file.getName().equals(dirName)
+              && Arrays.stream(excludes).noneMatch(exclude ->file.getPath().contains(exclude)))
+          .filter(file -> file.lastModified() < cutoff)
+          .collect(Collectors.toList());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static void deleteEmptyDirs(String dir) {
+    try(Stream<Path> pathStream = Files.walk(Paths.get(dir))) {
+      pathStream
+          .sorted(Comparator.reverseOrder())
+          .map(Path::toFile)
+          .filter(File::isDirectory)
+          .filter(f -> !StringUtils.endsWith(dir, f.getName()))
+          .forEach(File::delete);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static String findFileEncoding(File file) {
+    byte[] buf = new byte[4096];
+    try {
+      FileInputStream fis = new FileInputStream(file);
+      UniversalDetector detector = new UniversalDetector(null);
+
+      int length;
+      while ((length = fis.read(buf)) > 0 && !detector.isDone()) {
+        detector.handleData(buf, 0, length);
+      }
+      detector.dataEnd();
+
+      String encoding = detector.getDetectedCharset();
+      detector.reset();
+
+      return encoding;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }

@@ -1,5 +1,7 @@
 package utils;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -29,8 +31,17 @@ public final class DateUtils {
     return org.apache.commons.lang3.time.DateUtils.addDays(date, i);
   }
 
-  public static long getEpochMilli(LocalDateTime localDateTime) {
-    return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+  public static long getTimestamp(LocalDateTime localDateTime) {
+    return Timestamp.valueOf(localDateTime).getTime();
   }
+
+  public static Date convertToDate(LocalDateTime localDateTime) {
+    return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+  }
+
+  public static Date convertToDate(LocalDate localDateTime) {
+    return Date.from(localDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+  }
+
 }
 

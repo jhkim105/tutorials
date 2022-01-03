@@ -29,7 +29,7 @@ public class DownloadFileController {
   public ResponseEntity<InputStreamResource> download(String basePath, int index) {
     log.debug("download:{}", basePath);
     String absoluteBasePath = String.format("%s/files/%s", appProperties.getStoragePath(), basePath);
-    List<Path> paths = FileUtils.paths(absoluteBasePath);
+    List<Path> paths = FileUtils.filePaths(absoluteBasePath);
     Path path = paths.get(index - 1);
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION, contentDispositionHeader(path.getFileName().toString()))
