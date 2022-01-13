@@ -43,4 +43,8 @@ public class StringUtils {
   public static String substringBefore(String str, String separator ) {
     return org.apache.commons.lang3.StringUtils.substringBefore(str, separator);
   }
+
+  public static boolean endsWith(String str, String suffix) {
+    return org.apache.commons.lang3.StringUtils.endsWith(str, suffix);
+  }
 }

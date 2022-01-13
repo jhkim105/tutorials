@@ -1,5 +1,7 @@
-package com.example.multitenant.master;
+package com.example.multitenant.tenant;
 
+import com.example.multitenant.master.domain.Tenant;
+import com.example.multitenant.master.repository.TenantRepository;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Resource;

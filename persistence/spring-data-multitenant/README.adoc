@@ -263,8 +263,10 @@ public class TenantContextHolder {
 서버시작시 DataSourceBasedMultiTenantConnectionProviderImpl.selectAnyDataSource() 를 두번(?) 호출한다. 이때 Schema 가 JPA 설정이 create/update 일 경우 schema 가 생성된다.
 클라이언트 요청에 의해 selectDataSource(tenantIdentifier)를 호출할때에는 Schema 가 생성되지 않는다.
 
-## Issues
-고객 가입/등록시 Database/Schema 생성 기능 - 외부에서 DDL을 실행해야 함
+### Schema 동적으로 생성하기
+고객 가입/등록시 Database/Schema 생성 기능
+https://github.com/jhkim105/tutorials/blob/master/persistence/spring-data-jpa/src/main/java/jhkim105/tutorials/spring/data/jpa/utils/HibernateUtils.java
+
 
 ## References
 https://docs.jboss.org/hibernate/orm/5.5/userguide/html_single/Hibernate_User_Guide.html#multitenacy

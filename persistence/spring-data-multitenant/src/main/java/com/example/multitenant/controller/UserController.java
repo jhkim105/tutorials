@@ -1,5 +1,7 @@
-package com.example.multitenant.tenant;
+package com.example.multitenant.controller;
 
+import com.example.multitenant.domain.User;
+import com.example.multitenant.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

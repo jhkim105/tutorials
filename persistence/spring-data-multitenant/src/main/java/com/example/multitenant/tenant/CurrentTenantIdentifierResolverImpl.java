@@ -1,4 +1,4 @@
-package com.example.multitenant.master;
+package com.example.multitenant.tenant;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.util.StringUtils;

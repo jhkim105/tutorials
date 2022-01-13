@@ -1,4 +1,4 @@
-package com.example.multitenant.master;
+package com.example.multitenant.master.domain;
 
 import java.util.Objects;
 import javax.persistence.Column;

@@ -1,27 +1,26 @@
-package com.example.multitenant.tenant;
+package com.example.multitenant.master.repository;
 
-import com.example.multitenant.config.MasterDatabaseConfig;
-import com.example.multitenant.config.TenantDatabaseConfig;
+import com.example.multitenant.master.MasterDatabaseConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({MasterDatabaseConfig.class, TenantDatabaseConfig.class})
+@Import(MasterDatabaseConfig.class)
 @Slf4j
-public class CompanyRepositoryTest {
+class TenantRepositoryTest {
 
   @Autowired
-  CompanyRepository companyRepository;
+  TenantRepository tenantRepository;
+
 
   @Test
-  @Sql(scripts = {"/tenant.sql"})
-  void test() {
-    companyRepository.findAll();
+  void findFirst() {
+    tenantRepository.findFirstBy();
   }
+
 }

@@ -1,4 +1,4 @@
-package com.example.multitenant.master;
+package com.example.multitenant.tenant;
 
 public class TenantContextHolder {
 

@@ -1,4 +1,4 @@
-package com.example.multitenant.tenant;
+package com.example.multitenant.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

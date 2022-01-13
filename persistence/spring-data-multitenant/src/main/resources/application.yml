@@ -2,14 +2,16 @@ logging:
   level:
     root: info
     com.example.demo: debug
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
-    org.hibernate.type.EnumType: trace
+#    org.hibernate.SQL: debug
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
+#    org.hibernate.type.EnumType: trace
+    org.springframework.transaction: trace
+    org.springframework.orm.jpa: debug
 spring:
   jpa:
     defer-datasource-initialization: true
     properties:
-      hibernate.hbm2ddl.auto: update
+      hibernate.hbm2ddl.auto: create
       hibernate.physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
     show-sql: true
   sql:

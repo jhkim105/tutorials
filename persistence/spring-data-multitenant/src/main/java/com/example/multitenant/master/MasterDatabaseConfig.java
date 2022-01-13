@@ -1,4 +1,4 @@
-package com.example.multitenant.config;
+package com.example.multitenant.master;
 
 
 import javax.persistence.EntityManagerFactory;
@@ -18,11 +18,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.example.multitenant.master",
+@EnableJpaRepositories(basePackages = "com.example.multitenant.master.repository",
     entityManagerFactoryRef = "masterEntityManagerFactory",
     transactionManagerRef = "masterTransactionManager"
 )
 public class MasterDatabaseConfig {
+
+  public static final String PERSISTENCE_UNIT_NAME = "master";
 
   @Bean
   @Primary
@@ -43,8 +45,8 @@ public class MasterDatabaseConfig {
   @Primary
   public LocalContainerEntityManagerFactoryBean masterEntityManagerFactory(EntityManagerFactoryBuilder builder) {
     return builder.dataSource(masterDataSource())
-        .packages("com.example.multitenant.master")
-        .persistenceUnit("master")
+        .packages("com.example.multitenant.master.domain")
+        .persistenceUnit(PERSISTENCE_UNIT_NAME)
         .build();
   }
 
