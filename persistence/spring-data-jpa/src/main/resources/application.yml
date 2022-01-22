@@ -2,7 +2,7 @@
 # LOGGING
 logging:
   level:
-    com.example.demo: debug
+    jhkim105.tutorials: debug
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     org.hibernate.type.EnumType: trace
