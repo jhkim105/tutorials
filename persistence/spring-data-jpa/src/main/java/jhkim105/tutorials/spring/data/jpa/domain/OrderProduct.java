@@ -13,7 +13,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "de_order_products")
@@ -21,13 +20,11 @@ import org.hibernate.annotations.GenericGenerator;
 @ToString
 @EqualsAndHashCode(of = {"order", "product"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderProduct extends BaseEntity<String> {
+public class OrderProduct extends BaseEntity<Long> {
 
   @Id
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
-  @GeneratedValue(generator = "uuid")
-  @Column(length = ColumnLengths.UUID)
-  private String id;
+  @GeneratedValue
+  private Long id;
 
   @ManyToOne
   private Order order;

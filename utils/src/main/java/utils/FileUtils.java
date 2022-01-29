@@ -141,6 +141,14 @@ public class FileUtils {
     }
   }
 
+  public static void deleteDirectory(String dirPath) {
+    try {
+      org.apache.commons.io.FileUtils.deleteDirectory(new File(dirPath));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public static String findFileEncoding(File file) {
     byte[] buf = new byte[4096];
     try {
