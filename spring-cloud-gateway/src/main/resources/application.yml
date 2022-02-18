@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: one
+          uri: http://localhost:7777
+          predicates:
+            - Path=/one
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
