@@ -25,9 +25,7 @@
     <module>spring-activemq-guarantee-order</module>
     <module>spring-aws-dynamodb</module>
     <module>spring-oauth2</module>
-    <module>spring-cloud-config</module>
-    <module>spring-cloud-function</module>
-    <module>spring-cloud-stream</module>
+    <module>spring-cloud</module>
     <module>spring-files</module>
     <module>spring-integration</module>
     <module>spring-session-redis</module>
@@ -41,6 +39,7 @@
     <module>spring-security</module>
     <module>spring-mqtt</module>
     <module>utils</module>
+    <module>spring-cloud</module>
 
   </modules>
   <repositories>
