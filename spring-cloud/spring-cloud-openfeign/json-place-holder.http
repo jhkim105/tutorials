@@ -1,0 +1,4 @@
+GET https://jsonplaceholder.typicode.com/posts
+Accept: application/json
+
+###
