@@ -1,0 +1,10 @@
+logging.level:
+  "org.springframework.web": debug
+  "jhkim105.tutorials": debug
+spring:
+  application:
+    name: Sleuth Example
+  sleuth:
+    baggage:
+      remote-fields:
+        - username
