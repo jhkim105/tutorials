@@ -1,0 +1,25 @@
+# LOGGING
+logging:
+  level:
+    "jhkim105.tutorials": debug
+server:
+  port: 8082
+
+spring:
+
+  # DB
+  datasource:
+    url: @db.url@
+    username: @db.username@
+    password: @db.password@
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+
+  jpa:
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
+    properties:
+      hibernate.id.new_generator_mappings: false

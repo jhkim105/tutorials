@@ -1,0 +1,9 @@
+GET http://localhost:8080/books
+Accept: application/json
+
+###
+
+GET http://localhost:8080/ratings
+Accept: application/json
+
+###
