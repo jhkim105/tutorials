@@ -42,6 +42,7 @@
     <module>spring-cloud</module>
     <module>microservices</module>
     <module>spring-cloud-eureka</module>
+    <module>spring-cloud-zookeeper</module>
 
   </modules>
   <repositories>

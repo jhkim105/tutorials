@@ -1,0 +1,13 @@
+logging:
+  level:
+    "jhkim105.tutorials": debug
+spring:
+  application:
+    name: hello
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+      discovery:
+        enabled: true
+server:
+  port: 8081
