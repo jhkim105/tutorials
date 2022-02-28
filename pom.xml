@@ -41,6 +41,7 @@
     <module>utils</module>
     <module>spring-cloud</module>
     <module>microservices</module>
+    <module>spring-cloud-eureka</module>
 
   </modules>
   <repositories>

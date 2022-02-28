@@ -8,17 +8,16 @@
     <groupId>jhkim105</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>spring-cloud</artifactId>
+
+  <artifactId>spring-cloud-eureka</artifactId>
   <packaging>pom</packaging>
   <properties>
     <java.version>11</java.version>
   </properties>
-  <modules>
-    <module>spring-cloud-microservices</module>
-    <module>spring-cloud-config</module>
-    <module>spring-cloud-eureka</module>
-    <module>spring-cloud-function</module>
-    <module>spring-cloud-gateway</module>
-    <module>spring-cloud-stream</module>
-  </modules>
+
+    <modules>
+      <module>spring-cloud-eureka-server</module>
+      <module>spring-cloud-eureka-client</module>
+      <module>spring-cloud-eureka-client2</module>
+    </modules>
 </project>
