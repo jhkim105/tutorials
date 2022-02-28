@@ -24,10 +24,9 @@ public class HomeController {
   public String home() {
     InstanceInfo instance = eurekaClient.getApplication(SERVICE_NAME).getInstances().get(0);
     String hostName = instance.getHostName();
-
     URI uri = UriComponentsBuilder.newInstance()
         .scheme("http")
-        .host(hostName)
+        .host(instance.getHostName())
         .path("")
         .port(instance.getPort())
         .build().toUri();
@@ -35,6 +34,5 @@ public class HomeController {
     ResponseEntity<String> response = new RestTemplate().getForEntity(uri, String.class);
     return response.getBody();
   }
-
 
 }
