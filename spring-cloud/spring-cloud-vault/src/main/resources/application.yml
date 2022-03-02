@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: spring-cloud-vault
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      authentication: TOKEN
+      token: s.DMTWSKGCeozufCAVp2B1uc0x
+  config:
+    import: vault://
