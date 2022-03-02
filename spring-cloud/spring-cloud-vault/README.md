@@ -68,3 +68,7 @@ public class SpringCloudVaultApplication implements ApplicationRunner {
 
 ```
 
+
+## References
+https://spring.io/projects/spring-cloud-vault
+https://github.com/mp911de/spring-cloud-vault-config-samples/
