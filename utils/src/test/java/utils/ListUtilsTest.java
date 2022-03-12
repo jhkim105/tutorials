@@ -32,14 +32,14 @@ class ListUtilsTest {
   @Test
   void subList() {
     List<Integer> list = new ArrayList<>();
-    IntStream.range(0, 17).forEach(i -> list.add(i));
+    IntStream.range(0, 17).forEach(list::add);
     int sliceSize = 3;
     List<Integer> sublist;
     int index = 0;
     while(!(sublist = ListUtils.subList(list, index++, sliceSize)).isEmpty()) {
       log.debug("{}", sublist);
     }
-    log.debug("index:{}", index);
+    log.debug("index:{}", ListUtils.subList(list, 0, sliceSize));
   }
 
   @Test
