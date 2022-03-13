@@ -107,5 +107,21 @@ spring:
 
 jobStore.useProperties=true 일 경우 QRTZ_JOB_DETAILS.JOB_DATA 를 String 으로 저장
 
+## Clustering
+cronTrigger 등록 후 실행해보면 한대만 실행됨. 실행되던 인스턴스 중지하면 다른 인스턴스에서 실행됨
+```java
+@Bean
+public Trigger cronTrigger(JobDetail job) {
+    return TriggerBuilder.newTrigger().forJob(job)
+    .withIdentity("crontrigger1")
+    .withDescription("Sample cron trigger")
+    .withSchedule(cronSchedule("0/10 * * * * ?"))
+    .build();
+}
+```
+
+
+
 ## References
-https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#io.quartz
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#io.quartz  
+http://www.quartz-scheduler.org/

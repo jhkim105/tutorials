@@ -1,5 +1,6 @@
 package jhkim105.tutorials.spring.quartz.config;
 
+import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
 import jhkim105.tutorials.spring.quartz.scheduler.SampleJob;
@@ -27,11 +28,20 @@ public class SchedulerConfig {
   }
 
   @Bean
-  public Trigger trigger(JobDetail job) {
+  public Trigger simpleTrigger(JobDetail job) {
     return TriggerBuilder.newTrigger().forJob(job)
         .withIdentity("trigger1")
         .withDescription("Sample trigger")
-        .withSchedule(simpleSchedule().repeatForever().withIntervalInSeconds(10))
+        .withSchedule(simpleSchedule().repeatForever().withIntervalInSeconds(60))
+        .build();
+  }
+
+  @Bean
+  public Trigger cronTrigger(JobDetail job) {
+    return TriggerBuilder.newTrigger().forJob(job)
+        .withIdentity("crontrigger1")
+        .withDescription("Sample cron trigger")
+        .withSchedule(cronSchedule("0/10 * * * * ?"))
         .build();
   }
 
