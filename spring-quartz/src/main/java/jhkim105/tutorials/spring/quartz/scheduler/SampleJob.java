@@ -2,18 +2,19 @@ package jhkim105.tutorials.spring.quartz.scheduler;
 
 import jhkim105.tutorials.spring.quartz.service.SampleService;
 import lombok.RequiredArgsConstructor;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SampleJob implements Job {
+public class SampleJob extends QuartzJobBean {
 
     private final SampleService sampleService;
 
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    @Override
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         sampleService.doSomething();
     }
 

@@ -6,23 +6,17 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     org.hibernate.type.EnumType: trace
-
 spring:
-
-# DB - MySQL
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: @db.url@
     username: @db.username@
     password: @db.password@
-#    driver-class-name: org.mariadb.jdbc.Driver
-
   sql:
     init:
       mode: always
-#      data-locations: data.sql
       continue-on-error: false
-
+  #      data-locations: data.sql
   jpa:
     defer-datasource-initialization: true
     hibernate.ddl-auto: create

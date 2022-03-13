@@ -29,11 +29,12 @@ SampleJob.java
 ```java
 @Component
 @RequiredArgsConstructor
-public class SampleJob implements Job {
+public class SampleJob extends QuartzJobBean {
 
   private final SampleService sampleService;
 
-  public void execute(JobExecutionContext context) throws JobExecutionException {
+  @Override
+  protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
     sampleService.doSomething();
   }
 
@@ -84,7 +85,27 @@ Step: Run
 ```
 
 ## JDBC-based store
+```yaml
+spring:
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always
+  datasource:
+    url: jdbc:mariadb://localhost/demo_quartz?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+```
 
+## Quartz Properties
+```yaml
+spring:
+  quartz:
+    properties:
+      "org.quartz.jobStore.useProperties": true
+```
+
+jobStore.useProperties=true 일 경우 QRTZ_JOB_DETAILS.JOB_DATA 를 String 으로 저장
 
 ## References
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#io.quartz

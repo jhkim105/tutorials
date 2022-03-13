@@ -1,5 +1,19 @@
 
 spring:
   quartz:
-    job-store-type: memory
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    properties:
+      "org.quartz.jobStore.useProperties": true
+  datasource:
+    url: jdbc:mariadb://localhost/demo_quartz?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+#  jpa:
+#    defer-datasource-initialization: true
+#    hibernate.ddl-auto: create
+#    properties:
+#      hibernate.id.new_generator_mappings: false
+
 
