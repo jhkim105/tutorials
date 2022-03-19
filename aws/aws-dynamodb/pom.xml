@@ -5,14 +5,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.6.4</version>
+    <version>2.5.3</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>jhkim105.tutorials</groupId>
-  <artifactId>spring-data-dynamodb</artifactId>
+  <artifactId>aws-dynamodb</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-data-dynamodb</name>
-  <description>spring-data-dynamodb</description>
+  <name>aws-dynamodb</name>
+  <description>spring-aws-dynamodb</description>
   <properties>
     <java.version>11</java.version>
   </properties>
@@ -33,32 +33,12 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-releasetrain -->
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-releasetrain</artifactId>
-      <version>Neumann-SR9</version>
-      <type>pom</type>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb -->
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-dynamodb</artifactId>
       <version>1.12.35</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.github.derjust/spring-data-dynamodb -->
-    <dependency>
-      <groupId>com.github.derjust</groupId>
-      <artifactId>spring-data-dynamodb</artifactId>
-      <version>5.1.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.amazonaws</groupId>
-          <artifactId>aws-java-sdk-dynamodb</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
   </dependencies>
 
   <build>

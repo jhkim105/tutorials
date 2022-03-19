@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
   <name>tutorials</name>
   <modules>
-    <module>aws-lambda</module>
+    <module>aws</module>
     <module>beanio</module>
     <module>commons-configuration</module>
     <module>caching</module>
@@ -23,7 +23,6 @@
     <module>persistence</module>
     <module>spring-activemq</module>
     <module>spring-activemq-guarantee-order</module>
-    <module>spring-aws-dynamodb</module>
     <module>spring-oauth2</module>
     <module>spring-cloud</module>
     <module>spring-files</module>
@@ -35,14 +34,13 @@
     <module>spring-mqtt</module>
     <module>spring-rabbitmq</module>
     <module>spring-mvc</module>
+    <module>spring-quartz</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
     <module>spring-mqtt</module>
     <module>utils</module>
     <module>spring-cloud</module>
-    <module>microservices</module>
-    <module>spring-cloud-eureka</module>
-    <module>spring-cloud-zookeeper</module>
+    <module>aws</module>
 
   </modules>
   <repositories>
