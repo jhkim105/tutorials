@@ -1,0 +1,8 @@
+
+
+aws:
+  accessKey: AKIAJPMFX5J2KPRYPSBA
+  secretKey: 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
+  dynamodb:
+    endpoint:
+    region: us-west-2

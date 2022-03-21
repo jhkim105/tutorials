@@ -52,8 +52,7 @@ public class DynamoDBConfig {
 
   @Bean
   public AWSStaticCredentialsProvider credentialsProvider() {
-    return new AWSStaticCredentialsProvider(new BasicAWSCredentials(
-        awsAccessKey, awsSecretKey));
+    return new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsAccessKey, awsSecretKey));
   }
 
 }
