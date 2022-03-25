@@ -41,3 +41,33 @@ END
 ```
 
 저장된 데이터가 평문일 경우 null로 조회된다.
+
+### @Converter 
+
+StringEncryptConverter.java
+```java
+public class StringEncryptConverter implements AttributeConverter<String, String> {
+
+
+  private static final String P = "1234567890123456";
+
+  @Override
+  public String convertToDatabaseColumn(String s) {
+    return Aes.getInstance(P).encrypt(s);
+  }
+
+  @Override
+  public String convertToEntityAttribute(String s) {
+    return Aes.getInstance(P).decrypt(s);
+  }
+}
+
+```
+
+User.java
+```java
+  @Column
+  @Convert(converter = StringEncryptConverter.class)
+  private String phoneNumber;
+```
+

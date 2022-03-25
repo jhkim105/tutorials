@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
@@ -56,10 +57,12 @@ class AesTest {
     log.debug(decryptString);
   }
 
-  @Test
+
   /**
    * openssl enc -e -aes-256-cbc -nosalt -k 6162636465666768696a6b6c6d6e6f7031323334353637383930313233343536 -p -in src/test/resources/input.txt -out target/input-enc-256.txt
    */
+  @Test
+  @Disabled
   void decryptWithHex() throws  Exception{
     String key ="4455CEB66E472882A8EF8ABA0DA7C6959A4A4ACDA57BBF8B095CD5D320CC6B12";
     String iv ="F7183A3E260A30DFCD75FBC8025AFBDA";

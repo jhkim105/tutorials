@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +19,12 @@ import org.junit.jupiter.api.Test;
  * https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/java-example-code.html
  * Key ARN: For help finding the Amazon Resource Name (ARN) of your AWS KMS key, see 'Finding the key ID and key ARN' at https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html
  */
+@Slf4j
 class KmsMasterKeyTests {
 
   private static final byte[] EXAMPLE_DATA = "Hello World".getBytes(StandardCharsets.UTF_8);
 
-  private static final String KEY_ARN = "arn:aws:kms:ap-northeast-1:919767229200:key/mrk-ea3f92b9121343d9b5b0ec8df0f3cbb2";
+  private static final String KEY_ARN = "arn:aws:kms:ap-northeast-1:919767229200:key/08e97e4c-307b-47d6-ba64-18240d379114";
 
   @Test
   void test() {
@@ -54,5 +56,6 @@ class KmsMasterKeyTests {
 
     Assertions.assertThat(Arrays.equals(decryptResult.getResult(), EXAMPLE_DATA)).isTrue();
   }
+
 
 }

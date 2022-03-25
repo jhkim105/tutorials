@@ -49,6 +49,10 @@ public class Aes {
     this.ivParameterSpec = generateIv(iv);
   }
 
+  public static Aes getInstance(String password) {
+      return new Aes(password, 16);
+  }
+
   private Cipher cipher(String alg) {
     try {
       return Cipher.getInstance(alg);

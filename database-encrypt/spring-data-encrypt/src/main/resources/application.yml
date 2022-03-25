@@ -1,0 +1,22 @@
+# Logging
+logging:
+  level:
+    "com.example": trace
+    "org.hibernate.SQL": debug
+    "org.hibernate.type.descriptor.sql.BasicBinder": trace
+
+# DATASOURCE
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost/demo?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    username: root
+    password: 111111
+
+# JPA
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always

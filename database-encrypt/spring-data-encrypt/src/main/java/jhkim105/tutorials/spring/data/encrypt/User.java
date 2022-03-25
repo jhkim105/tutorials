@@ -1,6 +1,7 @@
 package jhkim105.tutorials.spring.data.encrypt;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class User {
   @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   @ColumnTransformer(
       read = "cast(AES_DECRYPT(UNHEX(username), fn_enckey()) as CHAR)",
       write = "HEX(AES_ENCRYPT(?, fn_enckey()))")
@@ -37,11 +38,15 @@ public class User {
   @Column
   private String description;
 
+  @Column
+  @Convert(converter = StringEncryptConverter.class)
+  private String phoneNumber;
 
   @Builder
-  public User(String name, String username, String description) {
+  public User(String name, String username, String description, String phoneNumber) {
     this.name = name;
     this.username = username;
     this.description = description;
+    this.phoneNumber = phoneNumber;
   }
 }

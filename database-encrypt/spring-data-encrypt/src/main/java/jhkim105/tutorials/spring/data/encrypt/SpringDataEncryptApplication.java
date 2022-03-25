@@ -10,4 +10,5 @@ public class SpringDataEncryptApplication {
     SpringApplication.run(SpringDataEncryptApplication.class, args);
   }
 
+
 }

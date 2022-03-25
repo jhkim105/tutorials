@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 /**
  * https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/java-example-code.html
  */
-public class JceMasterKeyProviderTests {
+public class JceMasterKeyTests {
 
 
   @Test

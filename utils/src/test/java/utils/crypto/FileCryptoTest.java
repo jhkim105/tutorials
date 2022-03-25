@@ -25,11 +25,11 @@ class FileCryptoTest {
   @Test
   void testWithKey() throws Exception {
     String originalContent = "abc123 z";
-    String encFilePath = "target/input-enc-256.txt";
+    String encFilePath = "target/testWithKey.txt";
     SecretKey secretKey = AesUtils.generateKey("abcdefghijklmnop1234567890123456", 32);
 
     FileCryptor fileCrypto = new FileCryptor(secretKey, "AES/CBC/PKCS5Padding");
-//    fileCrypto.encrypt(originalContent, encFilePath);
+    fileCrypto.encrypt(originalContent, encFilePath);
 
     String decryptedContent = fileCrypto.decrypt(encFilePath);
     Assertions.assertThat(decryptedContent).isEqualTo(originalContent);

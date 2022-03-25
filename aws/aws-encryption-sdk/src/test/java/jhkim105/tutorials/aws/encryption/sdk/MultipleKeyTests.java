@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
  *
  * The sample encrypts data under both an AWS KMS key and an "escrowed" RSA key pair
  */
-class MultipleKeyProviderTests {
+class MultipleKeyTests {
 
   private static PublicKey publicEscrowKey;
   private static PrivateKey privateEscrowKey;
