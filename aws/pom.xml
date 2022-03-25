@@ -16,5 +16,6 @@
   <modules>
     <module>aws-dynamodb</module>
     <module>aws-lambda</module>
+    <module>aws-encryption-sdk</module>
   </modules>
 </project>
