@@ -57,7 +57,8 @@ config.name: service-development
 http://localhost:8888/config-client/development
 
 Config 위치 지정
-지정하게 되면 classpath에 있는 config는 무시된다.
+지정하게 되면 classpath 에 있는 config 는 무시된다.
+classpath 에 config directory 가 없으면 search-locations 설정된 프로퍼티가 로드되지 않는다. 버그로 보임. (2022/03/28)
 [source,yaml]
 ----
 spring:
@@ -67,7 +68,7 @@ spring:
     config:
       server:
         native:
-          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud-config/config-server/conf
+          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud/spring-cloud-config/config-server/conf
 ----
 
 ==  Config Client
@@ -233,15 +234,104 @@ curl http://localhost:8888/config-client/development/main
 {"name":"config-client","profiles":["development"],"label":"main","version":"a286e0f76e05f89c695edc9ec7f6b11e3d81ec5b","state":null,"propertySources":[{"name":"file:///Users/jihwankim/config-repo/config-client-development.properties","source":{"config.name":"git-local-config-client-development"}}]}
 ----
 
-config client에서 label 지정
+config client 에서 label 지정
 ----
 spring.cloud.config.label=1.0.1
 ----
 
 ==== Git - remote
 
+== Encryption
 
+=== Symmetric
+
+대칭키
+
+application.yml 에 encrypt.key 를 지정하거나, System Property ECRYPT_KEY= 로 지정
+Config Server 에서 /encrypt, /decrypt 를 제공함
+
+----
+(base) ➜  tutorials git:(master) ✗ curl -X POST http://localhost:8888/encrypt -d 1234
+40fc12a9cd56c0f3a85b3716b27af3fa9e88950253732c4f8c860dfaec337024%
+----
+
+property
+----
+  password: '{cipher}40fc12a9cd56c0f3a85b3716b27af3fa9e88950253732c4f8c860dfaec337024'
+----
+
+서버쪽에서 암호화 하고 클라이언트에서 복호화하려면 서버쪽에 spring.cloud.config.server.encrypt.enabled=false 설정하고 클라이언트에 encrypt.key 를 설정해야 한다.
+
+
+=== Asymmetric
+
+keystore 생성 (config-server/src/main/resources)
+[source, shell]
+----
+keytool -genkeypair -alias config-server-key -keyalg RSA \
+        -keypass pass1234 -keystore config-server.jks -storepass pass1234 \
+        -dname 'CN=Config Server,OU=Spring Cloud,O=Jhkim105'
+----
+
+config-server/application.yml
+
+[source, yaml]
+----
+encrypt:
+  key-store:
+    location: classpath:/config-server.jks
+    alias: config-server-key
+    password: pass1234
+    secret: pass1234
+----
+
+----
+(base) ➜  resources git:(master) ✗ curl localhost:8888/encrypt -d 1234 -X POST
+AQA66PiKBz1mMXgZsnL/S9wPGsSRBRVAHKVNdzl+Jj+hLLExCeod4nrqQSs2WR3l26/dFzSuCQKjfZ6fT0HylYmMFZfe47rYyis1j5+bBBkfsNmEAUpe9vyLZ2AbqpgmYfPUiRY+U9ONDWPKH/+jYp0fz/rKediOXkmcFQ6lhcnF9Y8l5DMpH4doratccVy4f5XAJprJja5/ClReZNWVmfzlhNu4uQcpkdyiHBBJLippt0wue6EvzZkI5axN1lbOaANQ+UP2dwc2l/FCXfMadpU1R5tZUe/hC7Y9n2uWjUftbkKG0tILV4X4wvbcSBRGQxODUX0rZgUpfjw//VItKSjwlEUukBkSxk80DDIIs2QigzC3XHfsPDvOxcBshpLXFJQ=%
+----
+
+==== Server Encrypt and Client Decrypt
+
+* Private Key 생성
+----
+keytool -genkeypair -alias config-private-key -keyalg RSA \
+-keypass pass1234 -keystore config-private.jks -storepass pass1234 \
+-dname 'CN=Config Server,OU=Spring Cloud,O=Jhkim105'
+----
+
+* 인증서 생성 ( from Private Key)
+----
+keytool -export -alias config-private-key -keystore config-private.jks -rfc -file config-public.cer
+----
+
+* Public Key 생성 ( from 인증서 )
+----
+keytool -import -alias config-public-key -file config-public.cer -keystore config-public.jks -storepass 1234pass
+----
+
+* Config Server: public key
+[source, yaml]
+----
+encrypt:
+  key-store:
+    location: classpath:/config-public.jks
+    alias: config-server-key
+    password: 1234pass
+    secret: 1234pass
+----
+
+* Config Client: private key
+[source, yaml]
+----
+encrypt:
+  key-store:
+    location: classpath:/config-private.jks
+    alias: config-private-key
+    password: pass1234
+    secret: pass1234
+----
 
 == Refs
 https://docs.spring.io/spring-cloud-config/docs/current/reference/html/
 https://spring.io/guides/gs/centralized-configuration/
+https://www.baeldung.com/spring-cloud-configuration#Encryption

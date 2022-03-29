@@ -1,19 +1,26 @@
 server:
   port: 8888
 spring:
-#  profiles:
-#    active: native
-#  cloud:
-#    config:
-#      server:
-#        native:
-#          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud-config/config-server/conf
   profiles:
-    active: git
+    active: native
   cloud:
     config:
       server:
-        git:
-          uri: file://${user.home}/config-repo
-          default-label: main
-
+        native:
+          search-locations: file:///Users/jihwankim/dev/my/tutorials/spring-cloud/spring-cloud-config/config-server/conf
+        encrypt:
+          enabled: false
+#  profiles:
+#    active: git
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: file://${user.home}/config-repo
+#          default-label: main
+encrypt:
+  key-store:
+    location: classpath:/config-public.jks
+    alias: config-public-key
+    password: 1234pass
+    secret: 1234pass

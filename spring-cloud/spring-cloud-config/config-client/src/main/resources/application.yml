@@ -17,5 +17,9 @@ management:
     web:
       exposure:
         include: "refresh,busrefresh"
-
-config.name: local
+encrypt:
+  key-store:
+    location: classpath:/config-private.jks
+    alias: config-private-key
+    password: pass1234
+    secret: pass1234
