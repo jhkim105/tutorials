@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.data.initialize;
+package jhkim105.tutorials.spring.data.initialize.db;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import org.springframework.test.context.TestPropertySource;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 @TestPropertySource(locations = {"classpath:/db-initialize.properties"})
 @Slf4j
-class DBInitialize {
+class CreateSchema {
 
   @Test
   void run() {
