@@ -80,4 +80,27 @@ maven plugin 을 사용하지 않고, DB 초기화하는 효율적인 방법(방
   junit.jupiter.testclass.order.default=com.example.demo.TestClassOrderer
   ```
 
-maven-sufire-plugin을 사용해서 DB 초기화 테스트 케이스를 먼저 실행하게 하는것도 가능하다.
+
+### maven-sufire-plugin
+maven-sufire-plugin을 사용해서 DB 초기화 테스트 케이스를 실행하도록 지정한다. 중복 실행을 막기위해 이름에서 Tests를 제거.
+
+```xml
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>db-initialize</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>jhkim105.tutorials.spring.data.initialize.DBInitialize</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+```
