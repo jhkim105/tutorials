@@ -8,7 +8,7 @@
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>jhkim105.tutorials</groupId>
 	<artifactId>spring-rabbitmq-monitoring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-rabbitmq-monitoring</name>

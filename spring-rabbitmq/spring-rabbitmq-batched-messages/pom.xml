@@ -8,7 +8,7 @@
     <version>2.5.3</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.example</groupId>
+  <groupId>jhkim105.tutorials</groupId>
   <artifactId>spring-rabbitmq-batched-messages</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-rabbitmq-batched-messages</name>

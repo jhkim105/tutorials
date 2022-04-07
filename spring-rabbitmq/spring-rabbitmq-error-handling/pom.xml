@@ -3,11 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.example</groupId>
-		<artifactId>spring-rabbitmq</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.4.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>jhkim105.tutorials</groupId>
 	<artifactId>spring-rabbitmq-error-handling</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-rabbitmq-error-handling</name>
