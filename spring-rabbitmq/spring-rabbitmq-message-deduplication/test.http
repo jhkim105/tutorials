@@ -1,0 +1,4 @@
+GET http://localhost:8080/?message=1
+Accept: application/json
+
+###
