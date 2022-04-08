@@ -1,10 +1,4 @@
 
-mqtt:
-  brokerUrl: tcp://localhost:1883
-#  brokerUrl: tcp://devpns.remotemeeting.com:1883
-  qos: 2
-  async: true
-  completionTimeout: 5000
 spring:
   rabbitmq:
     host: localhost
@@ -14,3 +8,11 @@ spring:
 logging:
   level:
     com.example: debug
+
+
+mqtt:
+  broker-url: tcp://localhost:1883
+  #  broker-url: tcp://devpns.remotemeeting.com:1883
+  qos: 2
+  async: true
+  completion-timeout: 5000

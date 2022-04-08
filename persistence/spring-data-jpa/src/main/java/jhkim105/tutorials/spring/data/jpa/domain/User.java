@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.ToString.Exclude;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "dm_user")
@@ -26,7 +25,6 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity<String> {
   @Id
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
   @GeneratedValue(generator = "uuid")
   @Column(length = ColumnLengths.UUID)
   private String id;
