@@ -1,9 +1,9 @@
 package jhkim105.tutorials.spring.integration.mqtt;
 
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.Gateway;
@@ -25,15 +25,16 @@ import org.springframework.messaging.handler.annotation.Header;
 
 @Configuration
 @IntegrationComponentScan
+@RequiredArgsConstructor
 @Slf4j
 public class MqttIntegrationConfig {
 
   private static final String MQTT_OUTBOUND_CHANNEL = "outboundChannel";
-
   private static final String MQTT_LOGGING_CHANNEL = "mqttLoggingChannel";
+  private final MqttProperties mqttProperties;
+  private final MqttInboundHandler mqttInboundHandler;
+  public static final String TOPIC = "test";
 
-  @Autowired
-  private MqttProperties mqttProperties;
 
   @Bean
   public MqttPahoClientFactory mqttClientFactory() {
@@ -85,9 +86,9 @@ public class MqttIntegrationConfig {
     String clientId = UUID.randomUUID().toString();
 
     return IntegrationFlows.from(
-        inboundAdapter(clientId, "/test"))
+        inboundAdapter(clientId, TOPIC))
         .wireTap(MQTT_LOGGING_CHANNEL)
-        .handle(m -> log.debug("message -> {}", m))
+        .handle(mqttInboundHandler)
         .get();
   }
 
