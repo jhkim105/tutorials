@@ -12,7 +12,7 @@ public class MqttInboundHandler {
 
   @ServiceActivator
   public void handle(Message message) {
-    log.info("{}", message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC));
+    log.info("{}", message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC, String.class));
   }
 
 }
