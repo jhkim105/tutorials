@@ -5,12 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import jhkim105.tutorials.spring.data.jpa.BaseRepositoryTest;
 import jhkim105.tutorials.spring.data.jpa.domain.Order;
+import jhkim105.tutorials.spring.data.jpa.projection.OrderProjection;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 
-public class OrderRepositoryTest extends BaseRepositoryTest {
+@Slf4j
+class OrderRepositoryTest extends BaseRepositoryTest {
 
   @Autowired
   OrderRepository orderRepository;
@@ -25,4 +28,12 @@ public class OrderRepositoryTest extends BaseRepositoryTest {
     List<Order> orderList = orderRepository.findAll(example);
     assertThat(orderList).hasSizeGreaterThan(0);
   }
+
+
+  @Test
+  void projection() {
+    List<OrderProjection> list = orderRepository.getOrderProjections();
+    log.info("{}", list);
+  }
+
 }

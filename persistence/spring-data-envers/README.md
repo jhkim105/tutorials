@@ -65,4 +65,38 @@ public class Revision {
 }
 ```
 
+## Entity History 조회하기
+단건조회
+```java
+  public Object getRevisionObject(Class<?> clazz, long rev) {
+    AuditQuery query = AuditReaderFactory.get(entityManager)
+        .createQuery()
+        .forEntitiesAtRevision(clazz, rev);
+    query.setMaxResults(1);
+    List list = query.getResultList();
+    return CollectionUtils.isEmpty(list) ? null : list.get(0);
+  }
 
+```
+다건 조회
+```java
+  public List getRevisionObjects(Class<?> clazz, int maxResults) {
+    AuditQuery query = AuditReaderFactory.get(entityManager)
+        .createQuery()
+        .forRevisionsOfEntity(clazz, true, true);
+    query.addOrder(AuditEntity.revisionProperty("timestamp").desc());
+    query.setMaxResults(maxResults);
+
+    return query.getResultList();
+  }
+
+```
+
+실행 쿼리를 보면 cross join 이 발생한다. 조건절에 user_aud0_.rev=revision1_.id 이 있어서 성능상 이슈는 없다.(mysql 에서는 조건이 있는 경우 inner join 과 동일하게 동작)
+```shell
+select user_aud0_.id as id1_6_, user_aud0_.rev as rev2_6_, user_aud0_.revtype as revtype3_6_, user_aud0_.name as name4_6_, user_aud0_.username as username5_6_ 
+from dm_user_aud user_aud0_ 
+cross join dz_revision revision1_ 
+where user_aud0_.rev=revision1_.id 
+order by revision1_.timestamp desc limit ?
+```

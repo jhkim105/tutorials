@@ -15,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
 import org.hibernate.Hibernate;
@@ -41,6 +42,8 @@ public class User extends BaseEntity<String> {
   private String id;
 
   @Column(nullable = false)
+  @Setter
+  @Audited
   private String name;
 
   @NaturalId
