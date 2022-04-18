@@ -1,4 +1,4 @@
-package com.example.demo.file;
+package jhkim105.tutorials.spring.mvc.file;
 
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

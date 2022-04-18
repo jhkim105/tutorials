@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.mvc;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.mvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

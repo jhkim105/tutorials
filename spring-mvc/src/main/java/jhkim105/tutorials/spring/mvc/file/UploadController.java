@@ -1,10 +1,10 @@
-package com.example.demo.file;
+package jhkim105.tutorials.spring.mvc.file;
 
-import com.example.demo.AppProperties;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import jhkim105.tutorials.spring.mvc.AppProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

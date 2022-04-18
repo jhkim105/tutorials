@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.mvc;
 
 import lombok.Getter;
 import lombok.Setter;

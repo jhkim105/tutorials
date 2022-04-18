@@ -1,4 +1,4 @@
-package com.example.demo.file;
+package jhkim105.tutorials.spring.mvc.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
