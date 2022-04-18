@@ -16,6 +16,7 @@
     <module>caching</module>
     <module>concurrency</module>
     <module>database-encrypt</module>
+    <module>excel-poi</module>
     <module>java-basic</module>
     <module>jmh</module>
     <module>mockserver</module>
