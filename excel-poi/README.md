@@ -94,5 +94,49 @@ public class ExcelWriter {
 
 ```
 
+## Download
+```java
+  @GetMapping("/download")
+  public ResponseEntity<InputStreamResource> download() {
+    List<List<String>> list = getList();
 
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, contentDispositionHeader("output.xlsx"))
+        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+        .body(inputStreamResource(list));
+  }
 
+  private InputStreamResource inputStreamResource(List<List<String>> list) {
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    ExcelWriter.write(list, byteArrayOutputStream);
+
+    return new InputStreamResource(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+  }
+
+  private String contentDispositionHeader(String fileName) {
+    return "attachment;filename=\"" + fileName + "\"";
+  }
+
+```
+
+## Download TestCase
+````java
+  @Test
+  void download() throws Exception {
+    ResultActions resultActions = mockMvc.perform(
+        MockMvcRequestBuilders
+            .get("/download")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_OCTET_STREAM));
+
+    resultActions
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM));
+
+    File downloadFile = new File("target/output.xlsx");
+    FileUtils.writeByteArrayToFile(downloadFile, resultActions.andReturn().getResponse().getContentAsByteArray());
+
+    List<List<String>> list = ExcelReader.read(new FileInputStream(downloadFile));
+    assertThat(list.size()).isEqualTo(4);
+  }
+````
