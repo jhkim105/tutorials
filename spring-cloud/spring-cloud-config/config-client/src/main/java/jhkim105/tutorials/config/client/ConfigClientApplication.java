@@ -21,7 +21,7 @@ public class ConfigClientApplication implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    log.info("config.name:{}", environment.getProperty("config.name"));
-    log.info("config.password:{}", environment.getProperty("config.password"));
+    log.info("app.config.name:{}", environment.getProperty("app.config.name"));
+    log.info("app.config.password:{}", environment.getProperty("app.config.password"));
   }
 }

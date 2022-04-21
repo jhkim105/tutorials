@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RefreshScope
 public class HomeController {
 
-  @Value("${config.name}")
-  private String configName;
+  @Value("${app.config.name}")
+  private String appConfigName;
 
   @GetMapping("/")
   public String home() {
-    return configName;
+    return appConfigName;
   }
 }

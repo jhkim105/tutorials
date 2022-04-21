@@ -23,3 +23,8 @@ encrypt:
     alias: config-private-key
     password: pass1234
     secret: pass1234
+
+app:
+  config:
+    name: local
+    password: local-password
