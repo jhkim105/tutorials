@@ -1,0 +1,7 @@
+jasypt:
+  encryptor:
+    password: secret1234
+#    bean: stringEncryptor
+
+app:
+  password: ENC(yPLSbwn2IBcLYHNRvQyabUPdJh92QuefDbWobfkGON2gHlOADKdmFgen9t3Nnkj8)
