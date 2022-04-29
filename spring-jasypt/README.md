@@ -107,6 +107,24 @@ app:
 ```
 이 플러그인을 사용하는 경우 기본 설정으로만 사용 가능하고 알고리즘이나 encryptor bean을 지정하여 사용할 수 없다.
 
+기본값으로 작성한 StringEncryptor
+```java
+  @Bean
+  public StringEncryptor stringEncryptor() {
+    PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+    SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+    config.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
+    config.setPassword("secret1234"); //System.setProperty("jasypt.encryptor.password", "secret1234")
+    config.setKeyObtentionIterations("1000");
+    config.setPoolSize("1");
+    config.setProviderName("SunJCE");
+    config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+    config.setIvGeneratorClassName("org.jasypt.iv.RandomIvGenerator");
+    config.setStringOutputType("base64");
+    encryptor.setConfig(config);
+    return encryptor;
+  }
+```
 
 ## Refs
 https://github.com/ulisesbocchio/jasypt-spring-boot

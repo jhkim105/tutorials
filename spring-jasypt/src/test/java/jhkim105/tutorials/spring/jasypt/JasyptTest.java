@@ -16,11 +16,11 @@ class JasyptTest {
 
   @Test
   void encrypt() {
-    log.info("{}", stringEncryptor.encrypt("pass1234"));
+    log.info("{}", stringEncryptor.encrypt("1234"));
   }
 
   @Test
   void decrypt() {
-    log.info("{}", stringEncryptor.decrypt("ef0QM5m0w8R9HaQ4y4RqGIAIphZNXwyDwBWm165UdkiC7U3vRJzPbCoEzhD+SnknukrLzsqSzLWXvj5O77fVXQ=="));
+    log.info("{}", stringEncryptor.decrypt("VCr9a+qfrOy50aheLoseCKmZ/YeDZzMBQwk7UPUoUr6PISgiW+VXvF+a6yBB2vzn"));
   }
 }

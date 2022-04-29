@@ -4,4 +4,4 @@ jasypt:
 #    bean: stringEncryptor
 
 app:
-  password: ENC(yPLSbwn2IBcLYHNRvQyabUPdJh92QuefDbWobfkGON2gHlOADKdmFgen9t3Nnkj8)
+  password: ENC(VCr9a+qfrOy50aheLoseCKmZ/YeDZzMBQwk7UPUoUr6PISgiW+VXvF+a6yBB2vzn)
