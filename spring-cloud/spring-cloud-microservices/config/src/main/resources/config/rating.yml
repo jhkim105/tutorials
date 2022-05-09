@@ -4,18 +4,15 @@ logging:
     "jhkim105.tutorials": debug
 server:
   port: 8082
-
 spring:
   datasource:
     url: jdbc:mariadb://localhost/demo_svc_rating?createDatabaseIfNotExist=true
     username: root
     password: 111111
-
   sql:
     init:
       mode: always
       continue-on-error: false
-
   jpa:
     defer-datasource-initialization: true
     hibernate.ddl-auto: create

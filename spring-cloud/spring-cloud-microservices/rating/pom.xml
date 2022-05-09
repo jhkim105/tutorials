@@ -6,7 +6,6 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.6.4</version>
-    <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>jhkim105.tutorials.spring.cloud.microservices</groupId>
   <artifactId>rating</artifactId>
@@ -15,12 +14,19 @@
   <description>rating</description>
   <properties>
     <java.version>11</java.version>
-    <db.address>localhost</db.address>
-    <db.name>demo_svc_rating</db.name>
-    <db.url><![CDATA[jdbc:mariadb://${db.address}/${db.name}?createDatabaseIfNotExist=true]]></db.url>
-    <db.username>root</db.username>
-    <db.password>111111</db.password>
+    <spring-cloud.version>2021.0.1</spring-cloud.version>
   </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -30,7 +36,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
@@ -48,10 +58,13 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-sleuth</artifactId>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>

@@ -3,3 +3,8 @@ server:
 spring:
     profiles:
       active: native
+    cloud:
+      config:
+        server:
+          native:
+            search-locations: file:/Users/jihwankim/dev/my/tutorials/spring-cloud/spring-cloud-microservices/config/src/main/resources/config
