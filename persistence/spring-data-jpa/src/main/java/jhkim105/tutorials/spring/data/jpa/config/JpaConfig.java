@@ -18,4 +18,6 @@ public class JpaConfig {
   public JPAQueryFactory jpaQueryFactory() {
     return new JPAQueryFactory(entityManager);
   }
+
+  
 }
