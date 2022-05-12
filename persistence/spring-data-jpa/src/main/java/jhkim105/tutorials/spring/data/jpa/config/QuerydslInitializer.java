@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  *     ClassPathUtils.scanPackage(Thread.currentThread().getContextClassLoader(), packageToLoad);
  * Replace packageToLoad with the package of the classes you want to initialize.
  */
-public class QueryDslInitializer implements ApplicationRunner {
+public class QuerydslInitializer implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
