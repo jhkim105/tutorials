@@ -1,5 +1,23 @@
+server:
+  port: 8082
 spring:
   application:
     name: rating
   config:
     import: "optional:configserver:http://localhost:8888/"
+  datasource:
+    url: jdbc:mariadb://localhost/demo_svc_rating?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+  jpa:
+    "defer-datasource-initialization": true
+    "hibernate.ddl-auto": create
+    properties:
+      "hibernate.id.new_generator_mappings": false
+logging:
+  level:
+    "jhkim105.tutorials": debug

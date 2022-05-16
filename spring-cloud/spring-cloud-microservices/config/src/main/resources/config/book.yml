@@ -3,8 +3,7 @@ logging:
   level:
     "jhkim105.tutorials": debug
 server:
-  port: 8081
-
+  port: 8084
 spring:
   datasource:
     url: jdbc:mariadb://localhost/demo_svc_book?createDatabaseIfNotExist=true
