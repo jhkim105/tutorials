@@ -16,41 +16,17 @@ Property Encryption Using Jasypt
 ```
 
 ## Configuration
-JasyptConfig
-```java
-@Configuration
-public class JasyptConfig {
-
-  public final static String A = "PBEWithMD5AndDES";
-
-  public final static String B = "secret1234"; //System.setProperty("jasypt.encryptor.password", "secret1234")
-
-  @Bean
-  public StringEncryptor stringEncryptor() {
-    PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-    SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-    config.setAlgorithm(A);
-    config.setPassword(B);
-    config.setKeyObtentionIterations("1000");
-    config.setPoolSize("1");
-    config.setProviderName("SunJCE");
-    config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-    config.setStringOutputType("base64");
-    encryptor.setConfig(config);
-    return encryptor;
-  }
-}
-```
 
 application.yml
 ```yaml
 jasypt:
   encryptor:
-    bean: stringEncryptor
-
+    password: secret1234
+    
 app:
-  password: ENC(vSVyHgHG1spolMaihYR7DM4w6TQVmoBh)
+  password: ENC(VCr9a+qfrOy50aheLoseCKmZ/YeDZzMBQwk7UPUoUr6PISgiW+VXvF+a6yBB2vzn)
 ```
+Password 는 System Property 로 지정 가능(-Djasypt.encryptor.password=secret1234)
 
 ## Maven Plugin
 jasypt-maven-plugin 을 사용하여 암/복호화 하기 
@@ -105,7 +81,7 @@ app:
   password: DEC(1234)
 
 ```
-이 플러그인을 사용하는 경우 기본 설정으로만 사용 가능하고 알고리즘이나 encryptor bean을 지정하여 사용할 수 없다.
+이 플러그인을 사용하는 경우 기본 설정으로만 사용 가능하고 알고리즘이나 encryptor bean 을 지정하여 사용할 수 없다.
 
 기본값으로 작성한 StringEncryptor
 ```java
