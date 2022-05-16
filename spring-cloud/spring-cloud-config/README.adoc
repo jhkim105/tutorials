@@ -240,6 +240,22 @@ spring.cloud.config.label=1.0.1
 ----
 
 ==== Git - remote
+[source,yaml]
+----
+spring:
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/jhkim105/config-repo.git
+          username: xxxx
+          password: yyyy
+----
+
+== Security
+Spring Security HTTP Basic Authentication 사용
 
 == Encryption
 
