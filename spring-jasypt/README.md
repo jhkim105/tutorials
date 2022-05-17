@@ -81,7 +81,7 @@ app:
   password: DEC(1234)
 
 ```
-이 플러그인을 사용하는 경우 기본 설정으로만 사용 가능하고 알고리즘이나 encryptor bean 을 지정하여 사용할 수 없다.
+~~이 플러그인을 사용하는 경우 기본 설정으로만 사용 가능하고 알고리즘이나 encryptor bean 을 지정하여 사용할 수 없다.~~
 
 기본값으로 작성한 StringEncryptor
 ```java
@@ -100,6 +100,10 @@ app:
     encryptor.setConfig(config);
     return encryptor;
   }
+```
+다음과 같이 알고리즘 지정 가능함
+```shell
+-Djasypt.encryptor.algorithm=PBEWithMD5AndDES -Djasypt.encryptor.iv-generator-classname=org.jasypt.iv.NoIvGenerator
 ```
 
 ## Refs
