@@ -1,12 +1,12 @@
 -- schema
-create table company
+CREATE TABLE IF NOT EXISTS company
 (
     id   varchar(50)  not null,
     name varchar(255) null,
     primary key (id)
 );
 
-create table user
+CREATE TABLE IF NOT EXISTS user
 (
     id         varchar(50)  not null,
     name       varchar(255) not null,
