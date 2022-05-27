@@ -15,9 +15,9 @@
     <module>commons-configuration</module>
     <module>caching</module>
     <module>concurrency</module>
+    <module>core-java</module>
     <module>database-encrypt</module>
     <module>excel-poi</module>
-    <module>java-basic</module>
     <module>jmh</module>
     <module>mockserver</module>
     <module>monitoring</module>
