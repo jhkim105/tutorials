@@ -37,6 +37,8 @@
     <module>spring-rabbitmq</module>
     <module>spring-mvc</module>
     <module>spring-quartz</module>
+    <module>spring-reactive</module>
+    <module>spring-rest-documentation</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
     <module>spring-mqtt</module>
@@ -44,6 +46,7 @@
     <module>spring-cloud</module>
     <module>aws</module>
     <module>core-java</module>
+    <module>spring-rest-documentation</module>
 
   </modules>
   <repositories>
