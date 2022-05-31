@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -27,6 +28,18 @@ public class Tenant {
   private String dbUsername;
 
   private String dbPassword;
+
+  @ColumnDefault("10")
+  private int maxTotal;
+
+  @ColumnDefault("10")
+  private int maxIdle;
+
+  @ColumnDefault("0")
+  private int minIdle;
+
+  @ColumnDefault("5")
+  private int initialSize;
 
   @Transient
   public String getJdbcUrl() {

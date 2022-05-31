@@ -43,12 +43,21 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
   }
 
   private DataSource createDataSource(Tenant source) {
-    BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUsername(source.getDbUsername());
-    dataSource.setPassword(source.getDbPassword());
-    dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
-    dataSource.setUrl(source.getJdbcUrl());
-    return dataSource;
+    BasicDataSource tenantDataSource = new BasicDataSource();
+    tenantDataSource.setUsername(source.getDbUsername());
+    tenantDataSource.setPassword(source.getDbPassword());
+    tenantDataSource.setUrl(source.getJdbcUrl());
+
+    tenantDataSource.setMaxTotal(source.getMaxTotal());
+    tenantDataSource.setMaxIdle(source.getMaxIdle());
+    tenantDataSource.setMinIdle(source.getMinIdle());
+    tenantDataSource.setInitialSize(source.getInitialSize());
+    tenantDataSource.setTimeBetweenEvictionRunsMillis(masterDataSource.getTimeBetweenEvictionRunsMillis());
+    tenantDataSource.setMinEvictableIdleTimeMillis(masterDataSource.getMinEvictableIdleTimeMillis());
+    tenantDataSource.setDefaultAutoCommit(masterDataSource.getDefaultAutoCommit());
+    log.debug("tenantDataSource created. url:{}, maxTotal:{}, maxIdle:{}, minIdle:{}",
+        tenantDataSource.getUrl(), tenantDataSource.getMaxTotal(), tenantDataSource.getMaxIdle(), tenantDataSource.getMinIdle());
+    return tenantDataSource;
   }
 
   @Override
