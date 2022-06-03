@@ -2,17 +2,21 @@ server:
   port: 8888
 
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   profiles:
     active: native
   cloud:
     config:
       server:
         native:
-          search-locations: file:/Users/jihwankim/dev/my/tutorials/spring-cloud/spring-cloud-config/config-server/conf
+          search-locations: file:@project.basedir@/config
         encrypt:
           enabled: false
-
-#spring:
+  #spring:
 #  profiles:
 #    active: git
 #  cloud:
@@ -32,9 +36,9 @@ spring:
 #          uri: https://github.com/jhkim105/config-repo.git
 #          username:
 #          password:
-  security:
-    user:
-      password: secret1234
+#  security:
+#    user:
+#      password: secret1234
 encrypt:
   key-store:
     location: classpath:/config-public.jks

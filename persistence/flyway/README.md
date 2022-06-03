@@ -26,9 +26,10 @@ spring:
     enabled: true
 ```
 
-### SQL for Migration
-resources/db/migration/V0_0_1.init.sql
-
+### Script for Migration
+resources/db/migration/V0_0_1.init.sql  
+Script 작성시 ddl은 한파일에 하니씩 작성하는 것이 좋다. (mysql 은 ddl rollback 처리가 되지 않으므로 에러 발생시 조치하기 쉽게)  
+ddl 과 dml 은 구분해서 작성하는 것이 좋다.
 
 ## Callbacks
 migration 이 실패할 경우 실패한 이력을 자동 삭제 처리

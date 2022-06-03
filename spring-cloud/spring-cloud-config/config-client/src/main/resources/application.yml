@@ -4,7 +4,8 @@ spring:
   profiles:
     active: development
   config:
-    import: "optional:configserver:http://user:secret1234@localhost:8888"
+#    import: "optional:configserver:http://user:secret1234@localhost:8888"
+    import: "optional:configserver:http://localhost:8888"
   rbbitmq:
     host: localhost
     port:  5672

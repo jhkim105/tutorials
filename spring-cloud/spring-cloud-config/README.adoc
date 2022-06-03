@@ -196,7 +196,48 @@ management:
 ----
 curl -X POST localhost:8080/actuator/busrefresh
 ----
+==== 서버를 지정하여 갱신하기
+/busrefresh/destination
+----
+curl -X POST localhost:8080/actuator/busrefresh/config-client
+----
 
+destination 에 service ID 의 패턴을 지정
+
+.service ID
+** spring.cloud.bus.id 로 지정 가능
+** default: "app:index:id"
+*** app: spring.application.name
+*** index: spring.application.index, local.server.port, server.port, 0 순서로 적용
+*** id: random value
+
+=== Spring Cloud Monitor
+Config Server에서 event를 발생.
+Github Webhook 을 사용하여 프로퍼티 변경시 자동으로 config 를 갱신시킬 수 있다.
+
+
+==== Maven Depedencies
+[source,xml]
+----
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-monitor</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+			<version>3.2.4</version>
+		</dependency>
+----
+
+==== 갱신 요청
+프로퍼티 변경우 /monitor 를 호출하면 config client 의 프로퍼티가 자동 갱신된다.
+----
+curl -X POST localhost:8888/monitor -d 'path=**'
+----
+
+path 에 destination 를 지정하여 특정 서버만 리프레시가 가능함
+curl -X POST localhost:8888/monitor -d 'path=config-client:**'
 
 == Environment Repository
 
@@ -346,6 +387,16 @@ encrypt:
     password: pass1234
     secret: pass1234
 ----
+
+== Spring Cloud Config Server Docker 로 실행하기
+```shell
+docker run --rm -it -p 8888:8888 -m=2g \
+      --platform linux/amd64 \
+      -v /Users/jihwankim/dev/rsupport/rm/rm-asp/config/config:/config \
+      -e SPRING_PROFILES_ACTIVE=native \
+      hyness/spring-cloud-config-server
+```
+https://github.com/hyness/spring-cloud-config-server
 
 == Refs
 https://docs.spring.io/spring-cloud-config/docs/current/reference/html/

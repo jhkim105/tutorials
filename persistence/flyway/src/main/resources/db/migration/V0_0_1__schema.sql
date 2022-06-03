@@ -15,7 +15,3 @@ CREATE TABLE IF NOT EXISTS user
     constraint FK2yuxsfrkkrnkn5emoobcnnc3r
         foreign key (company_id) references company (id)
 );
-
--- data
-INSERT INTO company (id, name) VALUES ('id01', 'Company 01');
-INSERT INTO user (id, name, company_id) VALUES ('id01', 'User 01', 'id01');

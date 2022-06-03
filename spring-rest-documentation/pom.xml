@@ -15,5 +15,6 @@
   </properties>
   <modules>
     <module>spring-swagger2</module>
+    <module>spring-springdoc</module>
   </modules>
 </project>
