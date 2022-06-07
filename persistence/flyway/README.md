@@ -51,10 +51,26 @@ spring.flyway.baseline-version=0
 ```
 spring.flyway.baseline-version 보다 버전이 큰 파일들만 실행된다.
 
+## Flyway Using command-line
 
+https://flywaydb.org/documentation/usage/commandline/
+```shell
+brew install flyway
+```
 
+flyway.conf
+```properties
+flyway.url=jdbc:mariadb://localhost/demo_flyway_real?createDatabaseIfNotExist=true
+flyway.user=root
+flyway.password=111111
+```
 
+sql/V0_0_1__schema.sql
 
-
-
+```shell
+flyway migrate
+flyway info
+flyway repair
+flyway validate 
+```
 
