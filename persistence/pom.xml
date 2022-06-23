@@ -26,7 +26,7 @@
     <module>spring-data-jpa</module>
     <module>spring-data-jpa-nplusone</module>
     <module>spring-data-multiple-datasource</module>
-    <module>spring-data-multitenant</module>
+    <module>spring-data-multitenancy</module>
     <module>spring-data-redis</module>
     <module>spring-data-rest</module>
     <module>spring-data-replication-driver</module>

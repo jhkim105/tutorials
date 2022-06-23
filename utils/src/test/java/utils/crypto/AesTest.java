@@ -33,6 +33,7 @@ class AesTest {
   }
 
   @Test
+  @Disabled
   void aes256_decrypt_with_key() throws Exception{
     String key = "abcdefghijklmnop1234567890123456";
     Aes aes = new Aes(key, 32);
@@ -45,6 +46,7 @@ class AesTest {
   }
 
   @Test
+  @Disabled
   void aes256_decrypt_with_key_and_iv() throws Exception{
     String key = "abcdefghijklmnop1234567890123456";
     String iv = "F7183A3E260A30DFCD75FBC8025AFBDA";
