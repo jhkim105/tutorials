@@ -1,0 +1,1 @@
+INSERT INTO demo_multitenant_master.company (id, name) VALUES ('tid01', 'Test');

@@ -39,4 +39,9 @@ class StringUtilsTest {
     Assertions.assertThat(StringUtils.substringAfter("/Users/jihwankim/dev/rsupport/rm/WebServer/storage/abc/bd", "/storage"))
         .isEqualTo("/abc/bd");
   }
+
+  @Test
+  void getEmailDomain() {
+    Assertions.assertThat(StringUtils.getEmailDomain("abc_1.2@abc-d.e.org")).isEqualTo("abc-d");
+  }
 }

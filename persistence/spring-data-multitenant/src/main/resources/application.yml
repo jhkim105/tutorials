@@ -1,12 +1,13 @@
 logging:
   level:
     root: info
-    com.example.demo: debug
-#    org.hibernate.SQL: debug
-#    org.hibernate.type.descriptor.sql.BasicBinder: trace
-#    org.hibernate.type.EnumType: trace
-    org.springframework.transaction: trace
-    org.springframework.orm.jpa: debug
+    'jhkim105.tutorials': debug
+    'org.hibernate.SQL': debug
+    'org.hibernate.type.descriptor.sql.BasicBinder': trace
+    'org.hibernate.type.EnumType': trace
+    'org.springframework.transaction': trace
+    'org.springframework.orm.jpa': debug
+    'org.springframework.jdbc.core': trace
 spring:
   jpa:
     defer-datasource-initialization: true

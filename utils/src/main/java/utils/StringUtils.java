@@ -1,6 +1,8 @@
 package utils;
 
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtils {
 
@@ -47,4 +49,15 @@ public class StringUtils {
   public static boolean endsWith(String str, String suffix) {
     return org.apache.commons.lang3.StringUtils.endsWith(str, suffix);
   }
+
+  public static String getEmailDomain(String email) {
+    String regex = "(?<=@)[^.]+(?=\\.)";
+    Matcher m = Pattern.compile(regex).matcher(email);
+    String domain = null;
+    if (m.find()) {
+      domain = m.group();
+    }
+    return domain;
+  }
+
 }

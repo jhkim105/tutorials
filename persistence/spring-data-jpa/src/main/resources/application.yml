@@ -2,10 +2,13 @@
 # LOGGING
 logging:
   level:
-    jhkim105.tutorials: debug
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
-    org.hibernate.type.EnumType: trace
+    'jhkim105.tutorials': debug
+    'org.hibernate.SQL': debug
+    'org.hibernate.type.descriptor.sql.BasicBinder': trace
+    'org.hibernate.type.EnumType': trace
+    'org.springframework.transaction': trace
+    'org.springframework.orm.jpa': debug
+    'org.springframework.jdbc.core': trace
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
