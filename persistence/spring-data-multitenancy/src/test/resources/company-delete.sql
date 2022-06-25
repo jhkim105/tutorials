@@ -1,1 +1,0 @@
-DELETE FROM demo_multitenant_master.company WHERE id = 'tid01';

@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,12 @@ public class User {
   @Column
   private String description;
 
-  @ManyToOne
-  private Company company;
 
+  @Builder
+  public User(String name, String username, String password, String description) {
+    this.name = name;
+    this.username = username;
+    this.password = password;
+    this.description = description;
+  }
 }

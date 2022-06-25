@@ -1,0 +1,1 @@
+DELETE FROM demo_multitenant_master.user WHERE id = 'tid01';

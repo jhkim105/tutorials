@@ -1,0 +1,1 @@
+INSERT INTO demo_multitenant_master.user (id, name, username, password) VALUES ('tid01', 'Test User', 'tuser01', 'tpass01');
