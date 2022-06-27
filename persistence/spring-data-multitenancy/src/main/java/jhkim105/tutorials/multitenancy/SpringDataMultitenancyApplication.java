@@ -19,8 +19,7 @@ public class SpringDataMultitenancyApplication {
   @Bean
   public ApplicationRunner tenantInitialize(TenantService tenantService) {
     return args -> {
-      tenantService.createTenant("user1@company1.com");
-      tenantService.createTenant("user2@company2.com");
+      tenantService.createTenant("user1");
     };
 
   }

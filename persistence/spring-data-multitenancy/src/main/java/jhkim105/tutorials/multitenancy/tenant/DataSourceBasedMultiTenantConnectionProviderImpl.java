@@ -48,7 +48,7 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
   @Override
   protected DataSource selectDataSource(String tenantId) {
     if (DEFAULT_TENANT_ID.equals(tenantId)) {
-      log.info("MasterDataSource used");
+      log.info("MasterDataSource selected");
       return masterDataSource;
     }
     DataSource dataSource = dataSourceMap.get(tenantId);
@@ -57,7 +57,7 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
       dataSource = createDataSource(tenant);;
       dataSourceMap.put(tenantId, dataSource);
     }
-
+    log.info("TenantDataSource selected. id: {}", tenantId);
     return dataSource;
   }
 
@@ -74,7 +74,8 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
     tenantDataSource.setTimeBetweenEvictionRunsMillis(masterDataSource.getTimeBetweenEvictionRunsMillis());
     tenantDataSource.setMinEvictableIdleTimeMillis(masterDataSource.getMinEvictableIdleTimeMillis());
     tenantDataSource.setDefaultAutoCommit(masterDataSource.getDefaultAutoCommit());
-    log.debug("tenantDataSource created. url:{}, maxTotal:{}, maxIdle:{}, minIdle:{}",
+    log.debug("TenantDataSource created. id: {}, url: {}, maxTotal: {}, maxIdle: {}, minIdle: {}",
+        tenant.getId(),
         tenantDataSource.getUrl(), tenantDataSource.getMaxTotal(), tenantDataSource.getMaxIdle(), tenantDataSource.getMinIdle());
     return tenantDataSource;
   }

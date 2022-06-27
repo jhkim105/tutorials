@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.jdbc.SqlConfig;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @ActiveProfiles("test")
@@ -23,7 +24,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({MasterDatabaseConfig.class, TenantDatabaseConfig.class})
 @Slf4j
-//@Transactional(transactionManager = "tenantTransactionManager")
+@Transactional(transactionManager = "tenantTransactionManager")
 public class UserRepositoryTest {
 
   @Autowired
@@ -32,17 +33,20 @@ public class UserRepositoryTest {
   @BeforeEach
   void setUp() {
     User user = User.builder()
-        .name("User 1")
         .username("user01")
-        .password("pass01")
         .build();
 
     userRepository.save(user);
+
   }
 
+
+  /**
+   * @Sql 쿼리 실행 후 rollback 이 안된다.
+   */
   @Test
   @Sql(scripts = {"/user.sql"}, config = @SqlConfig(transactionManager = "tenantTransactionManager"))
-  @Sql(statements = {"DELETE FROM demo_multitenant_master.company WHERE id = 'tid01';"},
+  @Sql(statements = {"DELETE FROM demo_multitenancy_master.user WHERE id = 'tid01';"},
       config = @SqlConfig(transactionManager = "tenantTransactionManager"),
       executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
   void test() {

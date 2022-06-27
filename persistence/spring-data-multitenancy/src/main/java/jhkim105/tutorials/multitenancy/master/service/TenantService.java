@@ -9,7 +9,6 @@ import jhkim105.tutorials.multitenancy.tenant.TenantDatabaseHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import utils.StringUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -34,11 +33,10 @@ public class TenantService {
     return tenantUser.getTenant();
   }
 
-  public Tenant createTenant(String email) {
-    String domain = StringUtils.getEmailDomain(email);
+  public Tenant createTenant(String username) {
     Tenant tenant = Tenant.builder()
-        .id(domain)
-        .name(domain)
+        .id(username)
+        .name(username)
         .dbAddress(tenantDataSourceProperties.getAddress())
         .dbUsername(tenantDataSourceProperties.getUsername())
         .dbPassword(tenantDataSourceProperties.getPassword())

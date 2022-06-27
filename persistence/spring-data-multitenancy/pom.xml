@@ -8,7 +8,7 @@
     <version>2.5.4</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.example</groupId>
+  <groupId>jhkim105.tutorials</groupId>
   <artifactId>spring-data-multitenancy</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-data-multitenancy</name>
@@ -16,7 +16,7 @@
   <properties>
     <java.version>11</java.version>
     <db.address>localhost</db.address>
-    <db.name>demo_multitenant_master</db.name>
+    <db.name>demo_multitenancy_master</db.name>
     <db.username>root</db.username>
     <db.password>111111</db.password>
   </properties>

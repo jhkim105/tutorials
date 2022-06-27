@@ -11,6 +11,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+//@Import({ProductDatabaseConfig.class, UserDatabaseConfig.class})
 @Transactional(transactionManager = "productTransactionManager")
 class SqlTests {
 

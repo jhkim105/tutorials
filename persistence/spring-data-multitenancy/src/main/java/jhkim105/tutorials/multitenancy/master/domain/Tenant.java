@@ -58,7 +58,7 @@ public class Tenant {
 
   @Transient
   public String getJdbcUrl() {
-    return String.format("jdbc:mariadb://%s/%s?createDatabaseIfNotExist=true", dbAddress, name);
+    return String.format("jdbc:mariadb://%s/demo_multitenancy_%s?createDatabaseIfNotExist=true", dbAddress, name);
   }
 
   @Override

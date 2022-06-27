@@ -18,6 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
+
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
   @GeneratedValue(generator = "uuid")
@@ -25,23 +26,12 @@ public class User {
   private String id;
 
   @Column(nullable = false)
-  private String name;
-
-  @Column(nullable = false)
   private String username;
-
-  @Column(nullable = false)
-  private String password;
-
-  @Column
-  private String description;
 
 
   @Builder
-  public User(String name, String username, String password, String description) {
-    this.name = name;
+  public User(String username) {
     this.username = username;
-    this.password = password;
-    this.description = description;
   }
+
 }
