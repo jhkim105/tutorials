@@ -9,7 +9,7 @@ logging:
 spring:
   autoconfigure:
     exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - 'org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration'
   jpa:
     properties:
       hibernate.hbm2ddl.auto: create
@@ -19,7 +19,7 @@ spring:
 user:
   datasource:
     url: jdbc:mariadb://localhost/demo_mds_user?createDatabaseIfNotExist=true
-    username: root
+    username: @db.username@
     password: @db.password@
     dbcp2:
       max-total: 10
@@ -30,7 +30,7 @@ user:
 product:
   datasource:
     url: jdbc:mariadb://localhost/demo_mds_product?createDatabaseIfNotExist=true
-    username: root # not replaced
+    username: @db.username@
     password: @db.password@
     dbcp2:
       max-total: 20
