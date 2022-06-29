@@ -47,6 +47,7 @@
     <module>aws</module>
     <module>core-java</module>
     <module>spring-rest-documentation</module>
+    <module>spring-web</module>
 
   </modules>
   <repositories>
