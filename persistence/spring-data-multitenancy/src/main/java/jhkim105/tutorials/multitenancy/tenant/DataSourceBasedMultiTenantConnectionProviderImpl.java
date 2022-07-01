@@ -24,7 +24,7 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
 
   private TenantRepository tenantRepository;
 
-  private BasicDataSource masterDataSource;
+  private BasicDataSource dataSource;
 
   private Map<String, DataSource> dataSourceMap = new HashMap<>();
 
@@ -33,15 +33,15 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
     this.tenantRepository = tenantRepository;
   }
 
-  @Resource(name = "masterDataSource")
-  public void setBasicDataSource(BasicDataSource masterDataSource) {
-    this.masterDataSource = masterDataSource;
+  @Resource(name = "dataSource")
+  public void setBasicDataSource(BasicDataSource dataSource) {
+    this.dataSource = dataSource;
   }
 
   @Override
   protected DataSource selectAnyDataSource() {
-    log.info("selectAnyDataSource");
-    return masterDataSource;
+    log.info("selectAnyDataSource: masterDataSource selected.");
+    return dataSource;
   }
 
 
@@ -49,7 +49,7 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
   protected DataSource selectDataSource(String tenantId) {
     if (DEFAULT_TENANT_ID.equals(tenantId)) {
       log.info("MasterDataSource selected");
-      return masterDataSource;
+      return dataSource;
     }
     DataSource dataSource = dataSourceMap.get(tenantId);
     if (dataSource == null) {
@@ -71,9 +71,9 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
     tenantDataSource.setMaxIdle(tenant.getMaxIdle());
     tenantDataSource.setMinIdle(tenant.getMinIdle());
     tenantDataSource.setInitialSize(tenant.getInitialSize());
-    tenantDataSource.setTimeBetweenEvictionRunsMillis(masterDataSource.getTimeBetweenEvictionRunsMillis());
-    tenantDataSource.setMinEvictableIdleTimeMillis(masterDataSource.getMinEvictableIdleTimeMillis());
-    tenantDataSource.setDefaultAutoCommit(masterDataSource.getDefaultAutoCommit());
+    tenantDataSource.setTimeBetweenEvictionRunsMillis(dataSource.getTimeBetweenEvictionRunsMillis());
+    tenantDataSource.setMinEvictableIdleTimeMillis(dataSource.getMinEvictableIdleTimeMillis());
+    tenantDataSource.setDefaultAutoCommit(dataSource.getDefaultAutoCommit());
     log.debug("TenantDataSource created. id: {}, url: {}, maxTotal: {}, maxIdle: {}, minIdle: {}",
         tenant.getId(),
         tenantDataSource.getUrl(), tenantDataSource.getMaxTotal(), tenantDataSource.getMaxIdle(), tenantDataSource.getMinIdle());

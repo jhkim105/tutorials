@@ -1,6 +1,6 @@
 package jhkim105.tutorials.multitenancy.master.repository;
 
-import jhkim105.tutorials.multitenancy.master.MasterDatabaseConfig;
+import jhkim105.tutorials.multitenancy.config.JpaConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(MasterDatabaseConfig.class)
+@Import(JpaConfig.class)
 @Slf4j
 class TenantRepositoryTest {
 

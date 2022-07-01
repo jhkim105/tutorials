@@ -8,6 +8,7 @@ logging:
     'org.springframework.transaction': trace
     'org.springframework.orm.jpa': debug
     'org.springframework.jdbc.core': trace
+    'org.springframework.orm.jpa.support': debug
 spring:
   jpa:
     defer-datasource-initialization: true
@@ -19,18 +20,20 @@ spring:
   sql:
     init:
       mode: always
+  datasource:
+    url: jdbc:mariadb://@db.address@/@db.name@?createDatabaseIfNotExist=true
+    username: @db.username@
+    password: @db.password@
+    driver-class-name: org.mariadb.jdbc.Driver
+    type: org.apache.commons.dbcp2.BasicDataSource
+    dbcp2:
+      max-total: 20
+      initial-size: 10
+      max-idle: 10
+      min-idle: 10
+
+
 multitenancy:
-  master:
-    datasource:
-      url: jdbc:mariadb://@db.address@/@db.name@?createDatabaseIfNotExist=true
-      username: @db.username@
-      password: @db.password@
-      driver-class-name: org.mariadb.jdbc.Driver
-      dbcp2:
-        max-total: 20
-        initial-size: 20
-        max-idle: 20
-        min-idle: 10
   tenant:
     datasource:
       address: @db.address@

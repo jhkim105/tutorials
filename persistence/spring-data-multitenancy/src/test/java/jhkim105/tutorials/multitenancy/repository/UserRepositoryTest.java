@@ -2,8 +2,8 @@ package jhkim105.tutorials.multitenancy.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import jhkim105.tutorials.multitenancy.config.JpaConfig;
 import jhkim105.tutorials.multitenancy.domain.User;
-import jhkim105.tutorials.multitenancy.master.MasterDatabaseConfig;
 import jhkim105.tutorials.multitenancy.tenant.TenantDatabaseConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({MasterDatabaseConfig.class, TenantDatabaseConfig.class})
+@Import({JpaConfig.class, TenantDatabaseConfig.class})
 @Slf4j
 @Transactional(transactionManager = "tenantTransactionManager")
 public class UserRepositoryTest {

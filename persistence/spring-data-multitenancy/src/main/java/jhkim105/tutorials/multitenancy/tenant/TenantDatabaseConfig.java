@@ -31,7 +31,7 @@ public class TenantDatabaseConfig {
   public static final String PERSISTENCE_UNIT_NAME = "tenant";
   public static final String DOMAIN_PACKAGE = "jhkim105.tutorials.multitenancy.domain";
   @Bean
-  @ConditionalOnBean(name = "masterEntityManagerFactory")
+  @ConditionalOnBean(name = "entityManagerFactory")
   public MultiTenantConnectionProvider multiTenantConnectionProvider() {
     return new DataSourceBasedMultiTenantConnectionProviderImpl();
   }
