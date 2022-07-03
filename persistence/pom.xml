@@ -22,6 +22,7 @@
     <module>flyway</module>
     <module>spring-data-dbcp2</module>
     <module>spring-data-dynamodb</module>
+    <module>spring-data-h2</module>
     <module>spring-data-initialize</module>
     <module>spring-data-jpa</module>
     <module>spring-data-jpa-nplusone</module>
