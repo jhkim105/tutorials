@@ -10,4 +10,5 @@ public class SpringDataInitializeApplication {
     SpringApplication.run(SpringDataInitializeApplication.class, args);
   }
 
+
 }

@@ -1,0 +1,1 @@
+INSERT INTO company (id, name) VALUES ('default-id02', 'Company 02');

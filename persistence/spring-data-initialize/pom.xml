@@ -96,6 +96,18 @@
               </includes>
             </configuration>
           </execution>
+          <execution>
+            <id>load-data</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>jhkim105.tutorials.spring.data.initialize.db.LoadData</include>
+              </includes>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>

@@ -18,6 +18,6 @@ public class CompanyRepositoryTest {
   @Test
   void findAll() {
     List<Company> list = companyRepository.findAll();
-    Assertions.assertThat(list).hasSize(1);
+    Assertions.assertThat(list).hasSize(2);
   }
 }
