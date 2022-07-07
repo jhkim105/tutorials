@@ -52,14 +52,5 @@ public class SqlTest {
     assertThat(userRepository.getById("tid01")).isNotNull();
   }
 
-  @Test
-  void findByUsername() {
-    assertThat(userRepository.findByUsername("user01")).isNotNull();
-  }
-
-  @Test
-  void deleteByUsername() {
-    userRepository.deleteByUsername("user01");
-  }
 
 }

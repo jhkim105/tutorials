@@ -7,11 +7,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class TenantInterceptor implements HandlerInterceptor {
 
-  public static final String HEADER_X_TENANT_ID = "X-TENANT-ID";
+  public static final String HEADER_TENANT_ID = "X-TENANT-ID";
+  public static final String PARAM_TENANT_ID = "tenantId";
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    String tenantId = request.getHeader(HEADER_X_TENANT_ID);
+    String tenantId = request.getHeader(HEADER_TENANT_ID);
     if (StringUtils.hasText(tenantId)) {
       TenantContextHolder.setTenantId(tenantId);
     }

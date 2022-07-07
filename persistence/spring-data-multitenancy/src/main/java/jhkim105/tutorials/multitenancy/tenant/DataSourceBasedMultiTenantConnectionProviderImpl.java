@@ -8,19 +8,15 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
-@RequiredArgsConstructor
 public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 
-  private static final long serialVersionUID = -6837240859738111430L;
+  private static final long serialVersionUID = 2353465673130594043L;
 
   private TenantRepository tenantRepository;
 

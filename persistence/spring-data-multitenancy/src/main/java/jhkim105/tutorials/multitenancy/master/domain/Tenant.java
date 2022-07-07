@@ -3,6 +3,7 @@ package jhkim105.tutorials.multitenancy.master.domain;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import lombok.AccessLevel;
@@ -13,6 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -24,9 +26,12 @@ public class Tenant {
   public static final String DEFAULT_TENANT_ID = "default";
 
   @Id
+  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @GeneratedValue(generator = "uuid")
   @Column(length = 50)
   private String id;
 
+  @Column(unique = true)
   private String name;
 
   private String dbAddress;
@@ -48,8 +53,7 @@ public class Tenant {
   private int initialSize = 0;
 
   @Builder
-  public Tenant(String id, String name, String dbAddress, String dbUsername, String dbPassword) {
-    this.id = id;
+  public Tenant(String name, String dbAddress, String dbUsername, String dbPassword) {
     this.name = name;
     this.dbAddress = dbAddress;
     this.dbUsername = dbUsername;

@@ -61,9 +61,9 @@ public class UserRepositoryTest {
     assertThat(userRepository.findByUsername("user01")).isNotNull();
   }
 
-  @Test
-  void deleteByUsername() {
-    userRepository.deleteByUsername("user01");
-  }
+//  @Test
+//  void deleteByUsername() {
+//    userRepository.deleteByUsername("user01");
+//  }
 
 }

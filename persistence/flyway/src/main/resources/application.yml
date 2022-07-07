@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: production
+    default: local
 ---
 spring:
   config:
@@ -13,6 +13,20 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+  flyway:
+    enabled: false
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:mariadb://localhost/demo_flyway_test?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+  jpa:
+    hibernate:
+      ddl-auto: none
   flyway:
     enabled: false
 ---

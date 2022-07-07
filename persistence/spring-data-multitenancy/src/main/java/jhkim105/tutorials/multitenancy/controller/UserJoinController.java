@@ -31,6 +31,5 @@ public class UserJoinController {
     log.info("{}", userService.findById(user.getId()));
     return ResponseEntity.ok(user);
   }
-
-
+  
 }
