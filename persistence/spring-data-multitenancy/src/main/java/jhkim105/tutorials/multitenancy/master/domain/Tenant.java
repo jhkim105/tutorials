@@ -15,11 +15,12 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Getter
-@Setter
 @ToString
+@Audited
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tenant {
 

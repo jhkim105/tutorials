@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
@@ -32,11 +33,18 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class TenantDatabaseConfig {
   public static final String PERSISTENCE_UNIT_NAME = "tenant";
   public static final String DOMAIN_PACKAGE = "jhkim105.tutorials.multitenancy.domain";
+
   @Bean
-  @DependsOn("entityManagerFactory")
-  public MultiTenantConnectionProvider multiTenantConnectionProvider() {
+  @ConfigurationProperties(prefix = "multitenancy.tenant.datasource-cache")
+  public TenantDataSourceCacheProperties tenantDataSourceCacheProperties() {
+    return new TenantDataSourceCacheProperties();
+  }
+
+  @Bean
+  @DependsOn({"entityManagerFactory"})
+  public MultiTenantConnectionProvider multiTenantConnectionProvider(TenantDataSourceCacheProperties tenantDataSourceCacheProperties, TenantRepository tenantRepository, BasicDataSource dataSource) {
     log.info("multiTenantConnectionProvider create.");
-    return new DataSourceBasedMultiTenantConnectionProviderImpl();
+    return new DataSourceBasedMultiTenantConnectionProviderImpl(tenantDataSourceCacheProperties, dataSource, tenantRepository);
   }
 
   @Bean
@@ -49,6 +57,7 @@ public class TenantDatabaseConfig {
   public TenantFlywayProperties tenantFlywayProperties() {
     return new TenantFlywayProperties();
   }
+
 
   @Bean(initMethod = "migrate")
   public TenantDatabaseMigrator tenantDatabaseMigrator(TenantRepository tenantRepository, TenantFlywayProperties tenantFlywayProperties) {
@@ -84,4 +93,5 @@ public class TenantDatabaseConfig {
   public JPAQueryFactory tenantQueryFactory(@Qualifier("tenantEntityManagerFactory") EntityManager entityManager) {
     return new JPAQueryFactory(entityManager);
   }
+
 }

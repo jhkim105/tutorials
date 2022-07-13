@@ -42,5 +42,9 @@ multitenancy:
       address: @db.address@
       username: @db.username@
       password: @db.password@
+    datasource-cache:
+      max-size: 100
+      expire-minutes: 1
+
     flyway:
       enabled: false

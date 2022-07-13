@@ -25,7 +25,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @Import({JpaConfig.class, TenantDatabaseConfig.class})
 @Slf4j
 @Transactional(transactionManager = "tenantTransactionManager")
-public class UserRepositoryTest {
+class UserRepositoryTest {
 
   @Autowired
   UserRepository userRepository;

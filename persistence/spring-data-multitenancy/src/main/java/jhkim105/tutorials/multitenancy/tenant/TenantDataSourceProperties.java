@@ -17,5 +17,6 @@ public class TenantDataSourceProperties {
   private int maxIdle = 8;
   private int minIdle = 0;
   private int initialSize = 0;
+  private int expireMinutes = 10;
 
 }

@@ -11,12 +11,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Getter
 @ToString
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Audited
 public class User {
 
   @Id
@@ -25,7 +27,7 @@ public class User {
   @Column(length = 50)
   private String id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String username;
 
 

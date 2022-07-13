@@ -16,7 +16,7 @@ public class SpringDataMultitenancyApplication {
 
   @Profile("!test")
   @Bean
-  public ApplicationRunner tenantInitialize(TenantService tenantService) {
+  public ApplicationRunner initializeTenant(TenantService tenantService) {
     return args -> {
       tenantService.createTenant("user1");
     };

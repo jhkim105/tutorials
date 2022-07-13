@@ -2,6 +2,8 @@ package jhkim105.tutorials.multitenancy.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jhkim105.tutorials.multitenancy.domain.User;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.tenant.TenantInterceptor;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +25,9 @@ class UserControllerTest {
   MockMvc mockMvc;
 
   @Autowired
+  ObjectMapper objectMapper;
+
+  @Autowired
   TenantRepository tenantRepository;
 
   private String tenantId;
@@ -35,10 +40,26 @@ class UserControllerTest {
   @Test
   void getAll() throws Exception {
     ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/users")
-        .contentType(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
             .header(TenantInterceptor.HEADER_TENANT_ID, tenantId))
         .andDo(MockMvcResultHandlers.print());
 
     result.andExpect(status().isOk());
   }
+
+  @Test
+  void create() throws Exception {
+    User user = User.builder().username("username100").build();
+
+    ResultActions result = mockMvc.perform(
+        MockMvcRequestBuilders.post("/users")
+            .contentType(MediaType.APPLICATION_JSON)
+            .header(TenantInterceptor.HEADER_TENANT_ID, tenantId)
+            .content(objectMapper.writeValueAsString(user)))
+        .andDo(MockMvcResultHandlers.print());
+
+    result.andExpect(status().isOk());
+  }
+
+
 }

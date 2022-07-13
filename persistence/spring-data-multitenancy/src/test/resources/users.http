@@ -1,0 +1,27 @@
+# Create User
+POST http://localhost:8080/users
+Content-Type: application/json
+X-TENANT-ID: e3218a91-b30e-4884-a6c0-06030487c92e
+
+{
+  "username": "username4"
+}
+
+> {%
+client.global.set("userId", response.body.id);
+client.log(client.global.get("userId"));
+%}
+
+###
+
+# Update User
+POST http://localhost:8080/users
+Content-Type: application/json
+X-TENANT-ID: e3218a91-b30e-4884-a6c0-06030487c92e
+
+{
+  "id": "{{userId}}",
+  "username": "username12"
+}
+
+###

@@ -1,0 +1,28 @@
+# Create tenant
+POST http://localhost:8080/tenants/create
+Content-Type: application/x-www-form-urlencoded
+
+{
+  "name": "tenant999"
+}
+
+> {%
+client.global.set("tenantId", response.body.id);
+%}
+
+###
+
+# Create User
+POST http://localhost:8080/users
+Content-Type: application/json
+X-TENANT-ID: {{tenantId}}
+
+{
+  "username": "username4"
+}
+
+> {%
+client.global.set("userId", response.body.id);
+%}
+
+###

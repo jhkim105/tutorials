@@ -81,6 +81,17 @@
       <artifactId>flyway-mysql</artifactId>
       <version>8.5.13</version>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-envers</artifactId>
+      <version>${hibernate.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>27.0.1-jre</version>
+<!--      <version>31.1-jre</version> -->
+    </dependency>
   </dependencies>
 
   <build>
