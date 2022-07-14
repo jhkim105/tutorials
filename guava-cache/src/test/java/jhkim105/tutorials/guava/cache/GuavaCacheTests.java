@@ -10,6 +10,7 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.cache.RemovalCause;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.Weigher;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -65,7 +66,7 @@ class GuavaCacheTests {
   }
 
   @Test
-  void evictByTime() throws InterruptedException {
+  void evictByTime() throws InterruptedException, ExecutionException {
     CacheLoader<String, String> loader = new CacheLoader<>() {
       @Override
       public String load(String key) {
@@ -96,6 +97,9 @@ class GuavaCacheTests {
     cache.getUnchecked("test");
     assertEquals(1, cache.size());
     assertNull(cache.getIfPresent("hello"));
+    Thread.sleep(300);
+    cache.cleanUp();
+    assertNull(cache.getIfPresent("test"));
   }
 
   @Test

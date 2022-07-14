@@ -2,9 +2,8 @@
 POST http://localhost:8080/tenants/create
 Content-Type: application/x-www-form-urlencoded
 
-{
-  "name": "tenant999"
-}
+name=tenant999
+
 
 > {%
 client.global.set("tenantId", response.body.id);

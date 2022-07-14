@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -94,6 +95,11 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
           }
         });
 
+  }
+
+  @Scheduled(fixedRate = 10_000)
+  public void cleanUpCache() {
+    this.tenantDataSources.cleanUp();
   }
 
 }
