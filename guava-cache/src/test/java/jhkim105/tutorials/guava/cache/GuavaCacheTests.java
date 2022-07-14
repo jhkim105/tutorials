@@ -11,8 +11,11 @@ import com.google.common.cache.RemovalCause;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.Weigher;
 import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+
+@Slf4j
 class GuavaCacheTests {
 
   @Test
@@ -70,15 +73,24 @@ class GuavaCacheTests {
       }
     };
 
+    RemovalListener<String, String> listener = n -> {
+      log.info("key: {}, value: {}, wasEvicted: {}", n.getKey(), n.getValue(), n.wasEvicted());
+      if (n.wasEvicted()) {
+        String cause = n.getCause().name();
+        assertEquals(RemovalCause.EXPIRED.toString(),cause);
+      }
+    };
+
+
     LoadingCache<String, String> cache = CacheBuilder.newBuilder()
-        .expireAfterAccess(2, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(100, TimeUnit.MILLISECONDS)
         .maximumSize(10)
+        .removalListener(listener)
         .build(loader);
 
     cache.getUnchecked("hello");
     assertEquals(1, cache.size());
 
-    cache.getUnchecked("hello");
     Thread.sleep(300);
 
     cache.getUnchecked("test");
