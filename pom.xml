@@ -18,6 +18,7 @@
     <module>core-java</module>
     <module>database-encrypt</module>
     <module>excel-poi</module>
+    <module>guava-cache</module>
     <module>jmh</module>
     <module>mockserver</module>
     <module>monitoring</module>
@@ -31,17 +32,16 @@
     <module>spring-integration</module>
     <module>spring-session-redis</module>
     <module>spring-docker</module>
-    <module>spring-jsp</module>
     <module>spring-junit5</module>
     <module>spring-mqtt</module>
     <module>spring-rabbitmq</module>
-    <module>spring-mvc</module>
     <module>spring-quartz</module>
     <module>spring-reactive</module>
     <module>spring-rest-documentation</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
     <module>spring-mqtt</module>
+    <module>spring-web</module>
     <module>utils</module>
     <module>spring-cloud</module>
     <module>aws</module>
