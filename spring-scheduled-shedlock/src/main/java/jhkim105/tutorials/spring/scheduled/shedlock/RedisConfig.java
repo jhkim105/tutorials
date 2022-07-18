@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.scheduled.shedlock;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

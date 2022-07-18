@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,6 +49,7 @@ class UserControllerTest {
   }
 
   @Test
+  @Transactional(transactionManager = "tenantTransactionManager")
   void create() throws Exception {
     User user = User.builder().username("username100").build();
 

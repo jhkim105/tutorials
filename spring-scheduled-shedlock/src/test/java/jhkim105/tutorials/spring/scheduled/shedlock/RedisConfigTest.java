@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.scheduled.shedlock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

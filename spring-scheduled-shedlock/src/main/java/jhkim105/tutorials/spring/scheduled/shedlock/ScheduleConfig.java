@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.scheduled.shedlock;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
