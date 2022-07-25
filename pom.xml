@@ -28,6 +28,7 @@
     <module>spring-oauth2</module>
     <module>spring-cloud</module>
     <module>spring-config</module>
+    <module>spring-events</module>
     <module>spring-files</module>
     <module>spring-integration</module>
     <module>spring-session-redis</module>

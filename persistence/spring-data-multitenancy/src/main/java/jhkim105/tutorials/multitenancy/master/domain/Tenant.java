@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnDefault;
@@ -25,6 +24,7 @@ import org.hibernate.envers.Audited;
 public class Tenant {
 
   public static final String DEFAULT_TENANT_ID = "default";
+  public static final String DATABASE_NAME_PREFIX = "demo_multitenancy";
 
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -63,7 +63,12 @@ public class Tenant {
 
   @Transient
   public String getJdbcUrl() {
-    return String.format("jdbc:mariadb://%s/demo_multitenancy_%s?createDatabaseIfNotExist=true", dbAddress, name);
+    return String.format("jdbc:mariadb://%s/%s?createDatabaseIfNotExist=true", dbAddress, getDatabaseName());
+  }
+
+  @Transient
+  public String getDatabaseName() {
+    return String.format("%s_%s", DATABASE_NAME_PREFIX, name);
   }
 
   @Override

@@ -3,6 +3,7 @@ package jhkim105.tutorials.multitenancy.tenant;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import javax.sql.DataSource;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.boot.Metadata;
@@ -14,6 +15,7 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +24,9 @@ import org.springframework.stereotype.Component;
 public class TenantDatabaseHelper {
 
   private final JpaProperties jpaProperties;
+  private final DataSource dataSource;
 
-  public void createSchema(Tenant tenant) {
+  public void createDatabase(Tenant tenant) {
     Map<String, Object> settings = new HashMap<>();
     settings.put(Environment.URL, tenant.getJdbcUrl());
     settings.put(Environment.USER, tenant.getDbUsername());
@@ -44,6 +47,11 @@ public class TenantDatabaseHelper {
     SchemaExport schemaExport = new SchemaExport();
     schemaExport.createOnly(EnumSet.of(TargetType.DATABASE), metadata);
 
+  }
+
+  public void dropDatabase(Tenant tenant) {
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+    jdbcTemplate.execute("drop database " + tenant.getDatabaseName());
   }
 
 }

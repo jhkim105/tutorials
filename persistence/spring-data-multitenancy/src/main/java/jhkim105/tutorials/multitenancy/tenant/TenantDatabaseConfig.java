@@ -42,9 +42,10 @@ public class TenantDatabaseConfig {
 
   @Bean
   @DependsOn({"entityManagerFactory"})
-  public MultiTenantConnectionProvider multiTenantConnectionProvider(TenantDataSourceCacheProperties tenantDataSourceCacheProperties, TenantRepository tenantRepository, BasicDataSource dataSource) {
+  public MultiTenantConnectionProvider multiTenantConnectionProvider(TenantDataSourceCacheProperties tenantDataSourceCacheProperties,
+      TenantRepository tenantRepository, BasicDataSource dataSource, TenantDatabaseHelper tenantDatabaseHelper) {
     log.info("multiTenantConnectionProvider create.");
-    return new DataSourceBasedMultiTenantConnectionProviderImpl(tenantDataSourceCacheProperties, dataSource, tenantRepository);
+    return new DataSourceBasedMultiTenantConnectionProviderImpl(tenantDataSourceCacheProperties, dataSource, tenantRepository, tenantDatabaseHelper);
   }
 
   @Bean

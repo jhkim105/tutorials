@@ -12,11 +12,14 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
+import jhkim105.tutorials.multitenancy.master.domain.TenantDeleteEvent;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
@@ -28,6 +31,9 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
   private final TenantDataSourceCacheProperties tenantDataSourceCacheProperties;
   private final BasicDataSource dataSource;
   private final TenantRepository tenantRepository;
+  private final TenantDatabaseHelper tenantDatabaseHelper;
+
+  @Getter
   private LoadingCache<String, DataSource> tenantDataSources;
 
 
@@ -51,25 +57,6 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
     } catch (ExecutionException e) {
       throw new IllegalStateException("Failed to load DataSource for tenant: " + tenantId);
     }
-  }
-
-  private DataSource createDataSource(Tenant tenant) {
-    BasicDataSource tenantDataSource = new BasicDataSource();
-    tenantDataSource.setUsername(tenant.getDbUsername());
-    tenantDataSource.setPassword(tenant.getDbPassword());
-    tenantDataSource.setUrl(tenant.getJdbcUrl());
-
-    tenantDataSource.setMaxTotal(tenant.getMaxTotal());
-    tenantDataSource.setMaxIdle(tenant.getMaxIdle());
-    tenantDataSource.setMinIdle(tenant.getMinIdle());
-    tenantDataSource.setInitialSize(tenant.getInitialSize());
-    tenantDataSource.setTimeBetweenEvictionRunsMillis(dataSource.getTimeBetweenEvictionRunsMillis());
-    tenantDataSource.setMinEvictableIdleTimeMillis(dataSource.getMinEvictableIdleTimeMillis());
-    tenantDataSource.setDefaultAutoCommit(dataSource.getDefaultAutoCommit());
-    log.info("TenantDataSource created. id: {}, url: {}, maxTotal: {}, maxIdle: {}, minIdle: {}",
-        tenant.getId(),
-        tenantDataSource.getUrl(), tenantDataSource.getMaxTotal(), tenantDataSource.getMaxIdle(), tenantDataSource.getMinIdle());
-    return tenantDataSource;
   }
 
   @PostConstruct
@@ -97,9 +84,48 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
 
   }
 
+  private DataSource createDataSource(Tenant tenant) {
+    BasicDataSource tenantDataSource = new BasicDataSource();
+    tenantDataSource.setUsername(tenant.getDbUsername());
+    tenantDataSource.setPassword(tenant.getDbPassword());
+    tenantDataSource.setUrl(tenant.getJdbcUrl());
+
+    tenantDataSource.setMaxTotal(tenant.getMaxTotal());
+    tenantDataSource.setMaxIdle(tenant.getMaxIdle());
+    tenantDataSource.setMinIdle(tenant.getMinIdle());
+    tenantDataSource.setInitialSize(tenant.getInitialSize());
+    tenantDataSource.setTimeBetweenEvictionRunsMillis(dataSource.getTimeBetweenEvictionRunsMillis());
+    tenantDataSource.setMinEvictableIdleTimeMillis(dataSource.getMinEvictableIdleTimeMillis());
+    tenantDataSource.setDefaultAutoCommit(dataSource.getDefaultAutoCommit());
+    log.info("TenantDataSource created. id: {}, url: {}, maxTotal: {}, maxIdle: {}, minIdle: {}",
+        tenant.getId(),
+        tenantDataSource.getUrl(), tenantDataSource.getMaxTotal(), tenantDataSource.getMaxIdle(), tenantDataSource.getMinIdle());
+    return tenantDataSource;
+  }
+
+
+
   @Scheduled(fixedRate = 10_000)
   public void cleanUpCache() {
     this.tenantDataSources.cleanUp();
   }
+
+  @EventListener
+  public void handleTenantDeleteEvent(TenantDeleteEvent tenantDeleteEvent) {
+    log.debug("handleTenantDeleteEvent: {}", tenantDeleteEvent.getTenant());
+    Tenant tenant = tenantDeleteEvent.getTenant();
+    BasicDataSource dataSource = (BasicDataSource)tenantDataSources.getIfPresent(tenant.getId());
+    if (dataSource != null) {
+      try {
+        dataSource.close();
+        log.info("Closed datasource on delete tenant(url:[{}]).", dataSource.getUrl());
+      } catch (SQLException e) {
+        log.warn(e.toString());
+      }
+    }
+
+    tenantDatabaseHelper.dropDatabase(tenant);
+  }
+
 
 }

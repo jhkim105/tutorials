@@ -17,8 +17,9 @@ spring:
     properties:
       hibernate.hbm2ddl.auto: create
       hibernate.physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      hibernate.id.new_generator_mappings: false
     show-sql: true
-#    open-in-view: false
+    open-in-view: false
   sql:
     init:
       mode: always

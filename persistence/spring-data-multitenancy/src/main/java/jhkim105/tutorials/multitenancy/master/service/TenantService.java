@@ -2,11 +2,13 @@ package jhkim105.tutorials.multitenancy.master.service;
 
 import javax.persistence.EntityNotFoundException;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
+import jhkim105.tutorials.multitenancy.master.domain.TenantDeleteEvent;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.tenant.TenantDataSourceProperties;
 import jhkim105.tutorials.multitenancy.tenant.TenantDatabaseHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +19,7 @@ public class TenantService {
   private final TenantRepository tenantRepository;
   private final TenantDataSourceProperties tenantDataSourceProperties;
   private final TenantDatabaseHelper tenantDatabaseHelper;
+  private final ApplicationEventPublisher eventPublisher;
 
   public Tenant findById(String id) {
     return tenantRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("id: " + id));
@@ -34,10 +37,14 @@ public class TenantService {
       tenant = tenantRepository.save(tenant);
     }
 
-    tenantDatabaseHelper.createSchema(tenant);
+    tenantDatabaseHelper.createDatabase(tenant);
 
     return tenant;
   }
 
+  public void deleteTenant(Tenant tenant) {
+//    eventPublisher.publishEvent(new TenantDeleteEvent(this, tenant));
+    tenantRepository.delete(tenant);
+  }
 
 }
