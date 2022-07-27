@@ -1,13 +1,16 @@
 package jhkim105.tutorials.multitenancy.master.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
-import jhkim105.tutorials.multitenancy.master.domain.TenantDeleteEvent;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.tenant.TenantDataSourceProperties;
 import jhkim105.tutorials.multitenancy.tenant.TenantDatabaseHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +46,21 @@ public class TenantService {
   }
 
   public void deleteTenant(Tenant tenant) {
-//    eventPublisher.publishEvent(new TenantDeleteEvent(this, tenant));
     tenantRepository.delete(tenant);
   }
 
+  public void clearDatabase() {
+    List<String> databaseNames = tenantDatabaseHelper.getTenantDatabaseNames();
+    List<String> targetDatabaseNames = databaseNames.stream().filter(this::notExistsTenantByDatabaseName).collect(Collectors.toList());
+    if (CollectionUtils.isEmpty(targetDatabaseNames)) {
+      return;
+    }
+
+    targetDatabaseNames.stream().forEach(tenantDatabaseHelper::dropDatabase);
+  }
+
+  private boolean notExistsTenantByDatabaseName(String databaseName) {
+    String tenantName = StringUtils.removeStart(databaseName, Tenant.DATABASE_NAME_PREFIX);
+    return tenantRepository.existsByName(tenantName);
+  }
 }

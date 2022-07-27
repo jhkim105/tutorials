@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
@@ -41,11 +40,15 @@ public class TenantDatabaseConfig {
   }
 
   @Bean
+  public TenantDatabaseHelper tenantDatabaseHelper() {
+    return new TenantDatabaseHelper();
+  }
+
+  @Bean
   @DependsOn({"entityManagerFactory"})
-  public MultiTenantConnectionProvider multiTenantConnectionProvider(TenantDataSourceCacheProperties tenantDataSourceCacheProperties,
-      TenantRepository tenantRepository, BasicDataSource dataSource, TenantDatabaseHelper tenantDatabaseHelper) {
+  public MultiTenantConnectionProvider multiTenantConnectionProvider() {
     log.info("multiTenantConnectionProvider create.");
-    return new DataSourceBasedMultiTenantConnectionProviderImpl(tenantDataSourceCacheProperties, dataSource, tenantRepository, tenantDatabaseHelper);
+    return new DataSourceBasedMultiTenantConnectionProviderImpl();
   }
 
   @Bean

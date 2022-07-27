@@ -2,10 +2,10 @@ package jhkim105.tutorials.multitenancy.tenant;
 
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import javax.sql.DataSource;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
-import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -13,18 +13,19 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
-import org.springframework.stereotype.Component;
 
-@Component
-@RequiredArgsConstructor
 public class TenantDatabaseHelper {
 
-  private final JpaProperties jpaProperties;
-  private final DataSource dataSource;
+  @Autowired
+  private JpaProperties jpaProperties;
+
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   public void createDatabase(Tenant tenant) {
     Map<String, Object> settings = new HashMap<>();
@@ -50,8 +51,18 @@ public class TenantDatabaseHelper {
   }
 
   public void dropDatabase(Tenant tenant) {
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-    jdbcTemplate.execute("drop database " + tenant.getDatabaseName());
+    dropDatabase(tenant.getDatabaseName());
   }
 
+  public void dropDatabase(String databaseName) {
+    if (!StringUtils.startsWith(databaseName, Tenant.DATABASE_NAME_PREFIX)) {
+      throw new IllegalStateException(String.format("This database cannot be deleted. name: [%s]", databaseName));
+    }
+    jdbcTemplate.execute("drop database " + databaseName);
+  }
+
+  public List<String> getTenantDatabaseNames() {
+    return jdbcTemplate.query("show databases like '" + Tenant.DATABASE_NAME_PREFIX + "%'",
+        (rs, rowNum) -> rs.getString(1));
+  }
 }

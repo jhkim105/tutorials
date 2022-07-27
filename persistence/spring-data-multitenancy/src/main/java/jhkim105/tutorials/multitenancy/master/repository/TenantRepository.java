@@ -8,4 +8,6 @@ public interface TenantRepository extends JpaRepository<Tenant, String> {
   Tenant findFirstBy();
 
   Tenant findByName(String name);
+
+  boolean existsByName(String tenantName);
 }

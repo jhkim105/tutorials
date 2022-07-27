@@ -15,23 +15,26 @@ import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.domain.TenantDeleteEvent;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Slf4j
-@RequiredArgsConstructor
 public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
 
   private static final long serialVersionUID = 2353465673130594043L;
 
-  private final TenantDataSourceCacheProperties tenantDataSourceCacheProperties;
-  private final BasicDataSource dataSource;
-  private final TenantRepository tenantRepository;
-  private final TenantDatabaseHelper tenantDatabaseHelper;
+  @Autowired
+  private TenantDataSourceCacheProperties tenantDataSourceCacheProperties;
+  @Autowired
+  private BasicDataSource dataSource;
+  @Autowired
+  private TenantRepository tenantRepository;
+  @Autowired
+  private TenantDatabaseHelper tenantDatabaseHelper;
 
   @Getter
   private LoadingCache<String, DataSource> tenantDataSources;

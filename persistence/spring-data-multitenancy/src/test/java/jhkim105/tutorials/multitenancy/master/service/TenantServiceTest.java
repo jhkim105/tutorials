@@ -36,4 +36,9 @@ class TenantServiceTest {
     tenantService.deleteTenant(tenant);
   }
 
+  @Test
+  void clearDatabase() {
+    tenantService.clearDatabase();
+  }
+
 }
