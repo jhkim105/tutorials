@@ -1,8 +1,11 @@
 package jhkim105.tutorials.spring.mvc;
 
+import jhkim105.tutorials.spring.mvc.interceptor.SampleInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,5 +29,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
             .addResourceHandler("/upload/**")
             .addResourceLocations(String.format("file:%s/upload/", appProperties.getStoragePath()));
 
+    }
+
+    @Bean
+    public SampleInterceptor sampleInterceptor() {
+        return new SampleInterceptor();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(sampleInterceptor());
     }
 }
