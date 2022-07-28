@@ -49,7 +49,7 @@ public class TenantService {
     tenantRepository.delete(tenant);
   }
 
-  public void clearDatabase() {
+  public void dropOrphanDatabases() {
     List<String> databaseNames = tenantDatabaseHelper.getTenantDatabaseNames();
     List<String> targetDatabaseNames = databaseNames.stream().filter(this::notExistsTenantByDatabaseName).collect(Collectors.toList());
     if (CollectionUtils.isEmpty(targetDatabaseNames)) {

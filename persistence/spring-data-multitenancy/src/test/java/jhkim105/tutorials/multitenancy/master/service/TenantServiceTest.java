@@ -38,7 +38,7 @@ class TenantServiceTest {
 
   @Test
   void clearDatabase() {
-    tenantService.clearDatabase();
+    tenantService.dropOrphanDatabases();
   }
 
 }
