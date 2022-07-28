@@ -18,4 +18,9 @@ public class HomeController {
     model.addAttribute("message", "Hello EL!");
     return "el";
   }
+
+  @GetMapping("/wrong")
+  public String wrong() {
+    throw new IllegalStateException("Something wrong");
+  }
 }
