@@ -1,10 +1,10 @@
 # Create User
 POST http://localhost:8080/users
 Content-Type: application/json
-X-TENANT-ID: e3218a91-b30e-4884-a6c0-06030487c92e
 
 {
-  "username": "username4"
+  "username": "username4",
+  "tenantId": "f8922a32-7132-4a3a-aac3-d5346c10f218"
 }
 
 > {%
@@ -17,23 +17,21 @@ client.log(client.global.get("userId"));
 # Update User
 POST http://localhost:8080/users
 Content-Type: application/json
-X-TENANT-ID: e3218a91-b30e-4884-a6c0-06030487c92e
 
 {
   "id": "{{userId}}",
-  "username": "username12"
+  "username": "username12",
+  "tenantId": "e3218a91-b30e-4884-a6c0-06030487c92e"
 }
 
 ###
 
 # Get Users
-GET http://localhost:8080/users
-X-TENANT-ID: 363b3f08-5d5b-42f4-83d8-7ac5febac705
+GET http://localhost:8080/users?tenantId=363b3f08-5d5b-42f4-83d8-7ac5febac705
 
 ###
 
 # Get Users
-GET http://localhost:8080/users
-X-TENANT-ID: 47951816-3f8e-4ab3-a728-80c0438312d7
+GET http://localhost:8080/users?tenantId=47951816-3f8e-4ab3-a728-80c0438312d7
 
 ###

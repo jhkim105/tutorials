@@ -1,4 +1,4 @@
-package jhkim105.tutorials.multitenancy.tenant;
+package jhkim105.tutorials.multitenancy.tenant.migrate;
 
 import java.util.List;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;

@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
+import jhkim105.tutorials.multitenancy.tenant.migrate.TenantDatabaseMigrator;
+import jhkim105.tutorials.multitenancy.tenant.migrate.TenantFlywayProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;

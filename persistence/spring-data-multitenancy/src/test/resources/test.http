@@ -14,10 +14,10 @@ client.global.set("tenantId", response.body.id);
 # Create User
 POST http://localhost:8080/users
 Content-Type: application/json
-X-TENANT-ID: {{tenantId}}
 
 {
-  "username": "username4"
+  "username": "username4",
+  "tenantId": "{{tenantId}}"
 }
 
 > {%

@@ -2,7 +2,6 @@ package jhkim105.tutorials.multitenancy.master.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityNotFoundException;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.tenant.TenantDataSourceProperties;
@@ -25,7 +24,7 @@ public class TenantService {
   private final ApplicationEventPublisher eventPublisher;
 
   public Tenant findById(String id) {
-    return tenantRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("id: " + id));
+    return tenantRepository.findById(id).orElse(null);
   }
 
   public Tenant createTenant(String name) {

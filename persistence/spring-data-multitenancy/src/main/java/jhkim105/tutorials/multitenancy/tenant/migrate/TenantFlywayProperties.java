@@ -1,4 +1,4 @@
-package jhkim105.tutorials.multitenancy.tenant;
+package jhkim105.tutorials.multitenancy.tenant.migrate;
 
 import lombok.Getter;
 import lombok.Setter;

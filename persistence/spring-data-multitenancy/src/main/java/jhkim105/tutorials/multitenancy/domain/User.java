@@ -30,9 +30,12 @@ public class User {
   @Column(nullable = false, unique = true)
   private String username;
 
+  @Column(name = "tenant_id")
+  private String tenantId;
 
   @Builder
-  public User(String username) {
+  public User(String tenantId, String username) {
+    this.tenantId = tenantId;
     this.username = username;
   }
 
