@@ -44,6 +44,7 @@ multitenancy:
       password: @db.password@
     flyway:
       enabled: true
-      locations: classpath:db/migration/tenant
+#      locations: classpath:db/migration/tenant
+      locations: classpath:db/migration/tenant, filesystem:@project.basedir@/db/tenant
       baseline-on-migrate: true
-      baseline-version: 0
+      baseline-version: 1.0.2

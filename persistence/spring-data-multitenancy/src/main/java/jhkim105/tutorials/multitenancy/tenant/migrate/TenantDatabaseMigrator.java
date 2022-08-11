@@ -6,6 +6,7 @@ import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.FlywayException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,11 +31,13 @@ public class TenantDatabaseMigrator {
     Flyway flyway = Flyway.configure()
         .dataSource(tenant.getJdbcUrl(), tenant.getDbUsername(), tenant.getDbPassword())
         .locations(tenantFlywayProperties.getLocations())
-        .baselineOnMigrate(tenantFlywayProperties.isBaselineOnMigrate())
-        .baselineVersion(tenantFlywayProperties.getBaselineVersion())
         .load();
 
-    flyway.migrate();
+    try {
+      flyway.migrate();
+    } catch(FlywayException ex) {
+      log.warn(String.format("Migration Error: %s, Tenant::%s", ex.toString(), tenant));
+    }
   }
 
 }

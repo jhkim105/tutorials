@@ -6,11 +6,12 @@ import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.tenant.TenantDataSourceProperties;
 import jhkim105.tutorials.multitenancy.tenant.TenantDatabaseHelper;
+import jhkim105.tutorials.multitenancy.tenant.migrate.TenantFlywayProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.ApplicationEventPublisher;
+import org.flywaydb.core.Flyway;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +22,7 @@ public class TenantService {
   private final TenantRepository tenantRepository;
   private final TenantDataSourceProperties tenantDataSourceProperties;
   private final TenantDatabaseHelper tenantDatabaseHelper;
-  private final ApplicationEventPublisher eventPublisher;
+  private final TenantFlywayProperties tenantFlywayProperties;
 
   public Tenant findById(String id) {
     return tenantRepository.findById(id).orElse(null);
@@ -40,8 +41,22 @@ public class TenantService {
     }
 
     tenantDatabaseHelper.createDatabase(tenant);
+    setUpFlywayBaseline(tenant);
 
     return tenant;
+  }
+
+  private void setUpFlywayBaseline(Tenant tenant) {
+    if (!tenantFlywayProperties.isEnabled()) {
+      return;
+    }
+    Flyway flyway = Flyway.configure()
+        .dataSource(tenant.getJdbcUrl(), tenant.getDbUsername(), tenant.getDbPassword())
+        .locations(tenantFlywayProperties.getLocations())
+        .baselineOnMigrate(tenantFlywayProperties.isBaselineOnMigrate())
+        .baselineVersion(tenantFlywayProperties.getBaselineVersion())
+        .load();
+    flyway.migrate();
   }
 
   public void deleteTenant(Tenant tenant) {
