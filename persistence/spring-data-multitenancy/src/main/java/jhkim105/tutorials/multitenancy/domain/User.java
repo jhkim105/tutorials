@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.Audited;
@@ -28,6 +29,7 @@ public class User {
   private String id;
 
   @Column(nullable = false, unique = true)
+  @Setter
   private String username;
 
   @Column(name = "tenant_id")

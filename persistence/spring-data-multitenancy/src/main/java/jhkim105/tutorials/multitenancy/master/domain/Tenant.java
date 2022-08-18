@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnDefault;
@@ -33,8 +34,10 @@ public class Tenant {
   private String id;
 
   @Column(unique = true)
+  @Setter
   private String name;
 
+  private String dbName;
   private String dbAddress;
 
   private String dbUsername;
@@ -56,6 +59,7 @@ public class Tenant {
   @Builder
   public Tenant(String name, String dbAddress, String dbUsername, String dbPassword) {
     this.name = name;
+    this.dbName = name;
     this.dbAddress = dbAddress;
     this.dbUsername = dbUsername;
     this.dbPassword = dbPassword;
@@ -68,7 +72,7 @@ public class Tenant {
 
   @Transient
   public String getDatabaseName() {
-    return String.format("%s%s", DATABASE_NAME_PREFIX, name);
+    return String.format("%s%s", DATABASE_NAME_PREFIX, dbName);
   }
 
   @Override

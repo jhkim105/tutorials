@@ -13,6 +13,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.flywaydb.core.Flyway;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -76,5 +77,12 @@ public class TenantService {
   private boolean notExistsTenantByDatabaseName(String databaseName) {
     String tenantName = StringUtils.removeStart(databaseName, Tenant.DATABASE_NAME_PREFIX);
     return tenantRepository.existsByName(tenantName);
+  }
+
+  @Transactional(transactionManager = "transactionManager")
+  public Tenant updateTenantName(String oldName, String newName) {
+    Tenant tenant = tenantRepository.findByName(oldName);
+    tenant.setName(newName);
+    return tenantRepository.save(tenant);
   }
 }

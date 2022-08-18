@@ -36,7 +36,7 @@ public class TenantDatabaseMigrator {
     try {
       flyway.migrate();
     } catch(FlywayException ex) {
-      log.warn(String.format("Migration Error: %s, Tenant::%s", ex.toString(), tenant));
+      log.warn(String.format("Migration Error: %s, Tenant::%s", ex, tenant));
     }
   }
 

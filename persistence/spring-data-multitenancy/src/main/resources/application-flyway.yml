@@ -32,7 +32,6 @@ spring:
       min-idle: 10
   flyway:
     enabled: true
-    locations: classpath:db/migration/master, classpath:db/migration/tenant
     baseline-on-migrate: true
     baseline-version: 0
 
