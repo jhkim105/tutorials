@@ -49,6 +49,7 @@
     <module>core-java</module>
     <module>spring-rest-documentation</module>
     <module>spring-web</module>
+    <module>distributed-lock</module>
 
   </modules>
   <repositories>
