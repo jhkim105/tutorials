@@ -43,7 +43,7 @@ public class User extends BaseEntity<String> {
 
   @Column(nullable = false)
   @Setter
-  @Audited
+  @Audited(withModifiedFlag = true)
   private String name;
 
   @NaturalId

@@ -25,7 +25,10 @@ spring:
     hibernate.ddl-auto: create
     properties:
       hibernate.id.new_generator_mappings: false
-
+#      org.hibernate.envers.audit_table_suffix: _h
+#      org.hibernate.envers.store_data_at_delete: true
+#      org.hibernate.envers.global_with_modified_flag: true
+#      org.hibernate.envers.modified_flag_suffix: _mod
   data:
     rest:
 #      basePath: /data

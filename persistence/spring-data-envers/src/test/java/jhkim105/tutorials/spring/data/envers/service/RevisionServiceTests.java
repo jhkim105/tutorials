@@ -4,6 +4,7 @@ import java.util.List;
 import jhkim105.tutorials.spring.data.envers.domain.User;
 import jhkim105.tutorials.spring.data.envers.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,11 @@ class RevisionServiceTests {
   @Autowired
   UserRepository userRepository;
 
+  User user;
+
   @BeforeEach
   void beforeEach() {
-    User user = userRepository.findById("id01").orElseThrow();
+    user = userRepository.findById("id01").orElseThrow();
     user.setName("User1");
     userRepository.save(user);
     userRepository.flush();
@@ -30,9 +33,16 @@ class RevisionServiceTests {
 
   @Test
   void getRevisionObjects() {
-   List list = revisionService.getRevisionObjects(User.class, 10);
+   List list = revisionService.getList(User.class, 10);
    log.info("{}", list);
   }
 
+
+  @Test
+  void isModified() {
+    long rev = revisionService.getLatestRevisionNumber(User.class, user.getId());
+    boolean modified = revisionService.isModified(User.class, user.getId(), "name", rev);
+    Assertions.assertThat(modified).isTrue();
+  }
 
 }
