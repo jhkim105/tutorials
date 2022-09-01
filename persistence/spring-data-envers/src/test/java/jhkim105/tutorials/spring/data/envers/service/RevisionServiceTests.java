@@ -32,9 +32,16 @@ class RevisionServiceTests {
   }
 
   @Test
-  void getRevisionObjects() {
+  void getList() {
    List list = revisionService.getList(User.class, 10);
    log.info("{}", list);
+  }
+
+  @Test
+  void get() {
+    long rev = revisionService.getLatestRevisionNumber(User.class, user.getId());
+    User user = (User)revisionService.get(User.class, rev);
+    log.info("{}", user);
   }
 
 

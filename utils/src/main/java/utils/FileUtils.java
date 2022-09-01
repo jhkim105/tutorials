@@ -2,6 +2,7 @@ package utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
@@ -81,6 +83,14 @@ public class FileUtils {
   public static void writeStringToFile(File file, String data) {
     try {
       org.apache.commons.io.FileUtils.writeStringToFile(file, data, "UTF-8");
+    } catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
+  }
+
+  public static String readFileToString(File file) {
+    try {
+      return org.apache.commons.io.FileUtils.readFileToString(file, "UTF-8");
     } catch (IOException ex) {
       throw new RuntimeException(ex);
     }
@@ -168,5 +178,13 @@ public class FileUtils {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public static List<File> getFileListOrderByFileName(String dirPath) {
+    File dir = new File(dirPath);
+    return Stream.of(Objects.requireNonNull(dir.listFiles()))
+        .filter(File::isFile)
+        .sorted(Comparator.comparing(f -> FilenameUtils.getBaseName(f.getName())))
+        .collect(Collectors.toList());
   }
 }

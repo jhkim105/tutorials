@@ -66,6 +66,7 @@ public class TenantDatabaseConfig {
 
 
   @Bean(initMethod = "migrate")
+  @DependsOn("transactionManager")
   public TenantDatabaseMigrator tenantDatabaseMigrator(TenantRepository tenantRepository, TenantFlywayProperties tenantFlywayProperties) {
     return new TenantDatabaseMigrator(tenantRepository, tenantFlywayProperties);
   }

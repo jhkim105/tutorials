@@ -11,7 +11,9 @@
   <artifactId>spring-security</artifactId>
   <packaging>pom</packaging>
   <modules>
+    <module>spring-security-form-login</module>
     <module>spring-security-jwt</module>
+    <module>spring-security-okta</module>
   </modules>
 
 </project>

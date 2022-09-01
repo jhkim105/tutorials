@@ -27,6 +27,16 @@ class SampleControllerTest {
   @Autowired
   ObjectMapper objectMapper;
 
+
+  @Test
+  void testGet() throws Exception {
+    ResultActions resultActions = mockMvc.perform(get("/sample/get")
+            .param("id", "id01"))
+        .andDo(print());
+    String ret = resultActions.andReturn().getResponse().getContentAsString();
+    log.debug("ret: {}", ret);
+  }
+
   @Test
   void testPost() throws Exception {
     ResultActions resultActions = mockMvc.perform(post("/sample/post")

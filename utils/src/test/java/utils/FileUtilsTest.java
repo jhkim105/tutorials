@@ -68,4 +68,9 @@ public class FileUtilsTest {
     Assertions.assertThat(FileUtils.findFileEncoding(new File("src/test/resources/encoding-UTF-8.txt"))).isEqualTo("UTF-8");
   }
 
+  @Test
+  void getFileListOrderByFileName() {
+    List<File> fileList = FileUtils.getFileListOrderByFileName("src/test/resources");
+    log.debug("fileList: {}", fileList);
+  }
 }

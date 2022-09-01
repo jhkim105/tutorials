@@ -17,4 +17,5 @@ public class HomeController {
     return ResponseEntity.ok(serviceProperties.getAppName());
   }
 
+
 }

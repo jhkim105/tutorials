@@ -1,1 +1,1 @@
-INSERT INTO demo_multitenancy_master.tenant (id, db_address, db_password, db_username, initial_size, max_idle, max_total, min_idle, name) VALUES ('tenant1', 'localhost', '111111', 'root', 0, 10, 10, 0, 'user1');
+INSERT INTO demo_multitenancy_master.tenant (id, db_address, db_password, db_username, initial_size, max_idle, max_total, min_idle, name, db_name) VALUES ('tenant1', 'localhost', '111111', 'root', 0, 10, 10, 0, 'user1', 'user1');

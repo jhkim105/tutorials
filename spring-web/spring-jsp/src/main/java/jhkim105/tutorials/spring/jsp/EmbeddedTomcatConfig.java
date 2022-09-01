@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.jsp;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.Wrapper;

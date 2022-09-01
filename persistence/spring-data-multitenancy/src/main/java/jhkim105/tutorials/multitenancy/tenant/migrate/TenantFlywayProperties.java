@@ -10,9 +10,9 @@ import lombok.ToString;
 @ToString
 public class TenantFlywayProperties {
 
-  private boolean enabled;
+  private boolean migrateOnServerStart;
+  private boolean migrateOnTenantAdd;
   private String[] locations;
-  private boolean baselineOnMigrate;
   private String baselineVersion;
 
 }

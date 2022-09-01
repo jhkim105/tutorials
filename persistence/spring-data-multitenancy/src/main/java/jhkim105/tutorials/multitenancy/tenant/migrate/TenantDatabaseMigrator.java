@@ -18,7 +18,7 @@ public class TenantDatabaseMigrator {
 
 
   void migrate() {
-    if (!tenantFlywayProperties.isEnabled()) {
+    if (!tenantFlywayProperties.isMigrateOnServerStart()) {
       return;
     }
     log.info("migrate tenant");

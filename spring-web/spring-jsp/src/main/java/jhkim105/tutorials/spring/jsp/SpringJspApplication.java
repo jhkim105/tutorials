@@ -1,4 +1,4 @@
-package com.example.demo;
+package jhkim105.tutorials.spring.jsp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

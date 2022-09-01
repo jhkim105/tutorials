@@ -2,6 +2,7 @@ package jhkim105.tutorials.spring.data.envers.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditEntity;
@@ -44,12 +45,18 @@ public class RevisionService {
     return CollectionUtils.isEmpty(list) ? null : list.get(0);
   }
 
-  public  boolean isModified(Class<?> clazz, Object id, String columnName, long rev) {
+  public boolean isModified(Class<?> clazz, Object id, String columnName, long rev) {
     AuditQuery query = AuditReaderFactory.get(entityManager).createQuery()
         .forEntitiesAtRevision(clazz, rev)
         .add(AuditEntity.id().eq(id))
-        .add(AuditEntity.property(columnName).hasChanged());
-    Object res = query.getSingleResult();
-    return res != null;
+        .add(AuditEntity.property(columnName).hasChanged())
+        .addProjection(AuditEntity.id());
+    try {
+      query.getSingleResult();
+      return true;
+    } catch (NoResultException ex) {
+      return false;
+    }
   }
+
 }
