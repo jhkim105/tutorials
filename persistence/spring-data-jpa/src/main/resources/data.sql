@@ -1,9 +1,9 @@
 -- dm_user
 INSERT INTO dm_user (id, name) VALUES ('id01', '홍길동');
 -- dm_user_address
-INSERT INTO dm_user_address (id, city, street, name, user_id) VALUES ('id01', '서울시 송파구', '위례성대로', '직장', 'id01');
-INSERT INTO dm_user_address (id, city, street, name, user_id) VALUES ('id02', '서울시 성동구', '무팍로', '집', 'id01');
-INSERT INTO dm_user_address (id, city, street, name, user_id) VALUES ('id03', '전북 정읍시', '내능길', '시골', 'id01');
+INSERT INTO dm_user_address (user_id, address_city, address_street, address_name) VALUES ('id01', '서울시 송파구', '위례성대로', '직장');
+INSERT INTO dm_user_address (user_id, address_city, address_street, address_name) VALUES ('id01', '서울시 성동구', '무팍로', '집');
+INSERT INTO dm_user_address (user_id, address_city, address_street, address_name) VALUES ('id01', '전북 정읍시', '내능길', '시골');
 -- de_product
 INSERT INTO de_product (id, name, price) VALUES ('id01', '상품1', 1000);
 INSERT INTO de_product (id, name, price) VALUES ('id02', '상품2', 1500);

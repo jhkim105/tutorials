@@ -1,6 +1,7 @@
 package jhkim105.tutorials.spring.data.jpa.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,6 +27,7 @@ public class Delivery extends BaseEntity<String> {
   @Column(length = ColumnLengths.UUID)
   private String id;
 
+  @Embedded
   private Address address;
 
   @Enumerated(value = EnumType.STRING)

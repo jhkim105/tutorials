@@ -2,10 +2,13 @@ package jhkim105.tutorials.spring.data.jpa.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import jhkim105.tutorials.spring.data.jpa.domain.base.BaseEntity;
@@ -32,9 +35,10 @@ public class User extends BaseEntity<String> {
   @Column(nullable = false)
   private String name;
 
-  @OneToMany(mappedBy = "user")
+  @ElementCollection
+  @CollectionTable(name = "dm_user_address", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"))
   @Exclude
-  private Set<UserAddress> userAddresses = new HashSet<>();
+  private Set<Address> addresses = new HashSet<>();
 
   @OneToMany(mappedBy = "user")
   @Exclude
