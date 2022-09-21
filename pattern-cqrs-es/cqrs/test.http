@@ -1,0 +1,29 @@
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "username": "user01"
+}
+
+> {%
+client.global.set("username", response.body.username);
+%}
+###
+
+GET http://localhost:8080/users/by-username?username={{username}}
+Accept: application/json
+
+> {%
+client.global.set("userId", response.body.id);
+%}
+###
+
+PUT http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "id": "{{userId}}",
+  "username": "user01-new"
+}
+
+###

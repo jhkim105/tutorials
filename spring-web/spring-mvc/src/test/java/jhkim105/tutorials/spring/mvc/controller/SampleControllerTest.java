@@ -3,6 +3,8 @@ package jhkim105.tutorials.spring.mvc.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jhkim105.tutorials.spring.mvc.controller.SampleController.Sample;
@@ -32,7 +34,10 @@ class SampleControllerTest {
   void testGet() throws Exception {
     ResultActions resultActions = mockMvc.perform(get("/sample/get")
             .param("id", "id01"))
-        .andDo(print());
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value("id01"))
+        .andExpect(jsonPath("$.id").isNotEmpty());
     String ret = resultActions.andReturn().getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }
