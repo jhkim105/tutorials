@@ -1,19 +1,17 @@
 package jhkim105.tutorials.core.java.generic;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
 class GenericsTests {
 
-  void hello() {
-    String str = Generics.hello("str");
-  }
-
-
   @Test
-  void inferredClass() {
-    Foo<Bar> foo = new Foo<>();
-    log.info("{}", foo.getMemberClass());
+  void getGenericTypeClass() {
+    Class<?> clazz = Generics.getGenericTypeClass(Bar.class);
+    log.info("{}", clazz);
+    assertTrue(clazz.equals(String.class));
   }
 }

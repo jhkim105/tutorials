@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <groupId>jhkim105</groupId>
+    <groupId>jhkim105.tutorials</groupId>
     <artifactId>core-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
@@ -11,11 +11,14 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>core-java-basic</artifactId>
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>RELEASE</version>
+      <version>1.18.24</version>
+      <scope>provided</scope>
     </dependency>
+
     <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -23,13 +26,13 @@
       <version>1.2.11</version>
       <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
-      <version>RELEASE</version>
+      <version>5.9.1</version>
       <scope>test</scope>
     </dependency>
-
 
   </dependencies>
 
