@@ -1,0 +1,28 @@
+server:
+  error:
+    include-stacktrace: on_param
+
+# LOGGING
+logging:
+  level:
+    'jhkim105.tutorials': debug
+    'org.hibernate.SQL': debug
+    'org.hibernate.type.descriptor.sql.BasicBinder': trace
+    'org.hibernate.type.EnumType': trace
+    'org.springframework.transaction': trace
+    'org.springframework.orm.jpa': debug
+    'org.springframework.jdbc.core': trace
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost/demo_osiv?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+  jpa:
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
+    properties:
+      hibernate.id.new_generator_mappings: false

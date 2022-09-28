@@ -5,13 +5,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-public class Junit5Test {
+class Junit5Test {
 
   @Test
-  public void test() {
+  void test() {
     int n = 10;
     assertThat(n).isEqualTo(10);
 
@@ -20,5 +21,13 @@ public class Junit5Test {
         () -> assertFalse(n == 2)
     );
 
+  }
+
+  @Test
+  void assertThrowsException() {
+    String str = null;
+    assertThrows(IllegalArgumentException.class, () -> {
+      Integer.valueOf(str);
+    });
   }
 }
