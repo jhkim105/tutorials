@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import jhkim105.tutorials.spring.mvc.AppProperties;
+import jhkim105.tutorials.spring.mvc.config.AppProperties;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
 package jhkim105.tutorials.spring.mvc.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
 
 @SpringBootTest
@@ -66,5 +64,32 @@ class SampleControllerTest {
     String ret = resultActions.andReturn().getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }
+
+  @Test
+  /**
+   * configurer.setUseRegisteredSuffixPatternMatch(true);
+   * - 등록된 확장자만 허용함
+   */
+  void testUseRegisteredSuffix_json() throws Exception {
+    ResultActions resultActions = mockMvc.perform(get("/sample/get.json"))
+        .andDo(print())
+        .andExpect(status().isOk());
+    String ret = resultActions.andReturn().getResponse().getContentAsString();
+    log.debug("ret: {}", ret);
+  }
+
+  @Test
+  /**
+   * configurer.setUseRegisteredSuffixPatternMatch(true);
+   * - 모든 확장자를 허용하려면 suffixPatternMatch=true, registeredSuffixPatternMatch=false
+   */
+  void testUseRegisteredSuffix_other() throws Exception {
+    ResultActions resultActions = mockMvc.perform(get("/sample/get.do"))
+        .andDo(print())
+        .andExpect(status().is4xxClientError());
+    String ret = resultActions.andReturn().getResponse().getContentAsString();
+    log.debug("ret: {}", ret);
+  }
+
 
 }

@@ -2,6 +2,7 @@ package jhkim105.tutorials.spring.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import jhkim105.tutorials.spring.mvc.config.AppProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

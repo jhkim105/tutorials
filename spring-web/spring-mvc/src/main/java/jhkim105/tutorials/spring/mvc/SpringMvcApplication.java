@@ -1,5 +1,6 @@
 package jhkim105.tutorials.spring.mvc;
 
+import jhkim105.tutorials.spring.mvc.config.AppProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.mvc;
+package jhkim105.tutorials.spring.mvc.config;
 
 import jhkim105.tutorials.spring.mvc.interceptor.SampleInterceptor;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         AntPathMatcher matcher = new AntPathMatcher();
         matcher.setCaseSensitive(false);
         configurer.setPathMatcher(matcher);
+        configurer.setUseRegisteredSuffixPatternMatch(true);
+//        configurer.setUseSuffixPatternMatch(true);
     }
 
     @Override

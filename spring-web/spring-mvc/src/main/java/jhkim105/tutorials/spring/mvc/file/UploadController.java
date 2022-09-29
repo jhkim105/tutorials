@@ -4,7 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
-import jhkim105.tutorials.spring.mvc.AppProperties;
+import jhkim105.tutorials.spring.mvc.config.AppProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

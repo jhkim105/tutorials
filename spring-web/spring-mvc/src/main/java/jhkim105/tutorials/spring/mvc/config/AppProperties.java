@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.mvc;
+package jhkim105.tutorials.spring.mvc.config;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
