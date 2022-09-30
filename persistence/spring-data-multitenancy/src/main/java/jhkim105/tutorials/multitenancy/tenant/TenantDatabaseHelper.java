@@ -1,10 +1,15 @@
 package jhkim105.tutorials.multitenancy.tenant;
 
+import com.querydsl.codegen.ClassPathUtils;
+import java.io.IOException;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import javax.persistence.Converter;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -19,6 +24,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 
+@Slf4j
 public class TenantDatabaseHelper {
 
   @Autowired
@@ -39,6 +45,7 @@ public class TenantDatabaseHelper {
     StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(settings).build();
 
     MetadataSources metadataSources = new MetadataSources(serviceRegistry);
+    addAttributeConverter(metadataSources);
 
     PathMatchingResourcePatternResolver resourceLoader = new PathMatchingResourcePatternResolver();
     new LocalSessionFactoryBuilder(null, resourceLoader, metadataSources)
@@ -48,6 +55,18 @@ public class TenantDatabaseHelper {
     SchemaExport schemaExport = new SchemaExport();
     schemaExport.createOnly(EnumSet.of(TargetType.DATABASE), metadata);
 
+  }
+
+  private void addAttributeConverter(MetadataSources metadataSources) {
+    try {
+      Set<Class<?>> classes = ClassPathUtils.scanPackage(Thread.currentThread().getContextClassLoader(), TenantDatabaseConfig.DOMAIN_PACKAGE);
+      classes.stream()
+          .filter(scannedClass -> scannedClass.isAnnotationPresent(Converter.class))
+          .forEach(metadataSources::addAnnotatedClass);
+
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   public void dropDatabase(Tenant tenant) {
