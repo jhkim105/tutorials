@@ -1,6 +1,6 @@
 logging:
   level:
-    com.example: debug
+    jhkim105.tutorials: debug
 spring:
   rabbitmq:
     host: localhost

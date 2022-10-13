@@ -1,31 +1,33 @@
 package jhkim105.tutorials.spring.mqtt.concurrency.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
-public class ConferenceSttLogSaveActivator {
+public class SttLogAmqpHandler {
 
-  @Autowired
-  private ConferenceSttLogRepository conferenceSttLogRepository;
+  private final ConferenceSttLogRepository conferenceSttLogRepository;
 
   @ServiceActivator
   public void handle(SttLogMessage message) {
     log.debug("handle start. message->{}", message);
     SttLogMessage.Data data = message.getData();
+    if (data == null) {
+      log.debug("Empty message. Nothing to do");
+      return;
+    }
+
     if (message.isNotValid()) {
       log.debug("message is not valid. message -> {}", data);
       return;
     }
-    try {
-      createSttLog(data);
-    } catch(RuntimeException e) {
-      log.debug("ignored error:{}", e.toString());
-    }
+    createSttLog(data);
   }
+
 
   private void createSttLog(SttLogMessage.Data data) {
     ConferenceSttLog conferenceSttLog = ConferenceSttLog.builder()
@@ -39,4 +41,5 @@ public class ConferenceSttLogSaveActivator {
     conferenceSttLogRepository.save(conferenceSttLog);
     log.debug("conferenceSttLog created->{}", conferenceSttLog);
   }
+
 }

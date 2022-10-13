@@ -1,10 +1,12 @@
 package jhkim105.tutorials.spring.mqtt.concurrency.config;
 
 import java.util.UUID;
+import jhkim105.tutorials.spring.mqtt.concurrency.service.SttLogMessage;
+import jhkim105.tutorials.spring.mqtt.concurrency.service.SttLogMqttHandler;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.amqp.dsl.Amqp;
@@ -12,6 +14,7 @@ import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
+import org.springframework.integration.dsl.Transformers;
 import org.springframework.integration.handler.LoggingHandler;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
@@ -21,13 +24,14 @@ import org.springframework.messaging.MessageChannel;
 
 @Configuration
 @IntegrationComponentScan
+@RequiredArgsConstructor
 @Slf4j
 public class MqttConfig {
 
   private static final String MQTT_LOGGING_CHANNEL = "mqttLoggingChannel";
 
-  @Autowired
-  private MqttProperties mqttProperties;
+  private final MqttProperties mqttProperties;
+  private final SttLogMqttHandler mqttHandler;
 
 //  private static final String TOPIC_STT_SAVE = "/RCCP/CON/+/STT"; // 이 형식은 안된다.
   private static final String TOPIC_STT_SAVE = "/test";
@@ -51,6 +55,9 @@ public class MqttConfig {
     return IntegrationFlows
         .from(mqttInboundAdapter(clientId, TOPIC_STT_SAVE))
         .wireTap(MQTT_LOGGING_CHANNEL)
+        .transform(Transformers.fromJson(SttLogMessage.class))
+        .handle(mqttHandler)
+        .transform(Transformers.toJson())
         .handle(Amqp.outboundAdapter(rabbitTemplate)
             .routingKey(AmqpConfig.CONFERENCE_STT_LOG_SAVE_FLOW))
         .get();

@@ -27,7 +27,7 @@ public class SttLogMessage implements Serializable {
 
   @lombok.Data
   @JsonIgnoreProperties(ignoreUnknown = true)
-  public static class Data {
+  public static class Data implements Serializable {
 
     private static final long serialVersionUID = -5795681830862158710L;
 
