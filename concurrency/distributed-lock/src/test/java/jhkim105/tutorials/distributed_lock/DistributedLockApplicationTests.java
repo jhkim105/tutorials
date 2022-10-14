@@ -48,6 +48,14 @@ class DistributedLockApplicationTests {
   }
 
   @Test
+  void increaseUsingAtomicLong() {
+    int execCount = 100;
+    IntStream.range(0, execCount).parallel().forEach(n -> counterService.increaseUsingAtomicLong());
+    Assertions.assertThat(Counter.count).isNotEqualTo(execCount); // 잠금에 실패하면 실행안함.
+    log.info("count: {}", Counter.count);
+  }
+
+  @Test
   void increaseSynchronizedUsingRedissonLock() {
     int execCount = 1000;
     IntStream.range(0, execCount).parallel().forEach(n -> counterService.increaseSynchronizedUsingRedissonLock());

@@ -2,6 +2,7 @@ package jhkim105.tutorials.spring.mqtt.concurrency.service;
 
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RedissonClient;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SttLogMqttHandler {
+@Slf4j
+public class SttLogMqttInboundHandler {
   private final RedissonClient redissonClient;
 
   @ServiceActivator
@@ -18,14 +20,15 @@ public class SttLogMqttHandler {
     String key = String.format("%s_%s", data.getConferenceId(), data.getSeq());
 
     RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-    if (atomicLong.remainTimeToLive() < 0) {
-      atomicLong.expire(10, TimeUnit.SECONDS);
-    }
-
+    log.debug("[{}] value: {}, remainTimeToLive: {}", key, atomicLong.get(), atomicLong.remainTimeToLive());
     if (atomicLong.compareAndSet(0, 1)) {
+      atomicLong.expire(5, TimeUnit.SECONDS);
       return message;
+    } else {
+      log.info("[{}] Already done. ", key);
+      return new SttLogMessage();
     }
 
-    return new SttLogMessage();
   }
+
 }

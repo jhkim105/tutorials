@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SttLogAmqpHandler {
+public class SttLogAmqpInboundHandler {
 
   private final ConferenceSttLogRepository conferenceSttLogRepository;
 

@@ -2,7 +2,7 @@ package jhkim105.tutorials.spring.mqtt.concurrency.config;
 
 import java.util.UUID;
 import jhkim105.tutorials.spring.mqtt.concurrency.service.SttLogMessage;
-import jhkim105.tutorials.spring.mqtt.concurrency.service.SttLogMqttHandler;
+import jhkim105.tutorials.spring.mqtt.concurrency.service.SttLogMqttInboundHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -31,7 +31,7 @@ public class MqttConfig {
   private static final String MQTT_LOGGING_CHANNEL = "mqttLoggingChannel";
 
   private final MqttProperties mqttProperties;
-  private final SttLogMqttHandler mqttHandler;
+  private final SttLogMqttInboundHandler mqttHandler;
 
 //  private static final String TOPIC_STT_SAVE = "/RCCP/CON/+/STT"; // 이 형식은 안된다.
   private static final String TOPIC_STT_SAVE = "/test";
@@ -57,7 +57,7 @@ public class MqttConfig {
         .wireTap(MQTT_LOGGING_CHANNEL)
         .transform(Transformers.fromJson(SttLogMessage.class))
         .handle(mqttHandler)
-        .transform(Transformers.toJson())
+        .filter((SttLogMessage sttLogMessage) -> !sttLogMessage.isNotValid())
         .handle(Amqp.outboundAdapter(rabbitTemplate)
             .routingKey(AmqpConfig.CONFERENCE_STT_LOG_SAVE_FLOW))
         .get();

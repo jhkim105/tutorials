@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.core.LockConfiguration;
 import net.javacrumbs.shedlock.core.LockingTaskExecutor;
+import org.redisson.api.RAtomicLong;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,9 @@ public class CounterService {
 
   private final RedissonClient redissonClient;
 
+  /**
+   * 동시에 한 쓰레드만 실행되고, 나머지는 실행안됨
+   */
   public void increaseUsingRedissonLock() {
     String key = "counter";
     RLock lock = redissonClient.getLock(key);
@@ -54,7 +58,21 @@ public class CounterService {
     }
   }
 
+  /**
+   * 동시에 한 쓰레드만 실행되고, 나머지는 실행안됨
+   */
+  public void increaseUsingAtomicLong() {
+    String key = "counter";
+    RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
+    if (atomicLong.compareAndSet(0, 1)) {
+      increase();
+      atomicLong.expire(Duration.ofSeconds(5));
+    }
+  }
 
+  /**
+   * 모든 요청이 실행됨
+   */
   public void increaseSynchronizedUsingRedissonLock() {
     String key = "counter";
     RLock lock = redissonClient.getLock(key);
