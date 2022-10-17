@@ -20,13 +20,13 @@ public class OrderAggregate {
 
   @CommandHandler
   public OrderAggregate(CreateOrderCommand command) {
-    log.info("CreateOrderCommand:: {}", command);
+    log.info("[CommandHandler] {}", command);
     AggregateLifecycle.apply(new OrderCreatedEvent(command.getOrderId()));
   }
 
   @EventSourcingHandler
   public void on(OrderCreatedEvent event) {
-    log.info("OrderCreatedEvent:: {}", event);
+    log.info("[EventSourcingHandler] {}", event);
     this.orderId = event.getOrderId();
   }
 

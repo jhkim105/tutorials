@@ -1,7 +1,9 @@
 package jhkim105.tutorials.springdatajpalock.optimistic;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.Instant;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
@@ -67,4 +69,44 @@ class OptimisticLockingTests {
 
   }
 
+
+  @Test
+  @Transactional
+  void excludeOptimisticLock() {
+    Phone phone = new Phone("010-1111-2222");
+    em.persist(phone);
+    em.flush();
+    log.info("phone: {}", phone);
+
+    Instant versionBefore = phone.getVersion();
+    phone.setNumber("010-2222-3333");
+    em.merge(phone);
+    em.flush();
+    assertThat(phone.getVersion()).isNotEqualTo(versionBefore);
+
+    versionBefore = phone.getVersion();
+    phone.setCallCount(1);
+    em.merge(phone);
+    em.flush();
+    assertThat(phone.getVersion()).isEqualTo(versionBefore);
+  }
+
+
+  @Test
+  void optimisticLockingTypeNone() {
+    EntityManager em1 = em.getEntityManagerFactory().createEntityManager();
+    em1.getTransaction().begin();
+    OptimisticNone entity1 = em1.find(OptimisticNone.class, "id01");
+
+    EntityManager em2 = em.getEntityManagerFactory().createEntityManager();
+    em2.getTransaction().begin();
+    OptimisticNone entity2 = em2.find(OptimisticNone.class, "id01");
+    em2.getTransaction().commit();
+    log.info("{}", entity2);
+    em2.close();
+
+    entity1.incr();
+    em1.merge(entity1);
+    em1.close();
+  }
 }

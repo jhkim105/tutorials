@@ -11,6 +11,12 @@ JPA Locking
 - OPTIMISTIC (READ)
 - OPTIMISTIC_FORCE_INCREMENT (WRITE)
 
+### Mapping optimistic locking
+@Version 속성 지정
+- numeric or timestamp
+
+
+
 ## Refs
 https://mariadb.com/kb/en/innodb-lock-modes/
 https://www.baeldung.com/jpa-pessimistic-locking
