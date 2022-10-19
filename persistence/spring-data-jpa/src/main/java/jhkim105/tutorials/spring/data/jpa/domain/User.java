@@ -48,4 +48,10 @@ public class User extends BaseEntity<String> {
   public User(String name) {
     this.name = name;
   }
+
+
+  @Column
+  public String getNickname() {
+    return "";
+  }
 }

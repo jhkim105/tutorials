@@ -57,7 +57,7 @@ public class MqttConfig {
         .wireTap(MQTT_LOGGING_CHANNEL)
         .transform(Transformers.fromJson(SttLogMessage.class))
         .handle(mqttHandler)
-        .filter((SttLogMessage sttLogMessage) -> !sttLogMessage.isNotValid())
+        .filter(SttLogMessage::isAvailable)
         .handle(Amqp.outboundAdapter(rabbitTemplate)
             .routingKey(AmqpConfig.CONFERENCE_STT_LOG_SAVE_FLOW))
         .get();

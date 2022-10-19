@@ -16,19 +16,22 @@ public class SttLogMqttInboundHandler {
 
   @ServiceActivator
   public SttLogMessage handle(SttLogMessage message) {
+    if (message.isNotValid()) {
+      log.debug("Invalid Message. {}", message);
+      return message;
+    }
+
     SttLogMessage.Data data = message.getData();
     String key = String.format("%s_%s", data.getConferenceId(), data.getSeq());
-
     RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
     log.debug("[{}] value: {}, remainTimeToLive: {}", key, atomicLong.get(), atomicLong.remainTimeToLive());
     if (atomicLong.compareAndSet(0, 1)) {
+      log.info("[{}] OK", key);
       atomicLong.expire(5, TimeUnit.SECONDS);
       return message;
-    } else {
-      log.info("[{}] Already done. ", key);
-      return new SttLogMessage();
     }
 
+    return message;
   }
 
 }

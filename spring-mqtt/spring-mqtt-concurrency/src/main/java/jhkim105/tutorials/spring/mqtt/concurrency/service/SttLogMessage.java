@@ -14,6 +14,8 @@ public class SttLogMessage implements Serializable {
   @JsonProperty("speechToText")
   private SttLogMessage.Data data;
 
+  private boolean available;
+
   public boolean isNotValid() {
     return data == null
         || StringUtils.isBlank(data.conferenceId)

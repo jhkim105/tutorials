@@ -16,16 +16,8 @@ public class SttLogAmqpInboundHandler {
   public void handle(SttLogMessage message) {
     log.debug("handle start. message->{}", message);
     SttLogMessage.Data data = message.getData();
-    if (data == null) {
-      log.debug("Empty message. Nothing to do");
-      return;
-    }
-
-    if (message.isNotValid()) {
-      log.debug("message is not valid. message -> {}", data);
-      return;
-    }
     createSttLog(data);
+
   }
 
 
