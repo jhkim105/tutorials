@@ -50,6 +50,7 @@
     <module>spring-rest-documentation</module>
     <module>spring-web</module>
     <module>pattern-cqrs-es</module>
+    <module>logging</module>
 
   </modules>
   <repositories>

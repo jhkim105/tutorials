@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <include resource="logback/mdc.xml"/>
+  <logger name="org.springframework" level="info"/>
+
+  <logger name="jhkim105.tutorials" additivity="true">
+    <level value="debug" />
+    <appender-ref ref="mdc" />
+  </logger>
+
+  <root level="debug">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>
