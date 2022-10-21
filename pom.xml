@@ -23,6 +23,7 @@
     <module>mockserver</module>
     <module>monitoring</module>
     <module>persistence</module>
+    <module>reactive</module>
     <module>spring-activemq</module>
     <module>spring-activemq-guarantee-order</module>
     <module>spring-oauth2</module>
@@ -37,7 +38,6 @@
     <module>spring-mqtt</module>
     <module>spring-rabbitmq</module>
     <module>spring-quartz</module>
-    <module>spring-reactive</module>
     <module>spring-rest-documentation</module>
     <module>spring-scheduled-shedlock</module>
     <module>spring-security</module>
@@ -51,6 +51,7 @@
     <module>spring-web</module>
     <module>pattern-cqrs-es</module>
     <module>logging</module>
+    <module>reactive</module>
 
   </modules>
   <repositories>
