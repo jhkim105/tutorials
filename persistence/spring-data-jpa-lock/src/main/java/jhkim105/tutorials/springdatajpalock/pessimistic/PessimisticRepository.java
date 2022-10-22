@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Lock;
 
 public interface PessimisticRepository extends JpaRepository<Pessimistic, String> {
 
-  @Lock(LockModeType.PESSIMISTIC_READ)
-//  @Lock(LockModeType.PESSIMISTIC_WRITE)
+//  @Lock(LockModeType.PESSIMISTIC_READ)
+  @Lock(LockModeType.PESSIMISTIC_WRITE)
   Optional<Pessimistic> findById(String id);
 }

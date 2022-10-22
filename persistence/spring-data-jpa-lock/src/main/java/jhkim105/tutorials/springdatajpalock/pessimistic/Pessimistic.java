@@ -28,4 +28,7 @@ public class Pessimistic {
   @Column(nullable = false)
   private long count;
 
+  public void incr() {
+    count++;
+  }
 }
