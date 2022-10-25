@@ -1,10 +1,23 @@
+# Create tenant
+POST http://localhost:8080/tenants/create
+Content-Type: application/x-www-form-urlencoded
+
+name=tenant999
+
+
+> {%
+client.global.set("tenantId", response.body.id);
+%}
+
+###
+
 # Create User
 POST http://localhost:8080/users
 Content-Type: application/json
 
 {
   "username": "username4",
-  "tenantId": "c155f883-826c-452f-9b0a-ff65d229e4f9"
+  "tenantId": "{{tenantId}}"
 }
 
 > {%
@@ -21,20 +34,20 @@ Content-Type: application/json
 {
   "id": "{{userId}}",
   "username": "username12",
-  "tenantId": "c155f883-826c-452f-9b0a-ff65d229e4f9"
+  "tenantId": "{{tenantId}}"
 }
 
 ###
 
 # Get Users
-GET http://localhost:8080/users?tenantId=c155f883-826c-452f-9b0a-ff65d229e4f9
+GET http://localhost:8080/users?tenantId={{tenantId}}
 
 ###
 
 # Update Username
-POST http://localhost:8080/users/id101/username
+POST http://localhost:8080/users/{{userId}}/username
 Content-Type: application/x-www-form-urlencoded
 
-username=username000_&tenantId=c155f883-826c-452f-9b0a-ff65d229e4f9
+username=username000_&tenantId={{tenantId}}
 
 ###

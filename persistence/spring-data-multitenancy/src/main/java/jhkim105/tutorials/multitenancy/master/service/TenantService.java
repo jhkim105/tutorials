@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.persistence.EntityNotFoundException;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.tenant.TenantDataSourceProperties;
@@ -116,8 +117,8 @@ public class TenantService {
   }
 
   @Transactional(transactionManager = "transactionManager")
-  public Tenant updateTenantName(String oldName, String newName) {
-    Tenant tenant = tenantRepository.findByName(oldName);
+  public Tenant updateTenantName(String tenantId, String newName) {
+    Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(EntityNotFoundException::new);
     tenant.setName(newName);
     return tenantRepository.save(tenant);
   }

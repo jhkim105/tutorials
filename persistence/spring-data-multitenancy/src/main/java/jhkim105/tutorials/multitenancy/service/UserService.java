@@ -6,8 +6,8 @@ import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.master.service.TenantService;
 import jhkim105.tutorials.multitenancy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,11 +26,13 @@ public class UserService {
     return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("User not found. id:%s", id)));
   }
 
-  @Transactional(transactionManager = "tenantTransactionManager")
+
+  @Async
   public User updateUsername(String id, String username) {
     User user = userRepository.findById(id).get();
-    tenantService.updateTenantName(user.getUsername(), username);
+    tenantService.updateTenantName(user.getTenantId(), username);
     user.setUsername(username);
+    user = userRepository.save(user);
     return user;
   }
 }
