@@ -24,9 +24,9 @@
     <module>monitoring</module>
     <module>persistence</module>
     <module>reactive</module>
+    <module>security</module>
     <module>spring-activemq</module>
     <module>spring-activemq-guarantee-order</module>
-    <module>spring-oauth2</module>
     <module>spring-cloud</module>
     <module>spring-config</module>
     <module>spring-events</module>
@@ -40,7 +40,6 @@
     <module>spring-quartz</module>
     <module>spring-rest-documentation</module>
     <module>spring-scheduled-shedlock</module>
-    <module>spring-security</module>
     <module>spring-mqtt</module>
     <module>spring-web</module>
     <module>utils</module>
