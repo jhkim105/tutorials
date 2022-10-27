@@ -16,7 +16,9 @@
 	<properties>
 	</properties>
 	<modules>
+		<module>oauth2-authorization-server</module>
 		<module>spring-oauth2</module>
 		<module>spring-security</module>
+		<module>keycloak</module>
 	</modules>
 </project>

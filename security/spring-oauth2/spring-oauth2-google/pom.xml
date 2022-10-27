@@ -8,9 +8,9 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>spring-boot-oauth2-google</artifactId>
+  <artifactId>spring-oauth2-google</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-boot-oauth2-google</name>
+  <name>spring-oauth2-google</name>
   <description>Demo project for Spring Boot</description>
 
   <properties>
