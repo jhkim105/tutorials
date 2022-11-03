@@ -1,0 +1,12 @@
+server:
+  port: 8081
+  error:
+    include-stacktrace: always
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        opaquetoken:
+          introspection-uri: http://localhost:8089/auth/realms/demo/protocol/openid-connect/token/introspect
+          client-id: oidc-demo
+          client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt

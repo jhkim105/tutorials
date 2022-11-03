@@ -51,6 +51,7 @@
     <module>pattern-cqrs-es</module>
     <module>logging</module>
     <module>reactive</module>
+    <module>spring-cloud-gateway-oauth2</module>
 
   </modules>
   <repositories>
