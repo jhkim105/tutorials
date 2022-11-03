@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: oauth2-client-demo
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/demo
+            user-name-attribute: preferred_username
