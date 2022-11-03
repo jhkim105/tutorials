@@ -11,7 +11,7 @@
   <groupId>jhkim105.tutorials</groupId>
   <artifactId>oauth2-client-keycloak</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>oauth2-keycloak</name>
+  <name>oauth2-client-keycloak</name>
   <description>oauth2-client-keycloak</description>
   <properties>
     <java.version>11</java.version>
@@ -21,11 +21,15 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-oauth2-client</artifactId>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

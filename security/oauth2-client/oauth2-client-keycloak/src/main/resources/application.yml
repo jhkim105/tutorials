@@ -1,3 +1,6 @@
+server:
+  error:
+    include-stacktrace: always
 spring:
   security:
     oauth2:
@@ -11,3 +14,4 @@ spring:
           keycloak:
             issuer-uri: http://localhost:8089/realms/demo
             user-name-attribute: preferred_username
+

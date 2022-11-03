@@ -12,7 +12,7 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception  {
     http
         .authorizeHttpRequests(auth -> auth
-                .antMatchers("/me").hasRole("USER")
+                .antMatchers("/user-info").hasRole("USER")
                 .anyRequest().permitAll());
     http.oauth2Login();
     return http.build();
