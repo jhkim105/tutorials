@@ -11,8 +11,8 @@
 	<groupId>jhkim105.tutorials</groupId>
 	<artifactId>spring-oauth2-okta</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-oauth2-okta</name>
-	<description>spring-oauth2-okta</description>
+	<name>oauth2-okta</name>
+	<description>oauth2-okta</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
