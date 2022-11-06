@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>authorization-server</module>
+    <module>authorization-server-jpa</module>
   </modules>
 
 </project>

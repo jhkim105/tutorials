@@ -9,10 +9,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>jhkim105.tutorials</groupId>
-  <artifactId>authorization-server</artifactId>
+  <artifactId>authorization-server-jpa</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>authorization-server</name>
-  <description>authorization-server</description>
+  <name>authorization-server-jpa</name>
+  <description>authorization-server-jpa</description>
   <properties>
     <java.version>11</java.version>
   </properties>
