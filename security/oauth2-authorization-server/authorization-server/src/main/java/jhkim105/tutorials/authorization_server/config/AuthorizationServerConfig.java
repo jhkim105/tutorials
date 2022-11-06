@@ -37,8 +37,8 @@ public class AuthorizationServerConfig {
     http
         .exceptionHandling(exceptions ->
             exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-        )
-    ;
+        );
+
     return http.build();
   }
 
