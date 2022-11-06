@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Slf4j
-class AuthorizationCodeTests {
+class AuthorizationCodeGrantTypeTests {
 
   @LocalServerPort
   private int port;
