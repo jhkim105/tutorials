@@ -103,7 +103,7 @@ public class AuthorizationServerConfig {
 
   @Bean
   public JWKSource<SecurityContext> jwkSource() {
-    KeyPair keyPair = KeyGenerators.generateRsaKey();
+    KeyPair keyPair = generateRsaKey();
     RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
     RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
     RSAKey rsaKey = new RSAKey.Builder(publicKey)
@@ -114,15 +114,25 @@ public class AuthorizationServerConfig {
     return new ImmutableJWKSet<>(jwkSet);
   }
 
-  @Bean
-  public ProviderSettings providerSettings() {
-    return ProviderSettings.builder()
-        .build();
+  private static KeyPair generateRsaKey() {
+    KeyPair keyPair;
+    try {
+      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+      keyPairGenerator.initialize(2048);
+      keyPair = keyPairGenerator.generateKeyPair();
+    }
+    catch (Exception ex) {
+      throw new IllegalStateException(ex);
+    }
+    return keyPair;
   }
 
+  @Bean
+  public ProviderSettings providerSettings() {
+    return ProviderSettings.builder().build();
+  }
 
 }
-
 ```
 
 ## Supported Grant Type
