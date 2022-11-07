@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        opaque:
+          introspection-uri: http://localhost:8089/realms/demo/protocol/openid-connect/token/introspect
+          introspection-client-id: oidc-demo
+          introspection-client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
