@@ -1,0 +1,12 @@
+server:
+  port: 9000
+logging:
+  level:
+    org.springframework.security: trace
+    org.springframework.security.oauth2: trace
+
+#spring:
+#  datasource:
+#    url: jdbc:mariadb://localhost/demo_auth_server?createDatabaseIfNotExist=true
+#    username: root
+#    password: 111111
