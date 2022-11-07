@@ -33,14 +33,26 @@ public class DataSourceMonitoring {
 
   @ToString
   static class DataSourceInfo {
+    private int total;
     private int numActive;
     private int numIdle;
+    private int maxTotal;
+    private int initialSize;
+    private int maxIdle;
+    private int minIdle;
+    private long timeBetweenEvictionRunsMillis;
 
     static DataSourceInfo from(BasicDataSource dataSource) {
-      DataSourceInfo vo = new DataSourceInfo();
-      vo.numActive = dataSource.getNumActive();
-      vo.numIdle = dataSource.getNumIdle();
-      return vo;
+      DataSourceInfo info = new DataSourceInfo();
+      info.numActive = dataSource.getNumActive();
+      info.numIdle = dataSource.getNumIdle();
+      info.total = info.numActive + info.numIdle;
+      info.maxTotal = dataSource.getMaxTotal();
+      info.maxIdle = dataSource.getMaxIdle();
+      info.minIdle = dataSource.getMinIdle();
+      info.initialSize = dataSource.getInitialSize();
+      info.timeBetweenEvictionRunsMillis = dataSource.getTimeBetweenEvictionRunsMillis();
+      return info;
     }
   }
 
