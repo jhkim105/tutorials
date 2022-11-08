@@ -28,6 +28,21 @@ https://commons.apache.org/proper/commons-dbcp/configuration.html
 
 * softMinEvictableIdleTimeMillis(-1): 풀에 유휴상태로 남아있을 수 있는 최소시간. 
   - The minimum amount of time a connection may sit idle in the pool before it is eligible for eviction by the idle connection evictor, with the extra condition that at least "minIdle" connections remain in the pool. When minEvictableIdleTimeMillis is set to a positive value, minEvictableIdleTimeMillis is examined first by the idle connection evictor - i.e. when idle connections are visited by the evictor, idle time is first compared against minEvictableIdleTimeMillis (without considering the number of idle connections in the pool) and then against softMinEvictableIdleTimeMillis, including the minIdle constraint.
+
+## Connection Leak 처리 - Remove Abandoned
+connection.close() 를 호춣하지 않은 커넥션들을 찾아서 connection.close() 를 실행한다.
+```properties
+spring.datasource.dbcp2.remove-abandoned-on-borrow=true
+spring.datasource.dbcp2.remove-abandoned-on-maintenance=true
+spring.datasource.dbcp2.remove-abandoned-timeout=180
+spring.datasource.dbcp2.log-abandoned=true
+```
+remove-abandoned-timeout(초) 시간이 경과한 반환되지 않은 커넥션을 정리함. log-abandoned=true 일 경우 반환되지 않은 커넥션 정보를 로깅함.
+```text
+Pooled object created 2022-11-08 22:27:43 +0900 by the following code has not been returned to the pool:
+org.apache.commons.pool2.impl.ThrowableCallStack$Snapshot
+```
+
   
 ## Test
 * connection 조회

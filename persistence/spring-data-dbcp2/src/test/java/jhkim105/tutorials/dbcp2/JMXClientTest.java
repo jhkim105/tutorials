@@ -1,4 +1,4 @@
-package com.example.dbcp2;
+package jhkim105.tutorials.dbcp2;
 
 import java.util.Set;
 import java.util.TreeSet;

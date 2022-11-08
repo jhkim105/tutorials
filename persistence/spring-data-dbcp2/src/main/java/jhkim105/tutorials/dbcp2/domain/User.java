@@ -1,4 +1,4 @@
-package com.example.dbcp2;
+package jhkim105.tutorials.dbcp2.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

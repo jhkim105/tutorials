@@ -5,9 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Instant;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
-import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.RollbackException;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 class OptimisticLockingTests {
 
   @PersistenceContext
-  EntityManager  em;
+  EntityManager em;
 
   @Autowired
   OptimisticRepository optimisticRepository;

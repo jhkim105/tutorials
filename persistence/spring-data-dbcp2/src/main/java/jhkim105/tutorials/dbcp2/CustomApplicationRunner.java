@@ -1,4 +1,4 @@
-package com.example.dbcp2;
+package jhkim105.tutorials.dbcp2;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
