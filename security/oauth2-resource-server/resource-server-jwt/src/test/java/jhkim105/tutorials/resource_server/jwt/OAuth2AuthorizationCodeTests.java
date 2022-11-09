@@ -1,11 +1,10 @@
-package jhkim105.tutorials.resource_server.opaque;
+package jhkim105.tutorials.resource_server.jwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -13,38 +12,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
-/**
- * This Live Test requires:
- * - the Authorization Server to be running
- * - the Resource Server to be running
- *
- */
-@Slf4j
 @Disabled
-public class ResourceServerLiveTests {
+@Slf4j
+class OAuth2AuthorizationCodeTests {
 
   private final String redirectUrl = "http://localhost:8080";
   private final String authorizationUrlFormat = "http://localhost:8089/realms/demo/protocol/openid-connect/auth?response_type=code&client_id=%s&scope=%s&redirect_uri=" + redirectUrl;
   private final String tokenUrl = "http://localhost:8089/realms/demo/protocol/openid-connect/token";
-  private final String resourceUrl = "http://localhost:8081/resource-server-opaque/products";
 
   private final String clientId = "oidc-demo";
   private final String clientSecret = "Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt";
   private final String username01 = "user01";
   private final String password01 = "pass01";
 
-
-  @SuppressWarnings("unchecked")
   @Test
-  void givenUserWithReadScope_whenGetProductResource_thenSuccess() {
+  void accessToken() {
     String accessToken = obtainAccessToken("read");
-
-    // Access resources using access token
-    Response response = RestAssured.given()
-        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-        .get(resourceUrl);
-    log.info(response.asString());
-    assertThat(response.as(List.class)).hasSizeGreaterThan(0);
+    log.info(accessToken);
   }
 
   private String obtainAccessToken(String scopes) {
@@ -72,7 +56,7 @@ public class ResourceServerLiveTests {
     String code = location.split("code=")[1].split("&")[0];
 
     // get access token
-    Map<String, String> params = new HashMap<>();
+    Map<String, String> params = new HashMap<String, String>();
     params.put("grant_type", "authorization_code");
     params.put("code", code);
     params.put("client_id", clientId);
@@ -84,5 +68,4 @@ public class ResourceServerLiveTests {
     return response.jsonPath()
         .getString("access_token");
   }
-
 }

@@ -8,7 +8,12 @@ client_id=oidc-demo&client_secret=Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt&grant_type=pa
 client.global.set("access_token", response.body.access_token);
 %}
 ###
-GET http://localhost:8081/resource-server-jwt/products
+
+
+
+GET http://localhost:8081/resource-server-opaque/products
+Accept: application/json
 Authorization: Bearer {{access_token}}
+
 
 ###

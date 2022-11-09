@@ -15,10 +15,13 @@ public class SecurityConfig  {
   protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return
         http
-          .authorizeRequests(authorize -> authorize
-              .antMatchers(HttpMethod.GET, "/products/**").hasAnyAuthority("email", "SCOPE_email")
+            .authorizeRequests(authorize -> authorize
+              .antMatchers(HttpMethod.GET, "/products/**")
+                .hasAuthority("SCOPE_read")
               .anyRequest().authenticated()
-          )
-          .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt).build();
+            )
+            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+            .build();
   }
+
 }
