@@ -4,13 +4,16 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>jhkim105.tutorials</groupId>
-    <artifactId>spring-cloud</artifactId>
+    <groupId>jhkim105</groupId>
+    <artifactId>tutorials</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>spring-cloud-gateway-oauth2</artifactId>
+  <artifactId>spring-cloud-microservices</artifactId>
   <packaging>pom</packaging>
-  <properties>
-  </properties>
+  <modules>
+    <module>gateway</module>
+    <module>product-service</module>
+    <module>web</module>
+  </modules>
 
 </project>

@@ -1,0 +1,17 @@
+server:
+  port: 7070
+logging:
+  level:
+    'org.springframework.cloud.gateway': info
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: product
+          uri: http://localhost:8081
+          predicates:
+            - Path=/products/**
+        - id: default
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**

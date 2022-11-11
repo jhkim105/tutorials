@@ -1,4 +1,4 @@
-package jhkim105.tutorials.oauth2.keycloak;
+package jhkim105.tutorials.microservices.web;
 
 import java.security.Principal;
 import lombok.extern.slf4j.Slf4j;
@@ -18,5 +18,6 @@ public class UserInfoController {
     model.addAttribute("token", oidcUser.getIdToken().getTokenValue());
     return "user-info";
   }
+
 
 }

@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: oidc-demo
+            client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
+            authorization-grant-type: authorization_code
+            scope: openid, read
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/demo
+            user-name-attribute: preferred_username

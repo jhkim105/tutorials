@@ -1,0 +1,16 @@
+# Get AccessToken
+POST http://localhost:8089/realms/demo/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=oidc-demo&client_secret=Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt&grant_type=password&scope=read&username=user01&password=pass01
+
+> {%
+client.global.set("access_token", response.body.access_token);
+%}
+
+###
+
+GET http://localhost:7070/products
+Authorization: Bearer {{access_token}}
+
+###
