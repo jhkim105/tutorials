@@ -17,3 +17,18 @@ Authorization: Bearer {{access_token}}
 
 
 ###
+
+
+GET http://localhost:8081/resource-server-opaque/authinfo
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+###
+
+GET http://localhost:8081/resource-server-opaque/authinfo2
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+###

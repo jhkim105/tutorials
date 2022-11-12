@@ -46,6 +46,25 @@ SecurityConfig.java
             .build();
   }
 ```
+## How It Works
+OpaqueTokenAuthenticationProvider  
+NimbusOpaqueTokenIntrospector
+
+### Looking-Up Attributes Post-Authentication
+```java
+  @GetMapping("/authinfo")
+  public Map<String, Object> authinfo(BearerTokenAuthentication authentication) {
+    return authentication.getTokenAttributes();
+  }
+
+```
+
+```java
+  @GetMapping("/authinfo2")
+  public Map<String, Object> authinfo2(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+    return principal.getAttributes();
+  }
+```
 
 
 ## Refs

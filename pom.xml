@@ -28,6 +28,7 @@
     <module>spring-activemq</module>
     <module>spring-activemq-guarantee-order</module>
     <module>spring-cloud</module>
+    <module>spring-cloud-microservices</module>
     <module>spring-config</module>
     <module>spring-events</module>
     <module>spring-files</module>

@@ -1,5 +1,13 @@
 server:
   port: 8080
+  tomcat:
+    remoteip:
+      internal-proxies: .*
+      protocol-header: x-forwarded-proto
+      remote-ip-header: x-forwarded-for
+logging:
+  level:
+    'org.springframework.web.filter.CommonsRequestLoggingFilter': debug
 spring:
   security:
     oauth2:
@@ -10,6 +18,7 @@ spring:
             client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
             authorization-grant-type: authorization_code
             scope: openid, read
+            redirect-uri: http://localhost:7070/login/oauth2/code/keycloak
         provider:
           keycloak:
             issuer-uri: http://localhost:8089/realms/demo
