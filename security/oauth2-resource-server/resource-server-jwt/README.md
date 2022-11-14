@@ -37,5 +37,11 @@ SecurityConfig.java
   }
 ```
 
+## How It Works
+JwtAuthenticationProvider    
+jwk-set-uri
+
+
+
 ## Refs
 https://www.baeldung.com/spring-security-oauth-resource-server
