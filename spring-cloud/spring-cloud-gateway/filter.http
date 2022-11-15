@@ -1,0 +1,31 @@
+
+
+GET http://localhost:8080/request_filter
+Accept: application/json
+
+###
+
+# curl -X POST "http://localhost:8080/request_filter" -i -d "Content"
+POST http://localhost:8080/request_filter/modify_body
+Content-Type: application/x-www-form-urlencoded
+
+Content
+
+###
+
+
+GET http://localhost:8080/response_filter
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+POST http://localhost:8080/response_filter/modify_body
+Accept: application/json
+
+###
+
+GET http://localhost:8080/custom_filter/**
+Accept: application/json
+
+###
+

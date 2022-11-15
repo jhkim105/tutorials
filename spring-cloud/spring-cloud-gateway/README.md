@@ -75,8 +75,22 @@ curl -v -X PUT "http://localhost:7777/mockserver/expectation" -d '{
   }
 ```
 
+## Filter
+### GatewayFilter Factories
+Http Request, Response 를  수정할 수 있게 해주는 내장 필터
+https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#gatewayfilter-factories
+
+### Global Filters
+모든 경로에 조건부로 적용되는 필터
+
+
+### Custom GatewayFilter Factories
+
+- AbstractGatewayFilterFactory 를 상속받아서 구현한다. 
+- 이름은 GatewayFilterFactory 로 끝나야 한다. 
 
 ## References
 https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/
-
+https://www.baeldung.com/spring-cloud-gateway-webfilter-factories
+https://www.baeldung.com/spring-cloud-custom-gateway-filters
 

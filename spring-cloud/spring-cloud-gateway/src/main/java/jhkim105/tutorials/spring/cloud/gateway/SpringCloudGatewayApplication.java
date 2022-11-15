@@ -32,4 +32,5 @@ public class SpringCloudGatewayApplication {
   public Mono<ResponseEntity<byte[]>> proxy(ProxyExchange<byte[]> proxy) throws Exception {
     return proxy.uri("http://localhost:7777/one").get();
   }
+
 }
