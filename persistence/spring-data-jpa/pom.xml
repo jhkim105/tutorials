@@ -18,7 +18,7 @@
     <java.version>11</java.version>
     <db.address>localhost</db.address>
     <db.name>demo_jpa</db.name>
-    <db.url><![CDATA[jdbc:mariadb://${db.address}/${db.name}?createDatabaseIfNotExist=true]]></db.url>
+    <db.url><![CDATA[jdbc:mariadb://${db.address}/${db.name}?createDatabaseIfNotExist=true&profileSQL=true]]></db.url>
     <db.username>root</db.username>
     <db.password>111111</db.password>
   </properties>
