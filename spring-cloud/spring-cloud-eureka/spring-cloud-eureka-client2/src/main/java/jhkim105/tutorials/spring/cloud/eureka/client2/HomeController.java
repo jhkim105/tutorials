@@ -26,7 +26,7 @@ public class HomeController {
     String hostName = instance.getHostName();
     URI uri = UriComponentsBuilder.newInstance()
         .scheme("http")
-        .host(instance.getHostName())
+        .host(hostName)
         .path("")
         .port(instance.getPort())
         .build().toUri();
