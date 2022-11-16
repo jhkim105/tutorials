@@ -53,6 +53,7 @@
     <module>logging</module>
     <module>reactive</module>
     <module>spring-cloud-gateway-oauth2</module>
+    <module>spring-cloud-bootstrap</module>
 
   </modules>
   <repositories>
