@@ -15,7 +15,7 @@ public class RedissonConfig {
 
   private final RedisProperties redisProperties;
 
-  @Bean
+  @Bean(destroyMethod = "shutdown")
   public RedissonClient redissonClient() {
     String host = redisProperties.getHost();
     int port = redisProperties.getPort();
