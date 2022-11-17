@@ -1,6 +1,10 @@
 server:
   port: 8081
 spring:
+  config:
+    import: 'optional:configserver:'
+  application:
+    name: product-service
   security:
     oauth2:
       resourceserver:
@@ -8,3 +12,9 @@ spring:
           introspection-uri: http://localhost:8089/realms/demo/protocol/openid-connect/token/introspect
           introspection-client-id: oidc-demo
           introspection-client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true

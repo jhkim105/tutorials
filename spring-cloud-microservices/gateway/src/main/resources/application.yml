@@ -1,9 +1,13 @@
 server:
-  port: 7070
+  port: 8080
 logging:
   level:
     'org.springframework.cloud.gateway': info
 spring:
+  config:
+    import: 'optional:configserver:'
+  application:
+    name: gateway
   cloud:
     gateway:
       routes:
@@ -11,7 +15,21 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/products/**
-        - id: default
-          uri: http://localhost:8080
-          predicates:
-            - Path=/**
+      discovery:
+        locator:
+          enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: oidc-demo
+            client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
+            authorization-grant-type: authorization_code
+            scope: openid, read
+            redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/demo
+            end-session-endpoint: ${issuer-uri}/protocol/openid-connect/logout
+            user-name-attribute: preferred_username
