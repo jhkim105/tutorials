@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.reactive.webclient;
+package jhkim105.tutorials.spring.reactive;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

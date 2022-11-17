@@ -1,9 +1,9 @@
-package jhkim105.tutorials.spring.reactive.webclient;
+package jhkim105.tutorials.spring.reactive;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = WebClientApplication.class)
+@SpringBootTest(classes = ReactiveApplication.class)
 class WebClientApplicationTests {
 
   @Test

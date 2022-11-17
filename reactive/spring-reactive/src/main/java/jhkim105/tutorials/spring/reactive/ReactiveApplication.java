@@ -1,13 +1,13 @@
-package jhkim105.tutorials.spring.reactive.webclient;
+package jhkim105.tutorials.spring.reactive;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebClientApplication {
+public class ReactiveApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(WebClientApplication.class, args);
+    SpringApplication.run(ReactiveApplication.class, args);
   }
 
 }

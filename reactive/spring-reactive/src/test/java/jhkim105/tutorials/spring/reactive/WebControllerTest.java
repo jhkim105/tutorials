@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.reactive.webclient;
+package jhkim105.tutorials.spring.reactive;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +10,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = WebClientApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ReactiveApplication.class)
 @Slf4j
 class WebControllerTest {
 
