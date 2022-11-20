@@ -6,10 +6,11 @@ spring:
     oauth2:
       client:
         registration:
-          keycloak:
-            client-id: oauth2-client-demo
-            authorization-grant-type: authorization_code
-            scope: openid
+          oauth2-client:
+              provider: keycloak
+              client-id: oauth2-client-demo
+              authorization-grant-type: authorization_code
+              scope: openid
         provider:
           keycloak:
             issuer-uri: http://localhost:8089/realms/demo
