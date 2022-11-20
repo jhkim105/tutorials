@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.cloud.microservices.web.product;
+package jhkim105.tutorials.spring.cloud.micrservices.order;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,9 @@ public class SecurityConfig {
     return
         http
             .authorizeRequests(authorize -> authorize
-                .antMatchers(HttpMethod.GET, "/products/**").hasAuthority("SCOPE_read")
-                .anyRequest().authenticated())
+                .antMatchers(HttpMethod.GET, "/orders/**").hasAuthority("SCOPE_read")
+                .antMatchers(HttpMethod.GET, "/api-client/**").permitAll()
+                .anyRequest().permitAll())
             .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
             .build();
   }

@@ -1,8 +1,5 @@
 server:
   port: 8080
-logging:
-  level:
-    'org.springframework.cloud.gateway': info
 spring:
   config:
     import: 'optional:configserver:'
@@ -15,11 +12,19 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/products/**
+        - id: order
+          uri: http://localhost:8082
+          predicates:
+            - Path=/orders/**
       discovery:
         locator:
           enabled: true
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8089/realms/demo
+          jwk-set-uri: http://localhost:8089/realms/demo/protocol/openid-connect/certs
       client:
         registration:
           keycloak:
@@ -33,3 +38,7 @@ spring:
             issuer-uri: http://localhost:8089/realms/demo
             end-session-endpoint: ${issuer-uri}/protocol/openid-connect/logout
             user-name-attribute: preferred_username
+
+logging:
+  level:
+    'org.springframework.cloud.gateway': info

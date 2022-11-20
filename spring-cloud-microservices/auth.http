@@ -10,7 +10,23 @@ client.global.set("access_token", response.body.access_token);
 
 ###
 
-GET http://localhost:7070/products
+GET http://localhost:8080/products
+Authorization: Bearer {{access_token}}
+
+###
+
+GET http://localhost:8080/products/id01
+Authorization: Bearer {{access_token}}
+
+###
+
+
+GET http://localhost:8080/orders/id01
+Authorization: Bearer {{access_token}}
+
+###
+
+GET http://localhost:8080/orders/products/id01
 Authorization: Bearer {{access_token}}
 
 ###

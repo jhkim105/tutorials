@@ -1,0 +1,6 @@
+GET http://localhost:8082/api-client/products
+Accept: application/json
+
+###
+
+

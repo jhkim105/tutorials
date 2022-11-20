@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity.OAuth2ResourceServerSpec;
 import org.springframework.security.oauth2.client.oidc.web.server.logout.OidcClientInitiatedServerLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -25,7 +26,8 @@ public class SecurityConfig {
             .pathMatchers("/").permitAll()
             .anyExchange().authenticated())
         .oauth2Login(Customizer.withDefaults())
-        .logout(logout -> logout.logoutSuccessHandler(oidcLogoutSuccessHandler()));
+        .logout(logout -> logout.logoutSuccessHandler(oidcLogoutSuccessHandler()))
+        .oauth2ResourceServer(OAuth2ResourceServerSpec::jwt);
     return http.build();
   }
 

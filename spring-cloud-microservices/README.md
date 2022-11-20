@@ -2,8 +2,9 @@ Spring Cloud Microservices
 ===============================
 
 Spring Cloud 활용하여 마이크로 서비스 구현하기
-- OAuth2
 - Config Server
+- Discovery
+- OAuth2
 - Gateway
 - Feign
 - Sleuth / Zipkin
@@ -29,108 +30,82 @@ curl -L -X POST \
 ### Product Service
 - OAuth2 Resource Server
 
-```yaml
-server:
-  port: 8081
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        opaque:
-          introspection-uri: http://localhost:8089/realms/demo/protocol/openid-connect/token/introspect
-          introspection-client-id: oidc-demo
-          introspection-client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
-```
 
 ### GateWay
 - Spring Cloud Gateway
+- OAuth2 Resource Server
 - OAuth2 Client
-```xml
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-gateway</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-```
-
-```yaml
-spring:
-  config:
-    import: 'optional:configserver:'
-  application:
-    name: gateway
-  cloud:
-    gateway:
-      routes:
-        - id: product
-          uri: http://localhost:8081
-          predicates:
-            - Path=/products/**
-      discovery:
-        locator:
-          enabled: true
-  security:
-    oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: oidc-demo
-            client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
-            authorization-grant-type: authorization_code
-            scope: openid, read
-            redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8089/realms/demo
-            end-session-endpoint: ${issuer-uri}/protocol/openid-connect/logout
-            user-name-attribute: preferred_username
-```
-
-```java
-@Configuration
-@RequiredArgsConstructor
-@EnableWebFluxSecurity
-public class SecurityConfig {
-
-  private final ReactiveClientRegistrationRepository clientRegistrationRepository;
-
-  @Bean
-  public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception  {
-    http.csrf().disable()
-        .authorizeExchange(auth -> auth
-            .pathMatchers("/").permitAll()
-            .anyExchange().authenticated())
-        .oauth2Login(Customizer.withDefaults())
-        .logout(logout -> logout.logoutSuccessHandler(oidcLogoutSuccessHandler()));
-    return http.build();
-  }
-
-  private ServerLogoutSuccessHandler oidcLogoutSuccessHandler() {
-    OidcClientInitiatedServerLogoutSuccessHandler oidcLogoutSuccessHandler =
-        new OidcClientInitiatedServerLogoutSuccessHandler(this.clientRegistrationRepository);
-
-    oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}");
-    return oidcLogoutSuccessHandler;
-  }
-
-}
-```
 
 http://localhost:8080/me
 
-## Discovery
-http://localhost:8761
+
+### Server to Server
+
+```yaml
+      client:
+        registration:
+          api-client:
+            provider: keycloak
+            client-id: oidc-demo
+            client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
+            authorization-grant-type: client_credentials
+            scope: read
+        provider:
+          keycloak:
+            token-uri: http://localhost:8089/realms/demo/protocol/openid-connect/token
+```
+
+WebClientConfig.java
+```java
+@Configuration
+public class WebClientConfig {
+
+  @Bean
+  public WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+    ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
+        new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
+    return WebClient.builder()
+        .apply(oauth2Client.oauth2Configuration())
+        .build();
+  }
+
+  @Bean
+  public OAuth2AuthorizedClientManager authorizedClientManager(
+      ClientRegistrationRepository clientRegistrationRepository,
+      OAuth2AuthorizedClientRepository authorizedClientRepository) {
+
+    OAuth2AuthorizedClientProvider authorizedClientProvider = OAuth2AuthorizedClientProviderBuilder.builder()
+        .clientCredentials()
+        .build();
+
+    DefaultOAuth2AuthorizedClientManager authorizedClientManager = new DefaultOAuth2AuthorizedClientManager(
+        clientRegistrationRepository, authorizedClientRepository);
+    authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
+
+    return authorizedClientManager;
+  }
+
+
+}
+
+```
+
+ProductController.java
+```java
+  private final WebClient webClient;
+
+  @GetMapping
+  public List<Product> getProducts() {
+    return this.webClient
+        .get()
+        .uri("http://localhost:8081/products")
+        .attributes(clientRegistrationId("api-client"))
+        .retrieve()
+        .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})
+        .block();
+  }
+
+```
 
 
 
