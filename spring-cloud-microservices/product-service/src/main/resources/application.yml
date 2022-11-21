@@ -11,6 +11,14 @@ spring:
         jwt:
           issuer-uri: http://localhost:8089/realms/demo
           jwk-set-uri: http://localhost:8089/realms/demo/protocol/openid-connect/certs
+  sleuth:
+    sampler:
+      probability: 1.0
+
+#  zipkin:
+#    service:
+#      name: product
+
 eureka:
   client:
     service-url:

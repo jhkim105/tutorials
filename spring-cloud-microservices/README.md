@@ -107,6 +107,35 @@ ProductController.java
 
 ```
 
+## Tracing -  Sleuth and Zipkin
+
+### Run Zipkin Server
+```shell
+docker run -d --name=zipkin -p 9411:9411 openzipkin/zipkin
+```
+http://localhost:9411
+
+### Client Configuration
+
+```xml
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-sleuth</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-sleuth-zipkin -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+      <version>3.1.5</version>
+    </dependency>
+```
+
+```yaml
+spring:
+  sleuth:
+    sampler:
+      probability: 1.0
+```
 
 
 
