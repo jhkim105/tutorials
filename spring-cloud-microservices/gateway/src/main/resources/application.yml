@@ -38,6 +38,9 @@ spring:
             issuer-uri: http://localhost:8089/realms/demo
             end-session-endpoint: ${issuer-uri}/protocol/openid-connect/logout
             user-name-attribute: preferred_username
+feign:
+  client:
+    refresh-enabled: true
 
 logging:
   level:

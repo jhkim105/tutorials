@@ -7,26 +7,21 @@ client_id=oidc-demo&client_secret=Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt&grant_type=pa
 > {%
 client.global.set("access_token", response.body.access_token);
 %}
-
-###
-
-GET http://localhost:8080/products
-Authorization: Bearer {{access_token}}
-
-###
-
-GET http://localhost:8080/products/id01
-Authorization: Bearer {{access_token}}
-
 ###
 
 
-GET http://localhost:8080/orders/id01
+
+GET http://localhost:8081/products
+Accept: application/json
 Authorization: Bearer {{access_token}}
+
 
 ###
 
-GET http://localhost:8080/orders/products/id01
+
+GET http://localhost:8081/products/api-client/orders
+Accept: application/json
 Authorization: Bearer {{access_token}}
+
 
 ###

@@ -11,14 +11,20 @@ spring:
         jwt:
           issuer-uri: http://localhost:8089/realms/demo
           jwk-set-uri: http://localhost:8089/realms/demo/protocol/openid-connect/certs
+      client:
+        registration:
+          api-client:
+            provider: keycloak
+            client-id: oidc-demo
+            client-secret: Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt
+            authorization-grant-type: client_credentials
+            scope: read
+        provider:
+          keycloak:
+            token-uri: http://localhost:8089/realms/demo/protocol/openid-connect/token
   sleuth:
     sampler:
       probability: 1.0
-
-#  zipkin:
-#    service:
-#      name: product
-
 eureka:
   client:
     service-url:

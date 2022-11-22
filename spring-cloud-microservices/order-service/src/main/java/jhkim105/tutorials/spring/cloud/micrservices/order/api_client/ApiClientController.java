@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RestController
-@RequestMapping("/api-client/products")
+@RequestMapping("/orders/api-client")
 @RequiredArgsConstructor
-public class ProductController {
+public class ApiClientController {
 
   private final WebClient webClient;
 
-  @GetMapping
+  @GetMapping("/products")
   public List<Product> getProducts() {
     return this.webClient
         .get()

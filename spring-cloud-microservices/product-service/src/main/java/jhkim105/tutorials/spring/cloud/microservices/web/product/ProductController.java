@@ -13,7 +13,7 @@ public class ProductController {
 
 
   @GetMapping
-  public List<Product> findAll() {
+  public List<Product> getAll() {
     List<Product> list = new ArrayList<>();
     list.add(Product.builder().id("id01").name("Name 01").build());
     list.add(Product.builder().id("id02").name("Name 02").build());
