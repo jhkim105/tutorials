@@ -2,16 +2,18 @@ package jhkim105.tutorials.spring.files;
 
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
-@Component
-@ConfigurationProperties(prefix = "app")
 @Getter
-@Setter
+@ToString
+@ConstructorBinding
+@ConfigurationProperties(prefix = "app")
+@RequiredArgsConstructor
 public class AppProperties {
 
-  private String storagePath;
+  private final String storagePath;
 
 }

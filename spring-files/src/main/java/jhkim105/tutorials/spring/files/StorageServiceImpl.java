@@ -7,13 +7,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StorageServiceImpl implements StorageService{
 
   private final AppProperties appProperties;
@@ -26,14 +29,28 @@ public class StorageServiceImpl implements StorageService{
 
   @Override
   public void store(MultipartFile multipartFile) {
-    String destFilePath = appProperties.getStoragePath() + File.separator + multipartFile.getOriginalFilename();
+    store(multipartFile, null);
+  }
+
+  @Override
+  public void store(MultipartFile multipartFile, String key) {
+    if (!StringUtils.hasText(key)) {
+      key = multipartFile.getOriginalFilename();
+    }
+    String destFilePath = appProperties.getStoragePath() + File.separator + key;
     File dest = new File(destFilePath);
+    if (!dest.getParentFile().exists()) {
+      boolean created = dest.getParentFile().mkdirs();
+      log.debug("dir created: {}", created);
+    }
+
     try {
       multipartFile.transferTo(dest);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
+
 
 
   @Override

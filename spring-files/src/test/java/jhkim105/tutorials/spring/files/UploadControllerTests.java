@@ -46,11 +46,11 @@ class UploadControllerTests {
   void shouldSaveUploadedFile() throws Exception {
     MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
         "text/plain", "Spring Framework".getBytes());
-    this.mvc.perform(multipart("/").file(multipartFile))
+    this.mvc.perform(multipart("/").file(multipartFile).param("key", "test123"))
         .andExpect(status().isFound())
         .andExpect(header().string("Location", "/"));
 
-    then(this.storageService).should().store(multipartFile);
+    then(this.storageService).should().store(multipartFile, "test123");
   }
 
   @SuppressWarnings("unchecked")
