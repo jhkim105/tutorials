@@ -1,4 +1,9 @@
-server:
-  port: 8081
 app:
   storage-path: @project.basedir@/storage
+
+server:
+  port: 8081
+
+logging:
+  level:
+    'jhkim105.tutorials': debug

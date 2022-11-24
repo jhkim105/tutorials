@@ -22,9 +22,9 @@ public class StorageServiceImpl implements StorageService{
   private final AppProperties appProperties;
 
   @Override
-  public Resource loadAsResource(String filename) {
-    String path =  appProperties.getStoragePath() + File.separator + filename;
-    return new FileSystemResource(path);
+  public Resource loadAsResource(String path) {
+    String absolutePath =  appProperties.getStoragePath() + File.separator + path;
+    return new FileSystemResource(absolutePath);
   }
 
   @Override
@@ -47,7 +47,7 @@ public class StorageServiceImpl implements StorageService{
     try {
       multipartFile.transferTo(dest);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new IllegalStateException(e);
     }
   }
 
