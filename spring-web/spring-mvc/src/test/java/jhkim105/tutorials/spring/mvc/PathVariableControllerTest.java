@@ -16,14 +16,14 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PathVariableControllerTest {
+class PathVariableControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
   @Test
   @Disabled("404")
-  public void testUri() throws Exception{
+  void testUri() throws Exception{
     String uri = "abc/123";
     ResultActions resultActions = mockMvc.perform(
         MockMvcRequestBuilders
@@ -37,8 +37,7 @@ public class PathVariableControllerTest {
   }
 
   @Test
-  @Disabled
-  public void testUri2() throws Exception{
+  void testUri2() throws Exception{
     String uri = "abc/123/file.m3u8";
     ResultActions resultActions = mockMvc.perform(
         MockMvcRequestBuilders
@@ -52,7 +51,7 @@ public class PathVariableControllerTest {
   }
 
   @Test
-  public void testFile() throws Exception{
+  void testFile() throws Exception{
     String file = "file.m3u8";
     ResultActions resultActions = mockMvc.perform(
         MockMvcRequestBuilders
@@ -66,7 +65,7 @@ public class PathVariableControllerTest {
   }
 
   @Test
-  public void testFile2() throws Exception{
+  void testFile2() throws Exception{
     String file = "file.m3u8";
     String path = String.format("a/b/c/%s", file);
     ResultActions resultActions = mockMvc.perform(
