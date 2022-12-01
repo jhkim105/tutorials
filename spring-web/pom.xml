@@ -18,5 +18,8 @@
     <module>spring-jsp</module>
     <module>spring-mvc</module>
     <module>spring-thymeleaf</module>
+    <module>spring-files</module>
+    <module>spring-async-web</module>
+    <module>spring-async-webflux</module>
   </modules>
 </project>

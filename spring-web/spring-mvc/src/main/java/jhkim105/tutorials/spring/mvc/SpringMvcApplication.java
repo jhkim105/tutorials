@@ -26,4 +26,5 @@ public class SpringMvcApplication implements ApplicationRunner {
   public void run(ApplicationArguments args) throws Exception {
     log.info("{}", appProperties);
   }
+
 }

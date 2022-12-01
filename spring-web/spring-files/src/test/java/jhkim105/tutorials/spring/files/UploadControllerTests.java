@@ -38,8 +38,8 @@ class UploadControllerTests {
 
     this.mvc.perform(get("/")).andExpect(status().isOk())
         .andExpect(model().attribute("files",
-            Matchers.contains("http://localhost/files/first.txt",
-                "http://localhost/files/second.txt")));
+            Matchers.contains("http://localhost/first.txt",
+                "http://localhost/second.txt")));
   }
 
   @Test
@@ -59,7 +59,7 @@ class UploadControllerTests {
     given(this.storageService.loadAsResource("test.txt"))
         .willThrow(StorageFileNotFoundException.class);
 
-    this.mvc.perform(get("/files/test.txt")).andExpect(status().isNotFound());
+    this.mvc.perform(get("/test.txt")).andExpect(status().isNotFound());
   }
 
 }
