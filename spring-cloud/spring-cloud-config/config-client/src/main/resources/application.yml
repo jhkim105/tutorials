@@ -26,6 +26,7 @@ encrypt:
     secret: pass1234
 
 app:
+  name: local
   config:
     name: local
     password: local-password

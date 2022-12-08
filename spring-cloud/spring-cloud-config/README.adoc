@@ -48,14 +48,16 @@ spring:
     active: native
 ----
 
-config/config-client-development.yml
+config/1.0.1/config-client-development.yml
 [source,yaml]
 ----
 config.name: service-development
 ----
 
-http://localhost:8888/config-client/development
-
+[source, shell script]
+----
+curl localhost:8888/config-client/development/1.0.1
+----
 Config 위치 지정
 지정하게 되면 classpath 에 있는 config 는 무시된다.
 classpath 에 config directory 가 없으면 search-locations 설정된 프로퍼티가 로드되지 않는다. 버그로 보임. (2022/03/28)
@@ -216,7 +218,7 @@ Config Server에서 event를 발생.
 Github Webhook 을 사용하여 프로퍼티 변경시 자동으로 config 를 갱신시킬 수 있다.
 
 
-==== Maven Depedencies
+==== Maven Dependencies
 [source,xml]
 ----
 		<dependency>
