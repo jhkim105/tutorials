@@ -18,3 +18,5 @@ http://localhost:8080/swagger-ui/index.html
 
 ## Refs
 https://www.baeldung.com/spring-rest-openapi-documentation
+
+[SpringFox 에서 Migration 하기](https://springdoc.org/migrating-from-springfox.html)
