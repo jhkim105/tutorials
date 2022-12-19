@@ -20,6 +20,7 @@ public class FileUtilsTest {
   @Test
   void getDirPath() {
     assertEquals(FileUtils.getDirPath("a/b/c/d.exe"), "a/b/c");
+    assertEquals(FileUtils.getDirPath("a/b/c/"), "a/b/c");
   }
 
 
@@ -53,9 +54,9 @@ public class FileUtilsTest {
   void delete() {
     String basePath = "target/temp";
 
-    FileUtils.makeDirectory(basePath + "/1");
-    FileUtils.makeDirectory(basePath + "/2");
-    FileUtils.makeDirectory(basePath + "/3");
+    FileUtils.mkdirs(basePath + "/1");
+    FileUtils.mkdirs(basePath + "/2");
+    FileUtils.mkdirs(basePath + "/3");
 
     FileUtils.deleteEmptyDirs(basePath);
 
@@ -73,4 +74,11 @@ public class FileUtilsTest {
     List<File> fileList = FileUtils.getFileListOrderByFileName("src/test/resources");
     log.debug("fileList: {}", fileList);
   }
+
+  @Test
+  void moveFile() {
+    FileUtils.moveFile("src/test/resources/input.txt", "src/test/resources/output.txt");
+    FileUtils.moveFile("src/test/resources/output.txt", "src/test/resources/input.txt");
+  }
+
 }

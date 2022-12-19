@@ -2,7 +2,6 @@ package utils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,11 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUtils {
 
   public static String getDirPath(String filePath) {
-    if (filePath == null) {
-      return null;
-    }
-    int index = FilenameUtils.indexOfLastSeparator(filePath);
-    return filePath.substring(0, index);
+    return FilenameUtils.getFullPathNoEndSeparator(filePath);
   }
 
   public static boolean hasTraversalPath(String filePath) {
@@ -48,7 +43,7 @@ public class FileUtils {
   }
 
   public static File upload(MultipartFile multipartFile, String uploadDir, String saveFileName) {
-    makeDirectory(uploadDir);
+    mkdirs(uploadDir);
 
     String fileName = saveFileName;
     String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
@@ -70,13 +65,20 @@ public class FileUtils {
     return upload(multipartFile, uploadDir, saveFileName);
   }
 
-  public static void makeDirectory(String path) {
-    File dirPath = new File(path);
-    if (!dirPath.exists()) {
-      boolean made = dirPath.mkdirs();
-      if (!made) {
-        throw new RuntimeException(String.format("make directory(%s) fail", path));
-      }
+  public static void mkdirs(String path) {
+    File dir = new File(getDirPath(path));
+    try {
+      org.apache.commons.io.FileUtils.forceMkdir(dir);
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  public static void moveFile(String source, String dest) {
+    try {
+      org.apache.commons.io.FileUtils.moveFile(new File(source), new File(dest));
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
     }
   }
 

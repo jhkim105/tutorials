@@ -12,6 +12,7 @@
     <java.version>11</java.version>
   </properties>
   <modules>
+    <module>guava-cache</module>
     <module>jpa-cache-ehcache3</module>
     <module>spring-cache</module>
     <module>spring-cache-redis</module>

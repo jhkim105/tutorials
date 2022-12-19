@@ -1,4 +1,4 @@
-package jhkim105.tutorials.springboot3;
+package jhkim105.tutorials.springboot3.controller;
 
 import java.util.Arrays;
 import java.util.List;

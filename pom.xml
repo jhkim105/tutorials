@@ -18,7 +18,6 @@
     <module>core-java</module>
     <module>database-encrypt</module>
     <module>excel-poi</module>
-    <module>guava-cache</module>
     <module>jmh</module>
     <module>mockserver</module>
     <module>monitoring</module>
@@ -31,7 +30,6 @@
     <module>spring-cloud-microservices</module>
     <module>spring-config</module>
     <module>spring-events</module>
-    <module>spring-files</module>
     <module>spring-integration</module>
     <module>spring-session-redis</module>
     <module>spring-docker</module>
@@ -52,8 +50,7 @@
     <module>pattern-cqrs-es</module>
     <module>logging</module>
     <module>reactive</module>
-    <module>spring-cloud-gateway-oauth2</module>
-    <module>spring-cloud-bootstrap</module>
+    <module>spring-cloud-microservices</module>
 
   </modules>
   <repositories>
