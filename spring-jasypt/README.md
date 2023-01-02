@@ -8,11 +8,6 @@ Property Encryption Using Jasypt
       <artifactId>jasypt-spring-boot-starter</artifactId>
       <version>3.0.4</version>
     </dependency>
-    <dependency>
-      <groupId>com.github.ulisesbocchio</groupId>
-      <artifactId>jasypt-spring-boot</artifactId>
-      <version>3.0.4</version>
-    </dependency>
 ```
 
 ## Configuration

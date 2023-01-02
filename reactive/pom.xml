@@ -14,5 +14,6 @@
   </properties>
   <modules>
     <module>spring-reactive</module>
+    <module>spring-webclient</module>
   </modules>
 </project>

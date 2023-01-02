@@ -1,7 +1,8 @@
 jasypt:
   encryptor:
     password: secret1234
-#    bean: stringEncryptor
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
 app:
-  password: ENC(VCr9a+qfrOy50aheLoseCKmZ/YeDZzMBQwk7UPUoUr6PISgiW+VXvF+a6yBB2vzn)
+  password: pass1234
