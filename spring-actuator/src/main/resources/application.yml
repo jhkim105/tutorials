@@ -1,0 +1,10 @@
+management:
+  server:
+    port: 9090
+  health:
+    diskspace:
+      threshold: 1GB
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
