@@ -125,6 +125,8 @@ management:
 - @RefreshScope with Actuator
 - Spring Cloud Bus
 
+@ConstructorBinding 을 사용하는 경우 갱신 안됨.
+
 === Refresh - @RefreshScope
 Config Client 수정
 pom.xml

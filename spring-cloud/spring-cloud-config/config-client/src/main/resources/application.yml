@@ -27,6 +27,7 @@ encrypt:
 
 app:
   name: local
-  config:
-    name: local
-    password: local-password
+  config-name: local
+  config-password: local-password
+app2:
+  name: local

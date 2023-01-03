@@ -1,0 +1,14 @@
+POST http://localhost:8080/actuator/refresh
+Accept: application/json
+
+###
+
+GET http://localhost:8080/prop
+Accept: application/json
+
+###
+
+GET http://localhost:8080/prop2
+Accept: application/json
+
+###
