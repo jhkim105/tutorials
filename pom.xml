@@ -24,8 +24,6 @@
     <module>persistence</module>
     <module>reactive</module>
     <module>security</module>
-    <module>spring-activemq</module>
-    <module>spring-activemq-guarantee-order</module>
     <module>spring-cloud</module>
     <module>spring-cloud-microservices</module>
     <module>spring-config</module>
@@ -35,7 +33,6 @@
     <module>spring-docker</module>
     <module>spring-junit5</module>
     <module>spring-mqtt</module>
-    <module>spring-rabbitmq</module>
     <module>spring-quartz</module>
     <module>spring-rest-documentation</module>
     <module>spring-scheduled-shedlock</module>
@@ -51,6 +48,7 @@
     <module>logging</module>
     <module>reactive</module>
     <module>spring-cloud-microservices</module>
+    <module>messaging</module>
 
   </modules>
   <repositories>
