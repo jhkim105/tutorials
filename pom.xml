@@ -44,6 +44,7 @@
     <module>core-java</module>
     <module>spring-rest-documentation</module>
     <module>spring-web</module>
+    <module>springboot3</module>
     <module>pattern-cqrs-es</module>
     <module>logging</module>
     <module>reactive</module>
