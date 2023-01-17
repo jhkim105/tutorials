@@ -1,0 +1,1 @@
+INSERT INTO demo.user (id, username) VALUES ('id01', 'user01');
