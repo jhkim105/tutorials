@@ -22,5 +22,4 @@ UsernamePasswordAuthenticationToken 를 참고하여 구현
 
 ### JwtAuthenticationProvider
 JwtAuthenticationToken 을 support 하는 Provider.  
-인증 정보를 제공하여 인증을 처리함. 여기서는 DB 조회를 하지 않으므로 인증통과용 생성자를 호출하여 Authentication 객체를 생성한다.
-
+인증 정보를 제공하여 인증을 처리함. 인증통과용 생성자를 호출하여 Authentication 객체를 생성한다.
