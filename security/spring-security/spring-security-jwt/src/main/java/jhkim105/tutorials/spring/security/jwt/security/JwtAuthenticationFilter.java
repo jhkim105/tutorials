@@ -25,8 +25,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
   private final JwtAuthenticationTokenService tokenService;
 
-  private final AuthenticationErrorHandler authenticationErrorHandler;
-
   public JwtAuthenticationFilter(AuthenticationManager authenticationManager, String defaultFilterProcessesUrl,
       JwtAuthenticationTokenService tokenService, AuthenticationErrorHandler authenticationErrorHandler) {
     super(new AntPathRequestMatcher(defaultFilterProcessesUrl));
@@ -34,7 +32,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     setAuthenticationSuccessHandler(new TokenAuthenticationSuccessHandler());
     setAuthenticationFailureHandler(new TokenAuthenticationFailureHandler(authenticationErrorHandler));
     this.tokenService = tokenService;
-    this.authenticationErrorHandler = authenticationErrorHandler;
   }
 
   @Override
