@@ -47,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
           .anyRequest().authenticated()
           .and()
         .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
-        .authenticationProvider(tokenAuthenticationProvider())
         .exceptionHandling()
           .authenticationEntryPoint(tokenAuthenticationEntryPoint())
           .accessDeniedHandler(tokenAccessDeniedHandler())
@@ -69,17 +68,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.authenticationProvider(authenticationProvider()).authenticationProvider(tokenAuthenticationProvider());
+    auth
+        .authenticationProvider(daoAuthenticationProvider())
+        .authenticationProvider(tokenAuthenticationProvider());
   }
 
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
+  private DaoAuthenticationProvider daoAuthenticationProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
     authenticationProvider.setUserDetailsService(userDetailsService());
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
   }
 
+  private JwtAuthenticationProvider tokenAuthenticationProvider() {
+    return new JwtAuthenticationProvider();
+  }
   @Bean
   public UserDetailsServiceImpl userDetailsService() {
     return new UserDetailsServiceImpl();
@@ -96,10 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return new TokenAuthenticationEntryPoint(authenticationErrorHandler);
   }
 
-  @Bean
-  public JwtAuthenticationProvider tokenAuthenticationProvider() {
-    return new JwtAuthenticationProvider();
-  }
+
 
   private TokenAccessDeniedHandler tokenAccessDeniedHandler() {
     return new TokenAccessDeniedHandler(authenticationErrorHandler);
