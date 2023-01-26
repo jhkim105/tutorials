@@ -1,8 +1,8 @@
-package jhkim105.tutorials.spring.security.form_login.security;
+package jhkim105.tutorials.spring.security.jwt3.security;
 
 
-import jhkim105.tutorials.spring.security.form_login.user.User;
-import jhkim105.tutorials.spring.security.form_login.user.UserRepository;
+import jhkim105.tutorials.spring.security.jwt3.user.User;
+import jhkim105.tutorials.spring.security.jwt3.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

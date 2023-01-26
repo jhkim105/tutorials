@@ -14,9 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @ToString(exclude = {"password"})
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AuthUser implements UserDetails {
+public class UserPrincipal implements UserDetails {
 
-  public static final String AUTHORITY_SEPERATOR = ",";
+  public static final String AUTHORITY_SEPARATOR = ",";
 
   private String id;
 
@@ -28,7 +28,7 @@ public class AuthUser implements UserDetails {
 
   private Set<GrantedAuthority> authorities;
 
-  public AuthUser(User user) {
+  public UserPrincipal(User user) {
     this.id = user.getId();
     this.username = user.getUsername();
     this.password = user.getPassword();

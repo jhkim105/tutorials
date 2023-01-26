@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -39,19 +38,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-        .httpBasic().disable()
+//        .httpBasic().disable()
         .formLogin().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeRequests()
           .antMatchers("/login", "/users/join").permitAll()
           .anyRequest().authenticated()
           .and()
-        .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
+        .addFilterBefore(jwtAuthenticationFilter(http), BasicAuthenticationFilter.class)
         .exceptionHandling()
           .authenticationEntryPoint(tokenAuthenticationEntryPoint())
           .accessDeniedHandler(tokenAccessDeniedHandler())
           .and()
-        .csrf().disable();
+        .csrf().disable()
+        .authenticationProvider(daoAuthenticationProvider())
+        .authenticationProvider(jwtAuthenticationProvider());
     // @formatter:on
   }
 
@@ -66,13 +67,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth
-        .authenticationProvider(daoAuthenticationProvider())
-        .authenticationProvider(tokenAuthenticationProvider());
-  }
-
   private DaoAuthenticationProvider daoAuthenticationProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
     authenticationProvider.setUserDetailsService(userDetailsService());
@@ -80,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return authenticationProvider;
   }
 
-  private JwtAuthenticationProvider tokenAuthenticationProvider() {
+  private JwtAuthenticationProvider jwtAuthenticationProvider() {
     return new JwtAuthenticationProvider();
   }
   @Bean
@@ -88,9 +82,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return new UserDetailsServiceImpl();
   }
 
-  private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManagerBean(),
-        "/**", jwtAuthenticationTokenService, authenticationErrorHandler);
+  private JwtAuthenticationFilter jwtAuthenticationFilter(HttpSecurity http) throws Exception {
+    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter("/**", jwtAuthenticationTokenService, authenticationErrorHandler);
+    jwtAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
+    jwtAuthenticationFilter.afterPropertiesSet();
     return jwtAuthenticationFilter;
   }
 

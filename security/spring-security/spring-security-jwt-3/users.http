@@ -1,0 +1,24 @@
+
+# login
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "111111"
+}
+
+> {%
+client.global.set("authToken", response.body.authToken);
+client.log("authToken:" + client.global.get("authToken"));
+%}
+
+###
+
+# /users/me
+GET http://localhost:8080/users/me
+Authorization: {{authToken}}
+Content-Type: application/json
+
+
+###
