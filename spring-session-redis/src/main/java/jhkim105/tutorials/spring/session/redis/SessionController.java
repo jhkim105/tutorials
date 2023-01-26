@@ -20,15 +20,22 @@ public class SessionController {
     result.put("sessionId", session.getId());
     result.put("maxInactiveInterval", session.getMaxInactiveInterval());
     result.put("lastAccessedTime", session.getLastAccessedTime());
+    result.put("user", session.getAttribute("user"));
     return result;
   }
 
   @GetMapping("/set")
-  public Map set(int maxInactiveInterval, HttpSession session) {
-    session.setMaxInactiveInterval(maxInactiveInterval);
+  public Map set(Integer maxInactiveInterval, HttpSession session) {
+    if (maxInactiveInterval != null) {
+      session.setMaxInactiveInterval(maxInactiveInterval);
+    }
+
+    session.setAttribute("user", new User("user01"));
+
     Map<String, Object> result = new HashMap<>();
     result.put("sessionId", session.getId());
     result.put("maxInactiveInterval", session.getMaxInactiveInterval());
+    result.put("user", session.getAttribute("user"));
     return result;
   }
 
