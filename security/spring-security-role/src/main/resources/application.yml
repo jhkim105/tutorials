@@ -1,0 +1,15 @@
+logging:
+  level:
+    'jhkim105.tutorials': debug
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost/demo_security?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+  jpa:
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create

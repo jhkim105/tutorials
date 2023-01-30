@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Spring Security Thymeleaf tutorial</title>
+</head>
+<body>
+<h2>Welcome</h2>
+<div sec:authorize="isAuthenticated()">Authenticated</div>
+<div sec:authorize="hasRole('USER')">USER Role</div>
+<div sec:authorize="hasRole('ADMIN')">ADMIN Role</div>
+<div sec:authorize="hasAuthority('READ')">READ Authority</div>
+<div sec:authorize="hasAuthority('WRITE')">WRITE Authority</div>
+Authenticated username:
+<div sec:authentication="name"></div>
+Authenticated user roles:
+<div sec:authentication="principal.authorities"></div>
+</body>
+</html>
