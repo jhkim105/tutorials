@@ -11,10 +11,9 @@ logging:
     'org.springframework.jdbc.core': trace
 spring:
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: @db.url@
-    username: @db.username@
-    password: @db.password@
+    url: jdbc:mariadb://localhost/demo_jpa?createDatabaseIfNotExist=true&profileSQL=true
+    username: root
+    password: 111111
   sql:
     init:
       mode: always
