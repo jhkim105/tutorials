@@ -55,6 +55,14 @@ public class SecurityConfig {
     return http.build();
   }
 
+  private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(
+        "/**", jwtAuthenticationTokenService, authenticationErrorHandler);
+    jwtAuthenticationFilter.setAuthenticationManager(authenticationManager());
+    jwtAuthenticationFilter.afterPropertiesSet();
+    return jwtAuthenticationFilter;
+  }
+
   @Bean
   public UserDetailsService userDetailsService() {
     return new UserDetailsServiceImpl();
@@ -63,15 +71,6 @@ public class SecurityConfig {
   @Bean
   public PasswordEncoder passwordEncoder() {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-  }
-
-
-  private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-    JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(
-        "/**", jwtAuthenticationTokenService, authenticationErrorHandler);
-    jwtAuthenticationFilter.setAuthenticationManager(authenticationManager());
-    jwtAuthenticationFilter.afterPropertiesSet();
-    return jwtAuthenticationFilter;
   }
 
   @Bean
