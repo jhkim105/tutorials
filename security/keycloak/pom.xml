@@ -12,5 +12,7 @@
   <packaging>pom</packaging>
   <properties>
   </properties>
-
+  <modules>
+    <module>keycloak-spring-adapter</module>
+  </modules>
 </project>

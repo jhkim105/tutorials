@@ -1,0 +1,14 @@
+# Get AccessToken
+POST http://localhost:8089/realms/demo/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=keycloak-spring-adapter&client_secret=vUt7y5LD9PptYQIKAidn3haDxjFd1MKG&grant_type=password&scope=read&username=admin&password=admin
+
+> {%
+client.global.set("access_token", response.body.access_token);
+%}
+###
+GET http://localhost:8080/admin
+Authorization: Bearer {{access_token}}
+
+###
