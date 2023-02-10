@@ -42,7 +42,7 @@ java: package com.google.common.cache does not exist'
 
 ```java
   private void createDataSourceCache() {
-    caches = CacheBuilder.newBuilder()
+    cacheConf = CacheBuilder.newBuilder()
         .maximumSize(properties.getMaxSize())
         .expireAfterAccess(properties.getExpireMinutes(), TimeUnit.MINUTES)
         .removalListener((RemovalListener<String, DataSource>) removal -> {
@@ -71,7 +71,7 @@ https://github.com/google/guava/wiki/CachesExplained#when-does-cleanup-happen
 
   @Scheduled(fixedRate = 10_000)
   public void cleanUpCache() {
-    caches.cleanUp();
+    cacheConf.cleanUp();
   }
 
 ```

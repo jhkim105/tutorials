@@ -16,7 +16,7 @@ spring:
 
   datasource:
     type: org.apache.commons.dbcp2.BasicDataSource
-    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true
 #    url: jdbc:mariadb:replication://127.0.0.1:13306,127.0.0.1:13306,127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
 #    url: jdbc:mariadb://127.0.0.1:13306/demo_repl?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
     username: root

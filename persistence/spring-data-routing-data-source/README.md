@@ -103,13 +103,13 @@ spring:
 Evictor thread 설정 테스트를 위해서 min-evictable-idle-time-millis 를 10초, time-between-eviction-runs-millis 를 5초로 설정  
 slave connection 은 웹서버 시작시에는 생성되지 않았다가, 요청이 발생하면 생성됨.  
 Evictor thread 잘 동작함.(minIdle 유지 확인)
-읽기 부하 발생시 master db 커넥션은 증가(replication drvier 부작용)하지 않는다.
+읽기 부하 발생시 master db 커넥션은 증가(replication driver 단점)하지 않는다.
 
 ## 두개 이상의 slave
 ```yml
 url: jdbc:mariadb:loadbalance://127.0.0.1:23306,127.0.0.1:33306/demo_repl?createDatabaseIfNotExist=true
 ```
-
+replication driver 처럼 설정값이 분배되어 생성됨.
 
 
 
