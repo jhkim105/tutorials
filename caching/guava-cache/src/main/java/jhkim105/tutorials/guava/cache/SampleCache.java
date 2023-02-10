@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class DateService {
+public class SampleCache {
 
 
-  private LoadingCache<String, String> caches;
+  private LoadingCache<String, String> cache;
 
   @PostConstruct
   void initCache() {
-    caches = CacheBuilder.newBuilder()
+    cache = CacheBuilder.newBuilder()
         .maximumSize(100)
         .expireAfterAccess(5, TimeUnit.SECONDS)
         .removalListener((RemovalListener<String, String>) removal -> {
@@ -35,17 +35,17 @@ public class DateService {
         });
   }
 
-  public String getDateString(String pattern) {
-    return caches.getUnchecked(pattern);
+  public String get(String pattern) {
+    return cache.getUnchecked(pattern);
   }
 
   public void delete(String pattern) {
-    caches.invalidate(pattern);
+    cache.invalidate(pattern);
   }
 
   @Scheduled(fixedRate = 1_000)
   private void cleanUpCache() {
-    caches.cleanUp();
+    cache.cleanUp();
     log.debug("caches.cleanUp() executed.");
   }
 }

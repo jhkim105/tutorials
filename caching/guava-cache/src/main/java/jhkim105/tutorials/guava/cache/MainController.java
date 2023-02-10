@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class MainController {
 
-  private final DateService dateService;
+  private final SampleCache sampleCache;
 
   @GetMapping
   public String get() {
-    return dateService.getDateString("mm.ss.SSS");
+    return sampleCache.get("mm.ss.SSS");
   }
 
 
