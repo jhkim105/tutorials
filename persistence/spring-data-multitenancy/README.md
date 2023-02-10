@@ -35,10 +35,6 @@ Tenant DataSource 를 cache 에 저장하고 만료될때 connection 을 반환�
       <version>27.0.1-jre</version>
     </dependency>
 ```
-최신버전 (27.1-jre 이상) 을 사용하면 build error. Maven build 또는 java -jar 로 실행시에는 문제 없으나, 인텔리제이에서 테스트케이스 실행 또는 Application 을 실행하면 발생함.
-```
-java: package com.google.common.cache does not exist'
-```
 
 ```java
   private void createDataSourceCache() {
