@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "multitenancy.tenant.datasource")
+@ConfigurationProperties(prefix = "tenant.datasource")
 @Getter
 @Setter
 public class TenantDataSourceProperties {

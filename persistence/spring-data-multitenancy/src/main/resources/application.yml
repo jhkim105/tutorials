@@ -37,8 +37,7 @@ spring:
   flyway:
     enabled: false
 
-multitenancy:
-  tenant:
+tenant:
     datasource:
       address: @db.address@
       username: @db.username@

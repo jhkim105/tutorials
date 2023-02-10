@@ -9,6 +9,7 @@ import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
 import jhkim105.tutorials.multitenancy.tenant.migrate.TenantDatabaseMigrator;
 import jhkim105.tutorials.multitenancy.tenant.migrate.TenantFlywayProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.MultiTenancyStrategy;
 import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
@@ -36,7 +37,7 @@ public class TenantDatabaseConfig {
   public static final String DOMAIN_PACKAGE = "jhkim105.tutorials.multitenancy.domain";
 
   @Bean
-  @ConfigurationProperties(prefix = "multitenancy.tenant.datasource-cache")
+  @ConfigurationProperties(prefix = "tenant.datasource-cache")
   public TenantDataSourceCacheProperties tenantDataSourceCacheProperties() {
     return new TenantDataSourceCacheProperties();
   }
@@ -47,10 +48,16 @@ public class TenantDatabaseConfig {
   }
 
   @Bean
-  @DependsOn({"entityManagerFactory"})
-  public MultiTenantConnectionProvider multiTenantConnectionProvider() {
+  @DependsOn("entityManagerFactory")
+  public TenantDataSources tenantDataSources(TenantDataSourceCacheProperties tenantDataSourceCacheProperties,
+      TenantRepository tenantRepository, BasicDataSource dataSource) {
+    log.info("TenantDataSources create.");
+    return new TenantDataSources(tenantDataSourceCacheProperties, dataSource, tenantRepository);
+  }
+  @Bean
+  public MultiTenantConnectionProvider multiTenantConnectionProvider(BasicDataSource dataSource, TenantDataSources tenantDataSources) {
     log.info("multiTenantConnectionProvider create.");
-    return new DataSourceBasedMultiTenantConnectionProviderImpl();
+    return new DataSourceBasedMultiTenantConnectionProviderImpl(dataSource, tenantDataSources);
   }
 
   @Bean
@@ -59,20 +66,20 @@ public class TenantDatabaseConfig {
   }
 
   @Bean
-  @ConfigurationProperties(prefix = "multitenancy.tenant.flyway")
+  @ConfigurationProperties(prefix = "tenant.flyway")
   public TenantFlywayProperties tenantFlywayProperties() {
     return new TenantFlywayProperties();
   }
 
 
   @Bean(initMethod = "migrate")
-  @DependsOn("transactionManager")
+//  @DependsOn("transactionManager")
   public TenantDatabaseMigrator tenantDatabaseMigrator(TenantRepository tenantRepository, TenantFlywayProperties tenantFlywayProperties) {
     return new TenantDatabaseMigrator(tenantRepository, tenantFlywayProperties);
   }
 
   @Bean
-  @DependsOn("tenantDatabaseMigrator")
+//  @DependsOn("tenantDatabaseMigrator")
   public LocalContainerEntityManagerFactoryBean tenantEntityManagerFactory(
       @Qualifier("multiTenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
       @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantIdentifierResolver,
