@@ -1,0 +1,9 @@
+aws:
+    credentials:
+        profile-name: rm-rtmuser
+    s3:
+#        region: us-east-1
+        region: ap-northeast-2
+    localstack:
+        enabled: false
+        endpoint: http://localhost:4566
