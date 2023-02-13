@@ -1,7 +1,7 @@
 package jhkim105.tutorials.spring.aws.dynamodb;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -15,11 +15,9 @@ import org.springframework.util.StringUtils;
 @Configuration
 public class DynamoDBConfig {
 
-  @Value("${aws.accessKey}")
-  private String awsAccessKey;
+  @Value("${aws.profileName}")
+  private String profileName;
 
-  @Value("${aws.secretKey}")
-  private String awsSecretKey;
 
   @Value("${aws.dynamodb.endpoint}")
   private String awsDynamoDBEndpoint;
@@ -51,8 +49,8 @@ public class DynamoDBConfig {
   }
 
   @Bean
-  public AWSStaticCredentialsProvider credentialsProvider() {
-    return new AWSStaticCredentialsProvider(new BasicAWSCredentials(awsAccessKey, awsSecretKey));
+  public AWSCredentialsProvider credentialsProvider() {
+    return new ProfileCredentialsProvider(profileName);
   }
 
 }

@@ -1,8 +1,7 @@
 
 
 aws:
-  accessKey: ...
-  secretKey: ...
+  profileName: rm-rtmuser
   dynamodb:
     endpoint:
     region: us-west-2

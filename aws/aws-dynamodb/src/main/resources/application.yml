@@ -1,8 +1,7 @@
 
 
 aws:
-  accessKey: local
-  secretKey: local
+  profileName: default
   dynamodb:
     region:
     endpoint: http://localhost:8000

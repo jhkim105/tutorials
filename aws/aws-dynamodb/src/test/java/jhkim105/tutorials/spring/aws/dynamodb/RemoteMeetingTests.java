@@ -49,7 +49,7 @@ class RemoteMeetingTests {
     log.info("{}", list);
   }
 
-  @DynamoDBTable(tableName="mailing")
+  @DynamoDBTable(tableName="ses_mailing")
   @Getter
   @Setter
   public static class Mailing {
