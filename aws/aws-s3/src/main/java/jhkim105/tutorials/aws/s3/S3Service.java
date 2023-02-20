@@ -1,8 +1,12 @@
 package jhkim105.tutorials.aws.s3;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
@@ -12,8 +16,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +31,7 @@ public class S3Service {
 
 
   private final TransferManager tm;
+  private final AmazonS3 s3;
 
   public String uploadWithoutContentLength(String bucketName, String key, MultipartFile multipartFile) {
     InputStream inputStream;
@@ -59,7 +67,7 @@ public class S3Service {
     ByteArrayInputStream bis;
     try {
       bis = new ByteArrayInputStream(multipartFile.getBytes());
-      contentLength = IOUtils.toByteArray(bis).length;/**/
+      contentLength = IOUtils.toByteArray(bis).length;
       bis.reset();
     } catch (IOException e) {
       throw new IllegalStateException(String.format("upload error. key:%s, error:%s", key, e), e);
@@ -81,13 +89,40 @@ public class S3Service {
 
   public List<String> getList(String bucketName ) {
     List<String> list = new ArrayList<>();
-    ObjectListing objectListing = tm.getAmazonS3Client().listObjects(bucketName);
+    ObjectListing objectListing = s3.listObjects(bucketName);
     for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
       list.add(os.getKey());
     }
     return list;
   }
 
+  public Resource loadAsResource(String bucketName, String key) {
+    try {
+      S3Object o = s3.getObject(bucketName, key);
+      S3ObjectInputStream s3is = o.getObjectContent();
+      byte[] bytes = IOUtils.toByteArray(s3is);
+
+      Resource resource = new ByteArrayResource(bytes);
+      return resource;
+    } catch (IOException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  public Bucket createBucket(String bucketName) {
+    return s3.createBucket(bucketName);
+  }
+
+  public List<String> listBuckets() {
+    return s3.listBuckets().stream().map(Bucket::getName).collect(Collectors.toList());
+  }
+
+  public void deleteBucket(String bucketName) {
+    s3.deleteBucket(bucketName);
+  }
 
 
+  public void deleteObject(String bucketName, String key) {
+    s3.deleteObject(bucketName, key);
+  }
 }

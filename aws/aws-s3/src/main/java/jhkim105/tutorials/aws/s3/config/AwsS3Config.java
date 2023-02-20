@@ -18,13 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AwsConfig {
-
-  @Bean
-  @ConfigurationProperties(prefix = "aws.credentials")
-  public AwsCredentialsProperties credentialProperties() {
-    return new AwsCredentialsProperties();
-  }
+public class AwsS3Config {
 
   @Bean
   @ConfigurationProperties(prefix = "aws.s3")
@@ -34,10 +28,10 @@ public class AwsConfig {
 
   @Bean
   @ConditionalOnProperty(name = "aws.localstack.enabled", havingValue = "false")
-  public AmazonS3 s3Client(AwsCredentialsProperties credentialProperties, AwsS3Properties s3Properties) {
+  public AmazonS3 s3Client(AwsS3Properties s3Properties) {
     return AmazonS3ClientBuilder.standard()
         .withRegion(s3Properties.getRegion())
-        .withCredentials(profileCredentialsProvider(credentialProperties.getProfileName()))
+        .withCredentials(profileCredentialsProvider(s3Properties.getProfileName()))
         .build();
   }
 

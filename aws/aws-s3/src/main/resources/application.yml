@@ -1,7 +1,7 @@
 aws:
-    credentials:
-        profile-name: rm-rtmuser
     s3:
+#        profile-name: rm-rtmuser
+        profile-name: rm-s3
 #        region: us-east-1
         region: ap-northeast-2
     localstack:

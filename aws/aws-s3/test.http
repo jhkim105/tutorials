@@ -1,0 +1,38 @@
+# Create Bucket
+POST http://localhost:8080/rm-test001
+Content-Type: application/json
+
+{}
+
+###
+
+# Upload
+POST http://localhost:8080/rm-test001/files
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="key"
+Content-Type: text/plain
+
+a/test.txt
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="test.txt"
+
+< ./test.txt
+--WebAppBoundary--
+
+###
+
+# Download
+GET http://localhost:8080/rm-test001/files/a/test.txt
+
+###
+
+# Delete File
+DELETE http://localhost:8080/rm-test001/files/a/test.txt
+
+# Delete Bucket
+DELETE http://localhost:8080/rm-test001
+Content-Type: application/json
+
+###
