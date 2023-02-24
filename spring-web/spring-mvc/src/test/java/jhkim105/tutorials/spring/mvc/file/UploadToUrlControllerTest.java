@@ -31,7 +31,7 @@ class UploadToUrlControllerTest {
 
   @Test
   void uploadFile() throws Exception {
-    MockMultipartFile multipartFile = new MockMultipartFile( "file", "input.pdf", MediaType.MULTIPART_FORM_DATA_VALUE,
+    MockMultipartFile multipartFile = new MockMultipartFile( "file", "input.pdf", MediaType.APPLICATION_PDF_VALUE,
         Files.readAllBytes(Paths.get(appProperties.getStoragePath(), "files", "input.pdf")));
 
     URI uri = UriComponentsBuilder.fromUriString("/uploadToUrl/file").queryParam("url", "http://docimage.remotemeeting.com/upload").build().toUri();
@@ -41,7 +41,7 @@ class UploadToUrlControllerTest {
 
   @Test
   void uploadStream() throws Exception {
-    MockMultipartFile multipartFile = new MockMultipartFile( "file", "input.pdf", MediaType.MULTIPART_FORM_DATA_VALUE,
+    MockMultipartFile multipartFile = new MockMultipartFile( "file", "input.pdf", MediaType.APPLICATION_PDF_VALUE,
         Files.readAllBytes(Paths.get(appProperties.getStoragePath(), "files", "input.pdf")));
 
     URI uri = UriComponentsBuilder.fromUriString("/uploadToUrl/stream").queryParam("url", "http://docimage.remotemeeting.com/upload").build().toUri();

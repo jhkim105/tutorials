@@ -51,4 +51,21 @@ public class PathVariableController {
     return result;
   }
 
+  @GetMapping("/path/enum/{storageType}")
+  public StorageType storageType(@PathVariable StorageType storageType) {
+    return storageType;
+  }
+
+  @GetMapping("/path/enum2/{idpType}")
+  public IdpType idpType(@PathVariable IdpType idpType) {
+    return idpType;
+  }
+
+  public enum StorageType {
+    LOCAL, S3
+  }
+
+  public enum IdpType {
+    GOOGLE,FACEBOOK
+  }
 }

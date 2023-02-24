@@ -1,9 +1,14 @@
 package jhkim105.tutorials.spring.mvc.config;
 
+import java.util.Arrays;
+import java.util.List;
+import jhkim105.tutorials.spring.mvc.PathVariableController.IdpType;
+import jhkim105.tutorials.spring.mvc.PathVariableController.StorageType;
 import jhkim105.tutorials.spring.mvc.interceptor.SampleInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -41,5 +46,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(sampleInterceptor());
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        List<Class<? extends Enum>> enums = Arrays.asList(StorageType.class, IdpType.class);
+        enums.forEach(enumClass -> registry.addConverter(String.class, enumClass,
+            new CaseInsensitiveEnumConverter<>(enumClass)));
     }
 }
