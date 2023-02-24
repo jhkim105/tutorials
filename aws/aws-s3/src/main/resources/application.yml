@@ -1,9 +1,8 @@
 aws:
     s3:
 #        profile-name: rm-rtmuser
-        profile-name: rm-s3
-#        region: us-east-1
-        region: ap-northeast-2
-    localstack:
-        enabled: false
+#        profile-name: rm-s3
+#        region: ap-northeast-2
         endpoint: http://localhost:4566
+        localstack: true
+        profile-name: default

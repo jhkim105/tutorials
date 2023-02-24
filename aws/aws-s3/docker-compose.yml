@@ -8,7 +8,6 @@ services:
     environment:
       - SERVICES=s3
       - USE_SINGLE_REGION=1
-      - DEFAULT_REGION=ap-northeast-2
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - "./tmp/localstack:/var/lib/localstack"

@@ -33,7 +33,7 @@ public class StorageController {
 
   @GetMapping
   public List<String> listBuckets(){
-    List<String> buckets = s3Service.listBuckets();
+    List<String> buckets = s3Service.getBucketNameList();
     return buckets;
   }
 

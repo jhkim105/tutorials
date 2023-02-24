@@ -5,13 +5,13 @@ import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.util.IOUtils;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,27 @@ public class S3Service {
   private final TransferManager tm;
   private final AmazonS3 s3;
 
-  public String uploadWithoutContentLength(String bucketName, String key, MultipartFile multipartFile) {
+  public String upload(String bucketName, String key, MultipartFile multipartFile) {
+//    return uploadUsingTransferManager(bucketName, key, multipartFile);
+    return uploadUsingAmazonS3(bucketName, key, multipartFile);
+  }
+
+  private String uploadUsingAmazonS3(String bucketName, String key, MultipartFile multipartFile) {
+    InputStream inputStream;
+    try {
+      inputStream = multipartFile.getInputStream();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    ObjectMetadata om = objectMetadata(multipartFile);
+    PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, inputStream, om);
+    PutObjectResult result = s3.putObject(putObjectRequest);
+    log.debug("result-> {}", result);
+
+    return key;
+  }
+  private String uploadUsingTransferManager(String bucketName, String key, MultipartFile multipartFile) {
     InputStream inputStream;
     try {
       inputStream = multipartFile.getInputStream();
@@ -59,35 +80,12 @@ public class S3Service {
     ObjectMetadata metadata = new ObjectMetadata();
     metadata.setContentType(multipartFile.getContentType());
     metadata.setHeader("filename", multipartFile.getOriginalFilename());
+    metadata.setContentLength(multipartFile.getSize());
+    metadata.getUserMetadata().put("fileExtension", FilenameUtils.getExtension(multipartFile.getOriginalFilename()));
     return metadata;
   }
 
-  public String upload(String bucketName, String key, MultipartFile multipartFile) {
-    long contentLength;
-    ByteArrayInputStream bis;
-    try {
-      bis = new ByteArrayInputStream(multipartFile.getBytes());
-      contentLength = IOUtils.toByteArray(bis).length;
-      bis.reset();
-    } catch (IOException e) {
-      throw new IllegalStateException(String.format("upload error. key:%s, error:%s", key, e), e);
-    }
-
-    ObjectMetadata om = objectMetadata(multipartFile);
-    om.setContentLength(contentLength);
-    PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, bis, om);
-    Upload upload = tm.upload(putObjectRequest);
-
-    try {
-      upload.waitForCompletion();
-    } catch (InterruptedException e) {
-      throw new IllegalStateException(String.format("upload error. key:%s, error:%s", key, e), e);
-    }
-
-    return key;
-  }
-
-  public List<String> getList(String bucketName ) {
+  public List<String> getObjectKeyList(String bucketName ) {
     List<String> list = new ArrayList<>();
     ObjectListing objectListing = s3.listObjects(bucketName);
     for(S3ObjectSummary os : objectListing.getObjectSummaries()) {
@@ -113,7 +111,7 @@ public class S3Service {
     return s3.createBucket(bucketName);
   }
 
-  public List<String> listBuckets() {
+  public List<String> getBucketNameList() {
     return s3.listBuckets().stream().map(Bucket::getName).collect(Collectors.toList());
   }
 
