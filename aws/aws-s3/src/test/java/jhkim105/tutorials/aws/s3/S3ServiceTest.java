@@ -45,7 +45,6 @@ class S3ServiceTest {
     MockMultipartFile multipartFile =
         new MockMultipartFile("file", "1.txt", MediaType.TEXT_PLAIN_VALUE,
             Files.newInputStream(Paths.get("src/test/resources/1.txt")));
-    log.info("size: {}", multipartFile.getSize());
     s3Service.upload(bucketName, "a/1.txt", multipartFile);
   }
 

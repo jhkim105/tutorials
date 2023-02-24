@@ -3,7 +3,6 @@ package jhkim105.tutorials.aws.s3;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -14,39 +13,41 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/{bucketName}")
 @Slf4j
 public class StorageController {
 
   private final S3Service s3Service;
 
-  @PostMapping("/{bucketName}")
+  @PostMapping
   public void createBucket(@PathVariable String bucketName) {
     s3Service.createBucket(bucketName);
   }
 
-  @GetMapping
-  public List<String> listBuckets(){
-    List<String> buckets = s3Service.getBucketNameList();
-    return buckets;
-  }
-
-  @DeleteMapping("/{bucketName}")
+  @DeleteMapping
   public void deleteBucket(@PathVariable String bucketName){
     s3Service.deleteBucket(bucketName);
   }
 
-  @PostMapping("/{bucketName}/files")
-  public ResponseEntity<UploadResponse> upload(@PathVariable String bucketName, String key,
-      MultipartFile file) throws IOException {
-    s3Service.upload(bucketName, key, file);
-    String url = String.format("%s%s/files/%s",
+  @PostMapping("/**")
+  public ResponseEntity<UploadResponse> upload(@PathVariable String bucketName,
+      MultipartHttpServletRequest request) {
+    String key = extractPath(request);
+    MultipartFile multipartFile = request.getFile("file");
+    if (multipartFile == null || multipartFile.isEmpty()) {
+      return ResponseEntity.badRequest().build();
+    }
+    s3Service.upload(bucketName, key, multipartFile);
+    String url = String.format("%s%s/%s",
         MvcUriComponentsBuilder.fromController(this.getClass()).build().toUri(),
         bucketName,
         key);
@@ -54,7 +55,7 @@ public class StorageController {
     return ResponseEntity.ok(UploadResponse.of(url));
   }
 
-  @GetMapping("/{bucketName}/files/**")
+  @GetMapping("/**")
   public ResponseEntity<Resource> download(@PathVariable String bucketName, HttpServletRequest request) throws IOException {
     String key = extractPath(request);
     log.debug("key: {}", key);
@@ -71,7 +72,7 @@ public class StorageController {
     return new AntPathMatcher().extractPathWithinPattern(matchPattern, path);
   }
 
-  @DeleteMapping("/{bucketName}/files/**")
+  @DeleteMapping("/**")
   public void delete(@PathVariable String bucketName, HttpServletRequest request) {
     String key = extractPath(request);
     s3Service.deleteObject(bucketName, key);
