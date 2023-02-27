@@ -1,10 +1,12 @@
 package jhkim105.tutorials.spring.files;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -53,10 +55,16 @@ public class StorageController {
 
   @GetMapping("/**")
   @ResponseBody
-  public ResponseEntity<Resource> download(HttpServletRequest request) {
+  public ResponseEntity<Resource> download(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String path = extractPath(request);
     log.debug("path: {}", path);
     Resource file = storageService.loadAsResource(path);
+    if (!file.exists()) {
+//      return ResponseEntity.notFound().build(); // /error 페이지로 이동안하고 바로 결과 리턴
+      log.debug("Resource not found");
+      response.sendError(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION,
             "attachment; filename=\"" + file.getFilename() + "\"")

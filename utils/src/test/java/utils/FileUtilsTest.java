@@ -54,9 +54,9 @@ public class FileUtilsTest {
   void delete() {
     String basePath = "target/temp";
 
-    FileUtils.mkdirs(basePath + "/1");
-    FileUtils.mkdirs(basePath + "/2");
-    FileUtils.mkdirs(basePath + "/3");
+    FileUtils.mkdir(basePath + "/1");
+    FileUtils.mkdir(basePath + "/2");
+    FileUtils.mkdir(basePath + "/3");
 
     FileUtils.deleteEmptyDirs(basePath);
 
@@ -79,6 +79,14 @@ public class FileUtilsTest {
   void moveFile() {
     FileUtils.moveFile("src/test/resources/input.txt", "src/test/resources/output.txt");
     FileUtils.moveFile("src/test/resources/output.txt", "src/test/resources/input.txt");
+  }
+
+  @Test
+  void isEmptyDir() {
+    Assertions.assertThat(FileUtils.isEmptyDir("src/test/resources")).isEqualTo(false);
+    FileUtils.mkdir("target/empty");
+    FileUtils.mkdir("target/empty/a");
+    Assertions.assertThat(FileUtils.isEmptyDir("target/empty")).isEqualTo(true);
   }
 
 }

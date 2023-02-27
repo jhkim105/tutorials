@@ -35,8 +35,12 @@ public class S3Service {
   private final AmazonS3 s3;
 
   public String upload(String bucketName, String key, MultipartFile multipartFile) {
-//    return uploadUsingTransferManager(bucketName, key, multipartFile);
+
+    if (!s3.doesBucketExistV2(bucketName)) {
+      throw new IllegalStateException(String.format("bucket not exists. (bucketName: %s)", bucketName));
+    }
     return uploadUsingAmazonS3(bucketName, key, multipartFile);
+//    return uploadUsingTransferManager(bucketName, key, multipartFile);
   }
 
   private String uploadUsingAmazonS3(String bucketName, String key, MultipartFile multipartFile) {

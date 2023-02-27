@@ -1,0 +1,4 @@
+aws:
+  s3:
+    profile-name:
+    region: sa-east-1

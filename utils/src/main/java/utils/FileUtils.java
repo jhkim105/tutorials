@@ -43,7 +43,7 @@ public class FileUtils {
   }
 
   public static File upload(MultipartFile multipartFile, String uploadDir, String saveFileName) {
-    mkdirs(uploadDir);
+    mkdir(uploadDir);
 
     String fileName = saveFileName;
     String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
@@ -65,8 +65,8 @@ public class FileUtils {
     return upload(multipartFile, uploadDir, saveFileName);
   }
 
-  public static void mkdirs(String path) {
-    File dir = new File(getDirPath(path));
+  public static void mkdir(String dirPath) {
+    File dir = new File(dirPath);
     try {
       org.apache.commons.io.FileUtils.forceMkdir(dir);
     } catch (IOException e) {
@@ -189,4 +189,18 @@ public class FileUtils {
         .sorted(Comparator.comparing(f -> FilenameUtils.getBaseName(f.getName())))
         .collect(Collectors.toList());
   }
+
+  public static boolean isEmptyDir(String dir) {
+    Path path = Paths.get(dir);
+    if (!Files.isDirectory(path)) {
+      throw new IllegalArgumentException("This is not directory.");
+    }
+
+    try (Stream<Path> entries = Files.list(path)) {
+      return entries.noneMatch(p -> p.toFile().isFile());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
 }

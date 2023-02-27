@@ -18,5 +18,6 @@
     <module>aws-lambda</module>
     <module>aws-encryption-sdk</module>
     <module>aws-s3</module>
+    <module>aws-sdk2-s3</module>
   </modules>
 </project>

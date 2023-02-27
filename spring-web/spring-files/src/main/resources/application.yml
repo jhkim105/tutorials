@@ -3,7 +3,8 @@ app:
 
 server:
   port: 8081
-
+  compression:
+    enabled: true
 logging:
   level:
     'jhkim105.tutorials': debug
