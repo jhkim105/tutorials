@@ -61,6 +61,7 @@ public class CustomAnnotationDrivenEventListener {
     public void handleEventByCondition(final CustomSpringEvent event) {
         log.info("handleEventByCondition: " + event.getMessage());
     }
+    
 
 }
 ```

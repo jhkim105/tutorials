@@ -1,7 +1,6 @@
 package jhkim105.tutorials.spring.events.simple;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +12,10 @@ public class CustomAnnotationDrivenEventListener {
         log.info("handleEvent: {}", event.getMessage());
     }
 
+    @EventListener(CustomSpringEvent.class)
+    public void handleEvent() {
+        log.info("handleEvent");
+    }
     @EventListener(condition = "#event.success")
     public void handleEventByCondition(final CustomSpringEvent event) {
         log.info("handleEventByCondition: " + event.getMessage());
