@@ -1,8 +1,6 @@
 package jhkim105.tutorials.spring.aop;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MyAspect {
 
-
+  private final ExpressionParser parser = new SpelExpressionParser();
   @Around("@annotation(jhkim105.tutorials.spring.aop.MyAnnotation)")
   public Object doSomething(ProceedingJoinPoint joinPoint) throws Throwable {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -27,20 +25,15 @@ public class MyAspect {
     String key = (String)getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), myAnnotation.key());
     log.info("key: {}", key);
 
-    final Object proceed = joinPoint.proceed();
-    return proceed;
+    return joinPoint.proceed();
   }
 
-  public Object getDynamicValue(String[] parameterNames,
-      Object[] args, String key) {
-    ExpressionParser parser = new SpelExpressionParser();
-    StandardEvaluationContext context = new
-        StandardEvaluationContext();
+  public Object getDynamicValue(String[] parameterNames, Object[] args, String key) {
+    StandardEvaluationContext context = new StandardEvaluationContext();
 
     for (int i = 0; i < parameterNames.length; i++) {
       context.setVariable(parameterNames[i], args[i]);
     }
-    return parser.parseExpression(key).getValue(context,
-        Object.class);
+    return parser.parseExpression(key).getValue(context, Object.class);
   }
 }
