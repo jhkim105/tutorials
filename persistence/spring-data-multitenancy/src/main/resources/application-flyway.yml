@@ -15,7 +15,7 @@ spring:
       hibernate.hbm2ddl.auto: validate
       hibernate.physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
     show-sql: true
-#    open-in-view: false
+    open-in-view: false
   sql:
     init:
       mode: always
@@ -35,15 +35,18 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0
 
-multitenancy:
-  tenant:
-    datasource:
-      address: @db.address@
-      username: @db.username@
-      password: @db.password@
-    flyway:
-      migrate-on-server-start: true
-      migrate-on-tenant-add: true
-      locations: classpath:db/migration/tenant
-      baseline-version: 0.0.1
+
+tenant:
+  datasource:
+    address: @db.address@
+    username: @db.username@
+    password: @db.password@
+  datasource-cache:
+    max-size: 100
+    expire-minutes: 1
+  flyway:
+    migrate-on-server-start: true
+    migrate-on-tenant-add: true
+    locations: classpath:db/migration/tenant
+    baseline-version: 0.0.1
 #      locations: classpath:db/migration/tenant, filesystem:@project.basedir@/db/tenant

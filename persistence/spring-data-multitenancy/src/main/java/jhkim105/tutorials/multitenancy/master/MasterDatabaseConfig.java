@@ -1,4 +1,4 @@
-package jhkim105.tutorials.multitenancy.config;
+package jhkim105.tutorials.multitenancy.master;
 
 
 import javax.persistence.EntityManagerFactory;
@@ -17,7 +17,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 @EnableJpaRepositories(basePackages = "jhkim105.tutorials.multitenancy.master.repository")
 @RequiredArgsConstructor
-public class JpaConfig {
+public class MasterDatabaseConfig {
 
   public static final String PERSISTENCE_UNIT_NAME = "master";
   private static final String DOMAIN_PACKAGE = "jhkim105.tutorials.multitenancy.master.domain";
@@ -39,5 +39,6 @@ public class JpaConfig {
   public PlatformTransactionManager transactionManager(@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
     return new JpaTransactionManager(entityManagerFactory);
   }
+
 
 }

@@ -21,7 +21,6 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
 import org.flywaydb.core.api.MigrationInfoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -113,13 +112,16 @@ public class TenantService {
 
   private boolean notExistsTenantByDatabaseName(String databaseName) {
     String tenantName = StringUtils.removeStart(databaseName, Tenant.DATABASE_NAME_PREFIX);
-    return tenantRepository.existsByName(tenantName);
+    return !tenantRepository.existsByName(tenantName);
   }
 
-  @Transactional(transactionManager = "transactionManager")
   public Tenant updateTenantName(String tenantId, String newName) {
     Tenant tenant = tenantRepository.findById(tenantId).orElseThrow(EntityNotFoundException::new);
     tenant.setName(newName);
     return tenantRepository.save(tenant);
+  }
+
+  public List<Tenant> findAll() {
+    return tenantRepository.findAll();
   }
 }

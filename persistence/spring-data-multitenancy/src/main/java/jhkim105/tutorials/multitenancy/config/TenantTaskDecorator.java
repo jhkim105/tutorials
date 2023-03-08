@@ -1,6 +1,6 @@
 package jhkim105.tutorials.multitenancy.config;
 
-import jhkim105.tutorials.multitenancy.tenant.TenantContextHolder;
+import jhkim105.tutorials.multitenancy.tenant.context.TenantContextHolder;
 import org.springframework.core.task.TaskDecorator;
 
 public class TenantTaskDecorator implements TaskDecorator {

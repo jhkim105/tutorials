@@ -25,7 +25,7 @@ import org.hibernate.envers.Audited;
 public class Tenant {
 
   public static final String DEFAULT_TENANT_ID = "default";
-  public static final String DATABASE_NAME_PREFIX = "demo_multitenancy_tenant_";
+  public static final String DATABASE_NAME_PREFIX = "demo_multitenancy_";
 
   @Id
   @GenericGenerator(name = "uuid", strategy = "uuid2")

@@ -1,4 +1,4 @@
-package jhkim105.tutorials.multitenancy.tenant;
+package jhkim105.tutorials.multitenancy.tenant.context;
 
 public class TenantContextHolder {
   private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();

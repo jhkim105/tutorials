@@ -93,4 +93,7 @@ public class TenantDataSources implements InitializingBean {
     log.debug("tenantDataSources.cleanUp() executed.");
   }
 
+  public void invalidate(String key) {
+    caches.invalidate(key);
+  }
 }

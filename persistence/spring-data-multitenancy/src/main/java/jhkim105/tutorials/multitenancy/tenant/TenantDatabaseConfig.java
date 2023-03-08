@@ -28,23 +28,18 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"jhkim105.tutorials.multitenancy.repository"},
+@EnableJpaRepositories(basePackages = {"jhkim105.tutorials.multitenancy.tenant.repository"},
     entityManagerFactoryRef = "tenantEntityManagerFactory",
     transactionManagerRef = "tenantTransactionManager")
 @Slf4j
 public class TenantDatabaseConfig {
   public static final String PERSISTENCE_UNIT_NAME = "tenant";
-  public static final String DOMAIN_PACKAGE = "jhkim105.tutorials.multitenancy.domain";
+  public static final String DOMAIN_PACKAGE = "jhkim105.tutorials.multitenancy.tenant.domain";
 
   @Bean
   @ConfigurationProperties(prefix = "tenant.datasource-cache")
   public TenantDataSourceCacheProperties tenantDataSourceCacheProperties() {
     return new TenantDataSourceCacheProperties();
-  }
-
-  @Bean
-  public TenantDatabaseHelper tenantDatabaseHelper() {
-    return new TenantDatabaseHelper();
   }
 
   @Bean
@@ -73,13 +68,11 @@ public class TenantDatabaseConfig {
 
 
   @Bean(initMethod = "migrate")
-//  @DependsOn("transactionManager")
   public TenantDatabaseMigrator tenantDatabaseMigrator(TenantRepository tenantRepository, TenantFlywayProperties tenantFlywayProperties) {
     return new TenantDatabaseMigrator(tenantRepository, tenantFlywayProperties);
   }
 
   @Bean
-//  @DependsOn("tenantDatabaseMigrator")
   public LocalContainerEntityManagerFactoryBean tenantEntityManagerFactory(
       @Qualifier("multiTenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
       @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantIdentifierResolver,

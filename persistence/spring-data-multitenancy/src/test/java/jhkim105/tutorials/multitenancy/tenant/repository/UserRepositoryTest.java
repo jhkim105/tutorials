@@ -1,9 +1,9 @@
-package jhkim105.tutorials.multitenancy.repository;
+package jhkim105.tutorials.multitenancy.tenant.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import jhkim105.tutorials.multitenancy.config.JpaConfig;
-import jhkim105.tutorials.multitenancy.domain.User;
+import jhkim105.tutorials.multitenancy.master.MasterDatabaseConfig;
+import jhkim105.tutorials.multitenancy.tenant.domain.User;
 import jhkim105.tutorials.multitenancy.tenant.TenantDatabaseConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 @ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({JpaConfig.class, TenantDatabaseConfig.class})
+@Import({MasterDatabaseConfig.class, TenantDatabaseConfig.class})
 @Slf4j
 @Transactional(transactionManager = "tenantTransactionManager")
 class UserRepositoryTest {
@@ -46,7 +46,7 @@ class UserRepositoryTest {
    */
   @Test
   @Sql(scripts = {"/user.sql"}, config = @SqlConfig(transactionManager = "tenantTransactionManager"))
-  @Sql(statements = {"DELETE FROM demo_multitenancy_master.user WHERE id = 'tid01';"},
+  @Sql(statements = {"DELETE FROM user WHERE id = 'tid01';"},
       config = @SqlConfig(transactionManager = "tenantTransactionManager"),
       executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
   void test() {

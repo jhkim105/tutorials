@@ -1,1 +1,1 @@
-INSERT INTO demo_multitenancy_master.user (id, username) VALUES ('tid01', 'tuser01');
+INSERT INTO user (id, username) VALUES ('tid01', 'tuser01');

@@ -1,0 +1,29 @@
+# User Join
+POST http://localhost:8080/user-join
+Content-Type: application/json
+
+{
+  "tenantName": "tenant_0",
+  "username": "user01"
+}
+
+> {%
+client.global.set("userId", response.body.id);
+client.global.set("tenantId", response.body.tenantId);
+%}
+
+###
+
+# Get Users
+GET http://localhost:8080/users
+X-Tenant-ID: {{tenantId}}
+
+###
+
+
+# Tenant Delete
+DELETE http://localhost:8080/tenants/{{tenantId}}
+Content-Type: application/json
+
+
+###

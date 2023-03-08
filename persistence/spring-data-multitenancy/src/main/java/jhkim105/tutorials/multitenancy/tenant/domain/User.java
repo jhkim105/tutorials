@@ -1,4 +1,4 @@
-package jhkim105.tutorials.multitenancy.domain;
+package jhkim105.tutorials.multitenancy.tenant.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

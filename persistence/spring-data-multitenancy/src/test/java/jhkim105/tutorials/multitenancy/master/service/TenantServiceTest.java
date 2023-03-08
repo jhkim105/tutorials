@@ -2,13 +2,18 @@ package jhkim105.tutorials.multitenancy.master.service;
 
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
+import jhkim105.tutorials.multitenancy.master.service.TenantService;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest
+@TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 class TenantServiceTest {
 
   @Autowired
@@ -18,29 +23,22 @@ class TenantServiceTest {
   TenantRepository tenantRepository;
 
 
-  @Test
-  @Disabled
-  void createAndDelete() {
-    Tenant tenant = tenantService.createTenant("tenant001");
-
-    tenantService.deleteTenant(tenant);
-  }
-
 
   @Test
-  @Disabled
+  @Order(1)
   void create() {
     tenantService.createTenant("user1");
   }
 
   @Test
-  @Disabled
+  @Order(2)
   void delete() {
     Tenant tenant = tenantRepository.findByName("user1");
     tenantService.deleteTenant(tenant);
   }
 
   @Test
+  @Order(3)
   void dropOrphanDatabases() {
     tenantService.dropOrphanDatabases();
   }

@@ -1,6 +1,7 @@
-package jhkim105.tutorials.multitenancy.repository;
+package jhkim105.tutorials.multitenancy.tenant.repository;
 
-import static jhkim105.tutorials.multitenancy.domain.QUser.user;
+
+import static jhkim105.tutorials.multitenancy.tenant.domain.QUser.user;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.annotation.Resource;

@@ -1,10 +1,11 @@
-package jhkim105.tutorials.multitenancy.service;
+package jhkim105.tutorials.multitenancy.tenant.service;
 
+import java.util.List;
 import javax.persistence.EntityNotFoundException;
-import jhkim105.tutorials.multitenancy.domain.User;
-import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
+import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.service.TenantService;
-import jhkim105.tutorials.multitenancy.repository.UserRepository;
+import jhkim105.tutorials.multitenancy.tenant.domain.User;
+import jhkim105.tutorials.multitenancy.tenant.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final UserRepository userRepository;
-  private final TenantRepository tenantRepository;
   private final TenantService tenantService;
 
+
+  public User join(Tenant tenant, String username) {
+    User user = User.builder()
+        .username(username)
+        .tenantId(tenant.getId()).build();
+    return userRepository.save(user);
+  }
   public User join(String username) {
     User user = User.builder().username(username).build();
     return userRepository.save(user);
@@ -30,9 +37,16 @@ public class UserService {
   @Async
   public User updateUsername(String id, String username) {
     User user = userRepository.findById(id).get();
-    tenantService.updateTenantName(user.getTenantId(), username);
     user.setUsername(username);
-    user = userRepository.save(user);
-    return user;
+    return userRepository.save(user);
   }
+
+  public User create(User user) {
+    return userRepository.save(user);
+  }
+
+  public List<User> findAll() {
+    return userRepository.findAll();
+  }
+
 }

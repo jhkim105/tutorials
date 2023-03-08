@@ -1,1 +1,1 @@
-DELETE FROM demo_multitenancy_master.user WHERE id = 'tid01';
+DELETE FROM user WHERE id = 'tid01';

@@ -1,12 +1,12 @@
 package jhkim105.tutorials.multitenancy.controller;
 
 import java.util.List;
-import jhkim105.tutorials.multitenancy.domain.User;
-import jhkim105.tutorials.multitenancy.repository.UserRepository;
-import jhkim105.tutorials.multitenancy.service.UserService;
 import jhkim105.tutorials.multitenancy.tenant.context.TenantContext;
+import jhkim105.tutorials.multitenancy.tenant.domain.User;
+import jhkim105.tutorials.multitenancy.tenant.service.UserService;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,29 +19,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-  private final UserRepository userRepository;
-
   private final UserService userService;
 
   @GetMapping
-  @TenantContext(key = "#tenantId")
-  public ResponseEntity<List<User>> getAll(String tenantId) {
-    List<User> users = userRepository.findAll();
-    return ResponseEntity.ok(users);
+  public List<User> getAll() {
+    return userService.findAll();
+  }
+
+  @GetMapping("/{id}")
+  public User get(@PathVariable String id) {
+    return userService.findById(id);
   }
 
   @PostMapping
-  @TenantContext(key = "#user.tenantId")
-  public ResponseEntity<User> save(@RequestBody User user) {
-    user =  userRepository.save(user);
-    return ResponseEntity.ok(user);
+  @TenantContext(key = "#userCreateRequest.tenantId")
+  public User save(@RequestBody UserCreateRequest userCreateRequest) {
+    User user = User.builder()
+        .tenantId(userCreateRequest.tenantId)
+        .username(userCreateRequest.username)
+        .build();
+
+    return userService.create(user);
   }
 
   @PostMapping("/{id}/username")
-  @TenantContext(key = "#tenantId")
-  public ResponseEntity<User> updateUsername(@PathVariable String id, String tenantId, String username) {
-    User user =  userService.updateUsername(id, username);
-    return ResponseEntity.ok(user);
+  public User updateUsername(@PathVariable String id, String username) {
+    return userService.updateUsername(id, username);
   }
 
+
+  @Getter
+  public static class UserCreateRequest {
+    private String tenantId;
+    private String username;
+
+    @Builder
+    public UserCreateRequest(String tenantId, String username) {
+      this.tenantId = tenantId;
+      this.username = username;
+    }
+
+  }
 }

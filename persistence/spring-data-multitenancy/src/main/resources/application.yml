@@ -10,19 +10,16 @@ logging:
     'org.springframework.jdbc.core': trace
     'org.springframework.orm.jpa.support': debug
 spring:
-#  autoconfigure:
-#    exclude: org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
   jpa:
-#    defer-datasource-initialization: false
     properties:
-      hibernate.hbm2ddl.auto: create
+      hibernate.hbm2ddl.auto: none
       hibernate.physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
       hibernate.id.new_generator_mappings: false
     show-sql: true
     open-in-view: false
   sql:
     init:
-      mode: always
+      mode: never
   datasource:
     url: jdbc:mariadb://@db.address@/@db.name@?createDatabaseIfNotExist=true
     username: @db.username@
@@ -48,5 +45,5 @@ tenant:
     flyway:
       migrate-on-server-start: true
       migrate-on-tenant-add: true
-      locations: classpath:db/migration/tenant
+      locations: classpath:db/migration_tenant
       baseline-version: 0.0.1

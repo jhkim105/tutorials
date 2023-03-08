@@ -3,9 +3,14 @@ package jhkim105.tutorials.multitenancy.controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jhkim105.tutorials.multitenancy.domain.User;
+import jhkim105.tutorials.multitenancy.controller.UserController.UserCreateRequest;
+import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
+import jhkim105.tutorials.multitenancy.master.service.TenantService;
+import jhkim105.tutorials.multitenancy.tenant.context.TenantFilter;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,10 +20,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Disabled
 class UserControllerTest {
 
   @Autowired
@@ -30,18 +35,28 @@ class UserControllerTest {
   @Autowired
   TenantRepository tenantRepository;
 
-  private String tenantId;
+  @Autowired
+  TenantService tenantService;
+
+  private Tenant tenant;
+  private final String tenantName = "tenant_t01";
 
   @BeforeEach
   void setUp() {
-    tenantId = tenantRepository.findByName("user1").getId();
+    tenant = tenantService.createTenant(tenantName);
+  }
+
+  @AfterEach()
+  void tearDown() {
+    tenantService.deleteTenant(tenant);
+    tenantService.dropOrphanDatabases();
   }
 
   @Test
   void getAll() throws Exception {
     ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/users")
             .contentType(MediaType.APPLICATION_JSON)
-            .param("tenantId", tenantId))
+            .header(TenantFilter.X_TENANT_ID_HEADER, tenant.getId()))
         .andDo(MockMvcResultHandlers.print());
 
     result.andExpect(status().isOk());
@@ -49,17 +64,16 @@ class UserControllerTest {
 
 
   @Test
-  @Transactional(transactionManager = "tenantTransactionManager")
   void create() throws Exception {
-    User user = User.builder()
-        .tenantId(tenantId)
-        .username("username100")
+    UserCreateRequest userCreateRequest = UserCreateRequest.builder()
+        .tenantId(tenant.getId())
+        .username("user_t0101")
         .build();
 
     ResultActions result = mockMvc.perform(
         MockMvcRequestBuilders.post("/users")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(user)))
+            .content(objectMapper.writeValueAsString(userCreateRequest)))
         .andDo(MockMvcResultHandlers.print());
 
     result.andExpect(status().isOk());

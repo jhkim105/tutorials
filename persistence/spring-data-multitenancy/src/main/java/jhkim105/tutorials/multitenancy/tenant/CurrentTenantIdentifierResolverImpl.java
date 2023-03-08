@@ -2,6 +2,7 @@ package jhkim105.tutorials.multitenancy.tenant;
 
 import static jhkim105.tutorials.multitenancy.master.domain.Tenant.DEFAULT_TENANT_ID;
 
+import jhkim105.tutorials.multitenancy.tenant.context.TenantContextHolder;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.util.StringUtils;
 

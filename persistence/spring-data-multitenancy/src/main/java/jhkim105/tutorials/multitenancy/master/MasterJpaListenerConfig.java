@@ -1,4 +1,4 @@
-package jhkim105.tutorials.multitenancy.config;
+package jhkim105.tutorials.multitenancy.master;
 
 
 import javax.persistence.EntityManagerFactory;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class JpaListenerConfig implements InitializingBean {
+public class MasterJpaListenerConfig implements InitializingBean {
 
   private final TenantListener tenantListener;
   private final EntityManagerFactory entityManagerFactory;
@@ -22,6 +22,6 @@ public class JpaListenerConfig implements InitializingBean {
     SessionFactoryImpl sessionFactory = entityManagerFactory.unwrap(SessionFactoryImpl.class);
     EventListenerRegistry eventListenerRegistry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
 
-    eventListenerRegistry.appendListeners(EventType.PRE_DELETE, tenantListener);
+    eventListenerRegistry.appendListeners(EventType.POST_DELETE, tenantListener);
   }
 }

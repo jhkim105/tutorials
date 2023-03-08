@@ -3,7 +3,6 @@ package jhkim105.tutorials.multitenancy.tenant.context;
 import java.lang.reflect.Method;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.service.TenantService;
-import jhkim105.tutorials.multitenancy.tenant.TenantContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,41 +25,38 @@ import org.springframework.stereotype.Component;
 public class TenantContextAspect {
 
   private final TenantService tenantService;
-
+  private final ExpressionParser parser = new SpelExpressionParser();
 
   @Around("@annotation(jhkim105.tutorials.multitenancy.tenant.context.TenantContext)")
   public Object invoke(ProceedingJoinPoint joinPoint) throws Throwable {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
     Method method = signature.getMethod();
+
     TenantContext tenantContext = method.getAnnotation(TenantContext.class);
     String key = (String)getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), tenantContext.key());
-    log.info("key: {}", key);
+    log.debug("key: {}", key);
     Tenant tenant = tenantService.findById(key);
+
     try {
       if (tenant != null) {
         TenantContextHolder.setTenantId(tenant.getId());
+        log.debug("TenantContext created");
       }
-      log.info("TenantContext created");
-      final Object proceed = joinPoint.proceed();
-      return proceed;
+      return joinPoint.proceed();
     } finally {
       TenantContextHolder.clear();
-      log.info("TenantContext deleted");
+      log.debug("TenantContext deleted");
     }
 
   }
 
-  public Object getDynamicValue(String[] parameterNames,
-      Object[] args, String key) {
-    ExpressionParser parser = new SpelExpressionParser();
-    StandardEvaluationContext context = new
-        StandardEvaluationContext();
-
+  private Object getDynamicValue(String[] parameterNames, Object[] args, String key) {
+    StandardEvaluationContext context = new StandardEvaluationContext();
     for (int i = 0; i < parameterNames.length; i++) {
       context.setVariable(parameterNames[i], args[i]);
     }
-    return parser.parseExpression(key).getValue(context,
-        Object.class);
+
+    return parser.parseExpression(key).getValue(context, Object.class);
   }
 
 

@@ -19,8 +19,7 @@ Multi-Tenancy with Spring Data JPA
 - hibernate.tenant_identifier_resolver 로 지정
 
 ## 구현
-- Master Database Configuration
-- Tenant Database Configuration
+- Master/Tenant Database Configuration
 - Tenant 식별하기
 - Tenant Database 생성하기
 - Tenant Migration Using Flyway
@@ -71,6 +70,12 @@ https://github.com/google/guava/wiki/CachesExplained#when-does-cleanup-happen
   }
 
 ```
+
+### TaskDecoder 를 사용하여 context 전파하기
+@Async 를 사용하면 별도의 thread 로 실행되기 때문에 ThreadLocal 에 저장한 변수값이 전파되지 않는다. TaskDecoder 를 사용하여 이 문제를 해결할 수 있다
+
+
+
 
 ## References
 [Hibernate - Multitenancy](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#multitenacy)  
