@@ -8,7 +8,7 @@
     <version>2.6.6</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId></groupId>
+  <groupId>jhkim105.tutorials</groupId>
   <artifactId>spring-commons-configuration</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-commons-configuration</name>
