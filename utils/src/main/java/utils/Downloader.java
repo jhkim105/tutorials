@@ -28,8 +28,9 @@ public class Downloader {
     });
   }
 
-  public static void downloadWithJavaIO(String url, String localFilename) {
-    try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream()); FileOutputStream fileOutputStream = new FileOutputStream(localFilename)) {
+  public static void downloadWithJavaIO(String urlStr, String localFilename) {
+    try (BufferedInputStream in = new BufferedInputStream(new URL(urlStr).openStream());
+        FileOutputStream fileOutputStream = new FileOutputStream(localFilename)) {
       byte dataBuffer[] = new byte[1024];
       int bytesRead;
       while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {

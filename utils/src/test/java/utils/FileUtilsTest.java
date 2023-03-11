@@ -1,6 +1,7 @@
 package utils;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.entity.ContentType;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +35,7 @@ public class FileUtilsTest {
   @Test
   void fileList() {
     List<File> fileList = FileUtils.files("src/test/java/utils");
-    Assertions.assertThat(fileList).isNotEmpty();
+    assertThat(fileList).isNotEmpty();
   }
 
   @Test
@@ -65,8 +67,8 @@ public class FileUtilsTest {
 
   @Test
   void findFileEncoding() {
-    Assertions.assertThat(FileUtils.findFileEncoding(new File("src/test/resources/encoding-EUC-KR.txt"))).isEqualTo("EUC-KR");
-    Assertions.assertThat(FileUtils.findFileEncoding(new File("src/test/resources/encoding-UTF-8.txt"))).isEqualTo("UTF-8");
+    assertThat(FileUtils.findFileEncoding(new File("src/test/resources/encoding-EUC-KR.txt"))).isEqualTo("EUC-KR");
+    assertThat(FileUtils.findFileEncoding(new File("src/test/resources/encoding-UTF-8.txt"))).isEqualTo("UTF-8");
   }
 
   @Test
@@ -83,10 +85,16 @@ public class FileUtilsTest {
 
   @Test
   void isEmptyDir() {
-    Assertions.assertThat(FileUtils.isEmptyDir("src/test/resources")).isEqualTo(false);
+    assertThat(FileUtils.isEmptyDir("src/test/resources")).isEqualTo(false);
     FileUtils.mkdir("target/empty");
     FileUtils.mkdir("target/empty/a");
-    Assertions.assertThat(FileUtils.isEmptyDir("target/empty")).isEqualTo(true);
+    assertThat(FileUtils.isEmptyDir("target/empty")).isEqualTo(true);
   }
 
+  @Test
+  void contentType() {
+    assertThat(FileUtils.contentType(Paths.get("src/test/resources/input.txt"))).isEqualTo(ContentType.TEXT_PLAIN.getMimeType());
+    assertThat(FileUtils.contentType(Paths.get("src/test/resources/image.png"))).isEqualTo(ContentType.IMAGE_PNG.getMimeType());
+    assertThat(FileUtils.contentType(Paths.get("src/test/resources/info.zip"))).isEqualTo("application/zip");
+  }
 }

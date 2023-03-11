@@ -203,4 +203,11 @@ public class FileUtils {
     }
   }
 
+  public static String contentType(Path path) {
+    try {
+      return Files.probeContentType(path);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
