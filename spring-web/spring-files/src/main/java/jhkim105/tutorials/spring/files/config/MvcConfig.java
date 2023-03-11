@@ -15,19 +15,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Slf4j
 public class MvcConfig implements WebMvcConfigurer {
 
-	private final AppProperties appProperties;
+  private final AppProperties appProperties;
 
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/upload-form2").setViewName("upload-form2");
-	}
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/upload-form2").setViewName("upload-form2");
+  }
 
 
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		log.info("{}", appProperties.getStoragePath());
-		registry.setOrder(-1).addResourceHandler("/files/**")
-				.addResourceLocations(String.format("file:%s/", appProperties.getStoragePath()));
-	}
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.setOrder(-1);
+    appProperties.getResourceMappings().values().forEach(r ->
+        registry.addResourceHandler(r.getPath())
+            .addResourceLocations(r.getLocations())
+    );
+  }
 
 }

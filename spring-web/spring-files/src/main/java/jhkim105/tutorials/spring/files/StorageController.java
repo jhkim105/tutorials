@@ -1,8 +1,10 @@
 package jhkim105.tutorials.spring.files;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,20 +58,34 @@ public class StorageController {
 
   @GetMapping("/**")
   @ResponseBody
-  public ResponseEntity<Resource> download(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public ResponseEntity<Resource> download(HttpServletRequest request, HttpServletResponse response,
+      @RequestHeader Map<String, String> headers) throws IOException {
+
+    headers.forEach((key, value) -> {
+      log.debug("{}: {}", key, value);
+    });
+
     String path = extractPath(request);
     log.debug("path: {}", path);
-    Resource file = storageService.loadAsResource(path);
-    if (!file.exists()) {
+    Resource resource = storageService.loadAsResource(path);
+    if (!resource.exists()) {
 //      return ResponseEntity.notFound().build(); // /error 페이지로 이동안하고 바로 결과 리턴
       log.debug("Resource not found");
       response.sendError(HttpServletResponse.SC_NOT_FOUND);
       return null;
     }
     return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION,
-            "attachment; filename=\"" + file.getFilename() + "\"")
-        .body(file);
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+        .header(HttpHeaders.CONTENT_TYPE, contentType(resource))
+        .body(resource);
+  }
+
+  private String contentType(Resource resource) {
+    try {
+      return Files.probeContentType(resource.getFile().toPath());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private String extractPath(HttpServletRequest request) {
