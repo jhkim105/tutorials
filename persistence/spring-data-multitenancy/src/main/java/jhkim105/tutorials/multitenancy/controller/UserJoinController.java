@@ -1,10 +1,10 @@
 package jhkim105.tutorials.multitenancy.controller;
 
-import jhkim105.tutorials.multitenancy.tenant.domain.User;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.service.TenantService;
+import jhkim105.tutorials.multitenancy.tenant.context.TenantContext;
+import jhkim105.tutorials.multitenancy.tenant.domain.User;
 import jhkim105.tutorials.multitenancy.tenant.service.UserService;
-import jhkim105.tutorials.multitenancy.tenant.context.TenantContextHolder;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class UserJoinController {
     User user;
     if (!StringUtils.isBlank(tenantName)) {
       Tenant tenant = tenantService.createTenant(tenantName);
-      TenantContextHolder.setTenantId(tenant.getId());
+      TenantContext.setTenantId(tenant.getId());
       user = userService.join(tenant, username);
     } else {
       user = userService.join(username);

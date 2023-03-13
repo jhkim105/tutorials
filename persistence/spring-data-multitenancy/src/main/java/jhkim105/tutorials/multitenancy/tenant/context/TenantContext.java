@@ -1,14 +1,17 @@
 package jhkim105.tutorials.multitenancy.tenant.context;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+public class TenantContext {
+  private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
 
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface TenantContext {
+  public static void setTenantId(String tenantId) {
+    contextHolder.set(tenantId);
+  }
 
-  String key() default "";
+  public static String getTenantId() {
+    return contextHolder.get();
+  }
 
+  public static void clear() {
+    contextHolder.remove();
+  }
 }

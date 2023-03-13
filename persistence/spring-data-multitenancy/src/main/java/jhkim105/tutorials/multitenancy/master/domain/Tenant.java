@@ -1,6 +1,5 @@
 package jhkim105.tutorials.multitenancy.master.domain;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,20 +7,21 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.Audited;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @Audited
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(callSuper = false, of = "id")
 public class Tenant {
 
   public static final String DEFAULT_TENANT_ID = "default";
@@ -34,26 +34,15 @@ public class Tenant {
   private String id;
 
   @Column(unique = true)
-  @Setter
   private String name;
 
   private String dbName;
   private String dbAddress;
-
   private String dbUsername;
-
   private String dbPassword;
-
-  @ColumnDefault("10")
   private int maxTotal = 10;
-
-  @ColumnDefault("10")
   private int maxIdle = 10;
-
-  @ColumnDefault("0")
   private int minIdle = 0;
-
-  @ColumnDefault("0")
   private int initialSize = 0;
 
   @Builder
@@ -75,21 +64,4 @@ public class Tenant {
     return String.format("%s%s", DATABASE_NAME_PREFIX, dbName);
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
-      return false;
-    }
-    Tenant tenant = (Tenant) o;
-
-    return Objects.equals(id, tenant.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return 2096421156;
-  }
 }

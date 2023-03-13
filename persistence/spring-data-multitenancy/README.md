@@ -19,11 +19,9 @@ Multi-Tenancy with Spring Data JPA
 - hibernate.tenant_identifier_resolver 로 지정
 
 ## 구현
-- Master/Tenant Database Configuration
+- Master/Tenant Database
 - Tenant 식별하기
-- Tenant Database 생성하기
-- Tenant Migration Using Flyway
-- Tenant DataSource Caching
+- Tenant Database 생성/업데이트
 
 ### Tenant DataSource Caching
 Tenant DataSource 를 cache 에 저장하고 만료될때 connection 을 반환하도록 한다.
@@ -78,4 +76,7 @@ https://github.com/google/guava/wiki/CachesExplained#when-does-cleanup-happen
 
 
 ## References
-[Hibernate - Multitenancy](https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#multitenacy)  
+https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#multitenacy 
+https://aws.amazon.com/ko/blogs/apn/building-a-multi-tenant-saas-solution-using-aws-serverless-services/
+https://www.baeldung.com/hibernate-5-multitenancy
+https://www.baeldung.com/multitenancy-with-spring-data-jpa

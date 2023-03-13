@@ -24,12 +24,12 @@ public class TenantFilter extends OncePerRequestFilter {
 
     if (StringUtils.isNotBlank(tenantId)) {
       log.debug("TenantContext set, {}", tenantId);
-      TenantContextHolder.setTenantId(tenantId);
+      TenantContext.setTenantId(tenantId);
     }
     try {
       chain.doFilter(request, response);
     } finally {
-      TenantContextHolder.clear();
+      TenantContext.clear();
       log.debug("TenantContext deleted");
     }
 

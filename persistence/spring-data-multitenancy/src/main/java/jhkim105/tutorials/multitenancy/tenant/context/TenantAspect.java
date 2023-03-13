@@ -22,29 +22,29 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
-public class TenantContextAspect {
+public class TenantAspect {
 
   private final TenantService tenantService;
   private final ExpressionParser parser = new SpelExpressionParser();
 
-  @Around("@annotation(jhkim105.tutorials.multitenancy.tenant.context.TenantContext)")
+  @Around("@annotation(jhkim105.tutorials.multitenancy.tenant.context.TenantSetter)")
   public Object invoke(ProceedingJoinPoint joinPoint) throws Throwable {
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
     Method method = signature.getMethod();
 
-    TenantContext tenantContext = method.getAnnotation(TenantContext.class);
-    String key = (String)getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), tenantContext.key());
+    TenantSetter tenantSetter = method.getAnnotation(TenantSetter.class);
+    String key = (String)getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), tenantSetter.key());
     log.debug("key: {}", key);
     Tenant tenant = tenantService.findById(key);
 
     try {
       if (tenant != null) {
-        TenantContextHolder.setTenantId(tenant.getId());
+        TenantContext.setTenantId(tenant.getId());
         log.debug("TenantContext created");
       }
       return joinPoint.proceed();
     } finally {
-      TenantContextHolder.clear();
+      TenantContext.clear();
       log.debug("TenantContext deleted");
     }
 

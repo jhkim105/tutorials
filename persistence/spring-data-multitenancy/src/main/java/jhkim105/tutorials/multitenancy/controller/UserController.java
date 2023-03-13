@@ -1,7 +1,7 @@
 package jhkim105.tutorials.multitenancy.controller;
 
 import java.util.List;
-import jhkim105.tutorials.multitenancy.tenant.context.TenantContext;
+import jhkim105.tutorials.multitenancy.tenant.context.TenantSetter;
 import jhkim105.tutorials.multitenancy.tenant.domain.User;
 import jhkim105.tutorials.multitenancy.tenant.service.UserService;
 import lombok.Builder;
@@ -32,7 +32,7 @@ public class UserController {
   }
 
   @PostMapping
-  @TenantContext(key = "#userCreateRequest.tenantId")
+  @TenantSetter(key = "#userCreateRequest.tenantId")
   public User save(@RequestBody UserCreateRequest userCreateRequest) {
     User user = User.builder()
         .tenantId(userCreateRequest.tenantId)
