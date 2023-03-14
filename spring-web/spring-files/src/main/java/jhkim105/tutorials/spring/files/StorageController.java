@@ -1,6 +1,7 @@
 package jhkim105.tutorials.spring.files;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -75,7 +77,9 @@ public class StorageController {
       return null;
     }
     return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+        .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+            .filename(resource.getFilename(), StandardCharsets.UTF_8)
+            .build().toString())
         .header(HttpHeaders.CONTENT_TYPE, contentType(resource))
         .body(resource);
   }
