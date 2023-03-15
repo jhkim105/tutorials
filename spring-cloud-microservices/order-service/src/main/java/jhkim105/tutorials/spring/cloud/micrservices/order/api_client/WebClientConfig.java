@@ -16,10 +16,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
   @Bean
-  public WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+  public WebClient productClient(OAuth2AuthorizedClientManager authorizedClientManager) {
     ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
         new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
     return WebClient.builder()
+        .baseUrl("http://localhost:8081")
         .apply(oauth2Client.oauth2Configuration())
         .build();
   }

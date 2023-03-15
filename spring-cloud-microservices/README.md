@@ -104,10 +104,11 @@ WebClientConfig.java
 public class WebClientConfig {
 
   @Bean
-  public WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+  public WebClient productWebClient(OAuth2AuthorizedClientManager authorizedClientManager) {
     ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =
         new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
     return WebClient.builder()
+        .baseUrl("http://localhost:8081")
         .apply(oauth2Client.oauth2Configuration())
         .build();
   }
@@ -141,7 +142,7 @@ ProductController.java
   public List<Product> getProducts() {
     return this.webClient
         .get()
-        .uri("http://localhost:8081/products")
+        .uri("/products")
         .attributes(clientRegistrationId("api-client"))
         .retrieve()
         .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})

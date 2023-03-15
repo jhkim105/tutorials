@@ -15,13 +15,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class ApiClientController {
 
-  private final WebClient webClient;
+  private final WebClient productWebClient;
 
   @GetMapping("/products")
   public List<Product> getProducts() {
-    return this.webClient
+    return this.productWebClient
         .get()
-        .uri("http://localhost:8081/products")
+        .uri("/products")
         .attributes(clientRegistrationId("api-client"))
         .retrieve()
         .bodyToMono(new ParameterizedTypeReference<List<Product>>() {})

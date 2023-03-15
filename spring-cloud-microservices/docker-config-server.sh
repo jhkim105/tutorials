@@ -5,5 +5,5 @@ docker run --rm -it -p 8888:8888 -m=2g \
       -e SPRING_RABBITMQ_HOST=host.docker.internal \
       -e SPRING_RABBITMQ_USERNAME=guest \
       -e SPRING_RABBITMQ_PASSWORD=guest \
-      -e SPRING_RABBITMQ_VIRTUAL_HOST=msa \
+      -e SPRING_RABBITMQ_VIRTUAL_HOST=local \
       hyness/spring-cloud-config-server
