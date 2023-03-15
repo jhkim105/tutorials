@@ -58,7 +58,7 @@ Entity
   private String username;
 ```
 
-검색조건에 사용할 경우 직접 복호화해야 한다. Spring Data method로는 조회가 안된다.  
+검색조건에 사용할 경우 직접 복호화해야 한다. Spring Data method 로는 조회가 안된다.  
   - User user = repository.findByUsername("user01");
 
 
@@ -112,6 +112,8 @@ public class CustomPBStringEncryptor implements PBEStringCleanablePasswordEncryp
 - System.getProperty("jasypt.encryptor.password")
 - System.getenv("jasypt.encryptor.password")
 
+### @Lob 이슈
+@Lob 애노테이션 선언하면 varchar 기본 size(255) 로 생성됨. columnDefinition="longtext" 로 대응 가능하나, DB 종속적이게 됨.
 
 ## References
 http://www.jasypt.org/hibernate.html
