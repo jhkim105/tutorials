@@ -1,5 +1,6 @@
 package jhkim105.tutorials.spring.mvc.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -14,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.MvcResult;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,23 +31,25 @@ class SampleControllerTest {
 
   @Test
   void testGet() throws Exception {
-    ResultActions resultActions = mockMvc.perform(get("/sample/get")
+    MvcResult mvcResult = mockMvc.perform(get("/sample/get")
             .param("id", "id01"))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id").value("id01"))
-        .andExpect(jsonPath("$.id").isNotEmpty());
-    String ret = resultActions.andReturn().getResponse().getContentAsString();
+        .andExpect(jsonPath("$.id").isNotEmpty())
+        .andReturn();
+    assertThat(mvcResult.getResponse().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
+    String ret = mvcResult.getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }
 
   @Test
   void testPost() throws Exception {
-    ResultActions resultActions = mockMvc.perform(post("/sample/post")
+    MvcResult mvcResult = mockMvc.perform(post("/sample/post")
             .param("id", "id01")
             .param("name", "name01"))
-        .andDo(print());
-    String ret = resultActions.andReturn().getResponse().getContentAsString();
+        .andDo(print()).andReturn();
+    String ret = mvcResult.getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }
 
@@ -57,11 +60,11 @@ class SampleControllerTest {
         .name("name02")
         .build();
 
-    ResultActions resultActions = mockMvc.perform(post("/sample/postBody")
+    MvcResult mvcResult = mockMvc.perform(post("/sample/postBody")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(sample)))
-        .andDo(print());
-    String ret = resultActions.andReturn().getResponse().getContentAsString();
+        .andDo(print()).andReturn();
+    String ret = mvcResult.getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }
 
@@ -71,10 +74,10 @@ class SampleControllerTest {
    * - 등록된 확장자만 허용함
    */
   void testUseRegisteredSuffix_json() throws Exception {
-    ResultActions resultActions = mockMvc.perform(get("/sample/get.json"))
+    MvcResult mvcResult = mockMvc.perform(get("/sample/get.json"))
         .andDo(print())
-        .andExpect(status().isOk());
-    String ret = resultActions.andReturn().getResponse().getContentAsString();
+        .andExpect(status().isOk()).andReturn();
+    String ret = mvcResult.getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }
 
@@ -84,10 +87,10 @@ class SampleControllerTest {
    * - 모든 확장자를 허용하려면 suffixPatternMatch=true, registeredSuffixPatternMatch=false
    */
   void testUseRegisteredSuffix_other() throws Exception {
-    ResultActions resultActions = mockMvc.perform(get("/sample/get.do"))
+    MvcResult mvcResult = mockMvc.perform(get("/sample/get.do"))
         .andDo(print())
-        .andExpect(status().is4xxClientError());
-    String ret = resultActions.andReturn().getResponse().getContentAsString();
+        .andExpect(status().is4xxClientError()).andReturn();
+    String ret = mvcResult.getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }
 
