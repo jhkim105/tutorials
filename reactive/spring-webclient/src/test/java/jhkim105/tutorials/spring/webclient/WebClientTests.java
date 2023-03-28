@@ -1,5 +1,7 @@
 package jhkim105.tutorials.spring.webclient;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.net.URI;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,6 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 class WebClientTests {
-
 
   @Test
   void get() {
@@ -54,6 +55,27 @@ class WebClientTests {
     log.info(response.block());
   }
 
+  @Test
+  void post_error() {
+    String url = "http://httpbin.org";
+
+    LinkedMultiValueMap<String, String> linkedMultiValueMap = new LinkedMultiValueMap<>();
+    linkedMultiValueMap.add("a", "1");
+
+    Mono<String> response = WebClient.builder().baseUrl(url).build()
+        .post()
+        .uri("/post2")
+        .body(BodyInserters.fromMultipartData(linkedMultiValueMap))
+        .retrieve()
+        .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(IllegalStateException::new))
+        .bodyToMono(String.class);
+
+
+    assertThrows(IllegalStateException.class, () -> {
+      response.block();
+    });
+
+  }
 
   private WebClient webClient(String url) {
     return WebClient.builder()
@@ -63,23 +85,22 @@ class WebClientTests {
 
   @Test
   void file() {
-    WebClient webClient = WebClient.create();
-    String url = "http://httpbin.org/post";
-
+    WebClient webClient = WebClient.create("http://httpbin.org");
     MockMultipartFile multipartFile = new MockMultipartFile("file", "test.txt",
         "text/plain", "Spring Framework".getBytes());
     MultipartBodyBuilder builder = new MultipartBodyBuilder();
     builder.part("file", multipartFile.getResource());
 
-    Mono<String> res = webClient.post()
-        .uri(url)
+    Mono<String> res = webClient
+        .post()
+        .uri("/post")
         .contentType(MediaType.MULTIPART_FORM_DATA)
         .body(BodyInserters.fromMultipartData(builder.build()))
-        .exchangeToMono(response -> {
-          return response.bodyToMono(String.class);
-        });
+        .exchangeToMono(response -> response.bodyToMono(String.class));
      log.info(res.block());
 
   }
+
+
 
 }

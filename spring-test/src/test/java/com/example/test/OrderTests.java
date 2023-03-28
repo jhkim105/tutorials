@@ -1,4 +1,4 @@
-package com.example.junit5;
+package com.example.test;
 
 
 import lombok.extern.slf4j.Slf4j;

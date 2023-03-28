@@ -8,10 +8,10 @@
     <version>2.7.8</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.example</groupId>
-  <artifactId>spring-junit5</artifactId>
+  <groupId>jhkim105.tutorials</groupId>
+  <artifactId>spring-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-junit5</name>
+  <name>spring-test</name>
   <description>Demo project for Spring Boot</description>
 
   <properties>
