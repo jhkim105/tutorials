@@ -1,16 +1,27 @@
-#
+package com.example.mockserver;
 
-## Dependencies
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
 
-```xml
-<dependency>
-  <groupId>org.mock-server</groupId>
-  <artifactId>mockserver-junit-jupiter-no-dependencies</artifactId>
-  <version>5.14.0</version>
-</dependency>
-```
-## MockServer And JUnit5
-```java
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockserver.integration.ClientAndServer;
+import org.mockserver.junit.jupiter.MockServerExtension;
+import org.mockserver.junit.jupiter.MockServerSettings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
+
 @SpringBootTest
 @ExtendWith(MockServerExtension.class)
 @MockServerSettings(ports = {8888})
@@ -62,8 +73,3 @@ class MockServerTests {
   }
 
 }
-```
-
-
-## References
-* https://www.mock-server.com/mock_server/running_mock_server.html

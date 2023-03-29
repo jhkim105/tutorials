@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockserver.client.MockServerClient;
@@ -26,8 +25,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @ExtendWith(MockServerExtension.class)
 @MockServerSettings(ports = {8888})
 @AutoConfigureMockMvc
-@Disabled("java.lang.IllegalAccessException: class io.netty.util.internal.PlatformDependent0$6 cannot access class jdk.internal.misc.Unsafe (in module java.base) because module java.base does not export jdk.internal.misc to unnamed module @769a1df5\n"
-    + "\tat java.base/jdk.internal.reflect.Reflection.newIllegalAccessException(Reflection.java:361)\n")
 class CallbackControllerTest {
 
 
@@ -38,7 +35,7 @@ class CallbackControllerTest {
   private ObjectMapper objectMapper;
 
   @BeforeEach
-  public void beforeEachLifecyleMethod(MockServerClient mockServerClient) throws Exception {
+  public void beforeEach(MockServerClient mockServerClient) throws Exception {
     Map<String, Object> responseMessageMap = new HashMap<>();
     responseMessageMap.put("code", "100");
     responseMessageMap.put("message", "callback received");
