@@ -3,6 +3,7 @@ package jhkim105.tutorials.spring.webclient;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.net.URI;
+import java.util.concurrent.CountDownLatch;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -101,6 +102,24 @@ class WebClientTests {
 
   }
 
+  @Test
+  void exceptionHandling() throws InterruptedException {
+    Mono<String> response = WebClient.create("http://localhost:8080").get()
+        .retrieve()
+        .onStatus(
+            httpStatus -> httpStatus != HttpStatus.OK,
+            clientResponse ->
+                clientResponse.createException()
+                    .flatMap(it -> Mono.error(new RuntimeException("status: " + clientResponse.statusCode())))
+        )
+        .bodyToMono(String.class)
+        .onErrorResume(throwable -> Mono.error(new RuntimeException(throwable)));
 
 
+    CountDownLatch cdl = new CountDownLatch(1);
+    response
+        .doOnTerminate(cdl::countDown)
+        .subscribe(log::info, e -> log.warn("Error: " + e));
+    cdl.await();
+  }
 }

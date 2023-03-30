@@ -33,7 +33,6 @@ public class WebClientConfig {
           .doOnConnected(conn ->
               conn.addHandlerLast(new ReadTimeoutHandler(5000, TimeUnit.MILLISECONDS))
                   .addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS)));
-
       customizer.clientConnector(new ReactorClientHttpConnector(httpClient));
     };
   }

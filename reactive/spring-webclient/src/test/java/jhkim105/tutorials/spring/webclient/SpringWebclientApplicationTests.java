@@ -26,7 +26,7 @@ class SpringWebclientApplicationTests {
         .bodyToMono(String.class);
 
     response
-        .doOnTerminate(() -> cdl.countDown())
+        .doOnTerminate(cdl::countDown)
         .subscribe(log::info);
     cdl.await();
   }

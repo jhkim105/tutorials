@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.reactive;
+package jhkim105.tutorials.reactor;
 
 import java.util.List;
 import lombok.Setter;

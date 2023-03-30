@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.reactive;
+package jhkim105.tutorials.reactor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
