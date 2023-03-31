@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import jhkim105.tutorials.spring.data.jpa.domain.base.BaseEntity;
@@ -33,7 +34,7 @@ public class User extends BaseEntity<String> {
   private String id;
 
   @Column(nullable = false)
-  private String name;
+  private String username;
 
   @ElementCollection
   @CollectionTable(name = "dm_user_address", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"))
@@ -45,13 +46,11 @@ public class User extends BaseEntity<String> {
   private Set<Order> orders = new HashSet<>();
 
   @Builder
-  public User(String name) {
-    this.name = name;
+  public User(String username) {
+    this.username = username;
   }
 
+  @ManyToOne
+  private Group group;
 
-  @Column
-  public String getNickname() {
-    return "";
-  }
 }

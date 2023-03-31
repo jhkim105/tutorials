@@ -1,5 +1,5 @@
 -- dm_user
-INSERT INTO dm_user (id, name) VALUES ('id01', '홍길동');
+INSERT INTO dm_user (id, username) VALUES ('id01', 'user01');
 -- dm_user_address
 INSERT INTO dm_user_address (user_id, address_city, address_street, address_name) VALUES ('id01', '서울시 송파구', '위례성대로', '직장');
 INSERT INTO dm_user_address (user_id, address_city, address_street, address_name) VALUES ('id01', '서울시 성동구', '무팍로', '집');

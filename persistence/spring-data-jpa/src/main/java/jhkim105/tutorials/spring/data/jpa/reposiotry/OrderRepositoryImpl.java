@@ -23,6 +23,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
   public List<OrderProjection> getOrderProjections() {
     return jpaQueryFactory.from(order)
         .join(order.user, user)
-        .select(new QOrderProjection(order.name, user.name)).fetch();
+        .select(new QOrderProjection(order.name, user.username)).fetch();
   }
 }
