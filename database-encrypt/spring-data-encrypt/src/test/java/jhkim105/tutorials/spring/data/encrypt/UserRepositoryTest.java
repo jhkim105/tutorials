@@ -1,5 +1,8 @@
 package jhkim105.tutorials.spring.data.encrypt;
 
+import jhkim105.tutorials.spring.data.encrypt.crypto.CryptoConfig;
+import jhkim105.tutorials.spring.data.encrypt.domain.User;
+import jhkim105.tutorials.spring.data.encrypt.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -7,11 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(CryptoConfig.class)
 @Slf4j
 public class UserRepositoryTest {
 
@@ -21,7 +26,11 @@ public class UserRepositoryTest {
   @Test
   @Rollback(value = false)
   void save() {
-    User newUser = User.builder().username("test01").name("Full Name").phoneNumber("01011112222").build();
+    User newUser = User.builder()
+        .username("test01")
+        .name("Full Name")
+        .description("설명")
+        .build();
     repository.save(newUser);
 
     User user = repository.findByUsername("test01");

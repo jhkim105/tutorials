@@ -113,7 +113,8 @@ public class CustomPBStringEncryptor implements PBEStringCleanablePasswordEncryp
 - System.getenv("jasypt.encryptor.password")
 
 ### @Lob 이슈
-@Lob 애노테이션 선언하면 varchar 기본 size(255) 로 생성됨. columnDefinition="longtext" 로 대응 가능하나, DB 종속적이게 됨.
+@Lob 애노테이션 선언하면 varchar 기본 size(255) 로 생성됨. columnDefinition="longtext" 로 대응 가능하나, DB 종속적이게 됨.  
+AttributeConverter 를 사용하면 이런 문제 없다.
 
 ## References
 http://www.jasypt.org/hibernate.html

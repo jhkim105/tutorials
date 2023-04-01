@@ -1,10 +1,12 @@
-package jhkim105.tutorials.spring.data.encrypt;
+package jhkim105.tutorials.spring.data.encrypt.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import jhkim105.tutorials.spring.data.encrypt.crypto.StringEncryptConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -31,22 +33,18 @@ public class User {
 
   @Column(nullable = false, unique = true)
   @ColumnTransformer(
-      read = "cast(AES_DECRYPT(UNHEX(username), fn_enckey()) as CHAR)",
-      write = "HEX(AES_ENCRYPT(?, fn_enckey()))")
+      read = "cast(AES_DECRYPT(UNHEX(username), 'secret1111') as CHAR)",
+      write = "HEX(AES_ENCRYPT(?, 'secret1111'))")
   private String username;
-
-  @Column
+  ;
+  @Lob
+  @Convert(converter = StringEncryptConverter.class)
   private String description;
 
-  @Column
-  @Convert(converter = StringEncryptConverter.class)
-  private String phoneNumber;
-
   @Builder
-  public User(String name, String username, String description, String phoneNumber) {
+  public User(String name, String username, String description) {
     this.name = name;
     this.username = username;
     this.description = description;
-    this.phoneNumber = phoneNumber;
   }
 }

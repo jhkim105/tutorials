@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -32,7 +33,8 @@ public class User {
   @Type(type="encryptedString")
   private String username;
 
-  @Column
+  @Lob
+  @Type(type="encryptedString")
   private String description;
 
   @Builder

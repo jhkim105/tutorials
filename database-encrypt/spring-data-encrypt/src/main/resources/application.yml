@@ -1,18 +1,13 @@
-# Logging
 logging:
   level:
     "com.example": trace
     "org.hibernate.SQL": debug
     "org.hibernate.type.descriptor.sql.BasicBinder": trace
-
-# DATASOURCE
 spring:
   datasource:
-    url: jdbc:mariadb://localhost/demo?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://localhost/demo?createDatabaseIfNotExist=true
     username: root
     password: 111111
-
-# JPA
   jpa:
     hibernate:
       ddl-auto: create
@@ -20,3 +15,6 @@ spring:
   sql:
     init:
       mode: always
+application:
+  database-encrypt-type: JASYPT
+  database-encrypt-password: secret#01

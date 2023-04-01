@@ -1,7 +1,6 @@
 package jhkim105.tutorials.spring.data.encrypt.jasypt;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jasypt.encryption.pbe.PBEStringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.hibernate5.encryptor.HibernatePBEStringEncryptor;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +14,7 @@ public class JasyptConfig {
   private static final String DP = "secret#01";
 
   @Bean
-  public PBEStringEncryptor stringEncryptor() {
+  public CustomPBStringEncryptor customPBStringEncryptor() {
     PooledPBEStringEncryptor pooledPBEStringEncryptor = new PooledPBEStringEncryptor();
     pooledPBEStringEncryptor.setAlgorithm("PBEWithMD5AndTripleDES");
     pooledPBEStringEncryptor.setPassword(getPassword());
@@ -34,10 +33,10 @@ public class JasyptConfig {
   }
 
   @Bean
-  public HibernatePBEStringEncryptor hibernateStringEncryptor(PBEStringEncryptor stringEncryptor) {
+  public HibernatePBEStringEncryptor hibernateStringEncryptor(CustomPBStringEncryptor customPBStringEncryptor) {
     HibernatePBEStringEncryptor hibernateStringEncryptor = new HibernatePBEStringEncryptor();
     hibernateStringEncryptor.setRegisteredName("hibernateStringEncryptor");
-    hibernateStringEncryptor.setEncryptor(stringEncryptor);
+    hibernateStringEncryptor.setEncryptor(customPBStringEncryptor);
     return hibernateStringEncryptor;
   }
 
