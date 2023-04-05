@@ -1,10 +1,12 @@
 package jhkim105.tutorials.spring.data.encrypt.crypto;
 
 import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Converter
 @RequiredArgsConstructor
 public class StringEncryptConverter implements AttributeConverter<String, String> {
 
