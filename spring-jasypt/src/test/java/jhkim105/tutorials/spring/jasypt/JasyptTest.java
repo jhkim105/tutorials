@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
-import org.junit.jupiter.api.BeforeEach;
+import org.jasypt.registry.AlgorithmRegistry;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,20 +22,20 @@ class JasyptTest {
 
   @Value("${jasypt.encryptor.password}")
   private String jasyptPassword;
-  private StringEncryptor defaultStringEncryptor;
-  private StringEncryptor customStringEncryptor;
-
-  @BeforeEach
-  void setup() {
-    defaultStringEncryptor = defaultStringEncryptor();
-    customStringEncryptor = customStringEncryptor();
-  }
 
   @Test
   void encryptAndDecrypt() {
+    StringEncryptor customStringEncryptor = customStringEncryptor();
     String planText = "guest";
     String enc = stringEncryptor.encrypt(planText);
+    log.info(enc);
     assertThat(customStringEncryptor.decrypt(enc)).isEqualTo(planText);
+  }
+
+  @Test
+  void testDefaultStringEncryptor() {
+    StringEncryptor defaultStringEncryptor = defaultStringEncryptor() ;
+    log.info(defaultStringEncryptor.encrypt("guest"));
   }
 
   private StringEncryptor defaultStringEncryptor() {
@@ -65,5 +65,10 @@ class JasyptTest {
     config.setStringOutputType("base64");
     encryptor.setConfig(config);
     return encryptor;
+  }
+
+  @Test
+  void algorithms() {
+    log.info("supported: {}", AlgorithmRegistry.getAllPBEAlgorithms());
   }
 }

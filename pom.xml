@@ -52,6 +52,7 @@
     <module>spring-cloud-microservices</module>
     <module>messaging</module>
     <module>ai</module>
+    <module>security/oauth2-sso</module>
 
   </modules>
   <repositories>

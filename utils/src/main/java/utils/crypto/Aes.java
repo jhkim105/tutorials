@@ -49,7 +49,7 @@ public class Aes {
     this.ivParameterSpec = generateIv(iv);
   }
 
-  public static Aes getInstance(String password) {
+  public static Aes newInstance(String password) {
       return new Aes(password, 16);
   }
 

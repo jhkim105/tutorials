@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>jhkim105.tutorials</groupId>
-	<artifactId>spring-oauth2-okta</artifactId>
+	<artifactId>oauth2-okta</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>oauth2-okta</name>
 	<description>oauth2-okta</description>
