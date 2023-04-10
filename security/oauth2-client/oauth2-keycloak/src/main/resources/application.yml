@@ -6,8 +6,7 @@ spring:
     oauth2:
       client:
         registration:
-          oauth2-client:
-              provider: keycloak
+          keycloak:
               client-id: oauth2-client-demo
               authorization-grant-type: authorization_code
               scope: openid

@@ -19,7 +19,7 @@
   <dependencies>
   </dependencies>
   <modules>
-    <module>oauth2-client-keycloak</module>
+    <module>oauth2-keycloak</module>
     <module>oauth2-google</module>
     <module>oauth2-youtube</module>
     <module>oauth2-okta</module>
