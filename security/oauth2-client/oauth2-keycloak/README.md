@@ -51,7 +51,6 @@ public class SecurityConfig {
                 .antMatchers("/user-info").hasRole("USER")
                 .anyRequest().permitAll());
     http.oauth2Login();
-    http.logout(logout -> logout.addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/"));
     return http.build();
   }
 
@@ -60,6 +59,33 @@ public class SecurityConfig {
 ```
 
 http://localhost:8080/user-info
+
+### Social Logout
+
+SecurityConfig
+- OidcClientInitiatedLogoutSuccessHandler 지정
+```java
+  @Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception  {
+    http
+    .authorizeHttpRequests(auth -> auth
+    .antMatchers("/login").permitAll()
+    .anyRequest().authenticated());
+
+    http.oauth2Login();
+    http.logout(logout -> logout
+    .logoutSuccessHandler(oidcLogoutSuccessHandler())
+    .logoutSuccessUrl("/"));
+    return http.build();
+    }
+
+    OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
+    OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+    successHandler.setPostLogoutRedirectUri("{baseUrl}");
+    return successHandler;
+    }
+```
+
 
 ## Refs
 https://www.baeldung.com/spring-boot-keycloak
