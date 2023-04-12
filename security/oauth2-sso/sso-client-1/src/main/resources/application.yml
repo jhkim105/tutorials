@@ -1,0 +1,20 @@
+server:
+  port: 8082
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: sso-client-1
+            scope: openid
+            authorization-grant-type: authorization_code
+#            redirect-uri: http://localhost:8082/login/oauth2/code/keycloak
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/demo
+#            authorization-uri: http://localhost:8089/realms/demo/protocol/openid-connect/auth
+#            token-uri: http://localhost:8089/realms/demo/protocol/openid-connect/token
+#            user-info-uri: http://localhost:8089/realms/demo/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+

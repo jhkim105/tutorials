@@ -1,0 +1,16 @@
+server:
+  port: 8083
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: sso-client-2
+            scope: openid
+            authorization-grant-type: authorization_code
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/demo
+            user-name-attribute: preferred_username
+
