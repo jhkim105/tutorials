@@ -23,20 +23,10 @@ import org.springframework.http.HttpStatus;
 @Disabled
 public class ResourceServerLiveTests {
 
-  private final String redirectUrl = "http://localhost:8080";
-  private final String authorizationUrlFormat = "http://localhost:8089/realms/demo/protocol/openid-connect/auth?response_type=code&client_id=%s&scope=%s&redirect_uri=" + redirectUrl;
-  private final String tokenUrl = "http://localhost:8089/realms/demo/protocol/openid-connect/token";
-  private final String resourceUrl = "http://localhost:8081/resource-server-jwt/products";
 
-  private final String clientId = "oidc-demo";
-  private final String clientSecret = "Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt";
-  private final String username01 = "user01";
-  private final String password01 = "pass01";
-
-
-  @SuppressWarnings("unchecked")
   @Test
   void givenUserWithReadScope_whenGetProductResource_thenSuccess() {
+    String resourceUrl = "http://localhost:8081/products";
     String accessToken = obtainAccessToken("read");
 
     // Access resources using access token
@@ -47,6 +37,14 @@ public class ResourceServerLiveTests {
   }
 
   private String obtainAccessToken(String scopes) {
+    String redirectUrl = "http://localhost:8080";
+    String authorizationUrlFormat = "http://localhost:8089/realms/demo/protocol/openid-connect/auth?response_type=code&client_id=%s&scope=%s&redirect_uri=" + redirectUrl;
+    String tokenUrl = "http://localhost:8089/realms/demo/protocol/openid-connect/token";
+    String clientId = "oidc-demo";
+    String clientSecret = "Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt";
+    String username01 = "user01";
+    String password01 = "pass01";
+
     // obtain authentication url with custom codes
     String authorizationUrl = String.format(authorizationUrlFormat, clientId, scopes);
     Response response = RestAssured.given()

@@ -1,4 +1,4 @@
-package jhkim105.tutorials.resource_server.jwt;
+package jhkim105.tutorials.oauth2test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,14 +16,7 @@ import org.springframework.http.HttpStatus;
 @Slf4j
 class OAuth2AuthorizationCodeTests {
 
-  private final String redirectUrl = "http://localhost:8080";
-  private final String authorizationUrlFormat = "http://localhost:8089/realms/demo/protocol/openid-connect/auth?response_type=code&client_id=%s&scope=%s&redirect_uri=" + redirectUrl;
-  private final String tokenUrl = "http://localhost:8089/realms/demo/protocol/openid-connect/token";
 
-  private final String clientId = "oidc-demo";
-  private final String clientSecret = "Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt";
-  private final String username01 = "user01";
-  private final String password01 = "pass01";
 
   @Test
   void accessToken() {
@@ -32,6 +25,14 @@ class OAuth2AuthorizationCodeTests {
   }
 
   private String obtainAccessToken(String scopes) {
+    String redirectUrl = "http://localhost:8080";
+    String authorizationUrlFormat = "http://localhost:8089/realms/demo/protocol/openid-connect/auth?response_type=code&client_id=%s&scope=%s&redirect_uri=" + redirectUrl;
+    String tokenUrl = "http://localhost:8089/realms/demo/protocol/openid-connect/token";
+    String clientId = "oidc-demo";
+    String clientSecret = "Muo0SyBXyd3z06G5YPuP4n4gggX8pQlt";
+    String username01 = "user01";
+    String password01 = "pass01";
+
     // obtain authentication url with custom codes
     String authorizationUrl = String.format(authorizationUrlFormat, clientId, scopes);
     Response response = RestAssured.given()

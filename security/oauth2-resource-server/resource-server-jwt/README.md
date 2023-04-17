@@ -38,9 +38,8 @@ SecurityConfig.java
 ```
 
 ## How It Works
-JwtAuthenticationProvider    
-jwk-set-uri
-
+JwtAuthenticationProvider      
+jwk-set-uri 를 지정하면 인증서버가 내려가 있어도 동작한다. 키 정보를 해당 uri 에서 가져와서 캐싱해서 사용.
 
 
 ## Refs

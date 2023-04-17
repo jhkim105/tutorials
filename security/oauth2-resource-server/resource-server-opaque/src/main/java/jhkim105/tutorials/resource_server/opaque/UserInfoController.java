@@ -1,4 +1,4 @@
-package jhkim105.tutorials.resource_server.jwt;
+package jhkim105.tutorials.resource_server.opaque;
 
 import java.util.Map;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class AuthinfoController {
+public class UserInfoController {
 
-  @GetMapping("/authinfo")
-  public Map<String, Object> authinfo(BearerTokenAuthentication authentication) {
+  @GetMapping("/user-info")
+  public Map<String, Object> userInfo(BearerTokenAuthentication authentication) {
     return authentication.getTokenAttributes();
   }
 
-  @GetMapping("/authinfo2")
-  public Map<String, Object> authinfo2(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
+  @GetMapping("/user-info2")
+  public Map<String, Object> userInfo2(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
     return principal.getAttributes();
   }
 

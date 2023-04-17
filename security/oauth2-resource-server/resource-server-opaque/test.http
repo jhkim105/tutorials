@@ -11,7 +11,7 @@ client.global.set("access_token", response.body.access_token);
 
 
 
-GET http://localhost:8081/resource-server-opaque/products
+GET http://localhost:8081/products
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
@@ -19,14 +19,14 @@ Authorization: Bearer {{access_token}}
 ###
 
 
-GET http://localhost:8081/resource-server-opaque/authinfo
-Accept: application/json
-Authorization: Bearer {{access_token}}
 
+#
+GET http://localhost:8081/user-info
+Authorization: Bearer {{access_token}}
 
 ###
 
-GET http://localhost:8081/resource-server-opaque/authinfo2
+GET http://localhost:8081/user-info2
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
