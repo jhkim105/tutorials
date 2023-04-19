@@ -8,14 +8,15 @@ import jhkim105.tutorials.spring.mvc.config.AppProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import utils.FileUtils;
 
 @RestController
 @RequestMapping("/download/image")
@@ -33,25 +34,13 @@ public class DownloadImageController {
     String imagePath = String.format("%s/images/%s", appProperties.getStoragePath(), imageUri);
     log.debug("imagePath:{}", imagePath);
     return ResponseEntity.ok()
-        .contentType(mediaType(file))
+        .contentType(MediaType.valueOf(FileUtils.contentType(Paths.get(file))))
         .header(HttpHeaders.CONTENT_DISPOSITION, contentDispositionHeader(FilenameUtils.getName(imagePath)))
         .body(getImage(imagePath));
   }
 
-  private MediaType mediaType(String file) {
-    MediaType mediaType;
-    if (StringUtils.endsWithIgnoreCase(file, ".jpg") || StringUtils.endsWithIgnoreCase(file, ".jpeg")) {
-      mediaType = MediaType.IMAGE_JPEG;
-    } else if(StringUtils.endsWithIgnoreCase(file, ".png")) {
-      mediaType = MediaType.IMAGE_PNG;
-    } else {
-      throw new IllegalArgumentException("Request File is not supported...");
-    }
-    return mediaType;
-  }
-
   private String contentDispositionHeader(String fileName) {
-    return "inline;filename=\"" + fileName + "\"";
+    return ContentDisposition.inline().filename(fileName).build().toString();
   }
 
   private byte[] getImage(String imagePath) {

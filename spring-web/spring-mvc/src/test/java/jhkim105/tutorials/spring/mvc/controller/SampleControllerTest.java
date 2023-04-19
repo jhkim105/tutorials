@@ -38,7 +38,7 @@ class SampleControllerTest {
         .andExpect(jsonPath("$.id").value("id01"))
         .andExpect(jsonPath("$.id").isNotEmpty())
         .andReturn();
-    assertThat(mvcResult.getResponse().getContentType()).isEqualTo(MediaType.APPLICATION_JSON);
+    assertThat(mvcResult.getResponse().getContentType()).isEqualTo(MediaType.APPLICATION_JSON_VALUE);
     String ret = mvcResult.getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }

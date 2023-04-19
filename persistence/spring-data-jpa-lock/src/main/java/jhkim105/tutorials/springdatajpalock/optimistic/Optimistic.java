@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -24,6 +23,9 @@ public class Optimistic {
   @GeneratedValue(generator = "uuid")
   @Column(length = 50)
   private String id;
+
+  @Column(length = 100, unique = true)
+  private String name;
 
   @ColumnDefault("0")
   @Column(nullable = false)

@@ -7,6 +7,7 @@
     <groupId>jhkim105</groupId>
     <artifactId>tutorials</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath></relativePath>
   </parent>
   <groupId>jhkim105.tutorials</groupId>
   <artifactId>spring-cloud-function</artifactId>

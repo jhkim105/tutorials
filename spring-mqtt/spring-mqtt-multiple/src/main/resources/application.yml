@@ -2,7 +2,8 @@ spring:
   jmx:
     enabled: false
 mqtt:
-  brokerUrl: tcp://localhost:1883, tcp://localhost:1884
+#  brokerUrl: tcp://localhost:1883, tcp://localhost:1884
+  brokerUrl: tcp://devpns.remotemeeting.com:1883, tcp://stpns.remotemeeting.com:1883
   qos: 1
   async: true
   completionTimeout: 5000
