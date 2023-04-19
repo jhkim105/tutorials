@@ -1,0 +1,6 @@
+spring:
+  jmx:
+    enabled: false
+mqtt:
+  brokerUrl: tcp://devpns.remotemeeting.com:1883, tcp://stpns.remotemeeting.com:1883
+#  brokerUrl: tcp://localhost:1883, tcp://localhost:1884
