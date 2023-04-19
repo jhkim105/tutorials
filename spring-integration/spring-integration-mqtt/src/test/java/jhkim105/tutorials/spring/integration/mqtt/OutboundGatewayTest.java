@@ -18,7 +18,7 @@ public class OutboundGatewayTest {
   void send() {
     String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss SSS"));
     log.info(time);
-    outboundGateway.publish("/test", 2, time);
+    outboundGateway.publish("test", 2, time);
     log.info(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss SSS")));
   }
 }
