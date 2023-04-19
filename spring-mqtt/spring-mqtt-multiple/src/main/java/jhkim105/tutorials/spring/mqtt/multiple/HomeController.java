@@ -15,7 +15,7 @@ public class HomeController {
 
   @GetMapping("/publish")
   public ResponseEntity<Void> publish(String message) {
-    mqttUtils.publish("/test", message);
+    mqttUtils.publish("test", message);
     return ResponseEntity.ok().build();
   }
 

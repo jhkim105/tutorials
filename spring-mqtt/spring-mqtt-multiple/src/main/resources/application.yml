@@ -3,8 +3,6 @@ spring:
     enabled: false
 mqtt:
   brokerUrl: tcp://localhost:1883, tcp://localhost:1884
-#  brokerUrl: tcp://localhost:1884, tcp://localhost:1883
-#  brokerUrl: tcp://localhost:1884
   qos: 1
   async: true
   completionTimeout: 5000

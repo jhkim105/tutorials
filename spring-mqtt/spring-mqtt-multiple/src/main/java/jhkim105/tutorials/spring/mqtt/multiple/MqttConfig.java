@@ -40,7 +40,7 @@ public class MqttConfig {
 
   private final MqttConfigUtils mqttConfigUtils;
 
-  private static final String TOPIC = "/test";
+  private static final String TOPIC = "test";
 
   private static final String MQTT_LOGGING_CHANNEL = "mqttLoggingChannel";
 
