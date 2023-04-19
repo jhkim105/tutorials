@@ -1,0 +1,4 @@
+GET http://localhost:8080/publish?message=1111
+Accept: application/json
+
+###

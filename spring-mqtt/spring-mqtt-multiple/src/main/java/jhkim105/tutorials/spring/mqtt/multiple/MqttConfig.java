@@ -7,43 +7,35 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.annotation.Gateway;
-import org.springframework.integration.annotation.IntegrationComponentScan;
-import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.dsl.context.IntegrationFlowContext;
 import org.springframework.integration.handler.LoggingHandler;
+import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
+import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
-import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.util.StringUtils;
 
 @Configuration
-@IntegrationComponentScan
+//@IntegrationComponentScan
 @Slf4j
 @RequiredArgsConstructor
 public class MqttConfig {
 
-  private static final String MQTT_OUTBOUND_CHANNEL = "outboundChannel";
+  public static final String MQTT_OUTBOUND_CHANNEL = "outboundChannel";
   private final MqttProperties mqttProperties;
-
   private final IntegrationFlowContext integrationFlowContext;
-
-  private final MqttConfigUtils mqttConfigUtils;
-
   private static final String TOPIC = "test";
-
   private static final String MQTT_LOGGING_CHANNEL = "mqttLoggingChannel";
-
   private static final String INBOUND_PREFIX = "inbound";
   private static final String OUTBOUND_PREFIX = "outbound";
 
@@ -65,7 +57,7 @@ public class MqttConfig {
   private IntegrationFlow mqttInboundFlow(String brokerUrl) {
     String clientId = UUID.randomUUID().toString();
     return IntegrationFlows
-        .from(mqttInboundAdapter(mqttConfigUtils.mqttClientFactory(brokerUrl), clientId, TOPIC))
+        .from(mqttInboundAdapter(mqttClientFactory(brokerUrl), clientId, TOPIC))
         .wireTap(MQTT_LOGGING_CHANNEL)
         .handle(this::handle)
         .get();
@@ -98,7 +90,7 @@ public class MqttConfig {
     return IntegrationFlows
         .from(outboundChannel())
         .wireTap(MQTT_LOGGING_CHANNEL)
-        .handle(mqttConfigUtils.outboundMessageHandler(mqttProperties, url)).get();
+        .handle(outboundMessageHandler(mqttProperties, url)).get();
   }
 
 
@@ -108,12 +100,22 @@ public class MqttConfig {
     return channel;
   }
 
-  @MessagingGateway(defaultRequestChannel = MQTT_OUTBOUND_CHANNEL)
-  public interface OutboundGateway {
-    @Gateway
-    void publish(@Header(MqttHeaders.TOPIC) String topic, String data);
-    @Gateway
-    void publish(@Header(MqttHeaders.TOPIC) String topic, @Header(MqttHeaders.QOS) Integer qos, String data);
+  private MqttPahoMessageHandler outboundMessageHandler(MqttProperties mqttProperties, String brokerUrl) {
+    String clientId = UUID.randomUUID().toString();
+    MqttPahoMessageHandler messageHandler = new MqttPahoMessageHandler(clientId, mqttClientFactory(brokerUrl));
+    messageHandler.setAsync(mqttProperties.isAsync());
+    messageHandler.setDefaultQos(mqttProperties.getQos());
+    messageHandler.setCompletionTimeout(mqttProperties.getCompletionTimeout());
+    messageHandler.afterPropertiesSet();
+    return messageHandler;
+  }
+
+  private MqttPahoClientFactory mqttClientFactory(String brokerUrl) {
+    DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
+    MqttConnectOptions options = new MqttConnectOptions();
+    options.setServerURIs(new String[]{brokerUrl});
+    factory.setConnectionOptions(options);
+    return factory;
   }
 
   public void removeIntegrationFlows() {
@@ -127,15 +129,6 @@ public class MqttConfig {
   private boolean isMqttFlowId(String flowId) {
     return StringUtils.startsWithIgnoreCase(flowId, INBOUND_PREFIX) || StringUtils.startsWithIgnoreCase(flowId, OUTBOUND_PREFIX);
   }
-
-  private void removeInboundFlows() {
-
-  }
-
-  private void removeOutboundFlows() {
-
-  }
-
 
   @Bean(name = MQTT_LOGGING_CHANNEL)
   public MessageChannel loggingChannel() {
