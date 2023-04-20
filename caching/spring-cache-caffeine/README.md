@@ -1,4 +1,7 @@
 Caffeine Cache
 ===========================
 
-Guava Cache 에서 제공하는 LoadingCache.size() 함수를 제공하지 않음
+Guava Cache 에서 LoadingCache.size() 메소드가 없고, LoadingCache.estimatedSize() 메소드가 있다.
+
+
+

@@ -3,6 +3,8 @@ package jhkim105.tutorials.spring_cache_caffeine;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import jakarta.annotation.PostConstruct;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +26,15 @@ public class SampleCache {
         .removalListener((key, value, cause) -> {
           log.info("Removed. {}", new Date());
         })
-        .build(key -> new Date().toString());
+        .build(key -> LocalDateTime.now().format(DateTimeFormatter.ofPattern(key)));
   }
 
   public String get(String pattern) {
     return cache.get(pattern);
+  }
+
+  public long size() {
+    return cache.estimatedSize();
   }
 
   public void delete(String pattern) {
