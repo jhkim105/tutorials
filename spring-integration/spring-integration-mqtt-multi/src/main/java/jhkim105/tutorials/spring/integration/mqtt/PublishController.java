@@ -12,8 +12,15 @@ public class PublishController {
 
   private final MqttProperties mqttProperties;
   private final MqttOutboundGateway mqttOutboundGateway;
+
+  private final MqttClients mqttClients;
   @PostMapping("/publish")
   public void publish(String message) {
     mqttOutboundGateway.publish(mqttProperties.getBrokerUrl()[0], "test", message);
+  }
+
+  @PostMapping("/publish2")
+  public void publish2(String message) {
+    mqttClients.publish(mqttProperties.getBrokerUrl()[0], "test", message);
   }
 }

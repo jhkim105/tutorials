@@ -20,7 +20,6 @@ import org.springframework.messaging.MessageHandler;
 public class MqttMultiMessageHandler extends AbstractMessageHandler implements ManageableLifecycle {
 
   public static final String MQTT_OUTBOUND_BROKER_URL = MqttHeaders.PREFIX + "outboundBrokerUrl";
-
   private final AtomicBoolean running = new AtomicBoolean();
   private final Map<String, MessageHandler> mqttHandlers = new ConcurrentHashMap<>();
 

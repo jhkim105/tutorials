@@ -1,0 +1,13 @@
+POST http://localhost:8080/publish
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+message=123
+###
+
+POST http://localhost:8080/publish2
+Content-Type: application/x-www-form-urlencoded
+Accept: application/json
+
+message=1232111111
+###
