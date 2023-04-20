@@ -2,24 +2,24 @@ package jhkim105.tutorials.spring_cache_caffeine;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
-import jakarta.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 
-@Service
+@Component
 @Slf4j
-public class SampleCache {
+public class SampleCache implements InitializingBean {
 
   private LoadingCache<String, String> cache;
 
-  @PostConstruct
-  void initCache() {
+  @Override
+  public void afterPropertiesSet() throws Exception {
     cache = Caffeine.newBuilder()
         .maximumSize(100)
         .expireAfterAccess(5, TimeUnit.SECONDS)
