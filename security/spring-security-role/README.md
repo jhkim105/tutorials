@@ -6,6 +6,10 @@ Authority 를  Role 과 Privilege 로 구분하여, 역할 별 권한을 동적�
 - Privilege(Permission): 시스템에 정의된 권한.
 
 
+
+## Global Method Security
+
+
 ## Refs
 https://www.baeldung.com/role-and-privilege-for-spring-security-registration
 

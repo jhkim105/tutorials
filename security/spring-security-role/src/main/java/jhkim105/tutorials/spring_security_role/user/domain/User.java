@@ -35,7 +35,6 @@ public class User implements Serializable {
   @GeneratedValue(generator = "system-uuid")
   private String id;
 
-  @Id
   @Column(length = 200, unique = true)
   private String username;
 
