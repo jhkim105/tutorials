@@ -19,23 +19,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Slf4j
 public class ScheduleConfig {
 
-
-  private static final int SCHEDULER_POOL_SIZE = 5;
-
-
-  /**
-   *
-   * pool size나 threadName을 지정하고 싶다면
-   * 아래 bean을 선언하여 사용
-   */
-//  @Bean
-//  public ThreadPoolTaskScheduler taskScheduler() {
-//    ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-//    taskScheduler.setPoolSize(SCHEDULER_POOL_SIZE);
-//    taskScheduler.setThreadNamePrefix("scheduling-");
-//    return taskScheduler;
-//  }
-
   @Bean
   public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
     return new RedisLockProvider(connectionFactory);

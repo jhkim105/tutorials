@@ -45,12 +45,14 @@ public class CounterService {
     String key = "counter";
     RLock lock = redissonClient.getLock(key);
     try {
-      boolean res = lock.tryLock(100, 10, TimeUnit.MILLISECONDS);
+      boolean res = lock.tryLock(1000, 1000, TimeUnit.MILLISECONDS);
       if (res) {
         try {
           increase();
         } finally {
-          lock.unlock();
+          if(lock.isLocked()) {
+            lock.unlock();
+          }
         }
       }
     } catch (InterruptedException e) {

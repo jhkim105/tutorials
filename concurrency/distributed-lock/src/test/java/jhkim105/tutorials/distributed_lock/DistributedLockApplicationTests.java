@@ -43,7 +43,7 @@ class DistributedLockApplicationTests {
   void increaseUsingRedissonLock() {
     int execCount = 100;
     IntStream.range(0, execCount).parallel().forEach(n -> counterService.increaseUsingRedissonLock());
-    Assertions.assertThat(Counter.count).isNotEqualTo(execCount); // 잠금에 실패하면 실행안함.
+    Assertions.assertThat(Counter.count).isEqualTo(execCount); // 잠금에 실패하면 최대 대기시간동안 대기
     log.info("count: {}", Counter.count);
   }
 
