@@ -1,10 +1,12 @@
 package jhkim105.tutorials.spring.security.form_login.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import jhkim105.tutorials.spring.security.form_login.user.User;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -14,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @ToString(exclude = {"password"})
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(of = "id")
 public class UserPrincipal implements UserDetails {
 
   public static final String AUTHORITY_SEPARATOR = ",";
@@ -24,6 +27,7 @@ public class UserPrincipal implements UserDetails {
 
   private String username;
 
+  @JsonIgnore
   private String password;
 
   private Set<GrantedAuthority> authorities;

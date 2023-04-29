@@ -1,4 +1,5 @@
-
+logging.level:
+  "org.springframework.security": trace
 spring:
   datasource:
     url: jdbc:mariadb://localhost/demo_security?createDatabaseIfNotExist=true
