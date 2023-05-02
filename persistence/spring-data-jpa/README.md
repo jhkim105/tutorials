@@ -15,6 +15,13 @@ Spring Data Jpa
 ## Projection
 
 
+## Logging Configuration
+```yaml
+  jpa:
+    properties:
+      'hibernate.generate_statistics': true
+      'hibernate.session.events.log.LOG_QUERIES_SLOWER_THAN_MS': 1
+```
 
 
 ## References

@@ -2,7 +2,9 @@
 # LOGGING
 logging:
   level:
+    root: warn
     'jhkim105.tutorials': debug
+    'org.hibernate': info
     'org.hibernate.SQL': debug
     'org.hibernate.type.descriptor.sql.BasicBinder': trace
     'org.hibernate.type.EnumType': trace
@@ -23,4 +25,6 @@ spring:
     defer-datasource-initialization: true
     hibernate.ddl-auto: create
     properties:
-      hibernate.id.new_generator_mappings: false
+      'hibernate.id.new_generator_mappings': false
+      'hibernate.generate_statistics': true
+      'hibernate.session.events.log.LOG_QUERIES_SLOWER_THAN_MS': 1
