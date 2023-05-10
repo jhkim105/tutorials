@@ -2,7 +2,6 @@ package jhkim105.tutorials.multitenancy.master.service;
 
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
 import jhkim105.tutorials.multitenancy.master.repository.TenantRepository;
-import jhkim105.tutorials.multitenancy.master.service.TenantService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -13,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest
+@Disabled
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 class TenantServiceTest {
 

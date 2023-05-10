@@ -14,7 +14,6 @@ import jhkim105.tutorials.multitenancy.tenant.TenantDatabaseHelper;
 import jhkim105.tutorials.multitenancy.tenant.migrate.TenantFlywayProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.flywaydb.core.Flyway;
@@ -103,7 +102,7 @@ public class TenantService {
   public void dropOrphanDatabases() {
     List<String> databaseNames = tenantDatabaseHelper.getTenantDatabaseNames();
     List<String> targetDatabaseNames = databaseNames.stream().filter(this::notExistsTenantByDatabaseName).collect(Collectors.toList());
-    if (CollectionUtils.isEmpty(targetDatabaseNames)) {
+    if (targetDatabaseNames.isEmpty()) {
       return;
     }
 

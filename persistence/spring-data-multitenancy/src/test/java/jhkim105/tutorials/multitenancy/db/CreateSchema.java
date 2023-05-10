@@ -4,10 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.TestPropertySource;
 
-@SpringBootTest(webEnvironment = WebEnvironment.NONE)
-@TestPropertySource(locations = {"classpath:/db-initialize.properties"})
+@SpringBootTest(webEnvironment = WebEnvironment.NONE,
+    properties = {"spring.jpa.properties.hibernate.hbm2ddl.auto=update"})
 @Slf4j
 class CreateSchema {
 

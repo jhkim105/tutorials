@@ -15,6 +15,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.hibernate5.SpringBeanContainer;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -76,7 +78,7 @@ public class TenantDatabaseConfig {
   public LocalContainerEntityManagerFactoryBean tenantEntityManagerFactory(
       @Qualifier("multiTenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
       @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantIdentifierResolver,
-      @Lazy JpaProperties jpaProperties) {
+      @Lazy JpaProperties jpaProperties, ConfigurableListableBeanFactory beanFactory) {
     log.info("tenantEntityManagerFactory create.");
     LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
     entityManagerFactoryBean.setPackagesToScan(DOMAIN_PACKAGE);
@@ -86,6 +88,7 @@ public class TenantDatabaseConfig {
     properties.put(Environment.MULTI_TENANT, MultiTenancyStrategy.DATABASE);
     properties.put(Environment.MULTI_TENANT_CONNECTION_PROVIDER, connectionProvider);
     properties.put(Environment.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantIdentifierResolver);
+    properties.put(Environment.BEAN_CONTAINER, new SpringBeanContainer(beanFactory));
     properties.putAll(jpaProperties.getProperties());
     entityManagerFactoryBean.setJpaPropertyMap(properties);
     return entityManagerFactoryBean;

@@ -19,10 +19,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.tool.schema.TargetType;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.orm.hibernate5.SpringBeanContainer;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -33,6 +35,7 @@ public class TenantDatabaseHelper {
   private final JpaProperties jpaProperties;
 
   private final JdbcTemplate jdbcTemplate;
+  private final ConfigurableListableBeanFactory beanFactory;
 
   public void createDatabase(Tenant tenant) {
     Map<String, Object> settings = new HashMap<>();
@@ -41,6 +44,7 @@ public class TenantDatabaseHelper {
     settings.put(Environment.PASS, tenant.getDbPassword());
     settings.put(Environment.SHOW_SQL, true);
     settings.put(Environment.FORMAT_SQL, true);
+    settings.put(Environment.BEAN_CONTAINER, new SpringBeanContainer(beanFactory));
     settings.putAll(jpaProperties.getProperties());
 
     StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(settings).build();
@@ -71,7 +75,7 @@ public class TenantDatabaseHelper {
   }
 
   public void dropDatabase(Tenant tenant) {
-    dropDatabase(tenant.getDatabaseName());
+    dropDatabase(tenant.getDbName());
   }
 
   public void dropDatabase(String databaseName) {

@@ -48,7 +48,7 @@ public class Tenant {
   @Builder
   public Tenant(String name, String dbAddress, String dbUsername, String dbPassword) {
     this.name = name;
-    this.dbName = name;
+    this.dbName = String.format("%s%s", DATABASE_NAME_PREFIX, name);
     this.dbAddress = dbAddress;
     this.dbUsername = dbUsername;
     this.dbPassword = dbPassword;
@@ -56,12 +56,7 @@ public class Tenant {
 
   @Transient
   public String getJdbcUrl() {
-    return String.format("jdbc:mariadb://%s/%s?createDatabaseIfNotExist=true", dbAddress, getDatabaseName());
-  }
-
-  @Transient
-  public String getDatabaseName() {
-    return String.format("%s%s", DATABASE_NAME_PREFIX, dbName);
+    return String.format("jdbc:mariadb://%s/%s?createDatabaseIfNotExist=true", dbAddress, dbName);
   }
 
 }

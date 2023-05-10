@@ -1,6 +1,8 @@
 package jhkim105.tutorials.multitenancy.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,10 +65,11 @@ class UserJoinControllerTest {
     String tenantId = tenantRepository.findByName(tenantName).getId();
     ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/users")
             .contentType(MediaType.APPLICATION_JSON)
-            .param("tenantId", tenantId))
+            .header("X-Tenant-ID", tenantId))
         .andDo(MockMvcResultHandlers.print());
 
-    result.andExpect(status().isOk());
+    result.andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(1)));
   }
 
   @Test

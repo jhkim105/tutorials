@@ -43,7 +43,7 @@ tenant:
       max-size: 100
       expire-minutes: 1
     flyway:
-      migrate-on-server-start: true
-      migrate-on-tenant-add: true
+      migrate-on-server-start: false
+      migrate-on-tenant-add: false
       locations: classpath:db/migration_tenant
       baseline-version: 0.0.1
