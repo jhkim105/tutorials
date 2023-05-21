@@ -12,4 +12,4 @@ Authority 를  Role 과 Privilege 로 구분하여, 역할 별 권한을 동적�
 
 ## Refs
 https://www.baeldung.com/role-and-privilege-for-spring-security-registration
-
+https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html
