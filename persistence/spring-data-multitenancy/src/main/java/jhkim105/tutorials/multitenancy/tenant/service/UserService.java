@@ -3,7 +3,6 @@ package jhkim105.tutorials.multitenancy.tenant.service;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import jhkim105.tutorials.multitenancy.master.domain.Tenant;
-import jhkim105.tutorials.multitenancy.master.service.TenantService;
 import jhkim105.tutorials.multitenancy.tenant.domain.User;
 import jhkim105.tutorials.multitenancy.tenant.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final UserRepository userRepository;
-  private final TenantService tenantService;
 
 
   public User join(Tenant tenant, String username) {

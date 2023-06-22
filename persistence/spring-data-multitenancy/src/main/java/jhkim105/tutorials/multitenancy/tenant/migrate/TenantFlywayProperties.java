@@ -13,6 +13,5 @@ public class TenantFlywayProperties {
   private boolean migrateOnServerStart;
   private boolean migrateOnTenantAdd;
   private String[] locations;
-  private String baselineVersion;
 
 }

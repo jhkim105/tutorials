@@ -10,4 +10,5 @@ public interface TenantRepository extends JpaRepository<Tenant, String> {
   Tenant findByName(String name);
 
   boolean existsByName(String tenantName);
+  boolean existsByDbName(String dbName);
 }

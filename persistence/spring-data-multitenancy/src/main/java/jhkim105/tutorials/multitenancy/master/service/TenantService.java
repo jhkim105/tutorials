@@ -15,7 +15,6 @@ import jhkim105.tutorials.multitenancy.tenant.migrate.TenantFlywayProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
 import org.flywaydb.core.api.MigrationInfoService;
@@ -59,7 +58,8 @@ public class TenantService {
     }
 
     String[] locations = tenantFlywayProperties.getLocations();
-    String baselineVersion = tenantFlywayProperties.getBaselineVersion();
+    String baselineVersion = getBaselineVersion(tenant);
+//    String baselineVersion = tenantFlywayProperties.getBaselineVersion();
 
     log.debug("Flyway migrate. location: {}, baselineVersion: {}",
         locations, baselineVersion);
@@ -110,8 +110,8 @@ public class TenantService {
   }
 
   private boolean notExistsTenantByDatabaseName(String databaseName) {
-    String tenantName = StringUtils.removeStart(databaseName, Tenant.DATABASE_NAME_PREFIX);
-    return !tenantRepository.existsByName(tenantName);
+    boolean result = !tenantRepository.existsByDbName(databaseName);
+    return result;
   }
 
   public Tenant updateTenantName(String tenantId, String newName) {
