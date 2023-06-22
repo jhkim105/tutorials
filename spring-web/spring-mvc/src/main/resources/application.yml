@@ -1,0 +1,14 @@
+app:
+    storage-path: '@project.basedir@/storage'
+server:
+    compression:
+        enabled: true
+        mime-types: application/json
+spring:
+    autoconfigure:
+        exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
+    messages:
+        basename: messages.messages
+    mvc:
+        pathmatch:
+            matching-strategy: ant_path_matcher
