@@ -20,6 +20,12 @@ import javax.crypto.spec.SecretKeySpec;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 
+
+/**
+ * IV 를 고정값으로 사용하는 방식은 CBC 에서 권장 방식은 아님 (암호화 결과문이 동일하므로)
+ * 지정하지 않을 경우 iv 값을 포함해서 저장해야 하므로 사이즈가 길어진다.
+ * 여기에서는 고정값 사용함
+ */
 @Slf4j
 public class Aes {
 

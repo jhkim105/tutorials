@@ -19,13 +19,17 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
-public class AesFileCryptor {
+
+/**
+ * iv 값을 포함하여 저장
+ */
+public class AesFileCrypto {
 
   private static final String ALG = "AES/CBC/PKCS5Padding";
   private SecretKey secretKey;
   private Cipher cipher;
 
-  public AesFileCryptor(String secret)  {
+  public AesFileCrypto(String secret)  {
     this.secretKey = secretKey(secret);
     this.cipher = cipher(ALG);
   }

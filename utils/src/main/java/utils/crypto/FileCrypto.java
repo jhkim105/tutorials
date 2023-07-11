@@ -16,12 +16,15 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
-public class FileCryptor {
+/**
+ * Algorithm, key 를 지정
+ */
+public class FileCrypto {
 
   private SecretKey secretKey;
   private Cipher cipher;
 
-  public FileCryptor(SecretKey secretKey, String cipher) throws NoSuchPaddingException, NoSuchAlgorithmException {
+  public FileCrypto(SecretKey secretKey, String cipher) throws NoSuchPaddingException, NoSuchAlgorithmException {
     this.secretKey = secretKey;
     this.cipher = Cipher.getInstance(cipher);
   }

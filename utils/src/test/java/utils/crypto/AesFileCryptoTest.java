@@ -12,7 +12,7 @@ class AesFileCryptoTest {
   @Test
   void test() throws IOException {
     String secret = "abc";
-    AesFileCryptor aesFileCrypto = new AesFileCryptor(secret);
+    AesFileCrypto aesFileCrypto = new AesFileCrypto(secret);
     aesFileCrypto.encrypt(new File("src/test/resources/input.txt"), new File("target/enc.txt"));
     aesFileCrypto.decrypt(new File("target/enc.txt"), new File("target/dec.txt"));
     Assertions.assertTrue(IOUtils.contentEquals(new FileInputStream("src/test/resources/input.txt"), new FileInputStream("target/dec.txt")));
