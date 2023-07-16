@@ -15,29 +15,33 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Algorithm, key 를 지정
  */
+@Slf4j
 public class FileCrypto {
 
-  private SecretKey secretKey;
-  private Cipher cipher;
+  private final SecretKey secretKey;
+  private final String transformation;
 
-  public FileCrypto(SecretKey secretKey, String cipher) throws NoSuchPaddingException, NoSuchAlgorithmException {
+  public FileCrypto(SecretKey secretKey, String transformation) {
     this.secretKey = secretKey;
-    this.cipher = Cipher.getInstance(cipher);
+    this.transformation = transformation;
   }
 
 
   public void encrypt(String content, String destFilePath) throws InvalidKeyException, IOException {
+    Cipher cipher = getCipher();
     cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-    byte[] iv = cipher.getIV();
 
     try (
         FileOutputStream fileOut = new FileOutputStream(destFilePath);
         CipherOutputStream cipherOut = new CipherOutputStream(fileOut, cipher)
     ) {
+
+      byte[] iv = cipher.getIV();
       fileOut.write(iv);
       cipherOut.write(content.getBytes(StandardCharsets.UTF_8));
     }
@@ -46,13 +50,14 @@ public class FileCrypto {
 
   public String decrypt(String sourceFilePath) throws InvalidAlgorithmParameterException, InvalidKeyException, IOException {
     String content;
-    try (FileInputStream fileIn = new FileInputStream(sourceFilePath)) {
-      byte[] fileIv = new byte[16];
-      fileIn.read(fileIv);
-      cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(fileIv));
+    try (FileInputStream inputStream = new FileInputStream(sourceFilePath)) {
+      byte[] iv = new byte[16];
+      inputStream.read(iv);
+      Cipher cipher = getCipher();
+      cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
 
       try (
-          CipherInputStream cipherIn = new CipherInputStream(fileIn, cipher);
+          CipherInputStream cipherIn = new CipherInputStream(inputStream, cipher);
           InputStreamReader inputReader = new InputStreamReader(cipherIn);
           BufferedReader reader = new BufferedReader(inputReader);
       ) {
@@ -68,5 +73,12 @@ public class FileCrypto {
     return content;
   }
 
+  private Cipher getCipher() {
+    try {
+      return Cipher.getInstance(transformation);
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
 }

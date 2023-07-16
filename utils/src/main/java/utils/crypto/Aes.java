@@ -3,6 +3,7 @@ package utils.crypto;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -18,13 +19,11 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 
 
 /**
  * IV 를 고정값으로 사용하는 방식은 CBC 에서 권장 방식은 아님 (암호화 결과문이 동일하므로)
- * 지정하지 않을 경우 iv 값을 포함해서 저장해야 하므로 사이즈가 길어진다.
- * 여기에서는 고정값 사용함
+ * secret 으로 부터 유도(password based key drive) 하거나, 암호화 결과에 같이 기록하는 방식을 추천함
  */
 @Slf4j
 public class Aes {
@@ -32,54 +31,87 @@ public class Aes {
   private static final String ALG = "AES/CBC/PKCS5Padding";
 
   private final SecretKey secretKey;
-
   private final IvParameterSpec ivParameterSpec;
 
-  private final Cipher cipher;
-
   public Aes(String password, int size) {
-    this.cipher = cipher(ALG);
     this.secretKey = generateKey(password, size);
     this.ivParameterSpec = generateIv(password);
   }
 
   public Aes(String password, String iv, int size) {
-    this.cipher = cipher(ALG);
     this.secretKey = generateKey(password, size);
     this.ivParameterSpec = generateIv(iv);
   }
 
   public Aes(byte[] password, byte[] iv, int size) {
-    this.cipher = cipher(ALG);
     this.secretKey = generateKey(password, size);
     this.ivParameterSpec = generateIv(iv);
   }
 
   public static Aes newInstance(String password) {
-      return new Aes(password, 16);
+    return new Aes(password, 16);
   }
 
-  private Cipher cipher(String alg) {
+
+  public String encrypt(String strToEncrypt) {
+    return Base64.getEncoder().encodeToString(encrypt(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
+  }
+
+  public String decrypt(String strToDecrypt) {
+    return new String(decrypt(Base64.getDecoder().decode(strToDecrypt)));
+  }
+
+  public byte[] encrypt(byte[] bytesToEncrypt) {
     try {
-      return Cipher.getInstance(alg);
+      Cipher cipher = initCipher(ALG);
+      cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
+      return cipher.doFinal(bytesToEncrypt);
+    } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
+      throw new RuntimeException(e);
+    }
+
+  }
+
+  public byte[] decrypt(byte[] bytesToDecrypt) {
+    try {
+      Cipher cipher = initCipher(ALG);
+      cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
+      return cipher.doFinal(bytesToDecrypt);
+    } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+
+  private Cipher initCipher(String transformation) {
+    try {
+      return Cipher.getInstance(transformation);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
       throw new RuntimeException(e);
     }
   }
 
   private SecretKey generateKey(String password, int size) {
-    byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
-    bytes = Arrays.copyOf(bytes, size);
-    return generateKey(bytes, size);
+    byte[] passwordBytes = getPasswordBytes(password);
+    passwordBytes = Arrays.copyOf(passwordBytes, size);
+    return generateKey(passwordBytes);
   }
 
   private SecretKey generateKey(byte[] password, int size) {
     password = Arrays.copyOf(password, size);
+    return generateKey(password);
+  }
+
+  private SecretKey generateKey(byte[] password) {
     return new SecretKeySpec(password, "AES");
   }
 
+  private byte[] getPasswordBytes(String password) {
+    return password.getBytes(StandardCharsets.UTF_8);
+  }
+
   private IvParameterSpec generateIv(String iv) {
-    byte[] bytes = DigestUtils.sha256(iv);
+    byte[] bytes = getSha256Hash(iv);
     bytes = Arrays.copyOf(bytes, 16);
     return generateIv(bytes);
   }
@@ -87,6 +119,15 @@ public class Aes {
   private IvParameterSpec generateIv(byte[] iv) {
     iv = Arrays.copyOf(iv, 16);
     return new IvParameterSpec(iv);
+  }
+
+  private byte[] getSha256Hash(String value) {
+    try {
+      MessageDigest digest = MessageDigest.getInstance("SHA-256");
+      return digest.digest(value.getBytes(StandardCharsets.UTF_8));
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   private SecretKey generateKey(String password, String salt) {
@@ -98,38 +139,10 @@ public class Aes {
     }
     KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);
     try {
-      return new SecretKeySpec(factory.generateSecret(spec)
-          .getEncoded(), "AES");
+      return new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
     } catch (InvalidKeySpecException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public String encrypt(String strToEncrypt) {
-    return Base64.getEncoder().encodeToString(encryptBytes(strToEncrypt));
-  }
-
-  public String decrypt(String strToDecrypt) {
-    return new String(decryptBytes(Base64.getDecoder().decode(strToDecrypt)));
-  }
-
-  public byte[] encryptBytes(String strToEncrypt) {
-    try {
-      cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
-      byte[] bytes = strToEncrypt.getBytes(StandardCharsets.UTF_8);
-      return cipher.doFinal(bytes);
-    } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
-      throw new RuntimeException(e);
-    }
-
-  }
-
-  public byte[] decryptBytes(byte[] bytesToDecrypt) {
-    try {
-      cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
-      return cipher.doFinal(bytesToDecrypt);
-    } catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | InvalidAlgorithmParameterException e) {
-      throw new RuntimeException(e);
-    }
-  }
 }

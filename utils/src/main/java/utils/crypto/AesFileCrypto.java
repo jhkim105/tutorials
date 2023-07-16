@@ -16,88 +16,75 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 
-/**
- * iv 값을 포함하여 저장
- */
+@Slf4j
 public class AesFileCrypto {
 
-  private static final String ALG = "AES/CBC/PKCS5Padding";
-  private SecretKey secretKey;
-  private Cipher cipher;
+  private static final String ALG = "AES";
+  private static final String TF = "AES/CBC/PKCS5Padding";
+  private static final int KEY_LENGTH = 16;
+  private static final int IV_LENGTH = 16;
+  private final SecretKey secretKey;
 
-  public AesFileCrypto(String secret)  {
-    this.secretKey = secretKey(secret);
-    this.cipher = cipher(ALG);
-  }
-
-  private Cipher cipher(String alg) {
-    try {
-      return Cipher.getInstance(alg);
-    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-      throw new RuntimeException(e);
-    }
+  public AesFileCrypto(String key) {
+    this.secretKey = secretKey(key);
+    log.debug("key hex: [{}]", Hex.encodeHexString(secretKey.getEncoded()));
   }
 
   private SecretKey secretKey(String secret) {
     byte[] key = secret.getBytes(StandardCharsets.UTF_8);
-    key = Arrays.copyOf(key, 32);
-    return new SecretKeySpec(key, "AES");
+    key = Arrays.copyOf(key, KEY_LENGTH);
+    return new SecretKeySpec(key, ALG);
   }
 
-  public void encrypt(File inputFile, File outputFile)  {
-    initCipher(Cipher.ENCRYPT_MODE);
-    byte[] iv = cipher.getIV();
-
-    try (
-        FileOutputStream outputStream = new FileOutputStream(outputFile);
-        CipherOutputStream cipherOut = new CipherOutputStream(outputStream, cipher)
-    ) {
-      outputStream.write(iv);
-      cipherOut.write(FileUtils.readFileToByteArray(inputFile));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
-  }
-
-  private void initCipher(int encryptMode) {
+  public void encrypt(File inputFile, File outputFile) {
     try {
-      cipher.init(encryptMode, secretKey);
-    } catch (InvalidKeyException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private void initCipher(int encryptMode, IvParameterSpec ivParameterSpec) {
-    try {
-      cipher.init(encryptMode, secretKey, ivParameterSpec);
-    } catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  public void decrypt(File inputFile, File outputFile)  {
-    try (FileInputStream fileIn = new FileInputStream(inputFile)) {
-      byte[] fileIv = new byte[16];
-      fileIn.read(fileIv);
-      initCipher(Cipher.DECRYPT_MODE, new IvParameterSpec(fileIv));
+      Cipher cipher = Cipher.getInstance(TF);
+      cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
       try (
-          CipherInputStream cipherInputStream = new CipherInputStream(fileIn, cipher);
           FileOutputStream outputStream = new FileOutputStream(outputFile);
+          CipherOutputStream cipherOut = new CipherOutputStream(outputStream, cipher)
+      ) {
+        byte[] iv = cipher.getIV();
+        outputStream.write(iv);
+        FileUtils.copyFile(inputFile, cipherOut);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException e) {
+      throw new RuntimeException(e);
+    }
+
+  }
+
+  public void decrypt(File inputFile, File outputFile) {
+    try (FileInputStream inputStream = new FileInputStream(inputFile)) {
+      byte[] iv = new byte[IV_LENGTH];
+      inputStream.read(iv);
+      Cipher cipher = Cipher.getInstance(TF);
+      cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(iv));
+
+      try (
+          CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
+          FileOutputStream outputStream = new FileOutputStream(outputFile)
       ) {
         IOUtils.copy(cipherInputStream, outputStream);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
 
-    } catch (IOException e) {
+    } catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
+             InvalidAlgorithmParameterException e) {
       throw new RuntimeException(e);
     }
+
   }
 
 }
