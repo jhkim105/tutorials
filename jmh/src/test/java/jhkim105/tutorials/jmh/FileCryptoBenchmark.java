@@ -16,7 +16,7 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
-import utils.crypto.FileCryptor;
+import utils.crypto.FileCrypto;
 
 @Slf4j
 public class FileCryptoBenchmark {
@@ -34,7 +34,7 @@ public class FileCryptoBenchmark {
   @Threads(3)
   @Fork(1)
   public void benchmark1(BenchmarkState state, Blackhole bh) throws Exception {
-    FileCryptor fileCrypto = new FileCryptor(KeyGenerator.getInstance("AES").generateKey(), "AES/CBC/PKCS5Padding");
+    FileCrypto fileCrypto = new FileCrypto(KeyGenerator.getInstance("AES").generateKey(), "AES/CBC/PKCS5Padding");
     fileCrypto.encrypt("plaintext", "target/temp/" + UUID.randomUUID());
   }
 }

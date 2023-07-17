@@ -1,5 +1,6 @@
 package jhkim105.tutorials.spring.mvc.file;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,7 +39,7 @@ class DownloadImageControllerTest {
     File downloadFile = new File("target/1.jpg");
     FileUtils.writeByteArrayToFile(downloadFile, resultActions.andReturn().getResponse().getContentAsByteArray());
 
-    IOUtils.contentEquals(new FileInputStream("storage/images/sample/jpg/1.jpg"), new FileInputStream(downloadFile));
+    assertTrue(IOUtils.contentEquals(new FileInputStream("storage/images/sample/jpg/1.jpg"), new FileInputStream(downloadFile)));
   }
 
 }
