@@ -1,6 +1,5 @@
 package jhkim105.tutorials.crypto.aes;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.InvalidAlgorithmParameterException;
@@ -24,10 +23,7 @@ import org.junit.jupiter.api.Test;
 
 
 @Slf4j
-public class OpensslAesTests {
-
-  private static final String OPENSSL_ENCRYPT = "openssl enc -e -aes-128-cbc -k {0} -in {1} -out {2}";
-  private static final String OPENSSL_DECRYPT = "openssl enc -d -aes-128-cbc -k {0} -in {1} -out {2}";
+class OpensslAesTests {
 
   private static final String KEY = "1234567890abcdef";
 
@@ -128,8 +124,6 @@ public class OpensslAesTests {
     // Derive key
     String key = KEY;
     String keyHex = Hex.encodeHexString(key.getBytes());
-    byte[] passAndSalt = concat(key.getBytes(StandardCharsets.UTF_8), salt);
-    log.debug("keyLength: {}", passAndSalt.length);
 
     String keyAndIv = Hex.encodeHexString(deriveKeyAndIv(keyHex.getBytes(), salt));
     log.debug("keyAndIv: {}", keyAndIv);
