@@ -1,9 +1,11 @@
 package com.example.cache;
 
+import static com.example.cache.CacheConfig.DATE_STRING_CACHE;
+
 import java.util.Arrays;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import utils.DateUtils;
 import utils.RoundRobin;
@@ -13,13 +15,14 @@ public class DateService {
 
 
 
-  @Cacheable("dateString")
+  @Cacheable(value = DATE_STRING_CACHE)
   public String getDateString(String format) {
     return DateUtils.getDateString(format);
   }
 
 
-  @CacheEvict(value = "dateString", allEntries = true)
+  @CacheEvict(value = DATE_STRING_CACHE, allEntries = true)
+  @Scheduled(fixedRateString = "1000")
   public void evictCache() {
 
   }
@@ -40,11 +43,4 @@ public class DateService {
     return getDateString(s);
   }
 
-
-  @Autowired
-  private DateService self;
-
-  public String getCachedDateString(String s) {
-    return self.getDateString(s);
-  }
 }

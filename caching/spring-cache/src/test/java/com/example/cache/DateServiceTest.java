@@ -1,5 +1,9 @@
 package com.example.cache;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.IntStream;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
@@ -66,10 +70,13 @@ class DateServiceTest {
 
   @Test
   void getCachedDateString() {
-    IntStream.range(0, 10).forEach(i ->
+    Set<String> data = new HashSet<>();
+    IntStream.range(0, 3).forEach(i ->
     {
-      log.debug(dateService.getCachedDateString("mm:ss SSS"));
-      sleep(10);
+      data.add(dateService.getDateString("mm:ss SSS"));
+      sleep(1000);
     });
+
+    assertThat(data).hasSize(3);
   }
 }
