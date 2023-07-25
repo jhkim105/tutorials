@@ -4,9 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.IntStream;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,46 +16,27 @@ class DateServiceTest {
   @Autowired
   DateService dateService;
 
-  @Test
-  @Disabled
-  void roundRobin() throws InterruptedException {
-    log.debug("{}", dateService.getRoundRobin().next());
-    log.debug("{}", dateService.getRoundRobin().next());
-    log.debug("{}", dateService.getRoundRobin().next());
-    log.debug("{}", dateService.getRoundRobin().next());
-    log.debug("{}", dateService.getRoundRobin().next());
-    log.debug("{}", dateService.getRoundRobin().next());
-    Runnable r = () -> {
-      log.debug("{}", dateService.getRoundRobin().next());
-      log.debug("{}", dateService.getRoundRobin().next());
-      log.debug("{}", dateService.getRoundRobin().next());
-    };
-
-    int i = 0;
-    while(i++ < 2) {
-      Thread t = new Thread(r);
-      t.start();
-    }
-  }
-
 
   @Test
-  void externalCall() {
-    log.debug(dateService.getDateString("mm:ss SSS"));
-    log.debug(dateService.getDateString("mm:ss SSS"));
-    log.debug(dateService.getDateString("mm:ss SSS"));
-    log.debug(dateService.getDateString("mm:ss:SSS"));
-    log.debug(dateService.getDateString("mm:ss:SSS"));
-    log.debug(dateService.getDateString("mm:ss:SSS"));
-  }
+  void cache() {
+    Set<String> data = new HashSet<>();
 
-  @Test
-  void getNotCachedDateString() {
-    IntStream.range(0, 10).forEach(i ->
-    {
-      log.debug(dateService.getNotCachedDateString("mm:ss SSS"));
-      sleep(10);
-    });
+    String format = "mm:ss SSS";
+    data.add(dateService.getDateString(format));
+    data.add(dateService.getDateString(format));
+
+    sleep(10);
+    dateService.evictSingleCache(format);
+
+    data.add(dateService.getDateString(format));
+    data.add(dateService.getDateString(format));
+    data.add(dateService.getDateString(format));
+
+    sleep(10);
+    dateService.evictSingleCacheByCacheManager(format);
+
+    data.add(dateService.getDateString(format));
+    assertThat(data).hasSize(3);
   }
 
   private void sleep(int millis) {
@@ -68,15 +47,4 @@ class DateServiceTest {
     }
   }
 
-  @Test
-  void getCachedDateString() {
-    Set<String> data = new HashSet<>();
-    IntStream.range(0, 3).forEach(i ->
-    {
-      data.add(dateService.getDateString("mm:ss SSS"));
-      sleep(1000);
-    });
-
-    assertThat(data).hasSize(3);
-  }
 }

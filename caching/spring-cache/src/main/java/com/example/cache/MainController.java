@@ -20,7 +20,7 @@ public class MainController {
 
   @DeleteMapping
   public void evict() {
-    dateService.evictCache();
+    dateService.evictAllCache();
   }
 
 }
