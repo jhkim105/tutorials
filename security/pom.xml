@@ -22,5 +22,6 @@
 		<module>oauth2-client</module>
 		<module>spring-security</module>
 		<module>spring-saml</module>
+		<module>jwt</module>
 	</modules>
 </project>

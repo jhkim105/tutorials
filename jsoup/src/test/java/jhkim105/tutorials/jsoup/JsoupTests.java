@@ -20,6 +20,10 @@ class JsoupTests {
 
     assertThat(Jsoup.clean("<img src=\"abc\" onerror=\"alert(1)\">", Safelist.basicWithImages()))
         .isEqualTo("<img>");
+
+    assertThat(Jsoup.clean("<p><strong><img src=\\\"x\\\" onerror=\\\"alert(1)\\\"></img></strong></p>", Safelist.relaxed()))
+        .isEqualTo("<p><strong><img></strong></p>");
+
   }
 
 

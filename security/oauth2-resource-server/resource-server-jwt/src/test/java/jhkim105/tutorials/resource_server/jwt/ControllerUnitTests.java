@@ -15,7 +15,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = {ProductController.class, UserInfoController.class})
-class SpringSecurityTestControllerUnitTests {
+class ControllerUnitTests {
 
   @Autowired
   MockMvc mockMvc;

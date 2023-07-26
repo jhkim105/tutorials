@@ -4,8 +4,16 @@ JWT
 ## JWT (JSON Web Token)
 URL-safe, base64 URL-encoded, cryptographically signed(OR encrypted) Token
 Header(json) + Payload(json) + Signature 로 구성
-구현 방식에 따라서 JWS(Json Web Signature) OR JWE(Json Web Encryption)
-일반적으로 JWT는 JWS를 말함
+
+### JWS(JSON Web Signature)
+디지털 서명을 통해 데이터가 위조되지 않았음을 검증 (Signed JWT)
+
+### JWE(JSON Web Encryption)
+페이로드를 암호화
+
+### JWK (JSON Web Key)
+공개키나 개인키를 표현하기 위한 JSON 형식의 데이터 구조
+RSA, ECDSA, HMAC 등의 암호화 알고리즘에 대한 키를 JWK 형식으로 표현
 
 ### The Header
 Base64 encoded JSON String  
@@ -113,8 +121,8 @@ ES256, ES384, ES512
 
 
 ## Library - java-jwt
-https://github.com/auth0/java-jwt  
-
+[auth0 java-jwt](https://github.com/auth0/java-jwt)  
+[Nimbus JOSE](https://connect2id.com/products/nimbus-jose-jwt)
 
 
 
