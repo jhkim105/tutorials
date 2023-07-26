@@ -6,7 +6,7 @@ URL-safe, base64 URL-encoded, cryptographically signed(OR encrypted) Token
 Header(json) + Payload(json) + Signature 로 구성
 
 ### JWS(JSON Web Signature)
-디지털 서명을 통해 데이터가 위조되지 않았음을 검증 (Signed JWT)
+디지털 서명 (Signed JWT)
 
 ### JWE(JSON Web Encryption)
 페이로드를 암호화
