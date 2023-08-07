@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-class JwkTests {
+class RsaTests {
 
 
   @Test
@@ -25,6 +25,7 @@ class JwkTests {
         .keyID(UUID.randomUUID().toString())
         .issueTime(new Date())
         .generate();
+
 
     log.debug("jwk-> {}", jwk);
     log.debug("publicJWK-> {}", jwk.toPublicJWK());
@@ -36,7 +37,6 @@ class JwkTests {
     KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
     gen.initialize(2048);
     KeyPair keyPair = gen.generateKeyPair();
-
     // Convert to JWK format
     JWK jwk = new RSAKey.Builder((RSAPublicKey)keyPair.getPublic())
         .privateKey((RSAPrivateKey)keyPair.getPrivate())

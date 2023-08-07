@@ -23,12 +23,10 @@ import org.junit.jupiter.api.Test;
  * Get Token
  * - curl-token-password-grant-type.sh
  *
- *
- *
  */
 @Slf4j
 @Disabled
-class JwsRsaTests {
+class KeycloakTokenVerifyTests {
 
   @Test
   @Disabled
@@ -53,7 +51,7 @@ class JwsRsaTests {
     int sizeLimit = 10000;
     URL url;
     try {
-      url = new URL("http://localhost:8089/realms/demo/protocol/openid-connect/certs");
+      url = new URL(jwksUrl);
       return JWKSet.load(url, connectTimeout, readTimeout, sizeLimit);
     } catch (IOException | ParseException e) {
       throw new RuntimeException(e);

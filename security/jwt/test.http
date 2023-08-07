@@ -1,0 +1,14 @@
+GET http://localhost:8080/jwt/generate
+
+
+###
+
+GET http://localhost:8080/jwt/jwks
+
+###
+
+# https://jwt.io 에서 검증시 사용
+GET http://localhost:8080/jwt/public-key
+
+###
+
