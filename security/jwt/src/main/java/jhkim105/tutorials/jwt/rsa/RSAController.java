@@ -1,4 +1,4 @@
-package jhkim105.tutorials.jwt;
+package jhkim105.tutorials.jwt.rsa;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/jwt")
+@RequestMapping("/rsa")
 @RequiredArgsConstructor
-public class JwtController {
+public class RSAController {
 
 
-  private final JwtUtils jwtUtils;
+  private final RSAUtils rsaUtils;
 
 
   @GetMapping("/generate")
   public String generate() {
-    return jwtUtils.generateToken();
+    return rsaUtils.generateToken();
   }
 
   @GetMapping("/jwks")
   public String jwks() {
-    return jwtUtils.jwks();
+    return rsaUtils.jwks();
   }
 
   /**
@@ -29,7 +29,7 @@ public class JwtController {
    */
   @GetMapping("/public-key")
   public String publicKey() {
-    return jwtUtils.publicKey();
+    return rsaUtils.getPublicKeyPEM();
   }
 
 }

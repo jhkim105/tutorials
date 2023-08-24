@@ -1,14 +1,26 @@
-GET http://localhost:8080/jwt/generate
-
+GET http://localhost:8080/ecdsa/generate
 
 ###
 
-GET http://localhost:8080/jwt/jwks
+GET http://localhost:8080/ecdsa/jwks
 
 ###
 
 # https://jwt.io 에서 검증시 사용
-GET http://localhost:8080/jwt/public-key
+GET http://localhost:8080/ecdsa/public-key
+
+###
+
+GET http://localhost:8080/rsa/generate
+
+###
+
+GET http://localhost:8080/rsa/jwks
+
+###
+
+# https://jwt.io 에서 검증시 사용
+GET http://localhost:8080/rsa/public-key
 
 ###
 

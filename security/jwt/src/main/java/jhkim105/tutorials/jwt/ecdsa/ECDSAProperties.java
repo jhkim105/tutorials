@@ -1,4 +1,4 @@
-package jhkim105.tutorials.jwt;
+package jhkim105.tutorials.jwt.ecdsa;
 
 
 import lombok.Getter;
@@ -6,11 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "jwt")
+@ConfigurationProperties(prefix = "ecdsa")
 @Getter
 @Setter
 @ToString
-public class JwtProperties {
+public class ECDSAProperties {
 
   private String key;
 

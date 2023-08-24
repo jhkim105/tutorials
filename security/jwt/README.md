@@ -121,6 +121,7 @@ ES256, ES384, ES512
 
 
 ## Library - java-jwt
+[jjwt](https://github.com/jwtk/jjwt)
 [auth0 java-jwt](https://github.com/auth0/java-jwt)  
 [Nimbus JOSE](https://connect2id.com/products/nimbus-jose-jwt)
 
