@@ -4,7 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,19 @@ public class SampleController {
   public Sample postBody(@RequestBody  Sample sample) {
     log.info("{}", sample);
     return sample;
+  }
+
+
+  @GetMapping("/header")
+  public ResponseEntity<Void> header() {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add(HttpHeaders.CACHE_CONTROL, "no-cache");
+    headers.add("X-ID", "user01");
+    headers.add("X-Name", "홍길동"); // java.lang.IllegalArgumentException: The Unicode character [홍] at code point [54,861] cannot be encoded as it is outside the permitted range of 0 to 255
+
+    return ResponseEntity.noContent()
+        .headers(headers)
+        .build();
   }
 
   @Getter
