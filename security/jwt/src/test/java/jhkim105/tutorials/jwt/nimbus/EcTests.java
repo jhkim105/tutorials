@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.ECDSASigner;
 import com.nimbusds.jose.crypto.ECDSAVerifier;
@@ -37,10 +36,6 @@ class EcTests {
 
     ECKey ecPublicJWK = jwk.toPublicJWK();
 
-    // Create the EC signer
-    JWSSigner signer = new ECDSASigner(jwk);
-
-    // Prepare JWT with claims set
     JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
         .subject("alice")
         .issuer("https://c2id.com")
@@ -51,8 +46,7 @@ class EcTests {
         new JWSHeader.Builder(JWSAlgorithm.ES256).keyID(jwk.getKeyID()).build(),
         claimsSet);
 
-    // Compute the EC signature
-    signedJWT.sign(signer);
+    signedJWT.sign(new ECDSASigner(jwk));
 
     // Serialize the JWS to compact form
     String s = signedJWT.serialize();
@@ -82,6 +76,7 @@ class EcTests {
 
     assertEquals(ecJWK, parsedJwk);
   }
+  
 
 
 }

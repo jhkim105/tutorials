@@ -29,7 +29,7 @@ public class ECDSAController {
    */
   @GetMapping("/public-key")
   public String publicKey() {
-    return ecdsaUtils.getPublicKeyEncodedString();
+    return ecdsaUtils.getPublicKeyPEM();
   }
 
 }

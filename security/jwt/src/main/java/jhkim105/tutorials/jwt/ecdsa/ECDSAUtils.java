@@ -13,11 +13,13 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.gen.ECKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import java.io.StringWriter;
 import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
@@ -60,6 +62,17 @@ public class ECDSAUtils implements InitializingBean {
       throw new RuntimeException(e);
     }
   }
+
+  public String getPublicKeyPEM() {
+    try (StringWriter stringWriter = new StringWriter(); JcaPEMWriter pemWriter = new JcaPEMWriter(stringWriter)) {
+      pemWriter.writeObject(jwk.toPublicJWK().toECPublicKey());
+      pemWriter.flush();
+      return stringWriter.toString();
+    } catch (Exception e) {
+      throw new RuntimeException("Error converting public key to PEM format", e);
+    }
+  }
+
 
   @Override
   public void afterPropertiesSet() throws Exception {
