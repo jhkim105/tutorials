@@ -1,0 +1,22 @@
+logging.level:
+  "org.springframework.security": trace
+  "jhkim105.tutorials": debug
+server:
+  error:
+    include-stacktrace: always
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost/demo_security?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+  jpa:
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
+    properties:
+      hibernate:
+        'hbm2ddl.auto': create
+        'id.new_generator_mappings': false

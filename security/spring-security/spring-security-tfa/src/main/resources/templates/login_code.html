@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <title>Login By Code </title>
+  </head>
+  <body>
+  <form th:action="@{/login}" method="post">
+    <input type="hidden" name="username" th:value="${session.TFA_USERNAME}" /> </label></div>
+    <div><label> Code : <input type="text" name="code"/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
+  </form>
+  </body>
+</html>
