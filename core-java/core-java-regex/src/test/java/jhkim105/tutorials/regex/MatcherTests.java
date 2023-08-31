@@ -41,4 +41,23 @@ class MatcherTests {
     assertEquals(domain, "abc");
   }
 
+
+  @Test
+  void startWith() {
+    assertTrue(Pattern.matches("/RCCP/Web/.*", "/RCCP/Web/aaaa"));
+    assertFalse(Pattern.matches("/RCCP/Web/.*", "RCCP/Web/aaaa"));
+  }
+
+  @Test
+  void testEqual() {
+    assertTrue(Pattern.matches("/RCCP/Web/aaaa", "/RCCP/Web/aaaa"));
+    assertFalse(Pattern.matches("/RCCP/Web/aaaa", "/RCCP/Web/aaaab"));
+  }
+
+  @Test
+  void testMqttTopic() {
+    assertTrue(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1/2"));
+    assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1"));
+    assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1/2/3"));
+  }
 }
