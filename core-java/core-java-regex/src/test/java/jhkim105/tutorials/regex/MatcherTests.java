@@ -60,4 +60,13 @@ class MatcherTests {
     assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1"));
     assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1/2/3"));
   }
+
+  @Test
+  void escapingRegex() {
+    String regex = "/RCCP/CON/+";
+    String escapedRegex = regex.replace("+", "\\+").replace("/", "\\/");
+    assertTrue(Pattern.matches(escapedRegex, "/RCCP/CON/+"));
+    assertFalse(Pattern.matches(escapedRegex, "/RCCP/CON/-"));
+
+  }
 }
