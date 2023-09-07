@@ -64,7 +64,7 @@ class MatcherTests {
   @Test
   void escapingRegex() {
     String regex = "/RCCP/CON/+";
-    String escapedRegex = regex.replace("+", "\\+").replace("/", "\\/");
+    String escapedRegex = regex.replace("+", "\\+");
     assertTrue(Pattern.matches(escapedRegex, "/RCCP/CON/+"));
     assertFalse(Pattern.matches(escapedRegex, "/RCCP/CON/-"));
 
