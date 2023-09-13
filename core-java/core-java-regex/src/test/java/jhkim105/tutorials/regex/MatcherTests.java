@@ -56,9 +56,16 @@ class MatcherTests {
 
   @Test
   void testMqttTopic() {
-    assertTrue(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1/2"));
-    assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1"));
-    assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1/2/3"));
+//    assertTrue(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1/2"));
+//    assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1"));
+//    assertFalse(Pattern.matches("/RCCP/CON/[^/]+/[^/]+", "/RCCP/CON/1/2/3"));
+
+
+    assertTrue(Pattern.matches("/RCCP/CON/[a-zA-Z0-9-]+/(resource|life|report)$", "/RCCP/CON/6d6fdb290e3c49feb025b8dd30fb633e/resource"));
+    assertFalse(Pattern.matches("/RCCP/CON/[a-zA-Z0-9-]+/(resource|life|report)$", "/RCCP/CON/6d6fdb290e3c49feb025b8dd30fb633e/abc"));
+
+    assertFalse(Pattern.matches("/RCCP/CON/[a-zA-Z0-9-]+/(resource|life|report)$", "/RCCP/CON/6d6fdb290e3c49feb025b8dd30fb633e/abc"));
+
   }
 
   @Test
