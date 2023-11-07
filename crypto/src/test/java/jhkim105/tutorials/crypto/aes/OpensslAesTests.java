@@ -124,7 +124,6 @@ class OpensslAesTests {
     // Derive key
     String key = KEY;
     String keyHex = Hex.encodeHexString(key.getBytes());
-
     String keyAndIv = Hex.encodeHexString(deriveKeyAndIv(keyHex.getBytes(), salt));
     log.debug("keyAndIv: {}", keyAndIv);
 
@@ -143,8 +142,8 @@ class OpensslAesTests {
     return result;
   }
 
-  private byte[] deriveKeyAndIv(final byte[] pass, final byte[] salt) throws NoSuchAlgorithmException {
-    MessageDigest md = MessageDigest.getInstance("SHA-256");
+  private byte[] deriveKeyAndIv(final byte[] pass, final byte[] salt) {
+    MessageDigest md = DigestUtils.getSha256Digest();
     final byte[] passAndSalt = concat(pass, salt);
     byte[] hash = new byte[0];
     byte[] keyAndIv = new byte[0];
