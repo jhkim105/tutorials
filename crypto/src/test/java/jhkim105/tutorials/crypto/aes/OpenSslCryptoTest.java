@@ -13,6 +13,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * openssl enc -aes-128-cbc --in src/test/resources/image.png -out src/test/resources/image.png.enc -k 31323334353637383930616263646566 -p
+ * openssl enc -d -aes-128-cbc --in src/test/resources/image.png.enc -out src/test/resources/image-dec.png -k 31323334353637383930616263646566 -p
+ */
 @Slf4j
 class OpenSslCryptoTest {
 
