@@ -17,8 +17,6 @@ public class AmqpConfig {
 
   static final String QUEUE_A = "queue-a";
 
-
-
   @Bean
   Queue queue() {
     return new Queue(QUEUE_A, false);
