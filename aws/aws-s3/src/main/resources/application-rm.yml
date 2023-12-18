@@ -1,0 +1,7 @@
+aws:
+    s3:
+        localstack: false
+        profile-name: rm-s3
+        region: ap-northeast-2
+
+
