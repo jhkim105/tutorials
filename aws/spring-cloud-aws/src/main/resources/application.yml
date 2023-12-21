@@ -2,7 +2,7 @@ spring:
   cloud:
     aws:
       credentials:
-        access-key: xxxx
-        secret-key: xxxx
+        profile:
+          name: rm-rtmservice
       s3:
         region: ap-northeast-2
