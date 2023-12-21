@@ -1,3 +1,7 @@
 app:
   name: local
   storage-path: /local
+  inner:
+    name: inner-class
+  sample:
+    name: nested-annotation
