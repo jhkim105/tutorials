@@ -1,20 +1,19 @@
 package utils;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.entity.ContentType;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.http.entity.ContentType;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 public class FileUtilsTest {
@@ -93,8 +92,8 @@ public class FileUtilsTest {
 
   @Test
   void contentType() {
-//    assertThat(FileUtils.contentType(Paths.get("src/test/resources/input.txt"))).isEqualTo(ContentType.TEXT_PLAIN.getMimeType());
+    assertThat(FileUtils.contentType(Paths.get("src/test/resources/input.txt"))).isEqualTo(ContentType.TEXT_PLAIN.getMimeType());
     assertThat(FileUtils.contentType(Paths.get("src/test/resources/image.png"))).isEqualTo(ContentType.IMAGE_PNG.getMimeType());
-//    assertThat(FileUtils.contentType(Paths.get("src/test/resources/info.zip"))).isEqualTo("application/zip");
+    assertThat(FileUtils.contentType(Paths.get("src/test/resources/info.zip"))).isEqualTo("application/zip");
   }
 }
