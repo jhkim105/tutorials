@@ -11,6 +11,7 @@
   <name>tutorials</name>
   <modules>
     <module>ai</module>
+    <module>apache</module>
     <module>aws</module>
     <module>beanio</module>
     <module>commons-configuration</module>
