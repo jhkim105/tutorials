@@ -92,7 +92,19 @@ class CustomSpringEventTest {
 2022-07-25 11:23:39.373  INFO 61260 --- [           main] .e.s.CustomAnnotationDrivenEventListener : handleEventByCondition: Hello world!!
 2022-07-25 11:23:39.373  INFO 61260 --- [           main] j.t.s.e.simple.CustomSpringEventTest     : Done publishing synchronous custom event.
 ```
-
+@Async 를 지정하면 비동기로 동작
+```java
+  @EventListener
+  @Async
+  public void handleEvent(final CustomSpringEvent event) {
+    log.info("handleEvent: {}", event.getMessage());
+  }
+```
+``shell
+2023-12-28 12:07:24.619  INFO 92404 --- [           main] j.t.s.e.s.CustomSpringEventListener      : Received spring custom event - Hello world!!
+2023-12-28 12:07:24.628  INFO 92404 --- [         task-1] .e.s.CustomAnnotationDrivenEventListener : handleEvent: Hello world!!
+2023-12-28 12:07:24.628  INFO 92404 --- [           main] .e.s.CustomAnnotationDrivenEventListener : handleEvent
+``
 
 ## Refs
 https://www.baeldung.com/spring-events
