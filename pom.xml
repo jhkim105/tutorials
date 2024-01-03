@@ -54,6 +54,7 @@
     <module>messaging</module>
     <module>ai</module>
     <module>websocket-module</module>
+    <module>spring-async</module>
 
   </modules>
   <repositories>
