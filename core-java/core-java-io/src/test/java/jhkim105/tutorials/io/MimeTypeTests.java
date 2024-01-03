@@ -33,5 +33,12 @@ class MimeTypeTests {
     assertThat(type).isEqualTo(expected);
   }
 
+  @Test
+  void test() throws Exception {
+    Path path = Paths.get("src/test/resources/img2.jpeg");
+    String type = Files.probeContentType(path);
+    System.out.println(type);
+  }
+
 
 }
