@@ -10,6 +10,10 @@ import org.apache.tika.mime.MimeType;
 import org.apache.tika.mime.MimeTypes;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tika: 파일 메타데이터로 mimeType 결정
+ * Files.probeContentType(): 파일 확장자로 mimeType 결정
+ */
 
 class MimeTypeTests {
 
@@ -40,6 +44,8 @@ class MimeTypeTests {
     assertThat(type).isEqualTo("image/png");
   }
 
+
+
   @Test
   void usingJava7() throws Exception {
     Path path = Paths.get("src/test/resources/sample.pptx");
@@ -61,7 +67,6 @@ class MimeTypeTests {
     String type = Files.probeContentType(path);
     assertThat(type).isNull();
   }
-
 
 
 }
