@@ -27,6 +27,20 @@ class MimeTypeTests {
   }
 
   @Test
+  void tika_확장자변경한경우_파일내용으로인식함() throws Exception {
+    Tika tika = new Tika();
+    String type = tika.detect(Paths.get("src/test/resources/img-png.jpg").toFile());
+    assertThat(type).isEqualTo("image/png");
+  }
+
+  @Test
+  void tika_확장자없는경우() throws Exception {
+    Tika tika = new Tika();
+    String type = tika.detect(Paths.get("src/test/resources/img").toFile());
+    assertThat(type).isEqualTo("image/png");
+  }
+
+  @Test
   void usingJava7() throws Exception {
     Path path = Paths.get("src/test/resources/sample.pptx");
     String type = Files.probeContentType(path);
@@ -34,11 +48,20 @@ class MimeTypeTests {
   }
 
   @Test
-  void test() throws Exception {
-    Path path = Paths.get("src/test/resources/img2.jpeg");
+  void usingJava7_확장자변경한경우_확장자로인식함() throws Exception {
+    Path path = Paths.get("src/test/resources/img-png.jpg");
     String type = Files.probeContentType(path);
+    assertThat(type).isEqualTo("image/jpeg");
     System.out.println(type);
   }
+
+  @Test
+  void usingJava7_확장자없는경우_null() throws Exception {
+    Path path = Paths.get("src/test/resources/img");
+    String type = Files.probeContentType(path);
+    assertThat(type).isNull();
+  }
+
 
 
 }
