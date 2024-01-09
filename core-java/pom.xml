@@ -18,5 +18,6 @@
     <module>core-java-basic</module>
     <module>core-java-regex</module>
     <module>core-java-io</module>
+    <module>core-java-17</module>
   </modules>
 </project>
