@@ -42,11 +42,11 @@ class Java8to17Tests {
   void enhancedSwitchExpression() {
     var day = Day.MONDAY;
     int numLetters = switch (day) {
-      case MONDAY, FRIDAY -> 6;
-      case TUESDAY                -> 7;
-      case THURSDAY     -> 8;
-      case WEDNESDAY              -> 9;
-      default -> {
+      case MONDAY, FRIDAY   -> 6;
+      case TUESDAY          -> 7;
+      case THURSDAY         -> 8;
+      case WEDNESDAY        -> 9;
+      default               -> {
         System.out.println("default");
         yield day.toString().length();
       } // 단일표현식으로 처리되지 않는 경우 yield 로 값 반환하고 흐름 종료
