@@ -32,12 +32,16 @@ public class SecurityConfig {
   private final AuthenticationErrorHandler authenticationErrorHandler;
   private final JwtAuthenticationTokenService jwtAuthenticationTokenService;
 
+
+  // spring 에서는 권장하지 않음
+  // You are asking Spring Security to ignore Mvc [pattern='/favicon.ico']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
     return (web) -> web
         .ignoring()
         .requestMatchers("/favicon.ico");
   }
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
