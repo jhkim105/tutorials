@@ -10,8 +10,10 @@ import jhkim105.tutorials.spring.security.jwt3.security.JwtAuthenticationTokenSe
 import jhkim105.tutorials.spring.security.jwt3.security.TokenAuthenticationEntryPoint;
 import jhkim105.tutorials.spring.security.jwt3.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -19,6 +21,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -41,11 +44,30 @@ public class SecurityConfig {
 
   // spring 에서는 권장하지 않음
   // You are asking Spring Security to ignore Mvc [pattern='/favicon.ico']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead
-  @Bean
+//  @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
     return (web) -> web
         .ignoring()
         .requestMatchers(IGNORE_URI_PATTERNS);
+  }
+
+  /**
+   *
+   * permitAll() 설정
+   */
+  @Bean
+  @Order(0)
+  public SecurityFilterChain ignoredPatternFilterChain(HttpSecurity http) throws Exception {
+    return http
+        .securityMatchers((matchers) -> matchers
+            .requestMatchers(IGNORE_URI_PATTERNS)
+            .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+        )
+        .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
+        .requestCache(RequestCacheConfigurer::disable)
+        .securityContext(AbstractHttpConfigurer::disable)
+        .sessionManagement(AbstractHttpConfigurer::disable)
+        .build();
   }
 
   @Bean
@@ -57,7 +79,7 @@ public class SecurityConfig {
         .sessionManagement((it) -> it.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/login", "/users/join").permitAll()
-            .anyRequest().permitAll()
+            .anyRequest().authenticated()
         )
         .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
         .exceptionHandling((it) -> it.authenticationEntryPoint(tokenAuthenticationEntryPoint()));

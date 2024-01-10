@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /jwt
 spring:
   datasource:
     url: jdbc:mariadb://localhost/demo_security?createDatabaseIfNotExist=true
