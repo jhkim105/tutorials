@@ -1,0 +1,20 @@
+logging:
+  level:
+    root: info
+    jhkim105.tutorials: debug
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:demo
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+

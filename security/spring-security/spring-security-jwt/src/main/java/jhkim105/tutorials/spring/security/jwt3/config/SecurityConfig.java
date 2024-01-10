@@ -1,6 +1,8 @@
 package jhkim105.tutorials.spring.security.jwt3.config;
 
 
+import static jhkim105.tutorials.spring.security.jwt3.UriConstants.VERSION;
+
 import jhkim105.tutorials.spring.security.jwt3.security.AuthenticationErrorHandler;
 import jhkim105.tutorials.spring.security.jwt3.security.JwtAuthenticationFilter;
 import jhkim105.tutorials.spring.security.jwt3.security.JwtAuthenticationProvider;
@@ -16,6 +18,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -28,6 +31,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+  private static final String[] IGNORE_URI_PATTERNS = {
+      VERSION
+  };
 
   private final AuthenticationErrorHandler authenticationErrorHandler;
   private final JwtAuthenticationTokenService jwtAuthenticationTokenService;
@@ -39,22 +45,22 @@ public class SecurityConfig {
   public WebSecurityCustomizer webSecurityCustomizer() {
     return (web) -> web
         .ignoring()
-        .requestMatchers("/favicon.ico");
+        .requestMatchers(IGNORE_URI_PATTERNS);
   }
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-        .csrf().disable()
-        .httpBasic().disable()
-        .formLogin().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        .csrf(AbstractHttpConfigurer::disable)
+        .httpBasic(AbstractHttpConfigurer::disable)
+        .formLogin(AbstractHttpConfigurer::disable)
+        .sessionManagement((it) -> it.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/login", "/users/join").permitAll()
             .anyRequest().permitAll()
         )
         .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class)
-        .exceptionHandling().authenticationEntryPoint(tokenAuthenticationEntryPoint());
+        .exceptionHandling((it) -> it.authenticationEntryPoint(tokenAuthenticationEntryPoint()));
 
     return http.build();
   }

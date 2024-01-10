@@ -1,20 +1,15 @@
-logging:
-  level:
-    root: info
-    jhkim105.tutorials: debug
-
 spring:
-  h2:
-    console:
-      enabled: true
   datasource:
-    hikari:
-      jdbc-url: jdbc:h2:mem:demo
-  jpa:
-    hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true
+    url: jdbc:mariadb://localhost/demo_security?createDatabaseIfNotExist=true
+    username: root
+    password: 111111
   sql:
     init:
       mode: always
-
+      continue-on-error: false
+  jpa:
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
+    properties:
+      hibernate:
+        'id.new_generator_mappings': false
