@@ -1,7 +1,7 @@
 package jhkim105.tutorials.spring.security.jwt3.config;
 
 
-import static jhkim105.tutorials.spring.security.jwt3.UriConstants.VERSION;
+import static jhkim105.tutorials.spring.security.jwt3.VersionController.URI_VERSION;
 
 import jhkim105.tutorials.spring.security.jwt3.security.AuthenticationErrorHandler;
 import jhkim105.tutorials.spring.security.jwt3.security.JwtAuthenticationFilter;
@@ -35,7 +35,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig {
 
   private static final String[] IGNORE_URI_PATTERNS = {
-      VERSION
+      URI_VERSION
   };
 
   private final AuthenticationErrorHandler authenticationErrorHandler;
@@ -56,7 +56,7 @@ public class SecurityConfig {
    * permitAll() 설정
    */
   @Bean
-  @Order(0)
+  @Order(1)
   public SecurityFilterChain ignoredPatternFilterChain(HttpSecurity http) throws Exception {
     return http
         .securityMatchers((matchers) -> matchers
@@ -76,6 +76,7 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
         .formLogin(AbstractHttpConfigurer::disable)
+        .logout(AbstractHttpConfigurer::disable)
         .sessionManagement((it) -> it.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/login", "/users/join").permitAll()
