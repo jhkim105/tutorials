@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringSecurityJwt3ApplicationTests {
+class SpringSecurityJwtLegacyApplicationTests {
 
   @Test
   void contextLoads() {

@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserPrincipal implements UserDetails {
 
-  public static final String AUTHORITY_SEPERATOR = ",";
+  public static final String AUTHORITY_SEPARATOR = ",";
 
   private String id;
 

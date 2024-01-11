@@ -112,8 +112,7 @@ public class SecurityConfig {
 
   @Bean
   public AuthenticationManager authenticationManager() {
-    AuthenticationManager authenticationManager = new ProviderManager(daoAuthenticationProvider(),
-        jwtAuthenticationProvider());
+    AuthenticationManager authenticationManager = new ProviderManager(daoAuthenticationProvider(), jwtAuthenticationProvider());
 
     return authenticationManager;
   }
