@@ -7,6 +7,7 @@ server:
 #    excluded-user-agents:
 logging:
   level:
+    root: info
     'jhkim105.tutorials': debug
 app:
   storage-path: @project.basedir@/storage

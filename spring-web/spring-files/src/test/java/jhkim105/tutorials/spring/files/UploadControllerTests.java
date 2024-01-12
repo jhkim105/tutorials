@@ -3,13 +3,15 @@ package jhkim105.tutorials.spring.files;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@Slf4j
 class UploadControllerTests {
 
   @Autowired
@@ -33,6 +36,7 @@ class UploadControllerTests {
 
   @Test
   void shouldListAllFiles() throws Exception {
+    log.debug("shouldListAllFiles");
     given(this.storageService.loadAll())
         .willReturn(Stream.of(Paths.get("first.txt"), Paths.get("second.txt")));
 
