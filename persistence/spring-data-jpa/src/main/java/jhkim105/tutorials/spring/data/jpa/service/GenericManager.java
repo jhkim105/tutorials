@@ -1,10 +1,10 @@
 package jhkim105.tutorials.spring.data.jpa.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
-import javax.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public class GenericManager <T, ID extends Serializable>{

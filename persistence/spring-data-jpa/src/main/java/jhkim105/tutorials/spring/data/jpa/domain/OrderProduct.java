@@ -1,13 +1,12 @@
 package jhkim105.tutorials.spring.data.jpa.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import jhkim105.tutorials.spring.data.jpa.domain.base.BaseEntity;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,7 +17,7 @@ import lombok.ToString;
 @Table(name = "de_order_products")
 @Getter
 @ToString
-@EqualsAndHashCode(of = {"order", "product"})
+@EqualsAndHashCode(of = {"order", "product"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProduct extends BaseEntity<Long> {
 

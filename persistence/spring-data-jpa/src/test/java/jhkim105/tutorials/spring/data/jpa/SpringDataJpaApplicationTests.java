@@ -2,9 +2,9 @@ package jhkim105.tutorials.spring.data.jpa;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceContext;
 import jhkim105.tutorials.spring.data.jpa.service.UserManager;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

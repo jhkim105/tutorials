@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.data.jpa.domain.base;
+package jhkim105.tutorials.spring.data.jpa.domain;
 
 import java.io.Serializable;
 

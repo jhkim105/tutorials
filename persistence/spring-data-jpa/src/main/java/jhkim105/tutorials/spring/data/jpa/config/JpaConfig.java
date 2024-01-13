@@ -1,8 +1,9 @@
 package jhkim105.tutorials.spring.data.jpa.config;
 
+import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +23,8 @@ public class JpaConfig {
 
   @Bean("jpaQueryFactory")
   public JPAQueryFactory jpaQueryFactory() {
-    return new JPAQueryFactory(entityManager);
+    return new JPAQueryFactory(JPQLTemplates.DEFAULT, entityManager);
   }
 
 }
+

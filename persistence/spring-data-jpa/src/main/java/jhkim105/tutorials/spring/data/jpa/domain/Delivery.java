@@ -1,29 +1,28 @@
 package jhkim105.tutorials.spring.data.jpa.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import jhkim105.tutorials.spring.data.jpa.domain.base.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(name = "de_delievery")
 @Getter
 @ToString
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery extends BaseEntity<String> {
   @Id
-  @GeneratedValue(generator = "uuid")
+  @UuidGenerator
   @Column(length = ColumnLengths.UUID)
   private String id;
 
@@ -31,6 +30,7 @@ public class Delivery extends BaseEntity<String> {
   private Address address;
 
   @Enumerated(value = EnumType.STRING)
+  @Column(length = 10)
   private DeliveryStatus status;
 
   public enum DeliveryStatus {

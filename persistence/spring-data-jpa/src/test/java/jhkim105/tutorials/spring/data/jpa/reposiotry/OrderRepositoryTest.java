@@ -7,14 +7,12 @@ import jhkim105.tutorials.spring.data.jpa.BaseRepositoryTest;
 import jhkim105.tutorials.spring.data.jpa.domain.Order;
 import jhkim105.tutorials.spring.data.jpa.projection.OrderProjection;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 
 @Slf4j
-@Disabled
 class OrderRepositoryTest extends BaseRepositoryTest {
 
   @Autowired
