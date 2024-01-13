@@ -1,0 +1,7 @@
+app:
+    name: Test App
+    version: 1
+
+logging:
+    level:
+        '[org.springframework.test.context.cache]': debug

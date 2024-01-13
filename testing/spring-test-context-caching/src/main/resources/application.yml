@@ -1,0 +1,6 @@
+logging:
+  level:
+    '[org.springframework.test.context.cache]': debug
+
+service:
+  greeting: Hello, World
