@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -17,11 +18,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Slf4j
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-
-  private static final String SECURITY_TOKEN = "authToken";
-
-  private static final String SECURITY_TOKEN_HEADER = "Authorization";
-
   private final JwtAuthenticationTokenService tokenService;
 
   public JwtAuthenticationFilter(String defaultFilterProcessesUrl,
@@ -71,11 +67,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
   }
 
   private String getToken(HttpServletRequest request) {
-    String token = request.getParameter(SECURITY_TOKEN);
-    if (StringUtils.isBlank(token)) {
-      token = request.getHeader(SECURITY_TOKEN_HEADER);
-    }
-
-    return token;
+    return request.getHeader(HttpHeaders.AUTHORIZATION);
   }
 }

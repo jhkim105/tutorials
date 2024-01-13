@@ -1,3 +1,10 @@
 ### version
 GET http://localhost:8080/jwt/version
 Content-Type: application/x-www-form-urlencoded
+
+
+### version
+GET http://localhost:8080/jwt/version
+Content-Type: application/x-www-form-urlencoded
+Authorization: {{authToken}}
+Content-Type: application/json
