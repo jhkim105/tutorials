@@ -25,6 +25,5 @@ spring:
     defer-datasource-initialization: true
     hibernate.ddl-auto: create
     properties:
-      'hibernate.id.new_generator_mappings': false
       'hibernate.generate_statistics': true
       'hibernate.session.events.log.LOG_QUERIES_SLOWER_THAN_MS': 1
