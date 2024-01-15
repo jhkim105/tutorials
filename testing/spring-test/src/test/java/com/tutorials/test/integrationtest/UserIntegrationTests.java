@@ -2,10 +2,7 @@ package com.tutorials.test.integrationtest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tutorials.test.domain.User;
-import com.tutorials.test.repository.UserRepository;
-import com.tutorials.test.service.UserService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,18 +29,8 @@ class UserIntegrationTests {
   @Autowired
   private TestRestTemplate restTemplate;
 
-  @Autowired
-  private UserRepository userRepository;
-
-  @Autowired
-  private UserService userService;
-
-  @Autowired
-  private ObjectMapper objectMapper;
-
   private static HttpHeaders headers;
 
-//  private final ObjectMapper objectMapper = new ObjectMapper();
 
   @BeforeAll
   public static void init() {
