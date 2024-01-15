@@ -6,10 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-public class SpringJunit5Application {
+public class SpringTestApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringJunit5Application.class, args);
+    SpringApplication.run(SpringTestApplication.class, args);
   }
 
 }

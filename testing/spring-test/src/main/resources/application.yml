@@ -2,6 +2,16 @@ app:
     name: Test App
     version: 1
 
-logging:
-    level:
-        '[org.springframework.test.context.cache]': debug
+
+spring:
+    datasource:
+        url: jdbc:mariadb://localhost/demo_test?createDatabaseIfNotExist=true
+        username: root
+        password: 111111
+    sql:
+        init:
+            mode: always
+            continue-on-error: false
+    jpa:
+        defer-datasource-initialization: true
+        hibernate.ddl-auto: update
