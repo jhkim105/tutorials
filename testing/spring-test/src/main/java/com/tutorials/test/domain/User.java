@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -26,9 +27,11 @@ public class User {
   private String id;
 
   @Column(nullable = false)
+  @Setter
   private String username;
 
   @Column(nullable = false)
+  @Setter
   private String password;
 
   public User(String username, String password) {
