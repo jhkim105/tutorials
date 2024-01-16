@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -25,6 +26,12 @@ class UserIntegrationTests {
 
   @LocalServerPort
   private int port;
+
+  @Value("#{servletContext.contextPath}")
+  private String contextPath;
+
+  @Value("${spring.mvc.servlet.path}")
+  private String servletPath;
 
   @Autowired
   private TestRestTemplate restTemplate;
@@ -45,7 +52,12 @@ class UserIntegrationTests {
   public void getAll() {
     HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
-    var url = UriComponentsBuilder.fromUriString("http://localhost").port(port).path("/users").toUriString();
+    var url = UriComponentsBuilder.fromUriString("http://localhost")
+        .port(port)
+        .path(contextPath)
+        .path(servletPath)
+        .path("/users")
+        .toUriString();
     ResponseEntity<List<User>> response = restTemplate.exchange(
         url, HttpMethod.GET, entity, new ParameterizedTypeReference<List<User>>() {
         });
