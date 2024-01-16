@@ -4,6 +4,8 @@ server:
     compression:
         enabled: true
         mime-types: application/json
+    servlet:
+        context-path: /mvc
 spring:
     autoconfigure:
         exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration
@@ -12,3 +14,5 @@ spring:
     mvc:
         pathmatch:
             matching-strategy: ant_path_matcher
+#        servlet:
+#            path: /v1

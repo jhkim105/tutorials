@@ -13,7 +13,7 @@ public class FilterConfig {
         = new FilterRegistrationBean<>();
 
     registrationBean.setFilter(new RequestResponseLoggingFilter());
-    registrationBean.addUrlPatterns("/sample/*");
+    registrationBean.addUrlPatterns("/sample/*", "/mvc/**");
     registrationBean.setOrder(2);
 
     return registrationBean;

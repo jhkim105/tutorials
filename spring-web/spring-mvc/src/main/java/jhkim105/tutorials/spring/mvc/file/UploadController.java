@@ -4,6 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+import jhkim105.tutorials.spring.mvc.common.FileUtils;
 import jhkim105.tutorials.spring.mvc.config.AppProperties;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import utils.FileUtils;
 
 @RestController
 @RequestMapping("/upload")

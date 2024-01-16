@@ -1,9 +1,10 @@
 package jhkim105.tutorials.spring.mvc.file;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import javax.servlet.http.HttpServletRequest;
+import jhkim105.tutorials.spring.mvc.common.FileUtils;
 import jhkim105.tutorials.spring.mvc.config.AppProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import utils.FileUtils;
 
 @RestController
 @RequestMapping("/download/image")

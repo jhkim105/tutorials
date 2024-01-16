@@ -1,18 +1,16 @@
 package jhkim105.tutorials.spring.mvc.config;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 
 @Getter
+@Setter
 @ToString
-@ConstructorBinding
 @ConfigurationProperties(prefix = "app")
-@RequiredArgsConstructor
 public class AppProperties {
 
-  private final String storagePath;
+  private String storagePath;
 
 }
