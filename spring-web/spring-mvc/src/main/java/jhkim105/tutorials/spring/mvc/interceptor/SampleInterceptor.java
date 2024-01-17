@@ -11,7 +11,7 @@ public class SampleInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-    log.info("preHandle");
+    log.info("preHandle: {}", request.getRequestURI());
     return true;
 
   }
@@ -19,7 +19,7 @@ public class SampleInterceptor implements HandlerInterceptor {
   @Override
   public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
       throws Exception {
-    log.info("postHandle");
+    log.info("postHandle: {}", request.getRequestURI());
 
   }
 
