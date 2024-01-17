@@ -4,7 +4,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class SecurityUtils {
   private SecurityUtils() {
@@ -13,12 +12,14 @@ public class SecurityUtils {
     SecurityContext ctx = SecurityContextHolder.getContext();
     Authentication authentication = ctx.getAuthentication();
     if (authentication == null)
-      throw new AccessDeniedException("authentication not exists.");
-    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-    if (userDetails == null) {
-      throw new AccessDeniedException("userDetails not exists.");
+      throw new AccessDeniedException("Authentication not exists.");
+
+    var principal = authentication.getPrincipal();
+    if (principal instanceof UserPrincipal) {
+      return (UserPrincipal)principal;
     }
-    return (UserPrincipal)userDetails;
+
+    throw new AccessDeniedException("Not properly authenticated.");
   }
 
   public static UserPrincipal getAuthUserSilently() {
