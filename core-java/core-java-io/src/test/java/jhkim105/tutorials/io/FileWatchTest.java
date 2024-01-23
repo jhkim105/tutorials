@@ -46,7 +46,7 @@ class FileWatchTest {
   private String handleWatchEvent(WatchEvent<?> event, Path target) {
     if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE || event.kind() == StandardWatchEventKinds.ENTRY_MODIFY) {
       Path contextPath = (Path) event.context();
-      System.out.println("file: " + contextPath.toFile().getName());
+      System.out.println(String.format("file: %s, event: %s", contextPath.toFile().getName(), event.kind().name()));
       if (contextPath.toFile().getName().equals(target.toFile().getName())) {
         return readString(target);
       }
