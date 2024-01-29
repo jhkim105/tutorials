@@ -11,19 +11,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -47,7 +43,7 @@ public class User  {
   private String username;
 
   @ElementCollection
-  @JoinTable(name = "dm_user_roles", joinColumns = {@JoinColumn(name = "user_id")})
+  @CollectionTable(name = "dm_user_roles", joinColumns = {@JoinColumn(name = "user_id")})
   @Column(name = "role", nullable = false)
   @Enumerated(EnumType.STRING)
   private Set<Role> roles = new HashSet<>();
