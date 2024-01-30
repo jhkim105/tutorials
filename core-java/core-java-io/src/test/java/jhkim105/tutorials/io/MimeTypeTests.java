@@ -24,7 +24,7 @@ class MimeTypeTests {
     Path path = Paths.get("src/test/resources/sample.pptx");
     String expected = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
     Tika tika = new Tika();
-    String type = tika.detect(path.toFile());
+    String type = tika.detect(path);
     assertThat(type).isEqualTo(expected);
 
     MimeType mimeType = MimeTypes.getDefaultMimeTypes().forName(type);
@@ -56,7 +56,7 @@ class MimeTypeTests {
     Path path = Paths.get("src/test/resources/google.pptx");
     String expected = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
     Tika tika = new Tika();
-    String type = tika.detect(path.toFile());
+    String type = tika.detect(path);
     assertThat(type).isEqualTo(expected);
   }
 
