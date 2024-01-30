@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tika: 파일 메타데이터로 mimeType 결정
+ * - stream 으로 읽으면 제대로 못읽는 경우가 있다. (parser 를 추가해야 정상 동작)
  * Files.probeContentType(): 파일 확장자로 mimeType 결정
  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
  */
@@ -31,9 +32,29 @@ class MimeTypeTests {
   }
 
   @Test
-  void tika_pptx_no_extension() throws Exception {
-    Path path = Paths.get("src/test/resources/sample_pptx");
-    String expected = "application/x-tika-ooxml";
+  void tika_pptx_stream() throws Exception {
+    Path path = Paths.get("src/test/resources/sample.pptx");
+//    String expected = "application/x-tika-ooxml"; // parser 등록 안한 경우
+    String expected = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+    Tika tika = new Tika();
+    String type = tika.detect(Files.newInputStream(path));
+    assertThat(type).isEqualTo(expected);
+  }
+
+  @Test
+  void tika_pptx_google_stream() throws Exception {
+    Path path = Paths.get("src/test/resources/google.pptx");
+//    String expected = "application/zip"; // parser 등록 안한 경우
+    String expected = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+    Tika tika = new Tika();
+    String type = tika.detect(Files.newInputStream(path));
+    assertThat(type).isEqualTo(expected);
+  }
+
+  @Test
+  void tika_pptx_google() throws Exception {
+    Path path = Paths.get("src/test/resources/google.pptx");
+    String expected = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
     Tika tika = new Tika();
     String type = tika.detect(path.toFile());
     assertThat(type).isEqualTo(expected);
@@ -50,16 +71,10 @@ class MimeTypeTests {
   void tika_hwpx() throws Exception {
     Path path = Paths.get("src/test/resources/sample.hwpx");
     Tika tika = new Tika();
-    assertThat(tika.detect(path.toFile())).isEqualTo("application/hwp+zip");
-    assertThat(tika.detect(path.toFile().getName())).isEqualTo("application/hwp+zip");
+    assertThat(tika.detect(Files.newInputStream(path))).isEqualTo("application/hwp+zip");
+    assertThat(tika.detect(path)).isEqualTo("application/hwp+zip");
   }
 
-  @Test
-  void tika_hwpx_no_extension() throws Exception {
-    Path path = Paths.get("src/test/resources/sample_hwpx");
-    Tika tika = new Tika();
-    assertThat(tika.detect(path.toFile())).isEqualTo("application/zip");
-  }
 
   @Test
   void probeContentType() throws Exception {
@@ -74,14 +89,6 @@ class MimeTypeTests {
     Path path = Paths.get("src/test/resources/sample.hwpx");
     String type = Files.probeContentType(path);
     assertThat(type).isEqualTo(null);
-  }
-
-  @Test
-  void probeContentType_확장자변경한경우_확장자로인식함() throws Exception {
-    Path path = Paths.get("src/test/resources/img-png.jpg");
-    String type = Files.probeContentType(path);
-    assertThat(type).isEqualTo("image/jpeg");
-    System.out.println(type);
   }
 
   @Test
