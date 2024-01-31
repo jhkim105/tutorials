@@ -19,5 +19,6 @@
     <module>core-java-regex</module>
     <module>core-java-io</module>
     <module>core-java-17</module>
+    <module>core-java-uuid</module>
   </modules>
 </project>
