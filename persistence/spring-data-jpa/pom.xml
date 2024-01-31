@@ -72,6 +72,12 @@
       <artifactId>hibernate-tools-orm</artifactId>
       <version>${hibernate.version}</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.f4b6a3/uuid-creator -->
+    <dependency>
+      <groupId>com.github.f4b6a3</groupId>
+      <artifactId>uuid-creator</artifactId>
+      <version>5.3.7</version>
+    </dependency>
 
   </dependencies>
 

@@ -1,5 +1,6 @@
 package jhkim105.tutorials.spring.data.jpa.domain;
 
+import com.github.f4b6a3.uuid.UuidCreator;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -9,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
@@ -17,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.ToString.Exclude;
-import org.hibernate.annotations.UuidGenerator;
+import org.springframework.data.domain.Persistable;
 
 @Entity
 @Table(name = "dm_user")
@@ -25,9 +27,8 @@ import org.hibernate.annotations.UuidGenerator;
 @ToString
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseEntity<String> {
+public class User extends BaseEntity<String> implements Persistable<String> {
   @Id
-  @UuidGenerator
   @Column(length = ColumnLengths.UUID)
   private String id;
 
@@ -44,10 +45,15 @@ public class User extends BaseEntity<String> {
   private Set<Order> orders = new HashSet<>();
 
   public User(String username) {
+    this.id = UuidCreator.getTimeBased().toString();
     this.username = username;
+    this.isNew = true;
   }
 
   @ManyToOne
   private Group group;
+
+  @Transient
+  private boolean isNew;
 
 }
