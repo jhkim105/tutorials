@@ -9,7 +9,7 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>jhkim105.tutorials</groupId>
-  <artifactId>jmh</artifactId>
+  <artifactId>spring-jmh</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>jmh</name>
   <description>Demo project for Spring Boot</description>
@@ -68,10 +68,10 @@
 
   <build>
     <plugins>
-<!--      <plugin>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--      </plugin>-->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 

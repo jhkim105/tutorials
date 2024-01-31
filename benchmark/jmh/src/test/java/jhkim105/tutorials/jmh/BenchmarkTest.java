@@ -6,8 +6,8 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-@Disabled
-public class BenchmarTest {
+//@Disabled
+class BenchmarTest {
 
   @Test
   void rsCrypto() throws Exception {
