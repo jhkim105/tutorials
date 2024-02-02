@@ -29,16 +29,16 @@ public class User {
   private String id;
 
   @Column(nullable = false)
+  @ColumnTransformer(
+      read = "cast(AES_DECRYPT(UNHEX(name), 'secret1111') as CHAR)",
+      write = "HEX(AES_ENCRYPT(?, 'secret1111'))")
   private String name;
 
   @Column(nullable = false, unique = true)
-  @ColumnTransformer(
-      read = "cast(AES_DECRYPT(UNHEX(username), 'secret1111') as CHAR)",
-      write = "HEX(AES_ENCRYPT(?, 'secret1111'))")
   private String username;
   ;
   @Lob
-  @Convert(converter = StringEncryptConverter.class)
+  @Convert(converter = StringEncryptConverter.class) // Like 검색 안됨
   private String description;
 
   @Builder

@@ -1,5 +1,6 @@
 package jhkim105.tutorials.spring.data.encrypt;
 
+import java.util.List;
 import jhkim105.tutorials.spring.data.encrypt.crypto.CryptoConfig;
 import jhkim105.tutorials.spring.data.encrypt.domain.User;
 import jhkim105.tutorials.spring.data.encrypt.repository.UserRepository;
@@ -11,30 +12,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(CryptoConfig.class)
 @Slf4j
-public class UserRepositoryTest {
+class UserRepositoryTest {
 
   @Autowired
   UserRepository repository;
 
   @Test
-  @Rollback(value = false)
   void save() {
-    User newUser = User.builder()
-        .username("test01")
-        .name("Full Name")
-        .description("설명")
-        .build();
-    repository.save(newUser);
+    String username = "test01";
+    createUser(username, "name 01", "description 01");
 
     User user = repository.findByUsername("test01");
     Assertions.assertThat(user.getUsername()).isEqualTo("test01");
+  }
+
+
+  private void createUser(String username, String name, String description) {
+    User newUser = User.builder()
+        .username(username)
+        .name(name)
+        .description(description)
+        .build();
+    repository.save(newUser);
   }
 
   @Test
@@ -44,4 +49,21 @@ public class UserRepositoryTest {
     User user = repository.findById("tid01").get();
     Assertions.assertThat(user.getUsername()).isNull();
   }
+
+
+  @Test
+  void searchByName() {
+    List<User> users = repository.findByNameStartsWith("Name");
+    Assertions.assertThat(users).hasSize(3);
+  }
+
+  @Test
+  void searchByDescription() {
+    List<User> users = repository.findByDescriptionStartsWith("사용자");
+    Assertions.assertThat(users).hasSize(0);
+  }
+
+
+
+
 }

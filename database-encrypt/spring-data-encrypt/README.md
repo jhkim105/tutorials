@@ -41,7 +41,13 @@ END
 ```
 
 저장된 데이터가 평문일 경우 null 로 조회된다.
+DB에 저장된 암호화된 값을 복호화 화여 조회 조건절에 사용하므로 like 검색도 가능하지만, index 를 태울 수가 없다. 
+```text
+Hibernate: select user0_.id as id1_0_, user0_.description as descript2_0_, cast(AES_DECRYPT(UNHEX(user0_.name), 'secret1111') as CHAR) as name3_0_, user0_.username as username4_0_ from user user0_ where cast(AES_DECRYPT(UNHEX(user0_.name), 'secret1111') as CHAR) like ? escape ?
+2024-02-02 11:15:46.924 TRACE 94341 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Name%]
+2024-02-02 11:15:46.924 TRACE 94341 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [CHAR] - [\]
 
+```
 ### @Converter 
 
 StringEncryptConverter.java
@@ -70,4 +76,10 @@ User.java
   @Convert(converter = StringEncryptConverter.class)
   private String phoneNumber;
 ```
+암호화 값으로 where 절에 사용하므로 index 는 태울 수 있으나, like 검색을 할 수 없다.
+```text
+Hibernate: select user0_.id as id1_0_, user0_.description as descript2_0_, cast(AES_DECRYPT(UNHEX(user0_.name), 'secret1111') as CHAR) as name3_0_, user0_.username as username4_0_ from user user0_ where user0_.description like ? escape ?
+2024-02-02 11:11:45.622 TRACE 93411 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [CLOB] - [bPErQQ/6czOex+TMHLau655984WmaQ5W]
+2024-02-02 11:11:45.622 TRACE 93411 --- [           main] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [CHAR] - [\]
 
+```
