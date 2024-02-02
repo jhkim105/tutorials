@@ -18,6 +18,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <modules>
-    <module>jmh</module>
+    <module>spring-jmh</module>
   </modules>
 </project>
