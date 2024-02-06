@@ -20,7 +20,7 @@
     <module>core-java</module>
     <module>database-encrypt</module>
     <module>excel-poi</module>
-    <module>jmh</module>
+    <module>benchmark</module>
     <module>mockserver</module>
     <module>monitoring</module>
     <module>persistence</module>
@@ -56,6 +56,9 @@
     <module>websocket-module</module>
     <module>spring-async</module>
     <module>testing</module>
+    <module>kafka-modules</module>
+    <module>benchmark</module>
+    <module>spring-json</module>
 
   </modules>
   <repositories>
