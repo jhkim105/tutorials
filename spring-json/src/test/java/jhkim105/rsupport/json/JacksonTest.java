@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class JacksonTest {
 
   @Test
-  void test() {
+  void writeString() {
     SampleDateGroupedRecord sampleDateGroupedRecord = new SampleDateGroupedRecord(LocalDate.now(), LocalDateTime.now(), List.of(new Sample("sample1")));
     System.out.println(toString(sampleDateGroupedRecord, true));
   }
@@ -29,6 +29,11 @@ class JacksonTest {
     } catch (Exception e) {
       throw new RuntimeException(String.format("convert to json string error..,%s", e), e);
     }
+  }
+
+  @Test
+  void readList() {
+    var str = "";
   }
 
 }
