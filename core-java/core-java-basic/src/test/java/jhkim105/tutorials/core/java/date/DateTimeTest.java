@@ -1,4 +1,4 @@
-package jhkim105.tutorials.core.java;
+package jhkim105.tutorials.core.java.date;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -14,11 +14,11 @@ class DateTimeTest {
 
 
   @Test
-  void test() throws Exception {
-    String dateTimeString = "2024-02-06 12:30:00"; // 예시 날짜 및 시간 문자열
-    String timezone = "Asia/Seoul"; // 예시 시간대
+  void dateTime() throws Exception {
+    String dateTimeString = "2024-02-06 12:30:00";
+    String timezone = "Asia/Seoul";
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    dateFormat.setTimeZone(TimeZone.getTimeZone(timezone)); // 시간대 설정
+    dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
     Date date = dateFormat.parse(dateTimeString);
     System.out.println("Created Date: " + date);
 
@@ -33,6 +33,16 @@ class DateTimeTest {
     // OffsetDateTime
     OffsetDateTime offsetDateTime = OffsetDateTime.of(localDateTime, ZoneId.of(timezone).getRules().getOffset(localDateTime));
     System.out.println("OffsetDateTime: " + offsetDateTime);
+  }
+
+  @Test
+  void zonedDateTime() {
+    ZonedDateTime now = ZonedDateTime.now();
+    System.out.println(now);
+    System.out.println(now.getZone());
+    System.out.println(now.toLocalDateTime());
+    System.out.println(now.withZoneSameInstant(ZoneId.of("UTC")));
+    System.out.println(now.withZoneSameInstant(ZoneId.of("UTC")).toLocalTime());
   }
 
 
