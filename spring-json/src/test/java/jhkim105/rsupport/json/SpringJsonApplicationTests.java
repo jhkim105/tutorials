@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ class SpringJsonApplicationTests {
     String json = objectMapper.writeValueAsString(samples);
     log.info(json); // "[{\"name\":\"same 1\"}]";
 
-    var result = objectMapper.readValue(json, new TypeReference<List<Map<String, String>>>() {});
+    var result = objectMapper.readValue(json, new TypeReference<List<Sample>>() {});
     log.info("{}", result);
   }
 
