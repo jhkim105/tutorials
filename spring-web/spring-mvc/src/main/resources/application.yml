@@ -1,4 +1,4 @@
-app:
+service:
     storage-path: '@project.basedir@/storage'
 server:
     compression:

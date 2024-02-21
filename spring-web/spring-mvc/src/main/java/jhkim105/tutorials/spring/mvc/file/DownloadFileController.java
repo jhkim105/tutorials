@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import jhkim105.tutorials.spring.mvc.common.FileUtils;
-import jhkim105.tutorials.spring.mvc.config.AppProperties;
+import jhkim105.tutorials.spring.mvc.config.ServiceProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DownloadFileController {
 
-  private final AppProperties appProperties;
+  private final ServiceProperties serviceProperties;
 
   @GetMapping
   public ResponseEntity<InputStreamResource> download(String basePath, int index) {
     log.debug("download:{}", basePath);
-    String absoluteBasePath = String.format("%s/files/%s", appProperties.getStoragePath(), basePath);
+    String absoluteBasePath = String.format("%s/files/%s", serviceProperties.getStoragePath(), basePath);
     List<Path> paths = FileUtils.filePaths(absoluteBasePath);
     Path path = paths.get(index - 1);
     return ResponseEntity.ok()

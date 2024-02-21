@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import jhkim105.tutorials.spring.mvc.common.FileUtils;
-import jhkim105.tutorials.spring.mvc.config.AppProperties;
+import jhkim105.tutorials.spring.mvc.config.ServiceProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 @RequiredArgsConstructor
 public class UploadController {
 
-  private final AppProperties appProperties;
+  private final ServiceProperties serviceProperties;
 
   @PostMapping
   public ResponseEntity<UploadResponse> upload(MultipartRequest multipartRequest) {
@@ -34,7 +34,7 @@ public class UploadController {
 
     String baseDir = String.format("upload/%s/%s",
         LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")), UUID.randomUUID());
-    String uploadPath = appProperties.getStoragePath() + "/" + baseDir;
+    String uploadPath = serviceProperties.getStoragePath() + "/" + baseDir;
     File file = FileUtils.upload(multipartFile, uploadPath);
     String uri = baseDir + "/" + file.getName();
     return ResponseEntity.ok(

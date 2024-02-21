@@ -1,12 +1,12 @@
 package jhkim105.tutorials.spring.mvc.file;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import jhkim105.tutorials.spring.mvc.config.AppProperties;
+import jhkim105.tutorials.spring.mvc.config.ServiceProperties;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,13 @@ class UploadToUrlControllerTest {
   private MockMvc mockMvc;
 
   @Autowired
-  private AppProperties appProperties;
+  private ServiceProperties serviceProperties;
 
 
   @Test
   void uploadFile() throws Exception {
     MockMultipartFile multipartFile = new MockMultipartFile( "file", "input.pdf", MediaType.APPLICATION_PDF_VALUE,
-        Files.readAllBytes(Paths.get(appProperties.getStoragePath(), "files", "input.pdf")));
+        Files.readAllBytes(Paths.get(serviceProperties.getStoragePath(), "files", "input.pdf")));
 
     URI uri = UriComponentsBuilder.fromUriString("/uploadToUrl/file").queryParam("url", "http://docimage.remotemeeting.com/upload").build().toUri();
     mockMvc.perform(multipart(uri).file(multipartFile))
@@ -42,7 +42,7 @@ class UploadToUrlControllerTest {
   @Test
   void uploadStream() throws Exception {
     MockMultipartFile multipartFile = new MockMultipartFile( "file", "input.pdf", MediaType.APPLICATION_PDF_VALUE,
-        Files.readAllBytes(Paths.get(appProperties.getStoragePath(), "files", "input.pdf")));
+        Files.readAllBytes(Paths.get(serviceProperties.getStoragePath(), "files", "input.pdf")));
 
     URI uri = UriComponentsBuilder.fromUriString("/uploadToUrl/stream").queryParam("url", "http://docimage.remotemeeting.com/upload").build().toUri();
     mockMvc.perform(multipart(uri).file(multipartFile))

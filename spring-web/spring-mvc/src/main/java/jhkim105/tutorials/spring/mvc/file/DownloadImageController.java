@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import jhkim105.tutorials.spring.mvc.common.FileUtils;
-import jhkim105.tutorials.spring.mvc.config.AppProperties;
+import jhkim105.tutorials.spring.mvc.config.ServiceProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class DownloadImageController {
 
-  private final AppProperties appProperties;
+  private final ServiceProperties serviceProperties;
 
   @GetMapping(value = "/**/{file:.+}")
   public ResponseEntity<byte[]> download(HttpServletRequest request, @PathVariable String file) {
     log.debug("download:{}", file);
     int index = request.getRequestURI().indexOf("download/image");
     String imageUri = request.getRequestURI().substring(index + "download/image".length() + 1);
-    String imagePath = String.format("%s/images/%s", appProperties.getStoragePath(), imageUri);
+    String imagePath = String.format("%s/images/%s", serviceProperties.getStoragePath(), imageUri);
     log.debug("imagePath:{}", imagePath);
     return ResponseEntity.ok()
         .contentType(MediaType.valueOf(FileUtils.contentType(Paths.get(file))))

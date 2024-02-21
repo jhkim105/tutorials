@@ -1,6 +1,6 @@
 package jhkim105.tutorials.spring.mvc;
 
-import jhkim105.tutorials.spring.mvc.config.AppProperties;
+import jhkim105.tutorials.spring.mvc.config.ServiceProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 @Slf4j
 @SpringBootApplication
 @RequiredArgsConstructor
-@EnableConfigurationProperties(AppProperties.class)
+@EnableConfigurationProperties(ServiceProperties.class)
 @ServletComponentScan
 public class SpringMvcApplication {
 
@@ -22,9 +22,9 @@ public class SpringMvcApplication {
   }
 
   @Bean
-  public ApplicationRunner loggingProperties(AppProperties appProperties) {
+  public ApplicationRunner loggingProperties(ServiceProperties serviceProperties) {
     return (args) -> {
-      log.info("{}", appProperties);
+      log.info("{}", serviceProperties);
     };
 
   }
