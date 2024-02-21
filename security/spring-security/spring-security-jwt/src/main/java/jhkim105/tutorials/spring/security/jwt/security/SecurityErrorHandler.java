@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AuthenticationErrorHandler {
+public class SecurityErrorHandler {
 
   private final MappingJackson2HttpMessageConverter jacksonConverter;
 

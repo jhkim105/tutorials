@@ -11,11 +11,11 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 @RequiredArgsConstructor
 public class TokenAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-  private final AuthenticationErrorHandler authenticationErrorHandler;
+  private final SecurityErrorHandler securityErrorHandler;
 
   @Override
   public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
     log.debug("TokenAuthenticationEntryPoint::path:{}, message:{}", request.getRequestURI(), authException.getMessage());
-    authenticationErrorHandler.handleUnauthorized(response);
+    securityErrorHandler.handleUnauthorized(response);
   }
 }

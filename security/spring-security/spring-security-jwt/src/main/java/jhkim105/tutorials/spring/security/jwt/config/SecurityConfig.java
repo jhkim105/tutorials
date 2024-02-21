@@ -2,10 +2,10 @@ package jhkim105.tutorials.spring.security.jwt.config;
 
 
 import jhkim105.tutorials.spring.security.jwt.VersionController;
-import jhkim105.tutorials.spring.security.jwt.security.AuthenticationErrorHandler;
 import jhkim105.tutorials.spring.security.jwt.security.JwtAuthenticationFilter;
 import jhkim105.tutorials.spring.security.jwt.security.JwtAuthenticationProvider;
 import jhkim105.tutorials.spring.security.jwt.security.JwtAuthenticationTokenService;
+import jhkim105.tutorials.spring.security.jwt.security.SecurityErrorHandler;
 import jhkim105.tutorials.spring.security.jwt.security.TokenAuthenticationEntryPoint;
 import jhkim105.tutorials.spring.security.jwt.security.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class SecurityConfig {
       VersionController.URI_VERSION
   };
 
-  private final AuthenticationErrorHandler authenticationErrorHandler;
+  private final SecurityErrorHandler securityErrorHandler;
   private final JwtAuthenticationTokenService jwtAuthenticationTokenService;
 
 
@@ -89,7 +89,7 @@ public class SecurityConfig {
 
   private JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
     JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(
-        "/**", jwtAuthenticationTokenService, authenticationErrorHandler);
+        "/**", jwtAuthenticationTokenService, securityErrorHandler);
     jwtAuthenticationFilter.setAuthenticationManager(authenticationManager());
     jwtAuthenticationFilter.afterPropertiesSet();
     return jwtAuthenticationFilter;
@@ -107,7 +107,7 @@ public class SecurityConfig {
 
   @Bean
   public TokenAuthenticationEntryPoint tokenAuthenticationEntryPoint() {
-    return new TokenAuthenticationEntryPoint(authenticationErrorHandler);
+    return new TokenAuthenticationEntryPoint(securityErrorHandler);
   }
 
   @Bean

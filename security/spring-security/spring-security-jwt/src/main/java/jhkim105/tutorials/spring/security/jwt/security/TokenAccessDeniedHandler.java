@@ -10,10 +10,10 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @RequiredArgsConstructor
 public class TokenAccessDeniedHandler implements AccessDeniedHandler {
 
-  private final AuthenticationErrorHandler authenticationErrorHandler;
+  private final SecurityErrorHandler securityErrorHandler;
 
   @Override
   public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) {
-    authenticationErrorHandler.handleAccessDenied(response);
+    securityErrorHandler.handleAccessDenied(response);
   }
 }

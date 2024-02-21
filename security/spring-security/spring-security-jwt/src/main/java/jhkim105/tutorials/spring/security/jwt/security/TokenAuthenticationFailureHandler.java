@@ -12,13 +12,13 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @Slf4j
 @RequiredArgsConstructor
 public class TokenAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-  private final AuthenticationErrorHandler authenticationErrorHandler;
+  private final SecurityErrorHandler securityErrorHandler;
 
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
       throws IOException, ServletException {
     log.debug("onAuthenticationFailure");
-    authenticationErrorHandler.handleUnauthorized(response);
+    securityErrorHandler.handleUnauthorized(response);
   }
 
 }
