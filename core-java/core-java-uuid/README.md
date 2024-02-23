@@ -35,8 +35,12 @@ Time-based UUID structure
 ```
 Benchmark
 ```text
-[UUID.randomUUID()] 12800000 UUIDs generated,  0 collisions in 11729 ms
-[UuidCreator.getTimeBased()] 12800000 UUIDs generated,  0 collisions in 2503 ms
+[UUID::randomUUID] 12800000 UUIDs generated,  0 collisions in 9632 ms
+[UuidCreator::getTimeBased] 12800000 UUIDs generated,  0 collisions in 2519 ms
+[UuidCreator::getTimeOrderedEpoch] 12800000 UUIDs generated,  0 collisions in 8482 ms
+[UuidCreator::getTimeOrderedEpochPlus1] 12800000 UUIDs generated,  0 collisions in 2304 ms
+[UuidCreator::getTimeOrderedEpochPlusN] 12800000 UUIDs generated,  0 collisions in 7654 ms
+
 ```
 
 [benchmark of uuid-creator](https://github.com/f4b6a3/uuid-creator/wiki/5.0.-Benchmark)
