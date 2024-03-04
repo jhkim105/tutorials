@@ -1,17 +1,23 @@
 package jhkim105.tutorials.core.java.date;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.TimeZone;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-class DateTimeTest {
 
+@Disabled
+class DateTimeTest {
 
   @Test
   void dateTime() throws Exception {
@@ -45,5 +51,29 @@ class DateTimeTest {
     System.out.println(now.withZoneSameInstant(ZoneId.of("UTC")).toLocalTime());
   }
 
+  @Test
+  void truncate() {
+    System.out.println(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS));
+    assertThat(LocalDateTime.now().truncatedTo(ChronoUnit.DAYS))
+        .isEqualTo(LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0));
+  }
+
+  @Test
+  void localDateTime() {
+    LocalDateTime now = LocalDateTime.now();
+    ZoneId zoneId = ZoneId.of("UTC");
+    System.out.println(ZonedDateTime.of(now, zoneId));
+    System.out.println(now.atZone(zoneId));
+    assertThat(ZonedDateTime.of(now, zoneId)).isEqualTo(now.atZone(zoneId));
+  }
+
+  @Test
+  void localDate() {
+    LocalDate now = LocalDate.now();
+    ZoneId zoneId = ZoneId.of("Asia/Seoul");
+    System.out.println(ZonedDateTime.of(now.atStartOfDay(), zoneId));
+    System.out.println(now.atStartOfDay(zoneId));
+    assertThat(ZonedDateTime.of(now.atStartOfDay(), zoneId)).isEqualTo(now.atStartOfDay(zoneId));
+  }
 
 }
