@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
@@ -188,6 +189,19 @@ public class FileUtils {
         .filter(File::isFile)
         .sorted(Comparator.comparing(f -> FilenameUtils.getBaseName(f.getName())))
         .collect(Collectors.toList());
+  }
+
+  public static List<File> getFileListByPredicateOrderFileName(String dirPath, Predicate<Path> pathPredicate)  {
+    try (Stream<Path> stream = Files.list(Paths.get(dirPath))) {
+      return stream
+          .filter(pathPredicate)
+          .peek(System.out::println)
+          .sorted(Comparator.comparing(f -> FilenameUtils.getBaseName(f.getFileName().toString())))
+          .map(Path::toFile)
+          .collect(Collectors.toList());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static boolean isEmptyDir(String dir) {

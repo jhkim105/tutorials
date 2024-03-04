@@ -1,19 +1,20 @@
 package utils;
 
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.http.entity.ContentType;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.entity.ContentType;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class FileUtilsTest {
@@ -73,7 +74,10 @@ public class FileUtilsTest {
   @Test
   void getFileListOrderByFileName() {
     List<File> fileList = FileUtils.getFileListOrderByFileName("src/test/resources");
-    log.debug("fileList: {}", fileList);
+    log.debug("fileList: {}", fileList); // src/test/resources/dec.txt, src/test/resources/enc.txt, src/test/resources/encoding-EUC-KR.txt, src/test/resources/encoding-UTF-8.txt, src/test/resources/image.png, src/test/resources/info.zip, src/test/resources/input.txt, src/test/resources/logback.xml]
+
+    List<File> fileList2 = FileUtils.getFileListByPredicateOrderFileName("src/test/resources", (p -> !p.toFile().getName().endsWith(".txt")));
+    log.debug("{}", fileList2);
   }
 
   @Test

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: utils.DownloaderTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.543 s - in utils.DownloaderTest

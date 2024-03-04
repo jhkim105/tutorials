@@ -1,9 +1,11 @@
 package utils;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -39,8 +41,19 @@ public final class DateUtils {
     return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
 
-  public static Date convertToDate(LocalDate localDateTime) {
-    return Date.from(localDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+  public static Date convertToDate(LocalDate localDate) {
+    return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+  }
+
+  public static LocalDateTime convertToLocalDateTime(String dateString, String pattern, String timezone) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+    ZoneId zoneId = ZoneId.of(timezone);
+    ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateString, formatter.withZone(zoneId));
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(zonedDateTime.toInstant().toEpochMilli()), ZoneId.systemDefault());
+  }
+
+  public static LocalDateTime convertToLocalDateTime(long timestamp) {
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
   }
 
 }
