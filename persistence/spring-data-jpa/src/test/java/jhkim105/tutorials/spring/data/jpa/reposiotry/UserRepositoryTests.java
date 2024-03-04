@@ -46,4 +46,9 @@ class UserRepositoryTests {
     em.persist(user);
   }
 
+  @Test
+  void getUsers() {
+    userRepository.getUsers();
+  }
+
 }
