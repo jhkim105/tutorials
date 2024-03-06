@@ -16,3 +16,6 @@ spring:
             matching-strategy: ant_path_matcher
         servlet:
             path: /mvc
+    jackson:
+        mapper:
+          accept-case-insensitive-enums: true

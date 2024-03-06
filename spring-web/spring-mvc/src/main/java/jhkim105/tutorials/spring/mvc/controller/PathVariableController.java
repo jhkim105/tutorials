@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.mvc;
+package jhkim105.tutorials.spring.mvc.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -61,11 +61,8 @@ public class PathVariableController {
     return idpType;
   }
 
-  public enum StorageType {
-    LOCAL, S3
-  }
-
   public enum IdpType {
     GOOGLE,FACEBOOK
   }
+
 }

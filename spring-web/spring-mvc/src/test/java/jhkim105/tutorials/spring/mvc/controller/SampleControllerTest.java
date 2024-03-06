@@ -1,13 +1,13 @@
 package jhkim105.tutorials.spring.mvc.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jhkim105.tutorials.spring.mvc.controller.SampleController.Sample;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,15 +55,30 @@ class SampleControllerTest {
 
   @Test
   void testPostBody() throws Exception {
-    Sample sample = Sample.builder()
-        .id("id02")
-        .name("name02")
-        .build();
-
+    Sample sample = new Sample("id01", "name02", StorageType.S3);
     MvcResult mvcResult = mockMvc.perform(post("/sample/postBody")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(sample)))
-        .andDo(print()).andReturn();
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andReturn();
+    String ret = mvcResult.getResponse().getContentAsString();
+    log.debug("ret: {}", ret);
+  }
+
+  /**
+   * spring.jackson.mapper.accept-case-insensitive-enums=true
+   */
+  @Test
+  void testPostBody_lowercase() throws Exception {
+    String json = "{\"id\":\"id01\",\"name\":\"name02\",\"storageType\":\"s3\"}";
+    MvcResult mvcResult = mockMvc.perform(post("/sample/postBody")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(json)
+        )
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andReturn();
     String ret = mvcResult.getResponse().getContentAsString();
     log.debug("ret: {}", ret);
   }

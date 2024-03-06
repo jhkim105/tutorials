@@ -1,8 +1,5 @@
 package jhkim105.tutorials.spring.mvc.controller;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +16,7 @@ public class SampleController {
 
   @GetMapping("/get")
   public Sample get(String id) {
-    return Sample.builder().id(id).name("name").build();
+    return new Sample(id, "name");
   }
 
   @PostMapping("/post")
@@ -47,12 +44,5 @@ public class SampleController {
         .build();
   }
 
-  @Getter
-  @ToString
-  @Builder
-  public static class Sample {
-    private String id;
-    private String name;
-  }
 
 }
