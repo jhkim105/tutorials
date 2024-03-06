@@ -29,7 +29,7 @@ public class CounterService {
   }
 
   private LockConfiguration lockConfiguration() {
-    String lockKey = "counter";
+    String lockKey = "counter_shedlock";
     Instant now = Instant.now();
     Duration lockAtMostFor = Duration.ofMillis(30);
     Duration lockAtLeastFor = Duration.ofMillis(10);
@@ -42,7 +42,7 @@ public class CounterService {
    * 동시에 한 쓰레드만 실행되고, 나머지는 실행안됨
    */
   public void increaseUsingRedissonLock() {
-    String key = "counter";
+    String key = "counter_increaseUsingRedissonLock";
     RLock lock = redissonClient.getLock(key);
     try {
       boolean res = lock.tryLock(1000, 1000, TimeUnit.MILLISECONDS);
@@ -64,7 +64,7 @@ public class CounterService {
    * 동시에 한 쓰레드만 실행되고, 나머지는 실행안됨
    */
   public void increaseUsingAtomicLong() {
-    String key = "counter";
+    String key = "counter_increaseUsingAtomicLong";
     RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
     if (atomicLong.compareAndSet(0, 1)) {
       increase();
@@ -76,7 +76,7 @@ public class CounterService {
    * 모든 요청이 실행됨
    */
   public void increaseSynchronizedUsingRedissonLock() {
-    String key = "counter";
+    String key = "counter_increaseSynchronizedUsingRedissonLock";
     RLock lock = redissonClient.getLock(key);
     lock.lock();
     increase();
