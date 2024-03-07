@@ -1,10 +1,9 @@
-= Spring Cache With Redis
+# Spring Cache With Redis
 
 
-== Dependency
-[source,xml]
-----
-    <dependency>
+## Dependency
+```xml 
+<dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-cache</artifactId>
     </dependency>
@@ -13,7 +12,7 @@
       <artifactId>redisson-spring-data-25</artifactId>
       <version>3.16.1</version>
     </dependency>
-----
+```
 
 == Config
 RedisConfig.java
@@ -79,5 +78,6 @@ public class CacheConfig {
 
 ----
 
-== Refs
+## Refs
 https://github.com/redisson/redisson/tree/master/redisson-spring-data
+https://github.com/redisson/redisson/blob/master/redisson-spring-boot-starter/README.md
