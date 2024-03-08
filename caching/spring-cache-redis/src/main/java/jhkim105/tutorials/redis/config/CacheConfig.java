@@ -1,8 +1,10 @@
-package com.example.spring.cache.redis;
+package jhkim105.tutorials.redis.config;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -10,37 +12,34 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.core.RedisKeyValueAdapter;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Configuration
 @EnableCaching
 @EnableRedisRepositories(enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
+@RequiredArgsConstructor
 public class CacheConfig {
 
-  public final static String CACHE_DATE_STRING = "dateString";
+  private final CacheProperties cacheProperties;
 
   @Bean
   public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
     Map<String, RedisCacheConfiguration> configurationMap = new HashMap<>();
-    for(CacheConf cacheConf : CacheConf.values()) {
-      configurationMap.put(cacheConf.cacheName, redisCacheConfiguration(cacheConf.ttl));
+    for(String cacheName : Caches.ttlMap().keySet()) {
+      configurationMap.put(cacheName, redisCacheConfiguration(Caches.ttlMap().get(cacheName)));
     }
-    return builder -> builder.withInitialCacheConfigurations(configurationMap);
+    return builder -> builder
+        .cacheDefaults(redisCacheConfiguration(cacheProperties.getRedis().getTimeToLive()))
+        .withInitialCacheConfigurations(configurationMap);
   }
 
   private RedisCacheConfiguration redisCacheConfiguration(Duration ttl) {
-    return RedisCacheConfiguration.defaultCacheConfig()
-        .entryTtl(ttl);
-  }
-
-
-  private enum CacheConf {
-    DATE_STRING(CACHE_DATE_STRING, Duration.ofSeconds(5));
-    private final String cacheName;
-    private final Duration ttl;
-    CacheConf(String cacheName, Duration ttl) {
-      this.cacheName = cacheName;
-      this.ttl = ttl;
-    }
+    return RedisCacheConfiguration
+        .defaultCacheConfig()
+        .prefixCacheNameWith(cacheProperties.getRedis().getKeyPrefix())
+        .entryTtl(ttl)
+        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(RedisSerializer.json()));
   }
 
 }

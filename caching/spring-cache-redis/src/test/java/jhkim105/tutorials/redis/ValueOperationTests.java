@@ -1,9 +1,9 @@
-package com.example.spring.cache.redis;
+package jhkim105.tutorials.redis;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import jakarta.annotation.Resource;
 import java.time.Duration;
-import javax.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.ValueOperations;

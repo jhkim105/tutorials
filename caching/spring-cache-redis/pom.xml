@@ -5,16 +5,16 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.5</version>
+    <version>3.2.3</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.example</groupId>
+  <groupId>jhkim105.tutorials</groupId>
   <artifactId>spring-cache-redis</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>spring-cache-redis</name>
   <description>spring-cache-redis</description>
   <properties>
-    <java.version>11</java.version>
+    <java.version>17</java.version>
   </properties>
   <dependencies>
     <dependency>
