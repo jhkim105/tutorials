@@ -18,10 +18,18 @@ class JacksonTest {
 
   @Test
   void serializeAndDeserialize() throws Exception {
-    ObjectMapper mapper = new ObjectMapper();
+    var mapper = new ObjectMapper();
     
     var json = mapper.writeValueAsString(new Sample("sample 1"));
     var obj = mapper.readValue(json, Sample.class);
+    log.info("obj->{}", obj);
+  }
+
+  @Test
+  void serializeAndDeserializeRecordClass() throws Exception {
+    var mapper = new ObjectMapper();
+    var json = mapper.writeValueAsString(new SampleRecord("sample 1"));
+    var obj = mapper.readValue(json, SampleRecord.class);
     log.info("obj->{}", obj);
   }
 
