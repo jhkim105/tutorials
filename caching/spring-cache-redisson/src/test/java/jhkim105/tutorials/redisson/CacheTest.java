@@ -2,6 +2,7 @@ package jhkim105.tutorials.redisson;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import jhkim105.tutorials.redisson.service.CurrentDateRecordService;
 import jhkim105.tutorials.redisson.service.CurrentDateService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,9 @@ public class CacheTest {
 
   @Autowired
   CurrentDateService currentDateService;
+
+  @Autowired
+  CurrentDateRecordService currentDateRecordService;
 
   @Autowired
   RedisTemplate redisTemplate;
@@ -39,6 +43,15 @@ public class CacheTest {
     assertThat(currentDate.getDate()).isNotEqualTo(currentDate2.getDate());
 
   }
+
+  @Test
+  void testRecordClass() {
+    String pattern = "yyyy-MM-dd hh:MM:SSS";
+    var currentDate = currentDateRecordService.getCurrentDateRecord(pattern);
+    var currentDate2 = currentDateRecordService.getCurrentDateRecord(pattern);
+    assertThat(currentDate).isEqualTo(currentDate2);
+  }
+
 
 
 }
