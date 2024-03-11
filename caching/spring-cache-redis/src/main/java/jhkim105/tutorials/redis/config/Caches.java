@@ -11,7 +11,6 @@ public class Caches {
   public static Map<String, Duration> ttlMap() {
     Map<String, Duration> ttlMap = new HashMap<>();
     ttlMap.put(CURRENT_DATE, Duration.ofSeconds(10));
-//    ttlMap.put(CURRENT_DATE_RECORD, Duration.ofMinutes(10));
     return ttlMap;
   }
 
