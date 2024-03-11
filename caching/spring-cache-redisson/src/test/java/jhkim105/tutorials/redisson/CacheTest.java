@@ -27,7 +27,6 @@ public class CacheTest {
   void test() {
     String pattern = "yyyy-MM-dd hh:MM:SSS";
     var currentDate = currentDateService.getCurrentDate(pattern);
-    log.info("{}", currentDate);
     var currentDate2 = currentDateService.getCurrentDate(pattern);
     assertThat(currentDate.getDate()).isEqualTo(currentDate2.getDate());
 
