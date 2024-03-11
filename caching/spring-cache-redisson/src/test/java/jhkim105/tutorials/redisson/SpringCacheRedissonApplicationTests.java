@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.cache.redisson;
+package jhkim105.tutorials.redisson;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

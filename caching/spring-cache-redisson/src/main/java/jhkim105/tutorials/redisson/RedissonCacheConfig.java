@@ -1,23 +1,23 @@
-# Spring Cache With Redis
+package jhkim105.tutorials.redisson;
 
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import org.redisson.spring.data.connection.RedissonConnectionFactory;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
-## Dependency
-```xml
-  <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-cache</artifactId>
-  </dependency>
-  <dependency>
-    <groupId>org.redisson</groupId>
-    <artifactId>redisson-spring-boot-starter</artifactId>
-    <version>3.27.1</version>
-  </dependency>
-```
-
-## Config
-- RedissonAutoConfiguration 에서 spring.redis property 사용하여 bean 생성함.
-- RedissonCacheConfig.java
-```java
 @Configuration
 @EnableCaching
 @EnableConfigurationProperties({CacheProperties.class, RedisProperties.class})
@@ -59,10 +59,3 @@ public class RedissonCacheConfig {
   }
 
 }
-
-
-```
-
-## Refs
-- https://github.com/redisson/redisson/blob/master/redisson-spring-boot-starter/README.md
-

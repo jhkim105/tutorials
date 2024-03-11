@@ -3,3 +3,11 @@ spring:
     host: localhost
     port: 6379
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    redis:
+      key-prefix: v101_
+      time-to-live: 1m

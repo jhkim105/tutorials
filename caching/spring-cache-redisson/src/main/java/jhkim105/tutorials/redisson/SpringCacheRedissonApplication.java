@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.cache.redisson;
+package jhkim105.tutorials.redisson;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
