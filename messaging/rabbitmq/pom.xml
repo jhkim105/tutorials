@@ -9,31 +9,20 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>jhkim105.tutorials</groupId>
-  <artifactId>spring-rabbitmq-modules</artifactId>
+  <artifactId>rabbitmq</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>spring-rabbitmq-modules</name>
-  <description>spring-rabbitmq-modules</description>
+  <name>rabbitmq</name>
+  <description>rabbitmq</description>
   <modules>
     <module>spring-rabbitmq-batched-messages</module>
     <module>spring-rabbitmq-broadcast</module>
     <module>spring-rabbitmq-error-handling</module>
     <module>spring-rabbitmq-monitoring</module>
     <module>spring-rabbitmq-message-deduplication</module>
+    <module>spring-rabbitmq</module>
   </modules>
   <properties>
   </properties>
-
-  <dependencies>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>
