@@ -54,7 +54,6 @@
     <module>websocket-module</module>
     <module>spring-async</module>
     <module>testing</module>
-    <module>kafka-modules</module>
     <module>benchmark</module>
     <module>spring-json</module>
     <module>spring-rest</module>

@@ -23,8 +23,8 @@ public class CacheConfig {
   public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer(CacheProperties cacheProperties) {
     Map<String, RedisCacheConfiguration> configurationMap = new HashMap<>();
     String keyPrefix = cacheProperties.getRedis().getKeyPrefix();
-    for(String cacheName : Caches.ttlMap().keySet()) {
-      configurationMap.put(cacheName, redisCacheConfiguration(Caches.ttlMap().get(cacheName), keyPrefix));
+    for(String cacheName : Caches.configMap().keySet()) {
+      configurationMap.put(cacheName, redisCacheConfiguration(Caches.configMap().get(cacheName), keyPrefix));
     }
     return builder -> builder
         .cacheDefaults(redisCacheConfiguration(cacheProperties.getRedis().getTimeToLive(), keyPrefix))

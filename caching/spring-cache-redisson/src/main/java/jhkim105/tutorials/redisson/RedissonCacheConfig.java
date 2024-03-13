@@ -36,7 +36,7 @@ public class RedissonCacheConfig {
 
   private Set<String> cacheNames() {
     Set<String> cacheNames = new HashSet<>();
-    for(String cacheName : Caches.ttlMap().keySet()) {
+    for(String cacheName : Caches.configMap().keySet()) {
       cacheNames.add(cacheName);
     }
     return cacheNames;
@@ -44,8 +44,8 @@ public class RedissonCacheConfig {
 
   private Map<String, RedisCacheConfiguration> redisCacheConfigurationMap(String keyPrefix) {
     Map<String, RedisCacheConfiguration> configurationMap = new HashMap<>();
-    for(String cacheName : Caches.ttlMap().keySet()) {
-      configurationMap.put(cacheName, redisCacheConfiguration(Caches.ttlMap().get(cacheName), keyPrefix));
+    for(String cacheName : Caches.configMap().keySet()) {
+      configurationMap.put(cacheName, redisCacheConfiguration(Caches.configMap().get(cacheName), keyPrefix));
     }
     return configurationMap;
   }
