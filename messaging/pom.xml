@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-
+  <groupId>jhkim105.tutorials</groupId>
   <artifactId>messaging</artifactId>
   <packaging>pom</packaging>
   <modules>

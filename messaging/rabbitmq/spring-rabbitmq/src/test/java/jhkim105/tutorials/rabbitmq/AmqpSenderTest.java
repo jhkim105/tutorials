@@ -1,6 +1,6 @@
-package jhkim105.tutorials;
+package jhkim105.tutorials.rabbitmq;
 
-import static jhkim105.tutorials.AmqpConfig.QUEUE_SAMPLE;
+import static jhkim105.tutorials.rabbitmq.AmqpConfig.QUEUE_SAMPLE;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

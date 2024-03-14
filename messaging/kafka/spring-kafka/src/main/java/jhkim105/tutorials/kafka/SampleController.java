@@ -1,8 +1,8 @@
-package jhkim105.tutorials;
+package jhkim105.tutorials.kafka;
 
 
-import static jhkim105.tutorials.AmqpConfig.QUEUE_SAMPLE;
 
+import jhkim105.tutorials.kafka.producer.KafkaSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SampleController {
 
-  private final AmqpSender amqpSender;
+  private final KafkaSender sender;
 
   @GetMapping("/send")
   public void send() {
-    SampleMessage sampleMessage = new SampleMessage();
-    sampleMessage.setName("Test 01");
-    amqpSender.send(QUEUE_SAMPLE, sampleMessage);
+    SampleMessage sampleMessage = SampleMessage.of("Hello Kafka");
+    sender.send(Topics.SAMPLE, sampleMessage);
   }
 
 

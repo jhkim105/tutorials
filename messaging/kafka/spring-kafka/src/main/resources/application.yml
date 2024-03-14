@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: spring-kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+    admin:
+      auto-create: false
+    consumer:
+      group-id: group-01
+#      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+#      properties:
+#        "[spring.deserializer.key.delegate.class]": org.apache.kafka.common.serialization.StringDeserializer
+#        "[spring.deserializer.value.delegate.class]": org.apache.kafka.common.serialization.StringDeserializer
+
+logging:
+  level:
+    'jhkim105.tutorials': debug

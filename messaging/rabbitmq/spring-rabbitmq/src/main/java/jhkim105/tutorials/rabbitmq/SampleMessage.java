@@ -1,4 +1,4 @@
-package jhkim105.tutorials;
+package jhkim105.tutorials.rabbitmq;
 
 
 import java.io.Serial;
