@@ -1,19 +1,17 @@
-
-
-
 ## Application Setup
+
 - Messaging > Spring for Apache Kafka
 
-```text
-		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+```xml
+<dependency>
+  <groupId>org.springframework.kafka</groupId>
+  <artifactId>spring-kafka</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.springframework.kafka</groupId>
+  <artifactId>spring-kafka-test</artifactId>
+  <scope>test</scope>
+</dependency>        
 ```
 
 ```yaml
@@ -27,7 +25,9 @@ spring:
 ```
 
 ## Producing Messages
+
 ```java
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -55,28 +55,36 @@ public class KafkaSender {
 ```
 
 ## Consuming Messages
+
 ```java
+
 @Component
 @Slf4j
 public class SampleMessageListener {
+
   @KafkaListener(topics = Topics.SAMPLE)
-  public void handle(@Payload String message, @Header(KafkaHeaders.PARTITION) int partition) {
-    log.debug("message received. partitionId:{}, message: {}", partition, message);
+  public void handle(@Payload String message, @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) {
+    log.debug("message received. message: {}, partition: {}", message, partition);
   }
+
 }
 
 ```
 
 ## ERROR Handling
+
 - 에러 발생시 재시도 횟수 지정하기 (FixedBackOff)
+
 ```java
-  @Bean
-  public DefaultErrorHandler defaultErrorHandler() {
-    return new DefaultErrorHandler(new FixedBackOff(0, 2));
-  }
+
+@Bean
+public DefaultErrorHandler defaultErrorHandler() {
+  return new DefaultErrorHandler(new FixedBackOff(0, 2));
+}
 ```
 
 ## References
+
 - [Spring Boot Kafka](https://docs.spring.io/spring-boot/docs/current/reference/html/messaging.html#messaging.kafka)
 - [Baeldung](https://www.baeldung.com/spring-kafka) 
 
