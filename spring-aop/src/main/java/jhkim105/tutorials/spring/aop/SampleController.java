@@ -1,7 +1,6 @@
 package jhkim105.tutorials.spring.aop;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,11 +29,8 @@ public class SampleController {
   }
 
 
-  @Getter
-  @RequiredArgsConstructor
-  @ToString
-  public static class SampleResponse {
-    private final String name;
+
+  public record SampleResponse(String name) {
 
   }
 }
