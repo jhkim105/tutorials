@@ -18,5 +18,7 @@
     <module>concurrency-database</module>
     <module>distributed-lock</module>
     <module>java-concurrency</module>
+    <module>shedlock</module>
+
   </modules>
 </project>

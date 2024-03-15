@@ -36,7 +36,6 @@
     <module>testing</module>
     <module>spring-mqtt</module>
     <module>spring-quartz</module>
-    <module>spring-scheduled-shedlock</module>
     <module>spring-mqtt</module>
     <module>spring-web</module>
     <module>utils</module>

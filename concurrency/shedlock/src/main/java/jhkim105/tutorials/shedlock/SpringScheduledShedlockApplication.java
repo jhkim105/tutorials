@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.scheduled.shedlock;
+package jhkim105.tutorials.shedlock;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

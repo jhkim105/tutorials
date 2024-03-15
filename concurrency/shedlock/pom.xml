@@ -9,10 +9,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.example</groupId>
-  <artifactId>spring-scheduled-shedlock</artifactId>
+  <artifactId>shedlock</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-scheduled-shedlock</name>
-  <description>Demo project for Spring Boot</description>
+  <name>shedlock</name>
+  <description></description>
   <properties>
     <java.version>11</java.version>
   </properties>
