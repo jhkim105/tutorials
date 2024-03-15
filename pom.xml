@@ -57,6 +57,7 @@
     <module>benchmark</module>
     <module>spring-json</module>
     <module>spring-rest</module>
+    <module>micrometer</module>
 
   </modules>
   <repositories>
