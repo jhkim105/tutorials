@@ -1,4 +1,4 @@
-package jhkim105.tutorials.authorization_server.config;
+package jhkim105.tutorials.config;
 
 
 import static org.springframework.security.config.Customizer.withDefaults;

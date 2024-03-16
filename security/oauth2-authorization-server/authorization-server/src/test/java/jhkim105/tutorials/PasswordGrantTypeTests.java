@@ -1,4 +1,4 @@
-package jhkim105.tutorials.authorization_server;
+package jhkim105.tutorials;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

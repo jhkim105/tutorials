@@ -1,4 +1,4 @@
-package jhkim105.tutorials.authorization_server.config;
+package jhkim105.tutorials.config;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;

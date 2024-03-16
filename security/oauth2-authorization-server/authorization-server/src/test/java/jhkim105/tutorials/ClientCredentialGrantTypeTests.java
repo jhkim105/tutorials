@@ -1,4 +1,4 @@
-package jhkim105.tutorials.authorization_server;
+package jhkim105.tutorials;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
