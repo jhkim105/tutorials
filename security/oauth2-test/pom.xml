@@ -5,26 +5,25 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.5</version>
+    <version>3.0.5</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>jhkim105.tutorials</groupId>
-  <artifactId>keycloak-spring-adapter</artifactId>
+  <artifactId>oauth2-test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>keycloak-spring-adapter</name>
-  <description>keycloak-spring-adapter</description>
+  <name>oauth2-test</name>
+  <description>oauth2-test</description>
   <properties>
     <java.version>17</java.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.keycloak</groupId>
-      <artifactId>keycloak-spring-boot-starter</artifactId>
-      <version>20.0.3</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -37,8 +36,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
