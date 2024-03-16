@@ -2,5 +2,63 @@ server:
   port: 9000
 logging:
   level:
-    org.springframework.security: trace
-    org.springframework.security.oauth2: trace
+    'org.springframework.security': trace
+spring:
+  security:
+    user:
+      name: user01
+      password: pass01
+    oauth2:
+      authorizationserver:
+        client:
+          oidc-client:
+            registration:
+              client-id: "oidc-client"
+              client-secret: "{noop}secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8080/authorized"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/"
+              scopes:
+                - "openid"
+                - "profile"
+            require-authorization-consent: true
+          client01:
+            registration:
+              client-id: "client01"
+              client-secret: "{noop}secret01"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8080/authorized"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/"
+              scopes:
+                - "openid"
+                - "profile"
+                - "message.read"
+                - "message.write"
+            require-authorization-consent: true
+          client02:
+            registration:
+              client-id: "client02"
+              client-secret: "{noop}secret02"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "client_credentials"
+                - "password"
+              scopes:
+                - "openid"
+                - "profile"
+                - "read"
+                - "write"
+            require-authorization-consent: true

@@ -16,22 +16,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @AutoConfigureMockMvc
 @Slf4j
 class AuthorizationCodeGrantTypeTests {
 
-  @LocalServerPort
-  private int port;
 
   @Autowired
   private WebClient webClient;
 
-  private static final String REDIRECT_URI = "http://127.0.0.1:8080/login/oauth2/code/client01";
+  private static final String REDIRECT_URI = "http://127.0.0.1:8080/authorized";
 
   private static final String AUTHORIZATION_REQUEST = UriComponentsBuilder
       .fromPath("/oauth2/authorize")

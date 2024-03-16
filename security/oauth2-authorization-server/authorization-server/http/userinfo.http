@@ -1,0 +1,26 @@
+# grant_type=authorization_code
+
+### Get Code
+# http://localhost:9000/oauth2/authorize?response_type=code&client_id=oidc-client&redirect_uri=http://127.0.0.1:8080/authorized&scope=openid
+# -> http://127.0.0.1:8080/authorized?code=f7wRUxtDbi-HkQNAqEuu7W8roVBFy_XkuIk11Bnl7zQuocj8n_IYNrDQR3UvRuNvMV9uAfln1BTboBeO9Q0YMSsfgzMbj2o3zMDvhBkaXKe_zZHkCGt7w0rjIizcBL14
+# curl http://localhost:9000/oauth2/token -u "oidc-client:secret" -d "grant_type=authorization_code" -d "code=bTFAUYATu0zW7a6THjk1uFNE-VGdX144aIAjHQu7THhoiwkj1Rr3ShnpsPlc6ac4f8cAB-XXlpCWVmrctplgBI17Jdy5sw8GnE0Uz1oyCNFRDoU30-sQL1NbJWgN_sk-" -d "redirect_uri=http://127.0.0.1:8080/authorized" -d "scope=openid"
+
+
+### Get Token
+POST http://localhost:9000/oauth2/token
+Authorization: Basic oidc-client secret
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&code=
+fMU4wWClU13UNDxfVYj9W9aURcCiCzkSHIGI7lq3OnuIgarSSMsbWQuSba42stbSROGV7XHlMhxRi-4u9ffvAFUg6k07wXb77vQLkmto2PXHdZ4mgdgNStxjP1E5Y-5_
+&redirect_uri=http://127.0.0.1:8080/authorized&scope=openid
+
+
+> {%
+  client.global.set("access_token", response.body.access_token);
+%}
+
+### GET Userinfo
+GET http://localhost:9000/userinfo
+Accept: application/json
+Authorization: Bearer {{access_token}}

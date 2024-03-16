@@ -1,0 +1,16 @@
+### grant_type=client_credentials
+# curl "http://localhost:9000/oauth2/token" -u "client01:secret01" -d "grant_type=client_credentials&scope=read"
+POST http://localhost:9000/oauth2/token
+Authorization: Basic client02 secret02
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&scope=read
+
+### grant_type=password (deprecated)
+# curl -X POST http://localhost:9000/oauth2/token -u "client02:secret02" -H "Content-type: application/x-www-form-urlencoded" -d grant_type=password -d scope=read -d username=user01 -d password=pass01
+POST http://localhost:9000/oauth2/token
+Authorization: Basic client02 secret02
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&scope=read&username=user01&password=pass01
+###
