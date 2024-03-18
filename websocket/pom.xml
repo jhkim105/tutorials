@@ -6,10 +6,10 @@
     <artifactId>tutorials</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>websocket-module</artifactId>
+  <artifactId>websocket</artifactId>
   <name>websocket-module</name>
   <packaging>pom</packaging>
   <modules>
-    <module>websocket</module>
+    <module>spring-websocket</module>
   </modules>
 </project>

@@ -50,7 +50,7 @@
     <module>spring-cloud-microservices</module>
     <module>messaging</module>
     <module>ai</module>
-    <module>websocket-module</module>
+    <module>websocket</module>
     <module>spring-async</module>
     <module>testing</module>
     <module>benchmark</module>
