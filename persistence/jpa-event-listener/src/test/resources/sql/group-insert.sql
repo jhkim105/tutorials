@@ -1,0 +1,1 @@
+insert into t_group (id, name) values ('id01', 'group01');

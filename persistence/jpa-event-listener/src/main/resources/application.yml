@@ -1,0 +1,25 @@
+spring:
+    application:
+        name: jpa-event-listener
+    datasource:
+        url: jdbc:mariadb://localhost/demo?createDatabaseIfNotExist=true
+        username: root
+        password: 111111
+    jpa:
+        hibernate.ddl-auto: create
+        open-in-view: false
+
+
+
+logging:
+    level:
+        'jhkim105.tutorials': debug
+        'org.hibernate.SQL': debug
+        'org.hibernate.type.descriptor.sql.BasicBinder': trace
+        #    'org.hibernate.type.EnumType': trace
+        'org.springframework.transaction': trace
+        'org.springframework.orm.jpa': debug
+        'org.springframework.jdbc.core': trace
+        'org.hibernate.internal': trace
+        'org.hibernate.event.internal': trace
+        'org.hibernate.persister.entity': trace
