@@ -45,7 +45,7 @@ public class User extends BaseEntity<String> implements Persistable<String> {
   private Set<Order> orders = new HashSet<>();
 
   public User(String username) {
-    this.id = UuidCreator.getTimeBased().toString();
+    this.id = UuidCreator.getTimeOrderedEpochPlus1().toString();
     this.username = username;
     this.isNew = true;
   }
