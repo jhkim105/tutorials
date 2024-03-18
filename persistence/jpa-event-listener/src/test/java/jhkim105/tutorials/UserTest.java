@@ -1,8 +1,6 @@
 package jhkim105.tutorials;
 
 
-import jhkim105.tutorials.domain.Group;
-import jhkim105.tutorials.domain.GroupRepository;
 import jhkim105.tutorials.domain.User;
 import jhkim105.tutorials.domain.UserRepository;
 import jhkim105.tutorials.service.UserService;
@@ -12,32 +10,22 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 @Slf4j
-@Sql(scripts = "/sql/group-insert.sql", executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
-@Sql(scripts = "/sql/group-delete.sql", executionPhase = ExecutionPhase.AFTER_TEST_CLASS)
-
+//@Sql(scripts = "/sql/group-insert.sql", executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
+//@Sql(scripts = "/sql/group-delete.sql", executionPhase = ExecutionPhase.AFTER_TEST_CLASS)
 class UserTest {
-
-
   @Autowired
   UserService userService;
 
   @Autowired
   UserRepository userRepository;
-
-  @Autowired
-  GroupRepository groupRepository;
-
   @Test
   void create() {
-    Group group = groupRepository.findById("id01").get();
     log.debug("> user create start");
-    User user  = new User(group, "user01");
+    User user  = new User("user01");
     userRepository.save(user);
     log.debug("> user create end");
 

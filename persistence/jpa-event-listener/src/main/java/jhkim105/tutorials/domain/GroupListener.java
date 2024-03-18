@@ -39,7 +39,7 @@ public class GroupListener implements PreInsertEventListener, PostInsertEventLis
 
   private void createLogOnPostCommitSuccess(PostInsertEvent event) {
     event.getSession().getActionQueue().registerProcess((success, sessionImplementor) -> {
-      // 예외가 발생하더라도 롤백되지 않음
+      // commit 이후에 실행됨
       if (success) {
         log.info(">> GroupListener.onPostInsert PostCommit success: [{}]", event.getEntity());
       }
@@ -47,7 +47,7 @@ public class GroupListener implements PreInsertEventListener, PostInsertEventLis
   }
   @Override
   public boolean requiresPostCommitHandling(EntityPersister entityPersister) {
-    return false; // event.getSession().getActionQueue().registerProcess() 가 실패하더라도 rollback 되지 않음
+    return false; // true, false 동일하게 동작함
   }
 
 }

@@ -23,12 +23,6 @@ public class UserListener implements PreInsertEventListener, PostInsertEventList
     log.info("UserListener.onPreInsert: [{}]", event.getEntity());
     log.info("currentTx: {}", TransactionSynchronizationManager.getCurrentTransactionName());
 
-    // 저장되지 않는다. (dirty checking 을 하지 않음)
-    // envers 가 설정되어 있으면 저장된다.
-    User user = (User)entity;
-    user.setDescription("onPreInsert");
-    user.getGroup().setDescription("onPreInsert");
-
     return false;
   }
 
@@ -44,16 +38,18 @@ public class UserListener implements PreInsertEventListener, PostInsertEventList
 
   private void createLogOnPostCommitSuccess(PostInsertEvent event) {
     event.getSession().getActionQueue().registerProcess((success, sessionImplementor) -> {
-      // 예외가 발생하면 롤백됨
+      // commit 이후에 실행됨
       if (success) {
         log.info(">> UserListener.onPostInsert PostCommit success: [{}]", event.getEntity());
       }
+      throw new RuntimeException("111");
     });
+
   }
 
 
   @Override
   public boolean requiresPostCommitHandling(EntityPersister entityPersister) {
-    return true; // event.getSession().getActionQueue().registerProcess() 가 실패하면 rollback 됨
+    return true; // // true, false 동일하게 동작함
   }
 }

@@ -67,8 +67,7 @@ public class JpaListenerConfig implements InitializingBean {
 
 }
 ```
-requiresPostCommitHandling() true 인 경우 event.getSession().getActionQueue().registerProcess() 에 등록된 함수내에서 예외가 발생하면 롤백처리 된다 (org.springframework.transaction.TransactionSystemException: Could not commit JPA transaction)
-
+requiresPostCommitHandling() true/false 관계없이 동일하게 동작함
 
 ## Log
 ```shell
