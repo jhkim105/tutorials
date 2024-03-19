@@ -51,8 +51,6 @@ public class JpaListenerConfig implements InitializingBean {
 
   private final EntityManagerFactory entityManagerFactory;
   private final GroupListener groupListener;
-  private final UserListener userListener;
-
 
   @Override
   public void afterPropertiesSet() throws Exception {
@@ -61,8 +59,6 @@ public class JpaListenerConfig implements InitializingBean {
 
     eventListenerRegistry.appendListeners(EventType.PRE_INSERT, groupListener);
     eventListenerRegistry.appendListeners(EventType.POST_INSERT, groupListener);
-    eventListenerRegistry.appendListeners(EventType.PRE_INSERT, userListener);
-    eventListenerRegistry.appendListeners(EventType.POST_INSERT, userListener);
   }
 
 }
@@ -111,4 +107,15 @@ requiresPostCommitHandling() true/false 관계없이 동일하게 동작함
 2024-03-18T11:19:32.591+09:00 DEBUG 77728 --- [jpa-event-listener] [           main] o.s.orm.jpa.JpaTransactionManager        : Closing JPA EntityManager [SessionImpl(1241568657PersistenceContext[entityKeys=[EntityKey[jhkim105.tutorials.domain.Group#05715003-27f1-48d0-a988-6be383a4434b]], collectionKeys=[CollectionKey[jhkim105.tutorials.domain.Group.users#05715003-27f1-48d0-a988-6be383a4434b]]];ActionQueue[insertions=ExecutableList{size=0} updates=ExecutableList{size=0} deletions=ExecutableList{size=0} orphanRemovals=ExecutableList{size=0} collectionCreations=ExecutableList{size=0} collectionRemovals=ExecutableList{size=0} collectionUpdates=ExecutableList{size=0} collectionQueuedOps=ExecutableList{size=0} unresolvedInsertDependencies=null])] after transaction
 2024-03-18T11:19:32.591+09:00 TRACE 77728 --- [jpa-event-listener] [           main] org.hibernate.internal.SessionImpl       : Closing session [f2eddf2f-5011-4c28-9322-13995bb9d437]
 2024-03-18T11:19:32.592+09:00 DEBUG 77728 --- [jpa-event-listener] [           main] jhkim105.tutorials.GroupTest             : > group create end
+```
+commit 이후 SessionImpl#afterTransactionCompletion(successful=true, delayed=false) 가 실행됨
+
+## Mariadb Docker Logging
+- general_log 설정
+```shell
+docker exec -it mariadb sh -c 'mysql -uroot -p -e "SET GLOBAL general_log=1"'
+```
+- tail log
+```shell
+docker exec -it mariadb sh -c 'tail -f /var/lib/mysql/$HOSTNAME.log'
 ```
