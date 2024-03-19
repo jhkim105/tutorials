@@ -108,7 +108,7 @@ requiresPostCommitHandling() true/false 관계없이 동일하게 동작함
 2024-03-18T11:19:32.591+09:00 TRACE 77728 --- [jpa-event-listener] [           main] org.hibernate.internal.SessionImpl       : Closing session [f2eddf2f-5011-4c28-9322-13995bb9d437]
 2024-03-18T11:19:32.592+09:00 DEBUG 77728 --- [jpa-event-listener] [           main] jhkim105.tutorials.GroupTest             : > group create end
 ```
-commit 이후 SessionImpl#afterTransactionCompletion(successful=true, delayed=false) 가 실행됨
+commit(JdbcResourceLocalTransactionCoordinatorImpl.commit()) 이후 SessionImpl#afterTransactionCompletion(successful=true, delayed=false) 가 실행됨
 
 ## Mariadb Docker Logging
 - general_log 설정
