@@ -14,7 +14,6 @@
   <properties>
   </properties>
   <modules>
-    <module>spring-http-logging</module>
     <module>spring-jsp</module>
     <module>spring-mvc</module>
     <module>spring-thymeleaf</module>
