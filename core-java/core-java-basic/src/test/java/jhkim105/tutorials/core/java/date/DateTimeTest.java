@@ -3,6 +3,7 @@ package jhkim105.tutorials.core.java.date;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -74,6 +75,13 @@ class DateTimeTest {
     System.out.println(ZonedDateTime.of(now.atStartOfDay(), zoneId));
     System.out.println(now.atStartOfDay(zoneId));
     assertThat(ZonedDateTime.of(now.atStartOfDay(), zoneId)).isEqualTo(now.atStartOfDay(zoneId));
+  }
+
+
+  @Test
+  void instant() {
+    Instant now = Instant.now();
+    System.out.println(now);
   }
 
 }
