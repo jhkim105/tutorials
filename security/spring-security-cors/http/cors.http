@@ -1,0 +1,15 @@
+### CORS
+# curl -v -X OPTIONS http://localhost:8080 -H 'Origin: https://example.com' -H 'Access-Control-Request-Headers: Origin, Accept, Content-Type' -H 'Access-Control-Request-Method: GET'
+OPTIONS http://localhost:8080/
+Origin: https://example.com
+Access-Control-Request-Headers: Origin, Accept, Content-Type
+Access-Control-Request-Method: GET
+
+###
+# curl -X OPTIONS http://localhost:8080/user -H "Access-Control-Request-Method: GET" -H "Origin: http://localhost:4200" -v
+OPTIONS http://localhost:8080/user
+Access-Control-Request-Method: GET
+Origin: http://localhost:4200
+
+###
+

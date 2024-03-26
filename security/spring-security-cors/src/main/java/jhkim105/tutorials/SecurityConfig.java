@@ -26,7 +26,6 @@ public class SecurityConfig {
         .formLogin(FormLoginConfigurer::permitAll);
 
     http.cors(Customizer.withDefaults());
-//    http.cors(AbstractHttpConfigurer::disable);
     return http.build();
   }
 
