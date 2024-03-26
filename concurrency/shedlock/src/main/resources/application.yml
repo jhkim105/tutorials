@@ -1,9 +1,0 @@
-spring:
-    redis:
-        client-type: lettuce
-        host: localhost
-        port: 6379
-    task:
-        scheduling:
-            thread-name-prefix: scheduling-
-            pool.size: 5
