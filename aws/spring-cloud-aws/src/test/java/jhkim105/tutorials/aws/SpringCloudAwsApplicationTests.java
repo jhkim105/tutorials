@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring_cloud_aws;
+package jhkim105.tutorials.aws;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring_cloud_aws.s3;
+package jhkim105.tutorials.aws.s3;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
