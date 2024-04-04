@@ -1,6 +1,21 @@
 AWS CLI
 ==================
 
+## Install
+https://docs.aws.amazon.com/cli/v1/userguide/install-macos.html
+
+### PIP
+```text
+pip install awscli
+
+# version 지정
+pip install awscli==1.15.85
+
+# upgrade
+pip install --upgrade awscli
+
+```
+
 ## configure
 ```shell
 aws configure --profile rm-s3
