@@ -57,6 +57,8 @@
     <module>spring-rest</module>
     <module>micrometer</module>
     <module>scheduling</module>
+    <module>jenkins</module>
+    <module>docker-modules</module>
 
   </modules>
   <repositories>
