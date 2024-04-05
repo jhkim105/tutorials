@@ -32,7 +32,6 @@
     <module>spring-events</module>
     <module>spring-integration</module>
     <module>spring-session-redis</module>
-    <module>spring-docker</module>
     <module>testing</module>
     <module>spring-mqtt</module>
     <module>spring-mqtt</module>
