@@ -17,7 +17,7 @@ https://commons.apache.org/proper/commons-dbcp/configuration.html
 
 * testOnReturn(false) : testOnBorrow 와 비슷함. 다만 유효성 검사 시점이 커넥션을 풀에 반환할때 이다.
 
-* testWhileIde(false) : 커넥션 유효성 검사를 풀에 idle 상태에 존재할때 실시할것인지 여부
+* testWhileIde(false) : Evictor 가 실행될 때 커넥션 풀 안에 있는 유휴 상태의 커넥션을 대상으로 테스트 실행 (default = false)
 
 * timeBetweenEvictionRunsMillis(-1): Evictor 스레드 실행 간격. 기본값은 -1이며 Evictor thread의 실행이 비활성화 되어 있다. 유휴 커넥션을 제거하고 minIdle 로 커넥션을 유지한다.
 
