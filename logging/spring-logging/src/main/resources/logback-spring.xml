@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <appender name="jsonLayout" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+      <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">
+        <prettyPrint>false</prettyPrint>
+      </jsonFormatter>
+      <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+    </layout>
+  </appender>
+  <appender name="jsonEncoder" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.JsonEncoder"/>
+  </appender>
+  <appender name="logstashEncoder" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+  </appender>
+
+  <logger name="org.springframework.boot" level="info"/>
+  <logger name="org.springframework.security." level="info"/>
+
+  <logger name="jhkim105.tutorials" level="debug"/>
+  <root level="warn">
+<!--    <appender-ref ref="jsonEncoder"/>-->
+<!--    <appender-ref ref="logstashEncoder"/>-->
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>

@@ -8,4 +8,5 @@ Content-Type: application/json
 
 {"id":"e0a24b20-7deb-4144-9bf1-1a2782ff6767","name":"name 01"}
 
-
+### Error
+GET http://localhost:8080/samples/error

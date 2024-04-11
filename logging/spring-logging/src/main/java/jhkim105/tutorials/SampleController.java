@@ -24,4 +24,10 @@ public class SampleController {
     return sample;
   }
 
+
+  @GetMapping("/error")
+  public void error() {
+    throw new IllegalStateException("error");
+  }
+
 }
