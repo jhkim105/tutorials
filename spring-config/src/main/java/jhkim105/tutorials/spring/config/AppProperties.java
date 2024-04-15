@@ -16,8 +16,10 @@ public class AppProperties {
 
   private String name;
   private String storagePath;
+  private String randomValue;
 
   private InnerProperties inner;
+
 
 
   @NestedConfigurationProperty // 외부에 있는 클래스 사용시 필요. 없어도 값은 할당되지만 application.yml 에서 Cannot resolve configuration property

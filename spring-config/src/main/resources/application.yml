@@ -1,6 +1,7 @@
 app:
   name: local
-  storage-path: /local
+  storage-path: ${PWD}/local
+  random-value: ${random.value}
   inner:
     name: inner-class
   sample:
