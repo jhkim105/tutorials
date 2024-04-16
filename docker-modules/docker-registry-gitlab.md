@@ -7,30 +7,32 @@ https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-per
 
 ### Docker Login
 
-```text
+```shell
 cat ~/gitlab-cr.txt | docker login registry.gitlab.com --username jhkim105 --password-stdin
 ```
 
 ### Build
-```text
+```shell
 docker build -t registry.gitlab.com/jhkim105/docker-practice .
 ```
 
 ### Push
-```text
+```shell
 docker push registry.gitlab.com/jhkim105/docker-practice
 ```
 
-### Logout
-```text
-docker logout registry.gitlab.com
+### Delete
+```shell
+docker rmi -f $(docker images registry.gitlab.com/jhkim105/docker-practice -q)
+yes | docker image prune
 ```
 
+
 ### Run
-```text
-# 로그인 후
-cat ~/gitlab-cr.txt | docker login registry.gitlab.com --username jhkim105 --password-stdin
-# 실행
+```shell
 docker run -p 7070:8080 registry.gitlab.com/jhkim105/docker-practice
 ```
+
+## References
+- https://docs.gitlab.com/ee/user/packages/container_registry/
 

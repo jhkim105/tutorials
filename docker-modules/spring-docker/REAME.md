@@ -13,17 +13,17 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 
 ### Build
 
-```text
+```shell
 docker build -t jhkim105/myapp .
 ```
 
 Mac M1 에서는 다음 에러 발생. arm64 image 가 없어서 발생
-```text
+```shell
 failed to solve with frontend dockerfile.v0: failed to create LLB definition: no match for platform in manifest sha256:9909002ad26c12ac3be05d258f6424cd25620042ab682358a5dfbfe866885846: not found
 
 ```
 platform 을 지정
-```text
+```shell
 # platform 지정
 docker build -t jhkim105/myapp . --platform linux/x86_64
 ```
@@ -33,7 +33,7 @@ FROM amazoncorretto:17
 ```
 
 ### Run
-```text
+```shell
 docker run -p 8080:8080 jhkim105/myapp
 ```
 
