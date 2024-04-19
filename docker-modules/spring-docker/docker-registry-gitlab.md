@@ -13,24 +13,24 @@ cat ~/gitlab-cr.txt | docker login registry.gitlab.com --username jhkim105 --pas
 
 ### Build
 ```shell
-docker build -t registry.gitlab.com/jhkim105/docker-practice .
+docker build -t registry.gitlab.com/jhkim105/docker-practice/spring-docker .
 ```
 
 ### Push
 ```shell
-docker push registry.gitlab.com/jhkim105/docker-practice
+docker push registry.gitlab.com/jhkim105/docker-practice/spring-docker
 ```
 
 ### Delete
 ```shell
-docker rmi -f $(docker images registry.gitlab.com/jhkim105/docker-practice -q)
+docker rmi -f $(docker images registry.gitlab.com/jhkim105/docker-practices/pring-docker -q)
 yes | docker image prune
 ```
 
 
 ### Run
 ```shell
-docker run -p 7070:8080 registry.gitlab.com/jhkim105/docker-practice
+docker run -p 7070:8080 registry.gitlab.com/jhkim105/docker-practice/spring-docker
 ```
 
 ## 기타
@@ -43,6 +43,8 @@ Build step 'Execute shell' marked build as failure
 
 - 인증서를 추가하거나
 ```text
+mkdir -p /etc/docker/certs.d/gitlab.rsupport.com:5050
+openssl s_client -showcerts -connect gitlab.rsupport.com:5050 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /etc/docker/certs.d/gitlab.rsupport.com:5050/ca.crt
 /etc/docker/certs.d/gitlab.rsupport.com:5050/ca.crt
 ```
 
