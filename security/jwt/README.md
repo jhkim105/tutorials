@@ -13,7 +13,7 @@ Header(json) + Payload(json) + Signature 로 구성
 
 ### JWK (JSON Web Key)
 공개키나 개인키를 표현하기 위한 JSON 형식의 데이터 구조
-RSA, ECDSA, HMAC 등의 암호화 알고리즘에 대한 키를 JWK 형식으로 표현
+HMAC, RSA, ECDSA, EdDSA 등의 암호화 알고리즘에 대한 키를 JWK 형식으로 표현
 
 ### The Header
 Base64 encoded JSON String  
@@ -79,19 +79,6 @@ https://github.com/jwtk/jjwt
 ```
 
 ### Signature Algorithms
-- HS256: HMAC using SHA-256
-- HS384: HMAC using SHA-384
-- HS512: HMAC using SHA-512
-- ES256: ECDSA using P-256 and SHA-256
-- ES384: ECDSA using P-384 and SHA-384
-- ES512: ECDSA using P-521 and SHA-512
-- RS256: RSASSA-PKCS-v1_5 using SHA-256
-- RS384: RSASSA-PKCS-v1_5 using SHA-384
-- RS512: RSASSA-PKCS-v1_5 using SHA-512
-- PS256: RSASSA-PSS using SHA-256 and MGF1 with SHA-256
-- PS384: RSASSA-PSS using SHA-384 and MGF1 with SHA-384
-- PS512: RSASSA-PSS using SHA-512 and MGF1 with SHA-512
-
 io.jsonwebtoken.SignatureAlgorithm enum 에 정의되어 있음
 
 #### HMAC-SHA
