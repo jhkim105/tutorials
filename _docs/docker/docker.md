@@ -1,7 +1,5 @@
 # Docker Tip
 
-## container 접속
-docker exec -it <container> bash
 
 ## Docker 자동실행
 ### docker 실행시 다음 옵션 추가
@@ -85,4 +83,19 @@ docker rmi $(docker images -f "dangling=true" -q)
 
 ## Network
 Container 에서 host 주소는 host.docker.internal 로 접속
+
+
+## How To Change The Default Docker Subnet IP Range
+
+- sudo vi /etc/docker/daemon.json
+    - "bip" 로 대역 지정
+```json
+{
+  "log-driver": "journald",
+  "log-opts": {
+    "tag": "{{.Name}}"
+  },
+  "bip": "172.26.0.1/16"
+}
+```
 

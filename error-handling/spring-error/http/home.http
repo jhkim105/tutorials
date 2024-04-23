@@ -1,0 +1,25 @@
+
+### Error
+GET http://localhost:8080
+Accept: application/json
+
+### Error - text/html
+GET http://localhost:8080
+Accept: text/html
+
+### BadRequestException
+GET http://localhost:8080/bad-request
+Accept: application/json
+
+
+### Error - trace
+GET http://localhost:8080/?trace
+Accept: text/html
+
+### Error - message
+GET http://localhost:8080/?message
+Accept: text/html
+
+### Error - message
+GET http://localhost:8080/?message
+Accept: application/json

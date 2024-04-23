@@ -3,23 +3,22 @@ package jhkim105.tutorials.resterror.error;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
-import jhkim105.tutorials.resterror.exception.BaseException;
+import jhkim105.tutorials.resterror.exception.BusinessException;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 
-@Component
+//@Component
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 
   @Override
   public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
     super.resolveException(request, response, handler, ex);
     String code;
-    if (ex instanceof BaseException) {
-      code = ((BaseException) ex).getErrorCode().getCode();
+    if (ex instanceof BusinessException) {
+      code = ((BusinessException) ex).getErrorCode().getCode();
     } else {
       code = ErrorCode.UNKNOWN.getCode();
     }

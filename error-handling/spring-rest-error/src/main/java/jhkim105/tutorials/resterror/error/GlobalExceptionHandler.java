@@ -2,7 +2,7 @@ package jhkim105.tutorials.resterror.error;
 
 import jakarta.servlet.RequestDispatcher;
 import java.util.Map;
-import jhkim105.tutorials.resterror.exception.BaseException;
+import jhkim105.tutorials.resterror.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -27,13 +27,14 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<Map<String, Object>> handleException(HttpStatus status, WebRequest request, Exception ex) {
-        log.error("error!", ex);
         request.setAttribute(RequestDispatcher.ERROR_STATUS_CODE, status.value(), WebRequest.SCOPE_REQUEST);
         Map<String, Object> errorAttributeMap = errorAttributes.getErrorAttributes(request, ErrorAttributeOptions.of(Include.MESSAGE));
         String code;
-        if (ex instanceof BaseException) {
-            code = ((BaseException) ex).getErrorCode().getCode();
+        if (ex instanceof BusinessException) {
+            log.warn("error: {}", ex.getMessage());
+            code = ((BusinessException) ex).getErrorCode().getCode();
         } else {
+            log.error("error!", ex);
             code = ErrorCode.UNKNOWN.getCode();
         }
         errorAttributeMap.put("code", code);

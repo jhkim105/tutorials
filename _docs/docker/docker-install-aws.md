@@ -1,5 +1,3 @@
-Docker
-===========
 
 ## AWS Linux2에 docker, docker-compose 설치하기
 
@@ -16,7 +14,7 @@ sudo vi /etc/docker/daemon.json
 "data-root": "/DATA/docker/data"
 }
 
-sudo systemctl docker start
+sudo systemctl start docker
 sudo docker info
 ```
 
@@ -29,7 +27,11 @@ sudo systemctl enable docker.service
 webdev1 계정으로 docker 실행
 
 ```shell
+# docker group 에 추가 
 sudo usermod -a -G docker webdev1
+
+# 확인
+groups webdev1
 sudo reboot
 ```
 
@@ -41,17 +43,4 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose version
 ```
 
-## How To Change The Default Docker Subnet IP Range
-
-- sudo vi /etc/docker/daemon.json
-  - "bip" 로 대역 지정
-```json
-{
-  "log-driver": "journald",
-  "log-opts": {
-    "tag": "{{.Name}}"
-  },
-  "bip": "172.26.0.1/16"
-}
-```
 

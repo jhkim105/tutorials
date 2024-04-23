@@ -8,6 +8,12 @@ docker compose down
 docker compose start
 docker compose stop
 docker compose config
+
+
+docker-compose down --rmi all
+
+docker compose build --pull --no-cache
+docker compose up -d
 ```
 ## Custom network
 ```yaml

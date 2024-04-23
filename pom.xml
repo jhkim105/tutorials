@@ -58,6 +58,7 @@
     <module>scheduling</module>
     <module>jenkins</module>
     <module>docker-modules</module>
+    <module>error-handling</module>
 
   </modules>
   <repositories>

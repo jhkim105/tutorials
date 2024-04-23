@@ -1,0 +1,12 @@
+### 400 Error
+GET http://localhost:8081/400
+Accept: application/json
+
+### 500 Error
+GET http://localhost:8081/500
+Accept: application/json
+
+### Business Error
+GET http://localhost:8081/business-error
+Accept: application/json
+
