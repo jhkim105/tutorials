@@ -5,3 +5,14 @@ Access-Control-Request-Method: POST
 Cache-Control: no-cache
 Origin: http://localhost:63342
 Referer: http://localhost:63342/
+
+
+### DOWNLOAD
+GET http://localhost:8080/tus/1ec4b010-02b3-4469-bf08-bff852174150
+
+### DOWNLOAD - 별도 구현
+GET http://localhost:8080/tus/download/1ec4b010-02b3-4469-bf08-bff852174150
+
+###
+
+
