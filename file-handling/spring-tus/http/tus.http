@@ -1,0 +1,7 @@
+### CORS
+OPTIONS http://localhost:8080/tus
+Access-Control-Request-Headers: authorization,tus-resumable,upload-length,upload-metadata
+Access-Control-Request-Method: POST
+Cache-Control: no-cache
+Origin: http://localhost:63342
+Referer: http://localhost:63342/
