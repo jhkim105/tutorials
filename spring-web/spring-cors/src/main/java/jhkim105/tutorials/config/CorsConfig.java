@@ -1,15 +1,14 @@
-package jhkim105.tutorials;
+package jhkim105.tutorials.config;
 
 import jakarta.servlet.Filter;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 
-@Configuration
+//@Configuration
 public class CorsConfig {
 
   @Bean

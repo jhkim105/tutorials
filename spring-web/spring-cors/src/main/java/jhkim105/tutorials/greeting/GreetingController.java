@@ -11,7 +11,7 @@ public class GreetingController {
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 
-	@CrossOrigin(origins = "http://localhost:9000")
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/greeting")
 	public Greeting greeting(@RequestParam(required = false, defaultValue = "World") String name) {
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
