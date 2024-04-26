@@ -1,0 +1,6 @@
+### /sample/get
+GET http://localhost:8080/sample/get
+Accept: application/json
+
+###
+

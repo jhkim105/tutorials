@@ -1,5 +1,5 @@
-
-
+# Spring Security CORS
+Spring Security Filter 에서 동작. 전역에서 동작하게 하려면 CorsFilter 를 정의하거나, WebMvcConfigurer.addCorsMappings() 을 override 해야 한다.
 
 ## CORS Configuration
 ```text
@@ -17,23 +17,8 @@ http.cors(Customizer.withDefaults());
     return source;
   }
 ```
-response
-```text
-HTTP/1.1 200 
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Methods: GET
-Access-Control-Allow-Headers: Origin, Accept, Content-Type
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 0
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 0
-Date: Tue, 26 Mar 2024 08:22:09 GMT
-Keep-Alive: timeout=60
-Connection: keep-alive
-```
+
+
+## Refs
+https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html
+

@@ -1,0 +1,14 @@
+
+### CORS
+# curl 'http://localhost:8080/' -v -H 'Origin: http://localhost:3000'
+GET http://localhost:8080/
+Accept: application/json
+Origin: http://localhost:3000
+
+###
+# Response
+#HTTP/1.1 404
+#Vary: Origin
+#Vary: Access-Control-Request-Method
+#Vary: Access-Control-Request-Headers
+#Access-Control-Allow-Origin: *

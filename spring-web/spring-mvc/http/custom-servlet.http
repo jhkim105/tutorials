@@ -1,0 +1,2 @@
+### Custom servlet
+GET http://localhost:8080/mvc/hello?username=Neo
