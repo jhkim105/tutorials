@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.events.simple;
+package jhkim105.tutorials.spring.events;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;

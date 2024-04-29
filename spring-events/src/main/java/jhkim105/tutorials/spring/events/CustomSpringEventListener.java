@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.events.simple;
+package jhkim105.tutorials.spring.events;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;

@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.events;
+package jhkim105.tutorials.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

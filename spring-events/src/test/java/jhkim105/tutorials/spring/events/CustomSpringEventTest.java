@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.events.simple;
+package jhkim105.tutorials.spring.events;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

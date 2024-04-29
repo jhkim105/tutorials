@@ -106,5 +106,17 @@ class CustomSpringEventTest {
 2023-12-28 12:07:24.628  INFO 92404 --- [           main] .e.s.CustomAnnotationDrivenEventListener : handleEvent
 ``
 
+## Transaction-Bound Events
+```java
+  @TransactionalEventListener
+  public void handleTransactionalEvent(final CustomSpringEvent springEvent) {
+    log.info("handleTransactionalEvent: {}", springEvent);
+  }
+```
+
+다음과 같이 transaction phase 를 지정 가능
+- @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+- AFTER_COMMIT(default), AFTER_ROLLBACK, AFTER_COMPLETION, BEFORE_COMMIT
+
 ## Refs
 https://www.baeldung.com/spring-events

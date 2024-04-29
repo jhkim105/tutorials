@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 seconds">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <logger name="org.springframework.boot" level="info"/>
+  <logger name="org.springframework.transaction" level="trace"/>
+
+  <logger name="jhkim105.tutorials" level="debug"/>
+  <root level="warn">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>
