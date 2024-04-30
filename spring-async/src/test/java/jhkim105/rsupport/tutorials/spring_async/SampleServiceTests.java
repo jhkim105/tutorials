@@ -35,4 +35,9 @@ class SampleServiceTests {
     }
   }
 
+  @Test
+  void throwError() {
+    sampleService.throwError();
+  }
+
 }

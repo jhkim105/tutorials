@@ -14,14 +14,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Slf4j
 public class AsyncConfig implements AsyncConfigurer {
 
-  @Bean(name = "threadPoolTaskExecutor")
-  public Executor threadPoolTaskExecutor() {
-    return new ThreadPoolTaskExecutor();
-  }
-
   @Override
   public Executor getAsyncExecutor() {
-    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+    log.info("Runtime.getRuntime().availableProcessors(): {}", Runtime.getRuntime().availableProcessors());
+    var executor = new ThreadPoolTaskExecutor();
     executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
     executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors() * 2);
     executor.setQueueCapacity(100);
@@ -30,10 +26,15 @@ public class AsyncConfig implements AsyncConfigurer {
     return executor;
   }
 
+  @Bean(name = "threadPoolTaskExecutor")
+  public Executor threadPoolTaskExecutor() {
+    return new ThreadPoolTaskExecutor();
+  }
+
   @Override
   public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
     return (ex, method, params) -> {
-      log.error(String.format("Exception: method=%s, message=%s", method, ex.getMessage()), ex);
+      log.warn(String.format("Exception: method=%s, message=%s", method, ex.getMessage()));
     };
   }
 

@@ -23,6 +23,12 @@ public class SampleService {
     return LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
   }
 
+  @Async
+  public void throwError() {
+    log.info("throwError");
+    throw new RuntimeException("Error!");
+  }
+
 
   @Async
   public Future<String> getDateAsync() {

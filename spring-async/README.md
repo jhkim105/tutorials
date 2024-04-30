@@ -58,7 +58,7 @@ spring.task.execution.xxx
   @Override
   public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
     return (ex, method, params) -> {
-      log.error(String.format("Exception: method=%s, message=%s", method, ex.getMessage()), ex);
+      log.warn(String.format("Exception: method=%s, message=%s", method, ex.getMessage()), ex);
     };
   }
 ```
