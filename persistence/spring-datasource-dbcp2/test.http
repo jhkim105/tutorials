@@ -1,0 +1,9 @@
+### users
+GET http://localhost:8080/users
+Accept: application/json
+
+### readonly
+GET http://localhost:8080/users/readonly
+
+
+###
