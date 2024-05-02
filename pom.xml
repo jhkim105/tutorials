@@ -48,7 +48,7 @@
     <module>spring-cloud-microservices</module>
     <module>messaging</module>
     <module>ai</module>
-    <module>websocket</module>
+    <module>websocket-module</module>
     <module>spring-async</module>
     <module>testing</module>
     <module>benchmark</module>
@@ -56,9 +56,10 @@
     <module>spring-rest</module>
     <module>micrometer</module>
     <module>scheduling</module>
-    <module>jenkins</module>
     <module>docker-modules</module>
     <module>error-handling</module>
+    <module>file-handling</module>
+    <module>persistence/dbcp</module>
 
   </modules>
   <repositories>
