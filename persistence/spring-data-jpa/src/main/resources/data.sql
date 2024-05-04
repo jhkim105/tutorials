@@ -1,3 +1,5 @@
+-- dm_group
+INSERT INTO dm_group (id, name) VALUES ('id01', 'group 01');
 -- dm_user
 INSERT INTO dm_user (id, username) VALUES ('id01', 'user01');
 -- dm_user_address

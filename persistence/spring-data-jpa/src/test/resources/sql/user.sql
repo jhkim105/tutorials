@@ -1,0 +1,1 @@
+INSERT INTO demo_jpa.dm_user (id, name, username) VALUES ('tid01', 'test 01', 'test01');
