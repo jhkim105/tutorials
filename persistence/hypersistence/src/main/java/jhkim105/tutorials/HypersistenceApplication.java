@@ -1,13 +1,13 @@
-package jhkim105.tutorials.spring.data.jpa.nplusone;
+package jhkim105.tutorials;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringDataJpaNplusoneApplication {
+public class HypersistenceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SpringDataJpaNplusoneApplication.class, args);
+    SpringApplication.run(HypersistenceApplication.class, args);
   }
 
 }

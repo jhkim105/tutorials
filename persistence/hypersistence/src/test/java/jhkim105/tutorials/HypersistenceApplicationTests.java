@@ -1,10 +1,10 @@
-package jhkim105.tutorials.spring.data.jpa.nplusone;
+package jhkim105.tutorials;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringDataJpaNplusoneApplicationTests {
+class HypersistenceApplicationTests {
 
   @Test
   void contextLoads() {
