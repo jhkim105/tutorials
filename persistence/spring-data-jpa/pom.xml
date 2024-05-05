@@ -73,9 +73,30 @@
       <artifactId>uuid-creator</artifactId>
       <version>5.3.7</version>
     </dependency>
-
+    <!-- quickperf -->
+    <dependency>
+      <groupId>org.quickperf</groupId>
+      <artifactId>quick-perf-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.quickperf</groupId>
+      <artifactId>quick-perf-springboot2-sql-starter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!--// quickperf -->
   </dependencies>
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.quickperf</groupId>
+        <artifactId>quick-perf-bom</artifactId>
+        <version>1.1.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <plugins>
       <plugin>

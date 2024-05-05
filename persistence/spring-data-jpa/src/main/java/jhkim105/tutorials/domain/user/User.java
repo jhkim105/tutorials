@@ -5,6 +5,7 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -44,10 +45,10 @@ public class User extends BaseEntity<String> implements Persistable<String> {
   @Exclude
   private Set<Address> addresses = new HashSet<>();
 
-  @OneToOne(mappedBy = "user")
+  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
   private Membership membership;
 
-  @OneToOne(mappedBy = "user")
+  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
   private UserProfile profile;
 
   public User(String username) {
@@ -56,7 +57,7 @@ public class User extends BaseEntity<String> implements Persistable<String> {
     this.isNew = true;
   }
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Group group;
 
   @Transient
