@@ -11,7 +11,7 @@
   <groupId>jhkim105.tutorials</groupId>
   <artifactId>jpa-h2</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>spring-data-h2</name>
+  <name>jpa-h2</name>
   <description>spring-data-h2</description>
   <properties>
     <java.version>11</java.version>

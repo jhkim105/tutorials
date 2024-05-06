@@ -45,7 +45,7 @@ public class User extends BaseEntity<String> implements Persistable<String> {
   @Exclude
   private Set<Address> addresses = new HashSet<>();
 
-  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
+  @OneToOne
   private Membership membership;
 
   @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)

@@ -16,19 +16,20 @@
   <packaging>pom</packaging>
   <modules>
     <module>flyway</module>
-    <module>spring-data-dynamodb</module>
     <module>jpa-h2</module>
+    <module>jpa-n1</module>
+    <module>jpa-lock</module>
+    <module>spring-data-dynamodb</module>
     <module>spring-data-initialize</module>
     <module>spring-data-jpa</module>
-    <module>jpa-nplusone</module>
-    <module>jpa-lock</module>
-    <module>spring-datasource-multiple</module>
     <module>spring-data-multitenancy</module>
     <module>spring-data-redis</module>
     <module>spring-data-rest</module>
+    <module>spring-datasource-multiple</module>
     <module>spring-datasource-replication-driver</module>
     <module>spring-datasource-routing-datasource</module>
     <module>mysql-connector-j</module>
     <module>dbcp</module>
+    <module>hypersistence</module>
   </modules>
 </project>

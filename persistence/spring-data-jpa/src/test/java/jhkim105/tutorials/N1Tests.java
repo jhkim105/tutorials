@@ -20,7 +20,7 @@ class N1Tests {
 
 
   @Test
-  @ExpectSelect(3)
+  @ExpectSelect(1)
   void getUser() {
     userRepository.findById("id01").get();
   }
