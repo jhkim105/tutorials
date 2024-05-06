@@ -60,6 +60,7 @@
     <module>error-handling</module>
     <module>file-handling</module>
     <module>persistence/dbcp</module>
+    <module>persistence/hypersistence</module>
 
   </modules>
   <repositories>

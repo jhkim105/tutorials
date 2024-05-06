@@ -27,6 +27,7 @@ public class CustomAnnotationDrivenEventListener {
   }
 
   @TransactionalEventListener
+//  @Async
   public void handleTransactionalEvent(final CustomSpringEvent springEvent) {
     log.info("handleTransactionalEvent: {}", springEvent);
   }

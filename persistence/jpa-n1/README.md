@@ -3,7 +3,7 @@
 
 ## OneToOne Lazy
 ### 단건 조회시
-OneToOne FetchType.LAZY 일 경우 추가쿼리가 실행됨
+OneToOne FetchType.LAZY 일 경우 추가쿼리가 실행됨  
 주키 공유(@MapsId), optional=false 인 경우에는 n+1 쿼리를 실행하지 않는다.
 
 ### 다건 조회시

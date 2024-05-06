@@ -20,11 +20,12 @@ class TusTest {
   @Test
   @Disabled
   void uploadInfo() throws Exception{
-    UploadInfo uploadInfo = tusFileUploadService.getUploadInfo("59f7dc20-8c4b-4e94-a868-2228eb6b7c37");
+    var tusId = "1ec4b010-02b3-4469-bf08-bff852174150";
+    UploadInfo uploadInfo = tusFileUploadService.getUploadInfo(tusId);
     log.info("uploadInfo id: {}, filename: {}, length: {}, mimeTYpe: {}",
         uploadInfo.getId(), uploadInfo.getFileName(), uploadInfo.getLength(), uploadInfo.getFileMimeType());
 
-    UploadInfo uploadInfo2 = tusFileUploadService.getUploadInfo("/tus/59f7dc20-8c4b-4e94-a868-2228eb6b7c37");
+    UploadInfo uploadInfo2 = tusFileUploadService.getUploadInfo("/tus/" + tusId);
     log.info("uploadInfo id: {}, filename: {}, length: {}, mimeTYpe: {}",
         uploadInfo2.getId(), uploadInfo2.getFileName(), uploadInfo2.getLength(), uploadInfo2.getFileMimeType());
   }
