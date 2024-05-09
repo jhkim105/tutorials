@@ -1,4 +1,4 @@
-package jhkim105.tutorials.aws.s3;
+package jhkim105.tutorials.s3;
 
 import java.io.File;
 import java.io.IOException;
