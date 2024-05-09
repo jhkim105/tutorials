@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 /**
  * https://github.com/json-path/JsonPath
  */
-public class JsonParsingTests {
+class JsonParsingTests {
 
   @Test
   void active() throws IOException {

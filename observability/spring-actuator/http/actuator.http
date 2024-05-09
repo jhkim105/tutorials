@@ -1,0 +1,17 @@
+### actuator
+GET http://localhost:9091/actuator
+Accept: application/json
+
+
+### health
+GET http://localhost:9091/actuator/health
+Accept: application/json
+
+### info
+GET http://localhost:9091/actuator/health
+Accept: application/json
+
+
+### shutdown
+POST http://localhost:9091/actuator/shutdown
+Accept: application/json
