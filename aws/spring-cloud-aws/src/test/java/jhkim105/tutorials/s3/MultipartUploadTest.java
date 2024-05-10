@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,11 @@ import software.amazon.awssdk.services.s3.model.UploadPartResponse;
 
 /**
  * <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html"/>
+ * <a href="https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javav2/example_code/s3/src/main/java/com/example/s3/S3ObjectOperations.java"/>
  */
 @SpringBootTest
 @Disabled
+@Slf4j
 class MultipartUploadTest {
 
   @Autowired
@@ -39,6 +42,7 @@ class MultipartUploadTest {
 
   @Test
   void upload() {
+    log.info("Upload object: {}", objectKey);
     File file = new File(filePath);
     try {
       List<CompletedPart> completedParts = new ArrayList<>();
@@ -70,7 +74,7 @@ class MultipartUploadTest {
               .partNumber(completedParts.size() + 1)
               .eTag(uploadPartResponse.eTag())
               .build());
-          System.out.println("completedParts.size: " + completedParts.size());
+          log.info("completedParts.size: {}", completedParts.size());
 
         }
       }
@@ -84,7 +88,7 @@ class MultipartUploadTest {
               .build())
           .build());
 
-      System.out.println("Upload completed. ETag: " + finalResponse.eTag());
+      log.info("Uploaded object: {}, etag: {}", objectKey, finalResponse.eTag());
     } catch (Exception e) {
       throw new RuntimeException(e);
     } finally {
