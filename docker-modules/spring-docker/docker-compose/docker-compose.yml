@@ -1,0 +1,13 @@
+services:
+
+  spring-docker:
+    container_name: "spring-docker"
+    image: registry.gitlab.com/jhkim105/docker-practice/spring-docker
+    volumes:
+      - data:/data
+      - ./config:/application/config
+    ports:
+      - "8080:8080"
+
+volumes:
+  data:
