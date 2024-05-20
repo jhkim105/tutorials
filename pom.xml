@@ -22,7 +22,7 @@
     <module>excel-poi</module>
     <module>benchmark</module>
     <module>mockserver</module>
-    <module>monitoring</module>
+    <module>observability</module>
     <module>persistence</module>
     <module>reactive</module>
     <module>security</module>
@@ -58,7 +58,7 @@
     <module>scheduling</module>
     <module>docker-modules</module>
     <module>error-handling</module>
-    <module>file-handling</module>
+    <module>file-handling-modules</module>
     <module>persistence/dbcp</module>
     <module>persistence/hypersistence</module>
 
