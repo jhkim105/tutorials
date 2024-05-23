@@ -27,6 +27,8 @@ services:
       - "8989:8080"
     depends_on:
       - kafka
+    volumes:
+      - ./kafkaui:/etc/kafkaui
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
