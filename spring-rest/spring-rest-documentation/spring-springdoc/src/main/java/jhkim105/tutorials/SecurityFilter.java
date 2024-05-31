@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.springdoc;
+package jhkim105.tutorials;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.springdoc;
+package jhkim105.tutorials;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

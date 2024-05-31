@@ -1,10 +1,11 @@
-package jhkim105.tutorials.spring.springdoc;
+package jhkim105.tutorials;
 
 
-import static jhkim105.tutorials.spring.springdoc.SwaggerConfig.SWAGGER_SECURITY_SCHEME_KEY;
+import static jhkim105.tutorials.SwaggerConfig.SWAGGER_SECURITY_SCHEME_KEY;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,6 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "User")
 public class UserController {
 
+
+  @GetMapping
+  public List<User> findAll(UserFindAllRequest request) {
+    return List.of(new User(request.username()));
+  }
 
   @GetMapping("/{id}")
   @SecurityRequirement(name = SWAGGER_SECURITY_SCHEME_KEY)

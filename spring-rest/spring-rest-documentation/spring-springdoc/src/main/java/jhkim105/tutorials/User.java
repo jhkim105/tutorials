@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.springdoc;
+package jhkim105.tutorials;
 
 import java.util.UUID;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package jhkim105.tutorials.spring.springdoc;
+package jhkim105.tutorials;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
