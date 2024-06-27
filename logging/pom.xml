@@ -12,5 +12,9 @@
   <packaging>pom</packaging>
   <properties>
   </properties>
+  <modules>
+    <module>logging-mdc</module>
+    <module>spring-logging</module>
+  </modules>
 
 </project>
