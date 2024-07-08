@@ -21,7 +21,7 @@
 		<module>oauth2-client</module>
 		<module>oauth2-login</module>
 		<module>oauth2-sso</module>
-		<module>spring-security</module>
+		<module>spring-security-modules</module>
 		<module>spring-saml</module>
 		<module>jwt</module>
 		<module>spring-security-cors</module>
