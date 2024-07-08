@@ -1,4 +1,4 @@
-package jhkim105.tutorials.redis.config;
+package jhkim105.tutorials.redisson.config;
 
 import java.time.Duration;
 import java.util.HashMap;

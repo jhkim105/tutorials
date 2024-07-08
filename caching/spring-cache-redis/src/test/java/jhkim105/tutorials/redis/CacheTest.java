@@ -1,8 +1,8 @@
 package jhkim105.tutorials.redis;
 
+import static jhkim105.tutorials.redis.config.CacheConfig.Caches.CURRENT_DATE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import jhkim105.tutorials.redis.config.Caches;
 import jhkim105.tutorials.redis.service.CurrentDateRecordService;
 import jhkim105.tutorials.redis.service.CurrentDateService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class CacheTest {
     currentDate2 = currentDateService.getCurrentDate(pattern);
     assertThat(currentDate.getDate()).isNotEqualTo(currentDate2.getDate());
 
-    redisCacheManager.getCache(Caches.CURRENT_DATE).clear();
+    redisCacheManager.getCache(CURRENT_DATE).clear();
     currentDate2 = currentDateService.getCurrentDate(pattern);
     assertThat(currentDate.getDate()).isNotEqualTo(currentDate2.getDate());
 

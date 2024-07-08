@@ -1,9 +1,12 @@
+server:
+  port: 8081
 spring:
   data:
     redis:
       host: localhost
       port: 6379
   cache:
+    type: redis
     redis:
-      key-prefix: v101_
+      key-prefix: redisson_
       time-to-live: 1m

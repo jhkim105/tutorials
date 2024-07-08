@@ -1,7 +1,8 @@
 package jhkim105.tutorials.redis.service;
 
 
-import static jhkim105.tutorials.redis.config.Caches.CURRENT_DATE_RECORD;
+
+import static jhkim105.tutorials.redis.config.CacheConfig.Caches.CURRENT_DATE_RECORD;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
