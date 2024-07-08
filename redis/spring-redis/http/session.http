@@ -1,0 +1,13 @@
+
+
+###
+GET http://localhost:8080/session
+
+###
+POST http://localhost:8080/session
+Content-Type: application/x-www-form-urlencoded
+
+maxInactiveInterval=1000
+
+
+###

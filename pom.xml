@@ -61,6 +61,8 @@
     <module>file-handling-modules</module>
     <module>persistence/dbcp</module>
     <module>persistence/hypersistence</module>
+    <module>redis</module>
+    <module>redis/spring-redis</module>
 
   </modules>
   <repositories>
