@@ -11,6 +11,7 @@
   <packaging>pom</packaging>
   <name>apache</name>
   <modules>
+    <module>apache-commons</module>
     <module>apache-tika</module>
   </modules>
 </project>
