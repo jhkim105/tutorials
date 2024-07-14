@@ -17,22 +17,23 @@ import org.springframework.test.context.event.RecordApplicationEvents;
 @SpringBootTest
 @RecordApplicationEvents
 @Slf4j
-class CustomSpringEventTest {
+class CustomApplicationEventTest {
 
   @Autowired
   private ApplicationEvents applicationEvents;
+
   @Autowired
-  private CustomSpringEventPublisher publisher;
+  private EventPublisher publisher;
 
   @SpyBean
-  private CustomSpringEventListener customSpringEventListener;
+  private CustomApplicationEventListener customApplicationEventListener;
 
   @Test
-  void event() {
-    publisher.publishCustomEvent("Hello world!!");
+  void publishEvent() {
+    publisher.publishCustomApplicationEvent("Hello world!!");
     log.info("Done publishing synchronous custom event.");
-    assertThat(applicationEvents.stream(CustomSpringEvent.class).count()).isEqualTo(1);
-    then(customSpringEventListener).should(times(1)).onApplicationEvent(any());
+    assertThat(applicationEvents.stream(CustomApplicationEvent.class).count()).isEqualTo(1);
+    then(customApplicationEventListener).should(times(1)).onApplicationEvent(any());
   }
 
 }

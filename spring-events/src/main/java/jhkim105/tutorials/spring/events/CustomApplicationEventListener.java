@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class CustomSpringEventListener implements ApplicationListener<CustomSpringEvent> {
+public class CustomApplicationEventListener implements ApplicationListener<CustomApplicationEvent> {
     @Override
-    public void onApplicationEvent(CustomSpringEvent event) {
+    public void onApplicationEvent(CustomApplicationEvent event) {
         log.info("Received spring custom event - {}", event.getMessage());
     }
 }

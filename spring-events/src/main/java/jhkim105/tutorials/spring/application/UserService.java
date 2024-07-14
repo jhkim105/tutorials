@@ -3,7 +3,7 @@ package jhkim105.tutorials.spring.application;
 
 import jhkim105.tutorials.spring.domain.User;
 import jhkim105.tutorials.spring.domain.UserRepository;
-import jhkim105.tutorials.spring.events.CustomSpringEvent;
+import jhkim105.tutorials.spring.events.CustomApplicationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class UserService {
   @Transactional
   public User save(User user) {
     user = userRepository.save(user);
-    applicationEventPublisher.publishEvent(new CustomSpringEvent(this, "user created"));
+    applicationEventPublisher.publishEvent(new CustomApplicationEvent(this, "user created"));
     return user;
   }
 
