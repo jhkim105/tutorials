@@ -1,4 +1,4 @@
-package jhkim105.tutorials.websocket.interceptor;
+package jhkim105.tutorials.websocket.config.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
