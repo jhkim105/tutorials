@@ -14,6 +14,7 @@ public class MyChannelInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         log.debug("message-> {}", message);
+        log.debug("payload-> {}", new String((byte[])message.getPayload()));
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
         StompCommand command = accessor.getCommand();
         log.debug("accessor-> {}", accessor);
