@@ -1,7 +1,7 @@
 package jhkim105.tutorials.websocket.config;
 
 
-import jhkim105.tutorials.websocket.interceptor.MyChannelInterceptor;
+import jhkim105.tutorials.websocket.config.interceptor.MyChannelInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
