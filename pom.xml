@@ -41,6 +41,7 @@
     <module>aws</module>
     <module>core-java</module>
     <module>spring-web</module>
+    <module>spring-web-template</module>
     <module>springboot3</module>
     <module>pattern-cqrs-es</module>
     <module>logging</module>
