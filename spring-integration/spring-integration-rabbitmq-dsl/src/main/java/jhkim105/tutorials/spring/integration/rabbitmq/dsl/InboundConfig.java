@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.amqp.dsl.Amqp;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 
 @Configuration
 @Slf4j
@@ -22,7 +21,7 @@ public class InboundConfig {
 
   @Bean
   public IntegrationFlow routeFlow(ConnectionFactory connectionFactory) {
-    return IntegrationFlows
+    return IntegrationFlow
         .from(Amqp.inboundAdapter(connectionFactory, "foo"))
         .transform(String.class, String::toUpperCase)
         .handle(this, "handle")
