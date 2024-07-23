@@ -6,7 +6,7 @@ spring:
     admin:
       auto-create: false
     consumer:
-      group-id: group-01
+      group-id: ${spring.application.name}
 #      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
 #      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
 #      properties:
