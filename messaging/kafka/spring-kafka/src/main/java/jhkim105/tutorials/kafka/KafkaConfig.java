@@ -9,7 +9,7 @@ import org.springframework.util.backoff.FixedBackOff;
 
 
 @Configuration
-public class KafkaTopicConfig {
+public class KafkaConfig {
 
   @Bean
   public DefaultErrorHandler defaultErrorHandler() {
