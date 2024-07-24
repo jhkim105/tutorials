@@ -27,8 +27,8 @@ public class OutboundConfig {
 
   @MessagingGateway(defaultRequestChannel = "amqpOutboundChannel")
 //  @MessagingGateway(defaultRequestChannel = "amqpOutboundChannel", defaultRequestTimeout = "50000", defaultReplyTimeout = "5000")
-  public interface RabbitGateway {
-    void sendToRabbit(String data);
+  public interface OutboundGateway {
+    void send(String data);
   }
 
 }
