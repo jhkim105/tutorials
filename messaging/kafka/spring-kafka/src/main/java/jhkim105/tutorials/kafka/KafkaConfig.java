@@ -17,7 +17,7 @@ public class KafkaConfig {
   }
 
   @Bean
-  public NewTopic topicFoo() {
+  public NewTopic topicSample() {
     return TopicBuilder.name(Topics.SAMPLE)
         .partitions(1)
         .replicas(1)
