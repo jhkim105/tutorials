@@ -14,5 +14,6 @@
 
   <modules>
     <module>spring-kafka</module>
+    <module>spring-kafka-multitype</module>
   </modules>
 </project>

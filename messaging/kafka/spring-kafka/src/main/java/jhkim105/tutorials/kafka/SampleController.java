@@ -2,7 +2,7 @@ package jhkim105.tutorials.kafka;
 
 
 
-import jhkim105.tutorials.kafka.KafkaConfig.Topics;
+import jhkim105.tutorials.kafka.KafkaTopicConfig.Topics;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
