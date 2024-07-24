@@ -1,6 +1,6 @@
-package jhkim105.tutorials.kafka.consumer;
+package jhkim105.tutorials.kafka;
 
-import jhkim105.tutorials.kafka.Topics;
+import jhkim105.tutorials.kafka.KafkaConfig.Topics;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;

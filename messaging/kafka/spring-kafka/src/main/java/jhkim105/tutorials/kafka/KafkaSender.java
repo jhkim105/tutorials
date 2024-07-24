@@ -1,4 +1,4 @@
-package jhkim105.tutorials.kafka.producer;
+package jhkim105.tutorials.kafka;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
