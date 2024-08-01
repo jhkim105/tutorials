@@ -6,17 +6,21 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSHeader.Builder;
 import com.nimbusds.jose.crypto.ECDSASigner;
+import com.nimbusds.jose.crypto.Ed25519Verifier;
 import com.nimbusds.jose.jwk.Curve;
 import com.nimbusds.jose.jwk.ECKey;
-import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.OctetKeyPair;
 import com.nimbusds.jose.jwk.gen.ECKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.nimbusds.jwt.util.DateUtils;
 import java.io.StringWriter;
+import java.text.ParseException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
+import jhkim105.tutorials.jwt.JwtPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
@@ -26,20 +30,21 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ECDSAUtils implements InitializingBean {
+public class ECUtils implements InitializingBean {
 
-  private final ECDSAProperties ecdsaProperties;
+  private static final long DEFAULT_SKEW_SECONDS = 30;
   private ECKey jwk;
 
-  public String generateToken() {
+  public String generateToken(JwtPrincipal jwtPrincipal) {
     JWSHeader header = new Builder(JWSAlgorithm.ES256)
         .keyID(jwk.getKeyID())
         .build();
 
     JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-        .subject("es256")
+        .subject(jwtPrincipal.id())
         .issuer("jhkim105")
         .expirationTime(new Date(new Date().getTime() + 60 * 1000))
+        .claim("authority", jwtPrincipal.authority())
         .build();
 
     SignedJWT signedJWT = new SignedJWT(header, claimsSet);
@@ -76,16 +81,11 @@ public class ECDSAUtils implements InitializingBean {
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    this.jwk = JWK.parse(ecdsaProperties.getKey()).toECKey();
-    String jwtKey = ecdsaProperties.getKey();
-    if(jwtKey == null || jwtKey.isBlank()) {
-      jwtKey = generateJwtKey();
-      log.info("new key generated. key: {}", jwtKey);
-    }
+    String jwtKey = generateJwtKey();
     jwk =  ECKey.parse(jwtKey);
   }
 
-  private String generateJwtKey() {
+  public String generateJwtKey() {
     try {
       return new ECKeyGenerator(Curve.P_256)
           .keyID(UUID.randomUUID().toString())
@@ -93,6 +93,50 @@ public class ECDSAUtils implements InitializingBean {
           .generate().toJSONString();
     } catch (JOSEException e) {
       throw new RuntimeException(e);
+    }
+  }
+
+  public JwtPrincipal parse(String token) {
+    var signedJWT = parseSignedJWT(token);
+    verify(signedJWT);
+    return parseJwtPrincipal(signedJWT);
+  }
+
+  private JwtPrincipal parseJwtPrincipal(SignedJWT signedJWT) {
+    try {
+      var jwtClaimsSet = signedJWT.getJWTClaimsSet();
+      return new JwtPrincipal(jwtClaimsSet.getSubject(), jwtClaimsSet.getStringClaim("authority"));
+    } catch (ParseException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  private SignedJWT parseSignedJWT(String token) {
+    try {
+      return SignedJWT.parse(token);
+    } catch (ParseException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+  private void verify(SignedJWT signedJWT) {
+
+//    try {
+//      verifySignature(signedJWT, jwk);
+//      verifyExpirationTime(signedJWT);
+//    } catch (JOSEException | ParseException e) {
+//      throw new IllegalStateException(e);
+//    }
+  }
+
+  private void verifySignature(SignedJWT signedJWT, OctetKeyPair publicKey) throws JOSEException {
+    if (!signedJWT.verify(new Ed25519Verifier(publicKey))) {
+      throw new IllegalStateException("token verification failed");
+    }
+  }
+
+  private void verifyExpirationTime(SignedJWT signedJWT) throws ParseException {
+    if (!DateUtils.isAfter(signedJWT.getJWTClaimsSet().getExpirationTime(), new Date(), DEFAULT_SKEW_SECONDS)) {
+      throw new IllegalStateException("token expired");
     }
   }
 }

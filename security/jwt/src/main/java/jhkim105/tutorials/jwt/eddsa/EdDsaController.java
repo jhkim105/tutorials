@@ -1,27 +1,34 @@
-package jhkim105.tutorials.jwt.ecdsa;
+package jhkim105.tutorials.jwt.eddsa;
 
+import java.util.UUID;
+import jhkim105.tutorials.jwt.JwtPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/ecdsa")
+@RequestMapping("/eddsa")
 @RequiredArgsConstructor
-public class ECDSAController {
+public class EdDsaController {
 
 
-  private final ECDSAUtils ecdsaUtils;
+  private final EdDsaUtils edDsaUtils;
 
 
   @GetMapping("/generate")
   public String generate() {
-    return ecdsaUtils.generateToken();
+    return edDsaUtils.generateToken(new JwtPrincipal(UUID.randomUUID().toString(), "USER"));
+  }
+
+  @GetMapping("/parse")
+  public JwtPrincipal parse(String token) {
+    return edDsaUtils.parse(token);
   }
 
   @GetMapping("/jwks")
   public String jwks() {
-    return ecdsaUtils.jwks();
+    return edDsaUtils.jwks();
   }
 
   /**
@@ -29,7 +36,7 @@ public class ECDSAController {
    */
   @GetMapping("/public-key")
   public String publicKey() {
-    return ecdsaUtils.getPublicKeyPEM();
+    return edDsaUtils.getPublicKeyPEM();
   }
 
 }

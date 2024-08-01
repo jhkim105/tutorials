@@ -7,6 +7,8 @@ import com.nimbusds.jose.crypto.ECDSAVerifier;
 import com.nimbusds.jose.jwk.ECKey;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jwt.SignedJWT;
+import java.util.UUID;
+import jhkim105.tutorials.jwt.JwtPrincipal;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,25 +17,30 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @Slf4j
-class ECDSAUtilsTest {
+class ECUtilsTest {
 
 
   @Autowired
-  ECDSAUtils ecdsaUtils;
+  ECUtils ecUtils;
 
 
   @Test
   void verifyUsingPublicKeyPEM() throws Exception {
-    String token = ecdsaUtils.generateToken();
+    String token = ecUtils.generateToken(new JwtPrincipal(UUID.randomUUID().toString(), "USER"));
     log.debug(token);
-    String publicKeyPEM = ecdsaUtils.getPublicKeyPEM();
+    String publicKeyPEM = ecUtils.getPublicKeyPEM();
     log.debug(publicKeyPEM);
-    log.debug(ecdsaUtils.getPublicKeyEncodedString());
+    log.debug(ecUtils.getPublicKeyEncodedString());
     JWK publicJWK = JWK.parseFromPEMEncodedObjects(publicKeyPEM);
     SignedJWT jwt = SignedJWT.parse(token);
     JWSVerifier verifier = new ECDSAVerifier((ECKey) publicJWK);
 
     assertTrue(jwt.verify(verifier));
+  }
+
+  @Test
+  void generateKey() throws Exception {
+    log.debug(ecUtils.generateJwtKey());
   }
 
 }
