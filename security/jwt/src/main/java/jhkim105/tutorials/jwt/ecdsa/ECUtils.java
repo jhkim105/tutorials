@@ -6,11 +6,10 @@ import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSHeader.Builder;
 import com.nimbusds.jose.crypto.ECDSASigner;
-import com.nimbusds.jose.crypto.Ed25519Verifier;
+import com.nimbusds.jose.crypto.ECDSAVerifier;
 import com.nimbusds.jose.jwk.Curve;
 import com.nimbusds.jose.jwk.ECKey;
 import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.OctetKeyPair;
 import com.nimbusds.jose.jwk.gen.ECKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -102,6 +101,14 @@ public class ECUtils implements InitializingBean {
     return parseJwtPrincipal(signedJWT);
   }
 
+  private SignedJWT parseSignedJWT(String token) {
+    try {
+      return SignedJWT.parse(token);
+    } catch (ParseException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
   private JwtPrincipal parseJwtPrincipal(SignedJWT signedJWT) {
     try {
       var jwtClaimsSet = signedJWT.getJWTClaimsSet();
@@ -111,25 +118,17 @@ public class ECUtils implements InitializingBean {
     }
   }
 
-  private SignedJWT parseSignedJWT(String token) {
+  private void verify(SignedJWT signedJWT) {
     try {
-      return SignedJWT.parse(token);
-    } catch (ParseException e) {
+      verifySignature(signedJWT, jwk);
+      verifyExpirationTime(signedJWT);
+    } catch (JOSEException | ParseException e) {
       throw new IllegalStateException(e);
     }
   }
-  private void verify(SignedJWT signedJWT) {
 
-//    try {
-//      verifySignature(signedJWT, jwk);
-//      verifyExpirationTime(signedJWT);
-//    } catch (JOSEException | ParseException e) {
-//      throw new IllegalStateException(e);
-//    }
-  }
-
-  private void verifySignature(SignedJWT signedJWT, OctetKeyPair publicKey) throws JOSEException {
-    if (!signedJWT.verify(new Ed25519Verifier(publicKey))) {
+  private void verifySignature(SignedJWT signedJWT, ECKey publicKey) throws JOSEException {
+    if (!signedJWT.verify(new ECDSAVerifier(publicKey))) {
       throw new IllegalStateException("token verification failed");
     }
   }
