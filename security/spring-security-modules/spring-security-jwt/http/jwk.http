@@ -1,0 +1,6 @@
+###
+GET http://localhost:8080/jwt/jwks
+Accept: application/json
+
+###
+GET http://localhost:8080/jwt/jwks/public-key

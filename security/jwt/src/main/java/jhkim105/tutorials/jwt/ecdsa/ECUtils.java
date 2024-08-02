@@ -20,14 +20,12 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 import jhkim105.tutorials.jwt.JwtPrincipal;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class ECUtils implements InitializingBean {
 
