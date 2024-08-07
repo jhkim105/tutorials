@@ -22,7 +22,7 @@ public class Membership {
   @Column(length = 50)
   private String id;
 
-  @OneToOne
+  @OneToOne(optional = false)
   private User user;
 
   @Column(nullable = false)

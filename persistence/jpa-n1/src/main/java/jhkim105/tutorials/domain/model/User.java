@@ -43,8 +43,10 @@ public class User {
   private Set<Coupon> coupons = new HashSet<>();
 
 
-  //  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
-  @OneToOne(mappedBy = "user")
+//  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false) // n + more
+//  @OneToOne(mappedBy = "user", fetch = FetchType.LAZY) // n + 1
+  @OneToOne(mappedBy = "user", optional = false)
+//  @OneToOne(mappedBy = "user")
   private Membership membership;
 
   @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)

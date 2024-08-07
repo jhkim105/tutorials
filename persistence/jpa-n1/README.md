@@ -3,11 +3,11 @@
 
 ## OneToOne Lazy
 ### 단건 조회시
-OneToOne FetchType.LAZY 일 경우 추가쿼리가 실행됨  
-주키 공유(@MapsId), optional=false 인 경우에는 n+1 쿼리를 실행하지 않는다.
+OneToOne FetchType.LAZY 일 경우 추가쿼리가 실행됨
+주키공유(식별관계, @MapsId) OneToOne, optional=false 인 경우에는 n+1 쿼리를 실행하지 않는다.
 
 ### 다건 조회시
-참조관계 OneToOne 에 대한 n+1 select 발생함  
+참조관계(비식별관계) OneToOne 에 대한 n+1 select 발생함  
 참조관계 OneToOne 이 optional=false 인 경우 2n + 1 발생함. 동일한 쿼리가 2번씩 실행됨 (버그 의심됨)
 
 
