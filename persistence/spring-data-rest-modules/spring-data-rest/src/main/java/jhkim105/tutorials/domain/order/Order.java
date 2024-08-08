@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import jhkim105.tutorials.base.BaseEntity;
@@ -54,10 +54,10 @@ public class Order extends BaseEntity<String> {
   private Set<OrderLine> orderLines = new HashSet<>();
 
   @CreatedDate
-  private ZonedDateTime orderDate;
+  private Instant orderDate;
 
   @LastModifiedDate
-  private ZonedDateTime updatedDate;
+  private Instant updatedDate;
 
   @Builder
   public Order(User user, Set<OrderLine> orderLines) {

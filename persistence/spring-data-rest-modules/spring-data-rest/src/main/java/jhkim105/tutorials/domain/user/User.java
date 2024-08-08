@@ -6,20 +6,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import jhkim105.tutorials.base.BaseEntity;
 import jhkim105.tutorials.domain.ColumnLengths;
-import jhkim105.tutorials.domain.order.Order;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.NaturalId;
 
@@ -46,10 +41,6 @@ public class User extends BaseEntity<String> {
   @NaturalId
   @Column(nullable = false)
   private String username;
-
-  @OneToMany(mappedBy = "user")
-  @Exclude
-  private Set<Order> orders = new HashSet<>();
 
 
   @Builder

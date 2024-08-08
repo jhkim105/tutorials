@@ -21,5 +21,6 @@
   </properties>
   <modules>
     <module>spring-data-rest</module>
+    <module>spring-data-rest-client</module>
   </modules>
 </project>
