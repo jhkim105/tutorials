@@ -40,7 +40,10 @@ class ECUtilsTest {
 
   @Test
   void generateKey() throws Exception {
-    log.debug(ecUtils.generateJwtKey());
+    String key = ecUtils.generateKey();
+    ECKey ecKey = ECKey.parse(key);
+    log.debug(key);
+    log.debug("{}", ecKey.toPublicJWK());
   }
 
 }

@@ -24,7 +24,7 @@
     <module>spring-data-jpa</module>
     <module>spring-data-multitenancy</module>
     <module>spring-data-redis</module>
-    <module>spring-data-rest</module>
+    <module>spring-data-rest-modules</module>
     <module>spring-datasource-multiple</module>
     <module>spring-datasource-replication-driver</module>
     <module>spring-datasource-routing-datasource</module>

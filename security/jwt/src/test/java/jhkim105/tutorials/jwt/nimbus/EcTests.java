@@ -13,8 +13,11 @@ import com.nimbusds.jose.jwk.ECKey;
 import com.nimbusds.jose.jwk.gen.ECKeyGenerator;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.nimbusds.jwt.proc.DefaultJWTClaimsVerifier;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -61,6 +64,13 @@ class EcTests {
     assertEquals("alice", signedJWT.getJWTClaimsSet().getSubject());
     assertEquals("https://c2id.com", signedJWT.getJWTClaimsSet().getIssuer());
     assertTrue(new Date().before(signedJWT.getJWTClaimsSet().getExpirationTime()));
+
+    DefaultJWTClaimsVerifier<?> claimsVerifier = new DefaultJWTClaimsVerifier<>(
+        new JWTClaimsSet.Builder()
+            .issuer("https://c2id.com")
+            .build(),
+        new HashSet<>(List.of("exp")));
+    claimsVerifier.verify(signedJWT.getJWTClaimsSet(), null);
   }
 
 

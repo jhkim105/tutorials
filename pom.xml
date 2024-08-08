@@ -64,6 +64,7 @@
     <module>persistence/hypersistence</module>
     <module>redis</module>
     <module>redis/spring-redis</module>
+    <module>persistence/spring-data-rest-modules</module>
 
   </modules>
   <repositories>

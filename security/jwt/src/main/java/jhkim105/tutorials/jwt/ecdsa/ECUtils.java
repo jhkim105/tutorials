@@ -78,11 +78,11 @@ public class ECUtils implements InitializingBean {
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    String jwtKey = generateJwtKey();
+    String jwtKey = generateKey();
     jwk =  ECKey.parse(jwtKey);
   }
 
-  public String generateJwtKey() {
+  public String generateKey() {
     try {
       return new ECKeyGenerator(Curve.P_256)
           .keyID(UUID.randomUUID().toString())

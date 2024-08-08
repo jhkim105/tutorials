@@ -11,5 +11,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>websocket</module>
+    <module>websocket-security</module>
   </modules>
 </project>
