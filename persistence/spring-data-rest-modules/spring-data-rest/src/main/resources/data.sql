@@ -16,5 +16,5 @@ INSERT INTO de_order (id, order_date, user_id) VALUES ('id01', '2020-11-26 17:22
 INSERT INTO de_order (id, order_date, user_id) VALUES ('id02', '2020-11-27 17:22:18.000000', 'id01');
 INSERT INTO de_order (id, order_date, user_id) VALUES ('id03', '2020-11-28 17:22:29.000000', 'id01');
 -- de_order_products
-INSERT INTO de_order_products (id, count, price, order_id, product_id) VALUES ('id01', 2, 2000, 'id01', 'id01');
-INSERT INTO de_order_products (id, count, price, order_id, product_id) VALUES ('id02', 1, 300, 'id01', 'id03');
+INSERT INTO de_order_line (id, quantity, price, order_id, product_id) VALUES ('id01', 2, 2000, 'id01', 'id01');
+INSERT INTO de_order_line (id, quantity, price, order_id, product_id) VALUES ('id02', 1, 300, 'id01', 'id03');

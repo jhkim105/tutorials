@@ -12,23 +12,23 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import jhkim105.tutorials.base.BaseEntity;
 import jhkim105.tutorials.domain.ColumnLengths;
 import jhkim105.tutorials.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.ToString.Exclude;
-import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "de_order")
+@EqualsAndHashCode(of = "id", callSuper = false)
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -51,7 +51,7 @@ public class Order extends BaseEntity<String> {
 
   @OneToMany(mappedBy = "order")
   @Exclude
-  private Set<OrderProduct> orderProducts = new HashSet<>();
+  private Set<OrderLine> orderLines = new HashSet<>();
 
   @CreatedDate
   private ZonedDateTime orderDate;
@@ -60,26 +60,9 @@ public class Order extends BaseEntity<String> {
   private ZonedDateTime updatedDate;
 
   @Builder
-  public Order(User user, Set<OrderProduct> orderProducts) {
+  public Order(User user, Set<OrderLine> orderLines) {
     this.user = user;
-    this.orderProducts = orderProducts;
+    this.orderLines = orderLines;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
-      return false;
-    }
-    Order order = (Order) o;
-
-    return Objects.equals(id, order.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return 737800560;
-  }
 }

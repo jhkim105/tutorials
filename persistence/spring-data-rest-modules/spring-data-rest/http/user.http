@@ -1,0 +1,10 @@
+###
+GET http://localhost:8080/data/users
+Accept: application/json
+
+###
+GET http://localhost:8080/data/users/id01
+Accept: application/json
+
+###
+
