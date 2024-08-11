@@ -1,0 +1,4 @@
+### Get Hello World with Basic Auth
+GET http://localhost:8080/hello
+Authorization: Basic user 111111
+
