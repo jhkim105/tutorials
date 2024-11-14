@@ -8,18 +8,16 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-@Slf4j
-class InetAdressTests {
+class InetAddressTests {
 
 
   @Test
   void test() throws UnknownHostException {
     InetAddress inetAddress = InetAddress.getLocalHost();
-    log.info("IP Address: {}" + inetAddress.getHostAddress());
-    log.info("Host Name: {}" + inetAddress.getHostName());
+    System.out.println("IP Address: {}" + inetAddress.getHostAddress());
+    System.out.println("Host Name: {}" + inetAddress.getHostName());
   }
 
   @Test
@@ -27,7 +25,7 @@ class InetAdressTests {
     try (final DatagramSocket socket = new DatagramSocket()) {
       socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
       String ip = socket.getLocalAddress().getHostAddress();
-      log.info("{}", ip);
+      System.out.println(ip);
     }
   }
 
@@ -53,7 +51,7 @@ class InetAdressTests {
     } catch (SocketException e) {
       throw new IllegalStateException(e);
     }
-    log.info("{}", ip);
+    System.out.println(ip);
   }
 
 }
