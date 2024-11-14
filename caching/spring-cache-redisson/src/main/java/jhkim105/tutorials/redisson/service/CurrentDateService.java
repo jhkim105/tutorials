@@ -2,7 +2,8 @@ package jhkim105.tutorials.redisson.service;
 
 
 
-import static jhkim105.tutorials.redisson.Caches.CURRENT_DATE;
+
+import static jhkim105.tutorials.redisson.config.CacheConfig.Caches.CURRENT_DATE;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;

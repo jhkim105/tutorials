@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +32,6 @@ public class Group {
   @OneToMany(mappedBy = "group")
   private Set<User> users = new HashSet<>();
 
-  @Builder
   public Group(String name) {
     this.name = name;
   }

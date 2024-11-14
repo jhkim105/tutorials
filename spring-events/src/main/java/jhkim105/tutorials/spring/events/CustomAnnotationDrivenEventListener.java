@@ -12,23 +12,23 @@ public class CustomAnnotationDrivenEventListener {
 
   @EventListener
   @Async
-  public void handleEvent(final CustomSpringEvent event) {
+  public void handleEvent(final CustomApplicationEvent event) {
     log.info("handleEvent: {}", event.getMessage());
   }
 
-  @EventListener(CustomSpringEvent.class)
+  @EventListener(CustomApplicationEvent.class)
   public void handleEvent() {
     log.info("handleEvent");
   }
 
   @EventListener(condition = "#event.success")
-  public void handleEventByCondition(final CustomSpringEvent event) {
+  public void handleEventByCondition(final CustomApplicationEvent event) {
     log.info("handleEventByCondition: " + event.getMessage());
   }
 
   @TransactionalEventListener
 //  @Async
-  public void handleTransactionalEvent(final CustomSpringEvent springEvent) {
+  public void handleTransactionalEvent(final CustomApplicationEvent springEvent) {
     log.info("handleTransactionalEvent: {}", springEvent);
   }
 }

@@ -1,0 +1,11 @@
+### Generate Token
+GET http://localhost:8080/rsa/generate
+
+### JWKS
+GET http://localhost:8080/rsa/jwks
+
+### Public Key
+# https://jwt.io 에서 검증시 사용
+GET http://localhost:8080/rsa/public-key
+
+

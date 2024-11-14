@@ -15,11 +15,13 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.client.RestTemplate;
 
 public class Downloader {
 
   public static File download(String url, String dirPath) {
-    return RestTemplateUtils.getRestTemplate().execute(url, HttpMethod.GET, null, clientHttpResponse -> {
+    RestTemplate restTemplate = new RestTemplate();
+    return restTemplate.execute(url, HttpMethod.GET, null, clientHttpResponse -> {
       String fileName = clientHttpResponse.getHeaders().getContentDisposition().getFilename();
       fileName = StringUtils.defaultString(fileName, UUID.randomUUID().toString());
       File ret = new File(dirPath + File.separator + fileName);

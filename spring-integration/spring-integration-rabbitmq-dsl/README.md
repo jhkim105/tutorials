@@ -1,2 +1,4 @@
 # Spring Integration DSL
-https://docs.spring.io/spring-integration/docs/current/reference/html/dsl.html#java-dsl
+
+## Refs
+- https://docs.spring.io/spring-integration/reference/dsl.html

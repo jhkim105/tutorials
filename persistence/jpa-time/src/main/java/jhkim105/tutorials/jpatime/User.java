@@ -6,9 +6,12 @@ import jakarta.persistence.Id;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -18,6 +21,7 @@ public class User {
 
   @Id
   @UuidGenerator
+  @Getter
   private String id;
 
   private Date date;
@@ -28,6 +32,9 @@ public class User {
 
   private OffsetDateTime offsetDateTime;
   private Instant instant;
+  private OffsetTime offsetTime;
+  private OffsetTime offsetTimeUtc;
+  private OffsetTime offsetTimeSystemDefault;
 
   public User() {
     this.date = new Date();
@@ -35,6 +42,9 @@ public class User {
     this.zonedDateTime = ZonedDateTime.now();
     this.offsetDateTime = OffsetDateTime.now();
     this.instant = Instant.now();
+    this.offsetTime = offsetDateTime.toOffsetTime();
+    this.offsetTimeUtc = instant.atOffset(ZoneOffset.UTC).toOffsetTime();
+    this.offsetTimeSystemDefault = instant.atZone(ZoneId.systemDefault()).toOffsetDateTime().toOffsetTime();
   }
 
   public User(LocalDateTime localDateTime, String timezone) {

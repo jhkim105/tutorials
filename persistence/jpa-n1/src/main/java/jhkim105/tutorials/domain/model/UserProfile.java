@@ -23,5 +23,7 @@ public class UserProfile {
   @MapsId
   private User user;
 
+  private String url;
+
 
 }

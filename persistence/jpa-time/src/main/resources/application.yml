@@ -5,13 +5,3 @@ spring:
     password: 111111
   jpa:
     hibernate.ddl-auto: create
-
-
-logging:
-  level:
-    root: warn
-    'jhkim105.tutorials': debug
-    'org.hibernate': info
-    'org.hibernate.SQL': debug
-    'org.hibernate.type.descriptor.sql.BasicBinder': trace
-    'org.hibernate.type.EnumType': trace

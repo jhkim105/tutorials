@@ -31,8 +31,8 @@ public class CustomSpringEventPublisher {
 
     public void publishCustomEvent(final String message) {
         log.info("Publishing custom event. ");
-        CustomSpringEvent customSpringEvent = new CustomSpringEvent(this, message);
-        applicationEventPublisher.publishEvent(customSpringEvent);
+        CustomSpringEvent customApplicationEvent = new CustomSpringEvent(this, message);
+        applicationEventPublisher.publishEvent(customApplicationEvent);
     }
 }
 ```

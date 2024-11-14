@@ -22,7 +22,7 @@
     <module>excel-poi</module>
     <module>benchmark</module>
     <module>mockserver</module>
-    <module>monitoring</module>
+    <module>observability</module>
     <module>persistence</module>
     <module>reactive</module>
     <module>security</module>
@@ -41,6 +41,7 @@
     <module>aws</module>
     <module>core-java</module>
     <module>spring-web</module>
+    <module>spring-web-template</module>
     <module>springboot3</module>
     <module>pattern-cqrs-es</module>
     <module>logging</module>
@@ -58,9 +59,12 @@
     <module>scheduling</module>
     <module>docker-modules</module>
     <module>error-handling</module>
-    <module>file-handling</module>
+    <module>file-handling-modules</module>
     <module>persistence/dbcp</module>
     <module>persistence/hypersistence</module>
+    <module>redis</module>
+    <module>redis/spring-redis</module>
+    <module>persistence/spring-data-rest-modules</module>
 
   </modules>
   <repositories>

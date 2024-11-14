@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 import jhkim105.tutorials.domain.BaseEntity;
 import jhkim105.tutorials.domain.ColumnLengths;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,6 @@ public class Product extends BaseEntity<String> {
   private Long price;
 
 
-  @Builder
   public Product(String name, Long price) {
     this.name = name;
     this.price = price;

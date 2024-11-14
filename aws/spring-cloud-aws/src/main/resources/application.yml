@@ -1,8 +1,0 @@
-spring:
-  cloud:
-    aws:
-      credentials:
-        profile:
-          name: rm-rtmservice
-      s3:
-        region: ap-northeast-2

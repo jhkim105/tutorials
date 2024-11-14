@@ -2,6 +2,7 @@ package jhkim105.tutorials.redisson;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import jhkim105.tutorials.redisson.config.CacheConfig.Caches;
 import jhkim105.tutorials.redisson.service.CurrentDateRecordService;
 import jhkim105.tutorials.redisson.service.CurrentDateService;
 import lombok.extern.slf4j.Slf4j;

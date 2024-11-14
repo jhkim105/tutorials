@@ -7,7 +7,6 @@ import org.springframework.integration.amqp.dsl.Amqp;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.messaging.MessageChannel;
 
 @Configuration
@@ -15,7 +14,7 @@ public class OutboundConfig {
 
   @Bean
   public IntegrationFlow amqpOutboundFlow(AmqpTemplate amqpTemplate) {
-    return IntegrationFlows.from(amqpOutboundChannel())
+    return IntegrationFlow.from(amqpOutboundChannel())
         .handle(Amqp.outboundAdapter(amqpTemplate)
             .routingKey("foo")) // default exchange - route to queue 'foo'
         .get();
@@ -28,8 +27,8 @@ public class OutboundConfig {
 
   @MessagingGateway(defaultRequestChannel = "amqpOutboundChannel")
 //  @MessagingGateway(defaultRequestChannel = "amqpOutboundChannel", defaultRequestTimeout = "50000", defaultReplyTimeout = "5000")
-  public interface RabbitGateway {
-    void sendToRabbit(String data);
+  public interface OutboundGateway {
+    void send(String data);
   }
 
 }

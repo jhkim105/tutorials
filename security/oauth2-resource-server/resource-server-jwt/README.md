@@ -21,6 +21,8 @@ spring:
         jwt:
           issuer-uri: http://localhost:8089/realms/demo
 ```
+- issuer-uri + "/well-known/openid-configuration" 를 호출해서 인증관련 정보를 조회함(JwtDecoders.java)
+- http://localhost:8089/realms/demo/.well-known/openid-configuration
 
 SecurityConfig.java
 ```java

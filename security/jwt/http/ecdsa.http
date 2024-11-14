@@ -1,0 +1,18 @@
+### Generate Token
+GET http://localhost:8080/ecdsa/generate
+
+> {%
+  client.global.set("token", response.body);
+%}
+
+### Parse Token
+GET http://localhost:8080/ecdsa/parse?token={{token}}
+
+
+### JWKS
+GET http://localhost:8080/ecdsa/jwks
+
+### Public Key
+# https://jwt.io 에서 검증시 사용
+GET http://localhost:8080/ecdsa/public-key
+
