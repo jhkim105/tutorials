@@ -9,11 +9,13 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Slf4j
 public class CurrentDateService {
+
+  private final AtomicInteger counter = new AtomicInteger(0);
 
   @Cacheable(CURRENT_DATE)
   public CurrentDate getCurrentDate(String pattern) {
@@ -29,6 +31,10 @@ public class CurrentDateService {
   @CachePut(value = CURRENT_DATE)
   public CurrentDate putCache(String pattern) {
     return CurrentDate.create(pattern);
+  }
+
+  public int getExecutionCount() {
+    return counter.get();
   }
 
 }
